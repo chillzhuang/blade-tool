@@ -75,7 +75,7 @@ public class SecureUtil {
 	public static BladeUser getUser(HttpServletRequest request) {
 		Claims claims = getClaims(request);
 		if (claims == null) {
-			return new BladeUser();
+			return null;
 		}
 		Integer userId = Func.toInt(claims.get(SecureUtil.userId));
 		String roleId = Func.toStr(claims.get(SecureUtil.roleId));
