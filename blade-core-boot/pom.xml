@@ -83,6 +83,11 @@
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>${swagger.bootstrapui.version}</version>
         </dependency>
+        <!--Redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
         <!--MyBatis-->
         <dependency>
             <groupId>org.springblade</groupId>
