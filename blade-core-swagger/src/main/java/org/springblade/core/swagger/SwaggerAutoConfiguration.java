@@ -20,6 +20,7 @@ import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrap
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -43,6 +44,7 @@ import java.util.List;
 @EnableSwagger2
 @EnableSwaggerBootstrapUI
 @Profile({"dev", "test"})
+@EnableConfigurationProperties(SwaggerProperties.class)
 public class SwaggerAutoConfiguration {
 
     private static final String DEFAULT_EXCLUDE_PATH = "/error";
