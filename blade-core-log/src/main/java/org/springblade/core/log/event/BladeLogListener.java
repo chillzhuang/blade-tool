@@ -58,10 +58,10 @@ public class BladeLogListener {
         logBlade.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
         logBlade.setMethod(request.getMethod());
         logBlade.setParams(WebUtil.getRequestParamString(request));
-        logBlade.setServiceId(bladeProperties.getName());
         logBlade.setServerHost(serverInfo.getHostName());
-        logBlade.setServerIp(serverInfo.getIPWithPort());
+        logBlade.setServiceId(bladeProperties.getName());
         logBlade.setEnv(bladeProperties.getEnv());
+        logBlade.setServerIp(serverInfo.getIPWithPort());
         logBlade.setCreateBy(SecureUtil.getUserAccount(request));
         logBlade.setCreateTime(LocalDateTime.now());
         logService.saveBladeLog(logBlade);
