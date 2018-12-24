@@ -52,14 +52,14 @@ public class OKHttpUtil {
         StringBuffer sb = new StringBuffer(url);
         if (queries != null && queries.keySet().size() > 0) {
             sb.append("?clientId=blade");
-            queries.forEach((k, v) -> sb.append("&" + k + "=" + v));
+            queries.forEach((k, v) -> sb.append("&").append(k).append("=").append(v));
         }
 
         Request.Builder builder = new Request.Builder();
 
         //添加请求头
         if (header != null && header.keySet().size() > 0) {
-            header.forEach((k, v) -> builder.addHeader(k, v));
+            header.forEach(builder::addHeader);
         }
 
         Request request = builder.url(sb.toString()).build();
@@ -89,13 +89,13 @@ public class OKHttpUtil {
         FormBody.Builder formBuilder = new FormBody.Builder().add("clientId", "blade");
         //添加参数
         if (params != null && params.keySet().size() > 0) {
-            params.forEach((k, v) -> formBuilder.add(k, v));
+            params.forEach(formBuilder::add);
         }
 
         Request.Builder builder = new Request.Builder();
         //添加请求头
         if (header != null && header.keySet().size() > 0) {
-            header.forEach((k, v) -> builder.addHeader(k, v));
+            header.forEach(builder::addHeader);
         }
 
         Request request = builder.url(url).post(formBuilder.build()).build();
@@ -157,7 +157,7 @@ public class OKHttpUtil {
         Request.Builder builder = new Request.Builder();
         //添加请求头
         if (header != null && header.keySet().size() > 0) {
-            header.forEach((k, v) -> builder.addHeader(k, v));
+            header.forEach(builder::addHeader);
         }
         Request request = builder.url(url).post(requestBody).build();
         return getBody(request);
