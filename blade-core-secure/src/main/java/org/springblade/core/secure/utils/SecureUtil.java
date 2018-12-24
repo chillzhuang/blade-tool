@@ -37,6 +37,7 @@ import java.util.Map;
  * Secure工具类
  */
 public class SecureUtil {
+	public static final String BLADE_USER_REQUEST_ATTR = "_BLADE_USER_REQUEST_ATTR_";
 
 	public final static String header = "Authorization";
 	public final static String bearer = "bearer";
@@ -53,7 +54,17 @@ public class SecureUtil {
 	 * @return
 	 */
 	public static BladeUser getUser() {
-		return getUser(WebUtil.getRequest());
+		HttpServletRequest request = WebUtil.getRequest();
+		// 优先从 request 中获取
+		BladeUser bladeUser = (BladeUser) request.getAttribute(BLADE_USER_REQUEST_ATTR);
+		if (bladeUser == null) {
+			bladeUser = getUser(request);
+			if (bladeUser != null) {
+				// 设置到 request 中
+				request.setAttribute(BLADE_USER_REQUEST_ATTR, bladeUser);
+			}
+		}
+		return bladeUser;
 	}
 
 	/**
