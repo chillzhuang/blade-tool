@@ -65,7 +65,7 @@ public class ApiLogListener {
         logApi.setRequestUri(URLUtil.getPath(request.getRequestURI()));
         logApi.setMethod(request.getMethod());
         logApi.setParams(WebUtil.getRequestParamString(request));
-        logApi.setCreateBy(SecureUtil.getUser(request).getAccount());
+        logApi.setCreateBy(SecureUtil.getUserAccount(request).getAccount());
         logApi.setCreateTime(LocalDateTime.now());
         logService.saveApiLog(logApi);
 	}

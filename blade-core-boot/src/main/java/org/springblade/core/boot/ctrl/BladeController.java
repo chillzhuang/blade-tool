@@ -67,7 +67,7 @@ public class BladeController {
      * @return
      */
     public BladeUser getUser() {
-        return SecureUtil.getUser(request);
+        return SecureUtil.getUser();
     }
 
     /** ============================     API_RESULT    =================================================  */

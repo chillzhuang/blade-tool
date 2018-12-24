@@ -24,6 +24,7 @@ import org.springblade.core.tool.date.DateField;
 import org.springblade.core.tool.date.DateTime;
 import org.springblade.core.tool.date.DateUtil;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.WebUtil;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -87,6 +88,40 @@ public class SecureUtil {
 		bladeUser.setRoleId(roleId);
 		bladeUser.setRoleName(roleName);
 		return bladeUser;
+	}
+
+
+
+	/**
+	 * 获取用户id
+	 * @return
+	 */
+	public static Integer getUserId() {
+		return (null == getUser()) ? -1 : getUser().getUserId();
+	}
+
+	/**
+	 * 获取用户id
+	 * @return
+	 */
+	public static Integer getUserId(HttpServletRequest request) {
+		return (null == getUser(request)) ? -1 : getUser().getUserId();
+	}
+
+	/**
+	 * 获取用户账号
+	 * @return
+	 */
+	public static String getUserAccount() {
+		return (null == getUser()) ? StringPool.EMPTY : getUser().getAccount();
+	}
+
+	/**
+	 * 获取用户账号
+	 * @return
+	 */
+	public static String getUserAccount(HttpServletRequest request) {
+		return (null == getUser(request)) ? StringPool.EMPTY : getUser().getAccount();
 	}
 
 	/**

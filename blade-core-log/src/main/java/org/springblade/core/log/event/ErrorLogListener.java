@@ -60,7 +60,7 @@ public class ErrorLogListener {
         logError.setServerHost(serverInfo.getHostName());
         logError.setServerIp(serverInfo.getIPWithPort());
         logError.setEnv(bladeProperties.getEnv());
-        logError.setCreateBy(SecureUtil.getUser(request).getAccount());
+        logError.setCreateBy(SecureUtil.getUserAccount(request).getAccount());
         logError.setCreateTime(LocalDateTime.now());
         logService.saveErrorLog(logError);
     }

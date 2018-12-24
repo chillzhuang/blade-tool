@@ -62,7 +62,7 @@ public class BladeLogListener {
         logBlade.setServerHost(serverInfo.getHostName());
         logBlade.setServerIp(serverInfo.getIPWithPort());
         logBlade.setEnv(bladeProperties.getEnv());
-        logBlade.setCreateBy(SecureUtil.getUser(request).getAccount());
+        logBlade.setCreateBy(SecureUtil.getUserAccount(request));
         logBlade.setCreateTime(LocalDateTime.now());
         logService.saveBladeLog(logBlade);
     }
