@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.springblade.core.secure.config.RegistryConfiguration,\
+  org.springblade.core.secure.config.SecureConfiguration

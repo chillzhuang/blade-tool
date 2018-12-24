@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.springblade.core.boot.config.MybatisPlusConfiguration,\
+  org.springblade.core.boot.logger.RequestLogAspect,\
+  org.springblade.core.boot.config.RetryConfiguration,\
+  org.springblade.core.boot.config.BladeWebMvcConfiguration,\
+  org.springblade.core.boot.config.BladeBootAutoConfiguration

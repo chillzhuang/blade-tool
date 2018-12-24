@@ -1,0 +1,136 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "name": "swagger",
+      "type": "org.springblade.core.swagger.SwaggerProperties"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "name": "swagger.authorization",
+      "type": "org.springblade.core.swagger.SwaggerProperties$Authorization"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "name": "swagger.contact",
+      "type": "org.springblade.core.swagger.SwaggerProperties$Contact"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties$Authorization",
+      "defaultValue": "^.*$",
+      "name": "swagger.authorization.auth-regex",
+      "description": "需要开启鉴权URL的正则",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties$Authorization",
+      "name": "swagger.authorization.authorization-scope-list",
+      "description": "鉴权作用域列表",
+      "type": "java.util.List<org.springblade.core.swagger.SwaggerProperties.AuthorizationScope>"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties$Authorization",
+      "defaultValue": "",
+      "name": "swagger.authorization.name",
+      "description": "鉴权策略ID，需要和SecurityReferences ID保持一致",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties$Authorization",
+      "name": "swagger.authorization.token-url-list",
+      "type": "java.util.List<java.lang.String>"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "defaultValue": "org.springblade",
+      "name": "swagger.base-package",
+      "description": "swagger会解析的包路径",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "name": "swagger.base-path",
+      "description": "swagger会解析的url规则",
+      "type": "java.util.List<java.lang.String>"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties$Contact",
+      "defaultValue": "smallchill@163.com",
+      "name": "swagger.contact.email",
+      "description": "联系人email",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties$Contact",
+      "defaultValue": "chillzhuang",
+      "name": "swagger.contact.name",
+      "description": "联系人",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties$Contact",
+      "defaultValue": "",
+      "name": "swagger.contact.url",
+      "description": "联系人url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "defaultValue": "SpringBlade 接口文档系统",
+      "name": "swagger.description",
+      "description": "描述",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "name": "swagger.exclude-path",
+      "description": "在basePath基础上需要排除的url规则",
+      "type": "java.util.List<java.lang.String>"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "defaultValue": "",
+      "name": "swagger.host",
+      "description": "host信息",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "defaultValue": "",
+      "name": "swagger.license",
+      "description": "许可证",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "defaultValue": "",
+      "name": "swagger.license-url",
+      "description": "许可证URL",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "defaultValue": "",
+      "name": "swagger.terms-of-service-url",
+      "description": "服务条款URL",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "defaultValue": "SpringBlade 接口文档系统",
+      "name": "swagger.title",
+      "description": "标题",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "org.springblade.core.swagger.SwaggerProperties",
+      "defaultValue": "1.0.0",
+      "name": "swagger.version",
+      "description": "版本",
+      "type": "java.lang.String"
+    }
+  ]
+}

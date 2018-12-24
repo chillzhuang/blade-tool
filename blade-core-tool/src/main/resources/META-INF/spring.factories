@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.springblade.core.tool.config.ToolConfiguration,\
+  org.springblade.core.tool.config.JacksonConfiguration,\
+  org.springblade.core.tool.config.MessageConfiguration

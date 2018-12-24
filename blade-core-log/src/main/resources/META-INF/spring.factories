@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.springblade.core.log.config.BladeLogToolAutoConfiguration,\
+  org.springblade.core.log.config.BladeErrorMvcAutoConfiguration,\
+  org.springblade.core.log.error.BladeRestExceptionTranslator
