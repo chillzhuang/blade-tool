@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.boot.node;
+package org.springblade.core.tool.node;
 
+import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Blade.
+ * 节点基类
  *
  * @author zhuangqian
  */
-public interface INode {
+@Data
+public class BaseNode implements INode {
 
-    Integer getId();
-
-    Integer getParentId();
-
-    List<INode> getChildren();
+    protected Integer id;//主键ID
+    protected Integer parentId;//父节点ID
+    protected List<INode> children = new ArrayList<>();//子孙节点
 
 }

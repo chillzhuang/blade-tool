@@ -1,4 +1,4 @@
-package org.springblade.core.boot.node;
+package org.springblade.core.tool.node;
 
 import org.springblade.core.tool.jackson.JsonUtil;
 
