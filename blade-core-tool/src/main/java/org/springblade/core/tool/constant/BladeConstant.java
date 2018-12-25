@@ -45,7 +45,10 @@ public interface BladeConstant {
 	 */
 	int DB_STATUS_NORMAL = 1;
 
-
+	/**
+	 * 是否删除字段名
+	 */
+	String IS_DELETED_FIELD = "is_deleted";
     /**
      * 删除状态[0:正常,1:删除]
      */
