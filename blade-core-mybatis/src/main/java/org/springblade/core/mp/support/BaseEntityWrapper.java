@@ -28,8 +28,12 @@ public abstract class BaseEntityWrapper<E, V> {
 
 	public abstract V entityVO(E entity);
 
+	public List<V> listVO(List<E> list) {
+		return list.stream().map(this::entityVO).collect(Collectors.toList());
+	}
+
 	public IPage<V> pageVO(IPage<E> pages) {
-		List<V> records = pages.getRecords().stream().map(this::entityVO).collect(Collectors.toList());
+		List<V> records = listVO(pages.getRecords());
 		IPage<V> pageVo = new Page<>(pages.getCurrent(), pages.getSize(), pages.getTotal());
 		pageVo.setRecords(records);
 		return pageVo;
