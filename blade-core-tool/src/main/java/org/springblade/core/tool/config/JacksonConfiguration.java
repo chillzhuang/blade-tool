@@ -19,8 +19,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.springblade.core.tool.date.DatePattern;
 import org.springblade.core.tool.jackson.BladeJavaTimeModule;
+import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
@@ -47,7 +47,7 @@ public class JacksonConfiguration {
 	@Primary
 	@Bean
 	public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
-		builder.simpleDateFormat(DatePattern.NORM_DATETIME_PATTERN);
+		builder.simpleDateFormat(DateUtil.PATTERN_DATETIME);
 		//创建ObjectMapper
 		ObjectMapper objectMapper = builder.createXmlMapper(false).build();
 		//设置地点为中国
@@ -57,7 +57,7 @@ public class JacksonConfiguration {
 		//设置为中国上海时区
 		objectMapper.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
 		//序列化时，日期的统一格式
-		objectMapper.setDateFormat(new SimpleDateFormat(DatePattern.NORM_DATETIME_PATTERN, Locale.CHINA));
+		objectMapper.setDateFormat(new SimpleDateFormat(DateUtil.PATTERN_DATETIME, Locale.CHINA));
 		//序列化处理
 		objectMapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
 		objectMapper.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);

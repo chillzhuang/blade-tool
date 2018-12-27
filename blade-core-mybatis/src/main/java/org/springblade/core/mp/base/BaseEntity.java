@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.springblade.core.tool.date.DatePattern;
+import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -50,8 +50,8 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	@DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-	@JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
+	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@ApiModelProperty(value = "创建时间")
 	private LocalDateTime createTime;
 
@@ -64,8 +64,8 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 更新时间
 	 */
-	@DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-	@JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
+	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@ApiModelProperty(value = "更新时间")
 	private LocalDateTime updateTime;
 

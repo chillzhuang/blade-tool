@@ -16,7 +16,7 @@
 package org.springblade.core.boot.file;
 
 import org.springblade.core.tool.constant.SystemConstant;
-import org.springblade.core.tool.date.DateUtil;
+import org.springblade.core.tool.utils.DateUtil;
 import org.springblade.core.tool.utils.ImageUtil;
 import org.springblade.core.tool.utils.StringPool;
 

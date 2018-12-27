@@ -54,7 +54,7 @@ public class PathUtil {
 			return null;
 		}
 		String protocol = url.getProtocol();
-		String file = URLUtil.decodeURL(url.getPath(), Charsets.UTF_8);
+		String file = UrlUtil.decodeURL(url.getPath(), Charsets.UTF_8);
 		if (FILE_PROTOCOL.equals(protocol)) {
 			return new File(file).getParentFile().getParentFile().getAbsolutePath();
 		} else if (JAR_PROTOCOL.equals(protocol) || ZIP_PROTOCOL.equals(protocol)) {

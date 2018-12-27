@@ -24,7 +24,7 @@ import org.springblade.core.log.constant.EventConstant;
 import org.springblade.core.log.feign.ILogClient;
 import org.springblade.core.log.model.LogBlade;
 import org.springblade.core.secure.utils.SecureUtil;
-import org.springblade.core.tool.utils.URLUtil;
+import org.springblade.core.tool.utils.UrlUtil;
 import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
@@ -56,7 +56,7 @@ public class BladeLogListener {
 		Map<String, Object> source = (Map<String, Object>) event.getSource();
 		LogBlade logBlade = (LogBlade) source.get(EventConstant.EVENT_LOG);
 		HttpServletRequest request = (HttpServletRequest) source.get(EventConstant.EVENT_REQUEST);
-		logBlade.setRequestUri(URLUtil.getPath(request.getRequestURI()));
+		logBlade.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
 		logBlade.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
 		logBlade.setMethod(request.getMethod());
 		logBlade.setParams(WebUtil.getRequestParamString(request));

@@ -23,7 +23,7 @@ import org.springblade.core.secure.exception.SecureException;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.api.ResultCode;
 import org.springblade.core.tool.utils.Func;
-import org.springblade.core.tool.utils.URLUtil;
+import org.springblade.core.tool.utils.UrlUtil;
 import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -155,7 +155,7 @@ public class BladeRestExceptionTranslator {
 	public R handleError(Throwable e) {
 		log.error("服务器异常", e);
 		//发送服务异常事件
-		ErrorLogPublisher.publishEvent(e, URLUtil.getPath(WebUtil.getRequest().getRequestURI()));
+		ErrorLogPublisher.publishEvent(e, UrlUtil.getPath(WebUtil.getRequest().getRequestURI()));
 		return R.failure(ResultCode.INTERNAL_SERVER_ERROR, (Func.isEmpty(e.getMessage()) ? ResultCode.INTERNAL_SERVER_ERROR.getMessage() : e.getMessage()));
 	}
 

@@ -21,7 +21,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springblade.core.tool.date.DatePattern;
+import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -95,8 +95,8 @@ public class LogBlade implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	@DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-	@JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
+	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
 	private LocalDateTime createTime;
 
 

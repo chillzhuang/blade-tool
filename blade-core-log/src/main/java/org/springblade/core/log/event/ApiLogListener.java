@@ -22,7 +22,7 @@ import org.springblade.core.log.constant.EventConstant;
 import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.launch.server.ServerInfo;
-import org.springblade.core.tool.utils.URLUtil;
+import org.springblade.core.tool.utils.UrlUtil;
 import org.springblade.core.tool.utils.WebUtil;
 import org.springblade.core.log.feign.ILogClient;
 import org.springblade.core.log.model.LogApi;
@@ -64,7 +64,7 @@ public class ApiLogListener {
 		logApi.setEnv(bladeProperties.getEnv());
 		logApi.setRemoteIp(WebUtil.getIP(request));
 		logApi.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
-		logApi.setRequestUri(URLUtil.getPath(request.getRequestURI()));
+		logApi.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
 		logApi.setMethod(request.getMethod());
 		logApi.setParams(WebUtil.getRequestParamString(request));
 		logApi.setCreateBy(SecureUtil.getUserAccount(request));
