@@ -32,7 +32,7 @@ public class SuffixFileFilter implements FileFilter, Serializable {
 
 	public SuffixFileFilter(final String suffix) {
 		Assert.notNull(suffix, "The suffix must not be null");
-		this.suffixes = new String[] {suffix};
+		this.suffixes = new String[]{suffix};
 	}
 
 	public SuffixFileFilter(final String[] suffixes) {

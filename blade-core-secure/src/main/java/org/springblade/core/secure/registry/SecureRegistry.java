@@ -23,6 +23,8 @@ import java.util.List;
 
 /**
  * secure api放行配置
+ *
+ * @author smallchill
  */
 @Data
 public class SecureRegistry {

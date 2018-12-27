@@ -30,21 +30,23 @@ import java.util.Map;
 
 /**
  * API日志信息事件发送
+ *
+ * @author smallchill
  */
 public class ApiLogPublisher {
 
-    public static void publishEvent(String methodName, String methodClass, ApiLog apiLog, long time) {
-        HttpServletRequest request = WebUtil.getRequest();
-        LogApi logApi = new LogApi();
-        logApi.setType(BladeConstant.LOG_NORMAL_TYPE);
-        logApi.setTitle(apiLog.value());
-        logApi.setTime(String.valueOf(time));
-        logApi.setMethodClass(methodClass);
-        logApi.setMethodName(methodName);
-        Map<String, Object> event = new HashMap<>();
-        event.put(EventConstant.EVENT_LOG, logApi);
-        event.put(EventConstant.EVENT_REQUEST, request);
-        SpringUtil.publishEvent(new ApiLogEvent(event));
-    }
+	public static void publishEvent(String methodName, String methodClass, ApiLog apiLog, long time) {
+		HttpServletRequest request = WebUtil.getRequest();
+		LogApi logApi = new LogApi();
+		logApi.setType(BladeConstant.LOG_NORMAL_TYPE);
+		logApi.setTitle(apiLog.value());
+		logApi.setTime(String.valueOf(time));
+		logApi.setMethodClass(methodClass);
+		logApi.setMethodName(methodName);
+		Map<String, Object> event = new HashMap<>();
+		event.put(EventConstant.EVENT_LOG, logApi);
+		event.put(EventConstant.EVENT_REQUEST, request);
+		SpringUtil.publishEvent(new ApiLogEvent(event));
+	}
 
 }

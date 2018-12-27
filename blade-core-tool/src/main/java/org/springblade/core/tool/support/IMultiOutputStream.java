@@ -19,6 +19,8 @@ import java.io.OutputStream;
 
 /**
  * A factory for creating MultiOutputStream objects.
+ *
+ * @author smallchill
  */
 public interface IMultiOutputStream {
 
@@ -28,6 +30,6 @@ public interface IMultiOutputStream {
 	 * @param params the params
 	 * @return the output stream
 	 */
-	OutputStream buildOutputStream(Integer... params) ;
-	
+	OutputStream buildOutputStream(Integer... params);
+
 }

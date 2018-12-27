@@ -35,6 +35,8 @@ import java.time.Duration;
 
 /**
  * RedisTemplate 配置
+ *
+ * @author smallchill
  */
 @EnableCaching
 @Configuration
@@ -43,6 +45,7 @@ public class RedisTemplateConfiguration {
 
 	/**
 	 * value 值 序列化
+	 *
 	 * @return RedisSerializer
 	 */
 	@Bean

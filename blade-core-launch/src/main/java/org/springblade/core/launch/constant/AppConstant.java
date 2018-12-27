@@ -17,130 +17,132 @@ package org.springblade.core.launch.constant;
 
 /**
  * 系统常量
+ *
+ * @author smallchill
  */
 public interface AppConstant {
 
-    /**
-     * 应用版本
-     */
-    String APPLICATION_VERSION = "1.0.0";
+	/**
+	 * 应用版本
+	 */
+	String APPLICATION_VERSION = "1.0.0";
 
-    /**
-     * consul dev 地址
-     */
-    String CONSUL_DEV_HOST = "http://localhost";
+	/**
+	 * consul dev 地址
+	 */
+	String CONSUL_DEV_HOST = "http://localhost";
 
 	/**
 	 * consul prod 地址
 	 */
 	String CONSUL_PROD_HOST = "http://192.168.186.129";
 
-    /**
-     * consul端口
-     */
-    String CONSUL_PORT = "8500";
+	/**
+	 * consul端口
+	 */
+	String CONSUL_PORT = "8500";
 
-    /**
-     * consul端口
-     */
-    String CONSUL_CONFIG_FORMAT = "yaml";
+	/**
+	 * consul端口
+	 */
+	String CONSUL_CONFIG_FORMAT = "yaml";
 
-    /**
-     * consul端口
-     */
-    String CONSUL_WATCH_DELAY = "1000";
+	/**
+	 * consul端口
+	 */
+	String CONSUL_WATCH_DELAY = "1000";
 
-    /**
-     * consul端口
-     */
-    String CONSUL_WATCH_ENABLED = "true";
+	/**
+	 * consul端口
+	 */
+	String CONSUL_WATCH_ENABLED = "true";
 
-    /**
-     * 基础包
-     */
-    String BASE_PACKAGES = "org.springblade";
+	/**
+	 * 基础包
+	 */
+	String BASE_PACKAGES = "org.springblade";
 
-    /**
-     * zookeeper id
-     */
-    String ZOOKEEPER_ID = "zk";
+	/**
+	 * zookeeper id
+	 */
+	String ZOOKEEPER_ID = "zk";
 
-    /**
-     * zookeeper connect string
-     */
-    String ZOOKEEPER_CONNECT_STRING = "127.0.0.1:2181";
+	/**
+	 * zookeeper connect string
+	 */
+	String ZOOKEEPER_CONNECT_STRING = "127.0.0.1:2181";
 
-    /**
-     * zookeeper address
-     */
-    String ZOOKEEPER_ADDRESS = "zookeeper://" + ZOOKEEPER_CONNECT_STRING;
+	/**
+	 * zookeeper address
+	 */
+	String ZOOKEEPER_ADDRESS = "zookeeper://" + ZOOKEEPER_CONNECT_STRING;
 
-    /**
-     * zookeeper root
-     */
-    String ZOOKEEPER_ROOT = "/blade-services";
+	/**
+	 * zookeeper root
+	 */
+	String ZOOKEEPER_ROOT = "/blade-services";
 
-    /**
-     * 应用名前缀
-     */
-    String APPLICATION_NAME_FREFIX = "blade-";
-    /**
-     * 网关模块名称
-     */
-    String APPLICATION_GATEWAY_NAME = APPLICATION_NAME_FREFIX + "gateway";
-    /**
-     * 授权模块名称
-     */
-    String APPLICATION_AUTH_NAME = APPLICATION_NAME_FREFIX + "auth";
-    /**
-     * 监控模块名称
-     */
-    String APPLICATION_ADMIN_NAME = APPLICATION_NAME_FREFIX + "admin";
-    /**
-     * 配置中心模块名称
-     */
-    String APPLICATION_CONFIG_NAME = APPLICATION_NAME_FREFIX + "config-server";
-    /**
-     * TX模块名称
-     */
-    String APPLICATION_TX_MANAGER = "tx-manager";
-    /**
-     * 首页模块名称
-     */
-    String APPLICATION_DESK_NAME = APPLICATION_NAME_FREFIX + "desk";
-    /**
-     * 系统模块名称
-     */
-    String APPLICATION_SYSTEM_NAME = APPLICATION_NAME_FREFIX + "system";
-    /**
-     * 用户模块名称
-     */
-    String APPLICATION_USER_NAME = APPLICATION_NAME_FREFIX + "user";
-    /**
-     * 日志模块名称
-     */
-    String APPLICATION_LOG_NAME = APPLICATION_NAME_FREFIX + "log";
-    /**
-     * 测试模块名称
-     */
-    String APPLICATION_TEST_NAME = APPLICATION_NAME_FREFIX + "test";
+	/**
+	 * 应用名前缀
+	 */
+	String APPLICATION_NAME_FREFIX = "blade-";
+	/**
+	 * 网关模块名称
+	 */
+	String APPLICATION_GATEWAY_NAME = APPLICATION_NAME_FREFIX + "gateway";
+	/**
+	 * 授权模块名称
+	 */
+	String APPLICATION_AUTH_NAME = APPLICATION_NAME_FREFIX + "auth";
+	/**
+	 * 监控模块名称
+	 */
+	String APPLICATION_ADMIN_NAME = APPLICATION_NAME_FREFIX + "admin";
+	/**
+	 * 配置中心模块名称
+	 */
+	String APPLICATION_CONFIG_NAME = APPLICATION_NAME_FREFIX + "config-server";
+	/**
+	 * TX模块名称
+	 */
+	String APPLICATION_TX_MANAGER = "tx-manager";
+	/**
+	 * 首页模块名称
+	 */
+	String APPLICATION_DESK_NAME = APPLICATION_NAME_FREFIX + "desk";
+	/**
+	 * 系统模块名称
+	 */
+	String APPLICATION_SYSTEM_NAME = APPLICATION_NAME_FREFIX + "system";
+	/**
+	 * 用户模块名称
+	 */
+	String APPLICATION_USER_NAME = APPLICATION_NAME_FREFIX + "user";
+	/**
+	 * 日志模块名称
+	 */
+	String APPLICATION_LOG_NAME = APPLICATION_NAME_FREFIX + "log";
+	/**
+	 * 测试模块名称
+	 */
+	String APPLICATION_TEST_NAME = APPLICATION_NAME_FREFIX + "test";
 
-    /**
-     * 开发环境
-     */
-    String DEV_CDOE = "dev";
-    /**
-     * 生产环境
-     */
-    String PROD_CODE = "prod";
-    /**
-     * 测试环境
-     */
-    String TEST_CODE = "test";
+	/**
+	 * 开发环境
+	 */
+	String DEV_CDOE = "dev";
+	/**
+	 * 生产环境
+	 */
+	String PROD_CODE = "prod";
+	/**
+	 * 测试环境
+	 */
+	String TEST_CODE = "test";
 
-    /**
-     * 代码部署于 linux 上，工作默认为 mac 和 Windows
-     */
-    String OS_NAME_LINUX = "LINUX";
+	/**
+	 * 代码部署于 linux 上，工作默认为 mac 和 Windows
+	 */
+	String OS_NAME_LINUX = "LINUX";
 
 }

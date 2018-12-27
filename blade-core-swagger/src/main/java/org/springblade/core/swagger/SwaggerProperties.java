@@ -25,6 +25,8 @@ import java.util.List;
 
 /**
  * SwaggerProperties
+ *
+ * @author smallchill
  */
 @Data
 @RefreshScope

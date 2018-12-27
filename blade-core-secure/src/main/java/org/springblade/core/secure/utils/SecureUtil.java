@@ -36,6 +36,8 @@ import java.util.Map;
 
 /**
  * Secure工具类
+ *
+ * @author smallchill
  */
 public class SecureUtil {
 	public static final String BLADE_USER_REQUEST_ATTR = "_BLADE_USER_REQUEST_ATTR_";
@@ -91,9 +93,9 @@ public class SecureUtil {
 	}
 
 
-
 	/**
 	 * 获取用户id
+	 *
 	 * @return
 	 */
 	public static Integer getUserId() {
@@ -102,6 +104,7 @@ public class SecureUtil {
 
 	/**
 	 * 获取用户id
+	 *
 	 * @return
 	 */
 	public static Integer getUserId(HttpServletRequest request) {
@@ -110,6 +113,7 @@ public class SecureUtil {
 
 	/**
 	 * 获取用户账号
+	 *
 	 * @return
 	 */
 	public static String getUserAccount() {
@@ -118,6 +122,7 @@ public class SecureUtil {
 
 	/**
 	 * 获取用户账号
+	 *
 	 * @return
 	 */
 	public static String getUserAccount(HttpServletRequest request) {

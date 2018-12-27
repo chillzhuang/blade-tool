@@ -21,17 +21,22 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 森林节点类
+ *
+ * @author smallchill
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ForestNode extends BaseNode {
 
-    private Object content;//节点内容
+	/**
+	 * 节点内容
+	 */
+	private Object content;
 
-    public ForestNode(Integer id, Integer parentId, Object content) {
-        this.id = id;
-        this.parentId = parentId;
-        this.content = content;
-    }
+	public ForestNode(Integer id, Integer parentId, Object content) {
+		this.id = id;
+		this.parentId = parentId;
+		this.content = content;
+	}
 
 }

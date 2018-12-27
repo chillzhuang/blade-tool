@@ -30,7 +30,8 @@ import java.util.Arrays;
  */
 public class AESUtil {
 
-	private AESUtil() {}
+	private AESUtil() {
+	}
 
 	public static String genAesKey() {
 		return StringUtil.random(32);

@@ -28,76 +28,76 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- *  实体类
+ * 实体类
  *
- * @author Blade
+ * @author smallchill
  * @since 2018-10-12
  */
 @Data
 @TableName("blade_log")
 public class LogBlade implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 主键id
-     */
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
-    /**
-     * 服务ID
-     */
-    private String serviceId;
-    /**
-     * 服务器名
-     */
-    private String serverHost;
-    /**
-     * 服务器IP地址
-     */
-    private String serverIp;
-    /**
-     * 系统环境
-     */
-    private String env;
-    /**
-     * 日志级别
-     */
-    private String logLevel;
-    /**
-     * 日志业务id
-     */
-    private String logId;
-    /**
-     * 日志数据
-     */
-    private String logData;
-    /**
-     * 操作方式
-     */
-    private String method;
-    /**
-     * 请求URI
-     */
-    private String requestUri;
-    /**
-     * 用户代理
-     */
-    private String userAgent;
-    /**
-     * 操作提交的数据
-     */
-    private String params;
-    /**
-     * 创建者
-     */
-    private String createBy;
-    /**
-     * 创建时间
-     */
-    @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    private LocalDateTime createTime;
+	/**
+	 * 主键id
+	 */
+	@TableId(value = "id", type = IdType.ID_WORKER)
+	private Long id;
+	/**
+	 * 服务ID
+	 */
+	private String serviceId;
+	/**
+	 * 服务器名
+	 */
+	private String serverHost;
+	/**
+	 * 服务器IP地址
+	 */
+	private String serverIp;
+	/**
+	 * 系统环境
+	 */
+	private String env;
+	/**
+	 * 日志级别
+	 */
+	private String logLevel;
+	/**
+	 * 日志业务id
+	 */
+	private String logId;
+	/**
+	 * 日志数据
+	 */
+	private String logData;
+	/**
+	 * 操作方式
+	 */
+	private String method;
+	/**
+	 * 请求URI
+	 */
+	private String requestUri;
+	/**
+	 * 用户代理
+	 */
+	private String userAgent;
+	/**
+	 * 操作提交的数据
+	 */
+	private String params;
+	/**
+	 * 创建者
+	 */
+	private String createBy;
+	/**
+	 * 创建时间
+	 */
+	@DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	@JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	private LocalDateTime createTime;
 
 
 }

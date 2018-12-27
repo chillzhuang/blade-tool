@@ -39,6 +39,7 @@ public class DigestUtil extends org.springframework.util.DigestUtils {
 
 	/**
 	 * Return a hexadecimal string representation of the MD5 digest of the given bytes.
+	 *
 	 * @param bytes the bytes to calculate the digest over
 	 * @return a hexadecimal digest string
 	 */
@@ -48,19 +49,19 @@ public class DigestUtil extends org.springframework.util.DigestUtils {
 
 	private static final char[] HEX_DIGITS = "0123456789abcdef".toCharArray();
 
-	public static String sha1(String srcStr){
+	public static String sha1(String srcStr) {
 		return hash("SHA-1", srcStr);
 	}
 
-	public static String sha256(String srcStr){
+	public static String sha256(String srcStr) {
 		return hash("SHA-256", srcStr);
 	}
 
-	public static String sha384(String srcStr){
+	public static String sha384(String srcStr) {
 		return hash("SHA-384", srcStr);
 	}
 
-	public static String sha512(String srcStr){
+	public static String sha512(String srcStr) {
 		return hash("SHA-512", srcStr);
 	}
 
@@ -76,7 +77,7 @@ public class DigestUtil extends org.springframework.util.DigestUtils {
 
 	public static String toHex(byte[] bytes) {
 		StringBuilder ret = new StringBuilder(bytes.length * 2);
-		for (int i=0; i<bytes.length; i++) {
+		for (int i = 0; i < bytes.length; i++) {
 			ret.append(HEX_DIGITS[(bytes[i] >> 4) & 0x0f]);
 			ret.append(HEX_DIGITS[bytes[i] & 0x0f]);
 		}
@@ -98,19 +99,20 @@ public class DigestUtil extends org.springframework.util.DigestUtils {
 			return false;
 		}
 		int diff = a.length ^ b.length;
-		for(int i=0; i<a.length && i<b.length; i++) {
+		for (int i = 0; i < a.length && i < b.length; i++) {
 			diff |= a[i] ^ b[i];
 		}
 		return diff == 0;
 	}
 
-    /**
-     * 自定义加密 先MD5再SHA1
-     * @param data
-     * @return
-     */
-    public static String encrypt(String data) {
-        return sha1(md5Hex(data));
-    }
+	/**
+	 * 自定义加密 先MD5再SHA1
+	 *
+	 * @param data
+	 * @return
+	 */
+	public static String encrypt(String data) {
+		return sha1(md5Hex(data));
+	}
 
 }

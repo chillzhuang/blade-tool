@@ -20,43 +20,45 @@ import org.springframework.cloud.commons.util.InetUtils;
 
 /**
  * 服务器信息
+ *
+ * @author smallchill
  */
 public class ServerInfo {
 
-    private ServerProperties serverProperties;
-    private InetUtils inetUtils;
-    private String hostName;
-    private String ip;
-    private Integer prot;
-    private String ipWithPort;
+	private ServerProperties serverProperties;
+	private InetUtils inetUtils;
+	private String hostName;
+	private String ip;
+	private Integer prot;
+	private String ipWithPort;
 
-    public ServerInfo(ServerProperties serverProperties, InetUtils inetUtils) {
-        this.serverProperties = serverProperties;
-        this.inetUtils = inetUtils;
-        this.hostName = getHostInfo().getHostname();
-        this.ip = getHostInfo().getIpAddress();
-        this.prot = serverProperties.getPort();
-        this.ipWithPort = String.format("%s:%d", ip, prot);
-    }
+	public ServerInfo(ServerProperties serverProperties, InetUtils inetUtils) {
+		this.serverProperties = serverProperties;
+		this.inetUtils = inetUtils;
+		this.hostName = getHostInfo().getHostname();
+		this.ip = getHostInfo().getIpAddress();
+		this.prot = serverProperties.getPort();
+		this.ipWithPort = String.format("%s:%d", ip, prot);
+	}
 
-    public InetUtils.HostInfo getHostInfo() {
-        return inetUtils.findFirstNonLoopbackHostInfo();
-    }
+	public InetUtils.HostInfo getHostInfo() {
+		return inetUtils.findFirstNonLoopbackHostInfo();
+	}
 
-    public String getIP() {
-        return this.ip;
-    }
+	public String getIP() {
+		return this.ip;
+	}
 
-    public Integer getPort() {
-        return this.prot;
-    }
+	public Integer getPort() {
+		return this.prot;
+	}
 
-    public String getHostName() {
-        return this.hostName;
-    }
+	public String getHostName() {
+		return this.hostName;
+	}
 
-    public String getIPWithPort() {
-        return this.ipWithPort;
-    }
+	public String getIPWithPort() {
+		return this.ipWithPort;
+	}
 
 }

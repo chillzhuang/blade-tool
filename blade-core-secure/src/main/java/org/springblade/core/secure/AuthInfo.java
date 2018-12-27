@@ -21,6 +21,8 @@ import lombok.Data;
 
 /**
  * AuthInfo
+ *
+ * @author smallchill
  */
 @Data
 @ApiModel(description = "认证信息")

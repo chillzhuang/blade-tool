@@ -36,33 +36,35 @@ import java.util.Map;
 
 /**
  * 异步监听错误日志事件
+ *
+ * @author smallchill
  */
 @Slf4j
 @Component
 @AllArgsConstructor
 public class ErrorLogListener {
 
-    private final ILogClient logService;
-    private final ServerInfo serverInfo;
-    private final BladeProperties bladeProperties;
+	private final ILogClient logService;
+	private final ServerInfo serverInfo;
+	private final BladeProperties bladeProperties;
 
-    @Async
-    @Order
-    @EventListener(ErrorLogEvent.class)
-    public void saveErrorLog(ErrorLogEvent event) {
-        Map<String, Object> source = (Map<String, Object>) event.getSource();
-        LogError logError = (LogError) source.get(EventConstant.EVENT_LOG);
-        HttpServletRequest request = (HttpServletRequest) source.get(EventConstant.EVENT_REQUEST);
-        logError.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
-        logError.setMethod(request.getMethod());
-        logError.setParams(WebUtil.getRequestParamString(request));
-        logError.setServiceId(bladeProperties.getName());
-        logError.setServerHost(serverInfo.getHostName());
-        logError.setServerIp(serverInfo.getIPWithPort());
-        logError.setEnv(bladeProperties.getEnv());
-        logError.setCreateBy(SecureUtil.getUserAccount(request));
-        logError.setCreateTime(LocalDateTime.now());
-        logService.saveErrorLog(logError);
-    }
+	@Async
+	@Order
+	@EventListener(ErrorLogEvent.class)
+	public void saveErrorLog(ErrorLogEvent event) {
+		Map<String, Object> source = (Map<String, Object>) event.getSource();
+		LogError logError = (LogError) source.get(EventConstant.EVENT_LOG);
+		HttpServletRequest request = (HttpServletRequest) source.get(EventConstant.EVENT_REQUEST);
+		logError.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
+		logError.setMethod(request.getMethod());
+		logError.setParams(WebUtil.getRequestParamString(request));
+		logError.setServiceId(bladeProperties.getName());
+		logError.setServerHost(serverInfo.getHostName());
+		logError.setServerIp(serverInfo.getIPWithPort());
+		logError.setEnv(bladeProperties.getEnv());
+		logError.setCreateBy(SecureUtil.getUserAccount(request));
+		logError.setCreateTime(LocalDateTime.now());
+		logService.saveErrorLog(logError);
+	}
 
 }

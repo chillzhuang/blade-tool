@@ -25,6 +25,8 @@ import org.springframework.cloud.consul.serviceregistry.ConsulServiceRegistry;
 
 /**
  * Consul自定义注册规则
+ *
+ * @author smallchill
  */
 public class BladeConsulServiceRegistry extends ConsulServiceRegistry {
 

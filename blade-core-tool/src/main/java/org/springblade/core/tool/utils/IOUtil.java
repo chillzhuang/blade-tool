@@ -90,7 +90,7 @@ public class IOUtil extends org.springframework.util.StreamUtils {
 	 * @param data     the <code>String</code> to write, null ignored
 	 * @param output   the <code>OutputStream</code> to write to
 	 * @param encoding the encoding to use, null means platform default
-	 * @throws IOException          if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
 	public static void write(@Nullable final String data, final OutputStream output, final java.nio.charset.Charset encoding) throws IOException {
 		if (data != null) {

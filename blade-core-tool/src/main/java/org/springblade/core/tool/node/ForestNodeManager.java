@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 森林管理类
  *
- * @author zhuangqian
+ * @author smallchill
  */
 public class ForestNodeManager<T extends INode> {
 

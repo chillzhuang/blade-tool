@@ -27,6 +27,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * 基础实体类
+ *
+ * @author smallchill
+ */
 @Data
 public class BaseEntity implements Serializable {
 	/**
@@ -36,33 +41,33 @@ public class BaseEntity implements Serializable {
 	@ApiModelProperty(value = "主键id")
 	private Integer id;
 
-    /**
-     * 创建人
-     */
+	/**
+	 * 创建人
+	 */
 	@ApiModelProperty(value = "创建人")
-    private Integer createUser;
+	private Integer createUser;
 
-    /**
-     * 创建时间
-     */
-    @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	/**
+	 * 创建时间
+	 */
+	@DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	@JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
 	@ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+	private LocalDateTime createTime;
 
-    /**
-     * 更新人
-     */
+	/**
+	 * 更新人
+	 */
 	@ApiModelProperty(value = "更新人")
-    private Integer updateUser;
+	private Integer updateUser;
 
-    /**
-     * 更新时间
-     */
-    @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	/**
+	 * 更新时间
+	 */
+	@DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	@JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
 	@ApiModelProperty(value = "更新时间")
-    private LocalDateTime updateTime;
+	private LocalDateTime updateTime;
 
 	/**
 	 * 状态[1:正常]
@@ -70,9 +75,9 @@ public class BaseEntity implements Serializable {
 	@ApiModelProperty(value = "业务状态")
 	private Integer status;
 
-    /**
-     * 状态[0:未删除,1:删除]
-     */
+	/**
+	 * 状态[0:未删除,1:删除]
+	 */
 	@ApiModelProperty(value = "是否已删除")
-    private Integer isDeleted;
+	private Integer isDeleted;
 }

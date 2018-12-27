@@ -31,39 +31,41 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 日志工具自动配置
+ *
+ * @author smallchill
  */
 @Configuration
 @AllArgsConstructor
 @ConditionalOnWebApplication
 public class BladeLogToolAutoConfiguration {
 
-    private final ILogClient logService;
-    private final ServerInfo serverInfo;
-    private final BladeProperties bladeProperties;
+	private final ILogClient logService;
+	private final ServerInfo serverInfo;
+	private final BladeProperties bladeProperties;
 
-    @Bean
-    public ApiLogAspect apiLogAspect() {
-        return new ApiLogAspect();
-    }
+	@Bean
+	public ApiLogAspect apiLogAspect() {
+		return new ApiLogAspect();
+	}
 
-    @Bean
-    public BladeLogger bladeLogger() {
-        return new BladeLogger();
-    }
+	@Bean
+	public BladeLogger bladeLogger() {
+		return new BladeLogger();
+	}
 
-    @Bean
-    public ApiLogListener apiLogListener() {
-        return new ApiLogListener(logService, serverInfo, bladeProperties);
-    }
+	@Bean
+	public ApiLogListener apiLogListener() {
+		return new ApiLogListener(logService, serverInfo, bladeProperties);
+	}
 
-    @Bean
-    public ErrorLogListener errorEventListener() {
-        return new ErrorLogListener(logService, serverInfo, bladeProperties);
-    }
+	@Bean
+	public ErrorLogListener errorEventListener() {
+		return new ErrorLogListener(logService, serverInfo, bladeProperties);
+	}
 
-    @Bean
-    public BladeLogListener bladeEventListener() {
-        return new BladeLogListener(logService, serverInfo, bladeProperties);
-    }
+	@Bean
+	public BladeLogListener bladeEventListener() {
+		return new BladeLogListener(logService, serverInfo, bladeProperties);
+	}
 
 }

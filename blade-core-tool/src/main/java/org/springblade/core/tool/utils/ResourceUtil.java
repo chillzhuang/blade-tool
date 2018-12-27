@@ -35,19 +35,20 @@ public class ResourceUtil extends org.springframework.util.ResourceUtils {
 
 	/**
 	 * 获取资源
-	 *
+	 * <p>
 	 * 支持一下协议：
 	 * <p>
-	 *    1. classpath:
-	 *    2. file:
-	 *    3. ftp:
-	 *    4. http: and https:
-	 *    5. classpath*:
-	 *    6. C:/dir1/ and /Users/lcm
+	 * 1. classpath:
+	 * 2. file:
+	 * 3. ftp:
+	 * 4. http: and https:
+	 * 5. classpath*:
+	 * 6. C:/dir1/ and /Users/lcm
 	 * </p>
+	 *
 	 * @param resourceLocation 资源路径
-	 * @throws IOException IOException
 	 * @return {Resource}
+	 * @throws IOException IOException
 	 */
 	public static Resource getResource(String resourceLocation) throws IOException {
 		Assert.notNull(resourceLocation, "Resource location must not be null");

@@ -27,6 +27,8 @@ import org.springframework.context.annotation.Profile;
 
 /**
  * mybatisplus 配置
+ *
+ * @author smallchill
  */
 @Configuration
 @MapperScan("org.springblade.**.mapper.**")
@@ -42,14 +44,14 @@ public class MybatisPlusConfiguration {
 		return new BladeMetaObjectHandler();
 	}
 
-    /**
-     * SQL执行效率插件
-     */
-    @Bean
-    @Profile({AppConstant.DEV_CDOE, AppConstant.TEST_CODE})
-    public PerformanceInterceptor performanceInterceptor() {
-        return new PerformanceInterceptor();
-    }
+	/**
+	 * SQL执行效率插件
+	 */
+	@Bean
+	@Profile({AppConstant.DEV_CDOE, AppConstant.TEST_CODE})
+	public PerformanceInterceptor performanceInterceptor() {
+		return new PerformanceInterceptor();
+	}
 
 }
 

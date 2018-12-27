@@ -21,6 +21,8 @@ import java.nio.charset.Charset;
 
 /**
  * url处理工具类
+ *
+ * @author L.cm
  */
 public class URLUtil extends org.springframework.web.util.UriUtils {
 
@@ -32,8 +34,8 @@ public class URLUtil extends org.springframework.web.util.UriUtils {
 	 * @return 编码后的url
 	 */
 	public static String encodeURL(String source, Charset charset) {
-        return URLUtil.encode(source, charset.name());
-    }
+		return URLUtil.encode(source, charset.name());
+	}
 
 	/**
 	 * url 解码
@@ -43,24 +45,25 @@ public class URLUtil extends org.springframework.web.util.UriUtils {
 	 * @return 解码url
 	 */
 	public static String decodeURL(String source, Charset charset) {
-        return URLUtil.decode(source, charset.name());
-    }
+		return URLUtil.decode(source, charset.name());
+	}
 
-    /**
-     * 获取url路径
-     * @param uriStr
-     * @return
-     */
-    public static String getPath(String uriStr) {
-        URI uri;
+	/**
+	 * 获取url路径
+	 *
+	 * @param uriStr
+	 * @return
+	 */
+	public static String getPath(String uriStr) {
+		URI uri;
 
-        try {
-            uri = new URI(uriStr);
-        } catch (URISyntaxException var3) {
-            throw new RuntimeException(var3);
-        }
+		try {
+			uri = new URI(uriStr);
+		} catch (URISyntaxException var3) {
+			throw new RuntimeException(var3);
+		}
 
-        return uri.getPath();
-    }
+		return uri.getPath();
+	}
 
 }

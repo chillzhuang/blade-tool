@@ -40,9 +40,10 @@ public class RequestLogAspect {
 
 	/**
 	 * AOP 环切 控制器 R 返回值
+	 *
 	 * @param point JoinPoint
-	 * @throws Throwable 异常
 	 * @return Object
+	 * @throws Throwable 异常
 	 */
 	@Around(
 		"execution(!static org.springblade.core.tool.api.R<*> *(..)) && " +
@@ -106,7 +107,7 @@ public class RequestLogAspect {
 		needRemoveKeys.forEach(paraMap::remove);
 		// 打印请求
 		if (paraMap.isEmpty()) {
-			log.info("===> {}: {}",  requestMethod, requestURI);
+			log.info("===> {}: {}", requestMethod, requestURI);
 		} else {
 			log.info("===> {}: {} Parameters: {}", requestMethod, requestURI, JsonUtil.toJson(paraMap));
 		}
@@ -125,7 +126,7 @@ public class RequestLogAspect {
 			return result;
 		} finally {
 			long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-			log.info("<=== {}: {} ({} ms)",  request.getMethod(), requestURI, tookMs);
+			log.info("<=== {}: {} ({} ms)", request.getMethod(), requestURI, tookMs);
 		}
 	}
 

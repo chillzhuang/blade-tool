@@ -29,31 +29,33 @@ import java.util.Map;
 
 /**
  * 全局异常处理
+ *
+ * @author smallchill
  */
 @Slf4j
 public class BladeErrorAttributes extends DefaultErrorAttributes {
 
-    @Override
-    public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
-        String requestUri = this.getAttr(webRequest, "javax.servlet.error.request_uri");
-        Integer status = this.getAttr(webRequest, "javax.servlet.error.status_code");
-        Throwable error = getError(webRequest);
-        R result;
-        if (error == null) {
-            log.error("URL:{} error status:{}", requestUri, status);
-            result = R.failure(ResultCode.FAILURE, "系统未知异常[HttpStatus]:" + status);
-        } else {
-            log.error(String.format("URL:%s error status:%d", requestUri, status), error);
-            result = R.failure(status, error.getMessage());
-        }
-        //发送服务异常事件
-        ErrorLogPublisher.publishEvent(error, requestUri);
-        return BeanUtil.toMap(result);
-    }
+	@Override
+	public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
+		String requestUri = this.getAttr(webRequest, "javax.servlet.error.request_uri");
+		Integer status = this.getAttr(webRequest, "javax.servlet.error.status_code");
+		Throwable error = getError(webRequest);
+		R result;
+		if (error == null) {
+			log.error("URL:{} error status:{}", requestUri, status);
+			result = R.failure(ResultCode.FAILURE, "系统未知异常[HttpStatus]:" + status);
+		} else {
+			log.error(String.format("URL:%s error status:%d", requestUri, status), error);
+			result = R.failure(status, error.getMessage());
+		}
+		//发送服务异常事件
+		ErrorLogPublisher.publishEvent(error, requestUri);
+		return BeanUtil.toMap(result);
+	}
 
-    @Nullable
-    private <T> T getAttr(WebRequest webRequest, String name) {
-        return (T) webRequest.getAttribute(name, RequestAttributes.SCOPE_REQUEST);
-    }
+	@Nullable
+	private <T> T getAttr(WebRequest webRequest, String name) {
+		return (T) webRequest.getAttribute(name, RequestAttributes.SCOPE_REQUEST);
+	}
 
 }

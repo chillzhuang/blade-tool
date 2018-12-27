@@ -5,6 +5,8 @@ import lombok.Getter;
 
 /**
  * Bean属性
+ *
+ * @author smallchill
  */
 @Getter
 @AllArgsConstructor

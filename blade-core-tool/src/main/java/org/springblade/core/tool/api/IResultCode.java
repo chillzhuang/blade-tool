@@ -19,11 +19,23 @@ import java.io.Serializable;
 
 /**
  * 业务代码接口
+ *
+ * @author smallchill
  */
 public interface IResultCode extends Serializable {
 
-    String getMessage();
+	/**
+	 * 消息
+	 *
+	 * @return
+	 */
+	String getMessage();
 
-    int getCode();
+	/**
+	 * 状态码
+	 *
+	 * @return
+	 */
+	int getCode();
 
 }

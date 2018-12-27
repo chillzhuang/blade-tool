@@ -20,12 +20,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
+/**
+ * 文件工具类
+ *
+ * @author smallchill
+ */
 public class BladeFileUtil {
 
-	// 定义允许上传的文件扩展名
+	/**
+	 * 定义允许上传的文件扩展名
+	 */
 	private static HashMap<String, String> extMap = new HashMap<String, String>();
-	// 图片扩展名
-	private static String[] fileTypes = new String[] { "gif", "jpg", "jpeg", "png", "bmp" };
+
+	/**
+	 * 图片扩展名
+	 */
+	private static String[] fileTypes = new String[]{"gif", "jpg", "jpeg", "png", "bmp"};
 
 	static {
 		extMap.put("image", ".gif,.jpg,.jpeg,.png,.bmp,.JPG,.JPEG,.PNG");
@@ -34,21 +44,21 @@ public class BladeFileUtil {
 		extMap.put("file", ".doc,.docx,.xls,.xlsx,.ppt,.htm,.html,.txt,.zip,.rar,.gz,.bz2");
 		extMap.put("allfile", ".gif,.jpg,.jpeg,.png,.bmp,.swf,.flv,.mp3,.mp4,.wav,.wma,.wmv,.mid,.avi,.mpg,.asf,.rm,.rmvb,.doc,.docx,.xls,.xlsx,.ppt,.htm,.html,.txt,.zip,.rar,.gz,.bz2");
 	}
-	
+
 	/**
 	 * 获取文件后缀
-	 * 
-	 * @param @param fileName
+	 *
+	 * @param @param  fileName
 	 * @param @return 设定文件
 	 * @return String 返回类型
 	 */
 	public static String getFileExt(String fileName) {
 		return fileName.substring(fileName.lastIndexOf('.'), fileName.length());
 	}
-	
+
 	/**
 	 * 测试文件后缀 只让指定后缀的文件上传，像jsp,war,sh等危险的后缀禁止
-	 * 
+	 *
 	 * @return
 	 */
 	public static boolean testExt(String dir, String fileName) {
@@ -67,7 +77,12 @@ public class BladeFileUtil {
 	public enum FileSort {
 		size, type, name;
 
-		// 文本排序转换成枚举
+		/**
+		 * 文本排序转换成枚举
+		 *
+		 * @param sort
+		 * @return
+		 */
 		public static FileSort of(String sort) {
 			try {
 				return FileSort.valueOf(sort);
@@ -78,6 +93,7 @@ public class BladeFileUtil {
 	}
 
 	public static class NameComparator implements Comparator {
+		@Override
 		public int compare(Object a, Object b) {
 			Hashtable hashA = (Hashtable) a;
 			Hashtable hashB = (Hashtable) b;
@@ -92,6 +108,7 @@ public class BladeFileUtil {
 	}
 
 	public static class SizeComparator implements Comparator {
+		@Override
 		public int compare(Object a, Object b) {
 			Hashtable hashA = (Hashtable) a;
 			Hashtable hashB = (Hashtable) b;
@@ -112,6 +129,7 @@ public class BladeFileUtil {
 	}
 
 	public static class TypeComparator implements Comparator {
+		@Override
 		public int compare(Object a, Object b) {
 			Hashtable hashA = (Hashtable) a;
 			Hashtable hashB = (Hashtable) b;
@@ -128,70 +146,76 @@ public class BladeFileUtil {
 	public static String formatUrl(String url) {
 		return url.replaceAll("\\\\", "/");
 	}
-	
-	
+
+
 	/********************************BladeFile封装********************************************************/
-	
+
 	/**
 	 * 获取BladeFile封装类
+	 *
 	 * @param file
 	 * @return
 	 */
-	public static BladeFile getFile(MultipartFile file){
+	public static BladeFile getFile(MultipartFile file) {
 		return getFile(file, "image", null, null);
 	}
-	
+
 	/**
 	 * 获取BladeFile封装类
+	 *
 	 * @param file
 	 * @param dir
 	 * @return
 	 */
-	public static BladeFile getFile(MultipartFile file, String dir){
+	public static BladeFile getFile(MultipartFile file, String dir) {
 		return getFile(file, dir, null, null);
 	}
-	
+
 	/**
 	 * 获取BladeFile封装类
+	 *
 	 * @param file
 	 * @param dir
 	 * @param path
 	 * @param virtualPath
 	 * @return
 	 */
-	public static BladeFile getFile(MultipartFile file, String dir, String path, String virtualPath){
+	public static BladeFile getFile(MultipartFile file, String dir, String path, String virtualPath) {
 		return new BladeFile(file, dir, path, virtualPath);
 	}
-	
+
 	/**
 	 * 获取BladeFile封装类
+	 *
 	 * @param files
 	 * @return
 	 */
-	public static List<BladeFile> getFiles(List<MultipartFile> files){
+	public static List<BladeFile> getFiles(List<MultipartFile> files) {
 		return getFiles(files, "image", null, null);
 	}
-	
+
 	/**
 	 * 获取BladeFile封装类
+	 *
 	 * @param files
 	 * @param dir
 	 * @return
 	 */
-	public static List<BladeFile> getFiles(List<MultipartFile> files, String dir){
+	public static List<BladeFile> getFiles(List<MultipartFile> files, String dir) {
 		return getFiles(files, dir, null, null);
 	}
-	
+
 	/**
 	 * 获取BladeFile封装类
+	 *
 	 * @param files
 	 * @param path
 	 * @param virtualPath
 	 * @return
 	 */
-	public static List<BladeFile> getFiles(List<MultipartFile> files, String dir, String path, String virtualPath){
+	public static List<BladeFile> getFiles(List<MultipartFile> files, String dir, String path, String virtualPath) {
 		List<BladeFile> list = new ArrayList<>();
-		for (MultipartFile file : files){
+		for (MultipartFile file : files) {
 			list.add(new BladeFile(file, dir, path, virtualPath));
 		}
 		return list;

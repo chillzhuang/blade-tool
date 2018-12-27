@@ -28,6 +28,8 @@ import java.util.function.Function;
 
 /**
  * 项目启动器，搞定环境变量问题
+ *
+ * @author smallchill
  */
 public class BladeApplication {
 
@@ -92,7 +94,7 @@ public class BladeApplication {
 		props.setProperty("blade.service.version", AppConstant.APPLICATION_VERSION);
 		// 加载自定义组件
 		ServiceLoader<LauncherService> loader = ServiceLoader.load(LauncherService.class);
- 		loader.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
+		loader.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
 		return builder;
 	}
 

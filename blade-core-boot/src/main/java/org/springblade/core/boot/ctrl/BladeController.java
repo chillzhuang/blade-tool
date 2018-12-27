@@ -33,177 +33,179 @@ import java.util.List;
 
 /**
  * Blade控制器封装类
+ *
+ * @author smallchill
  */
 public class BladeController {
 
-    /**
-     * ============================     BINDER    =================================================
-     */
+	/**
+	 * ============================     BINDER    =================================================
+	 */
 
-    @InitBinder
-    protected void initBinder(ServletRequestDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-    }
+	@InitBinder
+	protected void initBinder(ServletRequestDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+	}
 
-    /**
-     * ============================     REQUEST    =================================================
-     */
+	/**
+	 * ============================     REQUEST    =================================================
+	 */
 
-    @Autowired
-    private HttpServletRequest request;
+	@Autowired
+	private HttpServletRequest request;
 
-    /**
-     * 获取request
-     */
-    public HttpServletRequest getRequest() {
-        return this.request;
-    }
+	/**
+	 * 获取request
+	 */
+	public HttpServletRequest getRequest() {
+		return this.request;
+	}
 
-    /**
-     * 获取当前用户
-     *
-     * @return
-     */
-    public BladeUser getUser() {
-        return SecureUtil.getUser();
-    }
+	/**
+	 * 获取当前用户
+	 *
+	 * @return
+	 */
+	public BladeUser getUser() {
+		return SecureUtil.getUser();
+	}
 
-    /** ============================     API_RESULT    =================================================  */
+	/** ============================     API_RESULT    =================================================  */
 
-    /**
-     * 返回ApiResult
-     *
-     * @param data
-     * @return R
-     */
-    public <T> R<T> data(T data) {
-        return R.data(data);
-    }
+	/**
+	 * 返回ApiResult
+	 *
+	 * @param data
+	 * @return R
+	 */
+	public <T> R<T> data(T data) {
+		return R.data(data);
+	}
 
-    /**
-     * 返回ApiResult
-     *
-     * @param data
-     * @param message
-     * @return R
-     */
-    public <T> R<T> data(T data, String message) {
-        return R.data(data, message);
-    }
+	/**
+	 * 返回ApiResult
+	 *
+	 * @param data
+	 * @param message
+	 * @return R
+	 */
+	public <T> R<T> data(T data, String message) {
+		return R.data(data, message);
+	}
 
-    /**
-     * 返回ApiResult
-     *
-     * @param data
-     * @param message
-     * @param code
-     * @return R
-     */
-    public <T> R<T> data(T data, String message, int code) {
-        return R.data(code, data, message);
-    }
+	/**
+	 * 返回ApiResult
+	 *
+	 * @param data
+	 * @param message
+	 * @param code
+	 * @return R
+	 */
+	public <T> R<T> data(T data, String message, int code) {
+		return R.data(code, data, message);
+	}
 
-    /**
-     * 返回ApiResult
-     *
-     * @param message
-     * @return R
-     */
-    public R success(String message) {
-        return R.success(message);
-    }
+	/**
+	 * 返回ApiResult
+	 *
+	 * @param message
+	 * @return R
+	 */
+	public R success(String message) {
+		return R.success(message);
+	}
 
-    /**
-     * 返回ApiResult
-     *
-     * @param message
-     * @return R
-     */
-    public R failure(String message) {
-        return R.failure(message);
-    }
+	/**
+	 * 返回ApiResult
+	 *
+	 * @param message
+	 * @return R
+	 */
+	public R failure(String message) {
+		return R.failure(message);
+	}
 
-    /**
-     * 返回ApiResult
-     *
-     * @param flag
-     * @return R
-     */
-    public R status(boolean flag) {
-        return R.status(flag);
-    }
+	/**
+	 * 返回ApiResult
+	 *
+	 * @param flag
+	 * @return R
+	 */
+	public R status(boolean flag) {
+		return R.status(flag);
+	}
 
 
-    /**============================     FILE    =================================================  */
+	/**============================     FILE    =================================================  */
 
-    /**
-     * 获取BladeFile封装类
-     *
-     * @param file
-     * @return
-     */
-    public BladeFile getFile(MultipartFile file) {
-        return BladeFileUtil.getFile(file);
-    }
+	/**
+	 * 获取BladeFile封装类
+	 *
+	 * @param file
+	 * @return
+	 */
+	public BladeFile getFile(MultipartFile file) {
+		return BladeFileUtil.getFile(file);
+	}
 
-    /**
-     * 获取BladeFile封装类
-     *
-     * @param file
-     * @param dir
-     * @return
-     */
-    public BladeFile getFile(MultipartFile file, String dir) {
-        return BladeFileUtil.getFile(file, dir);
-    }
+	/**
+	 * 获取BladeFile封装类
+	 *
+	 * @param file
+	 * @param dir
+	 * @return
+	 */
+	public BladeFile getFile(MultipartFile file, String dir) {
+		return BladeFileUtil.getFile(file, dir);
+	}
 
-    /**
-     * 获取BladeFile封装类
-     *
-     * @param file
-     * @param dir
-     * @param path
-     * @param virtualPath
-     * @return
-     */
-    public BladeFile getFile(MultipartFile file, String dir, String path, String virtualPath) {
-        return BladeFileUtil.getFile(file, dir, path, virtualPath);
-    }
+	/**
+	 * 获取BladeFile封装类
+	 *
+	 * @param file
+	 * @param dir
+	 * @param path
+	 * @param virtualPath
+	 * @return
+	 */
+	public BladeFile getFile(MultipartFile file, String dir, String path, String virtualPath) {
+		return BladeFileUtil.getFile(file, dir, path, virtualPath);
+	}
 
-    /**
-     * 获取BladeFile封装类
-     *
-     * @param files
-     * @return
-     */
-    public List<BladeFile> getFiles(List<MultipartFile> files) {
-        return BladeFileUtil.getFiles(files);
-    }
+	/**
+	 * 获取BladeFile封装类
+	 *
+	 * @param files
+	 * @return
+	 */
+	public List<BladeFile> getFiles(List<MultipartFile> files) {
+		return BladeFileUtil.getFiles(files);
+	}
 
-    /**
-     * 获取BladeFile封装类
-     *
-     * @param files
-     * @param dir
-     * @return
-     */
-    public List<BladeFile> getFiles(List<MultipartFile> files, String dir) {
-        return BladeFileUtil.getFiles(files, dir);
-    }
+	/**
+	 * 获取BladeFile封装类
+	 *
+	 * @param files
+	 * @param dir
+	 * @return
+	 */
+	public List<BladeFile> getFiles(List<MultipartFile> files, String dir) {
+		return BladeFileUtil.getFiles(files, dir);
+	}
 
-    /**
-     * 获取BladeFile封装类
-     *
-     * @param files
-     * @param path
-     * @param virtualPath
-     * @return
-     */
-    public List<BladeFile> getFiles(List<MultipartFile> files, String dir, String path, String virtualPath) {
-        return BladeFileUtil.getFiles(files, dir, path, virtualPath);
-    }
+	/**
+	 * 获取BladeFile封装类
+	 *
+	 * @param files
+	 * @param path
+	 * @param virtualPath
+	 * @return
+	 */
+	public List<BladeFile> getFiles(List<MultipartFile> files, String dir, String path, String virtualPath) {
+		return BladeFileUtil.getFiles(files, dir, path, virtualPath);
+	}
 
 
 }

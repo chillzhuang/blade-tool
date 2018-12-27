@@ -23,44 +23,48 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+/**
+ * 上传文件封装
+ * @author smallchill
+ */
 public class BladeFile {
 	/**
 	 * 上传文件在附件表中的id
 	 */
 	private Object fileId;
-	
+
 	/**
 	 * 上传文件
 	 */
 	private MultipartFile file;
-	
+
 	/**
 	 * 上传分类文件夹
 	 */
 	private String dir;
-	
+
 	/**
 	 * 上传物理路径
 	 */
 	private String uploadPath;
-	
+
 	/**
 	 * 上传虚拟路径
 	 */
 	private String uploadVirtualPath;
-	
+
 	/**
 	 * 文件名
 	 */
 	private String fileName;
-	
+
 	/**
 	 * 真实文件名
 	 */
 	private String originalFileName;
 
 	public BladeFile() {
-		
+
 	}
 
 	public BladeFile(MultipartFile file, String dir) {
@@ -74,55 +78,57 @@ public class BladeFile {
 
 	public BladeFile(MultipartFile file, String dir, String uploadPath, String uploadVirtualPath) {
 		this(file, dir);
-		if (null != uploadPath){
+		if (null != uploadPath) {
 			this.uploadPath = BladeFileUtil.formatUrl(uploadPath);
 			this.uploadVirtualPath = BladeFileUtil.formatUrl(uploadVirtualPath);
 		}
 	}
 
-	/**   
+	/**
 	 * 图片上传
-	*/
+	 */
 	public void transfer() {
 		transfer(SystemConstant.me().isCompress());
 	}
 
-	/**   
+	/**
 	 * 图片上传
+	 *
 	 * @param compress 是否压缩
-	*/
+	 */
 	public void transfer(boolean compress) {
 		IFileProxy fileFactory = FileProxyManager.me().getDefaultFileProxyFactory();
 		this.transfer(fileFactory, compress);
 	}
-	
-	/**   
+
+	/**
 	 * 图片上传
+	 *
 	 * @param fileFactory 文件上传工厂类
-	 * @param compress 是否压缩
-	*/
+	 * @param compress    是否压缩
+	 */
 	public void transfer(IFileProxy fileFactory, boolean compress) {
 		try {
 			File file = new File(uploadPath);
-			
-			if(null != fileFactory){
-				String [] path = fileFactory.path(file, dir);
+
+			if (null != fileFactory) {
+				String[] path = fileFactory.path(file, dir);
 				this.uploadPath = path[0];
 				this.uploadVirtualPath = path[1];
 				file = fileFactory.rename(file, path[0]);
 			}
-			
+
 			File pfile = file.getParentFile();
 			if (!pfile.exists()) {
 				pfile.mkdirs();
 			}
-			
+
 			this.file.transferTo(file);
-			
+
 			if (compress) {
-				fileFactory.compress(this.uploadPath);				
+				fileFactory.compress(this.uploadPath);
 			}
-			
+
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}

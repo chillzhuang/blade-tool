@@ -31,7 +31,7 @@ import java.time.temporal.TemporalAccessor;
 public class DateTimeUtil {
 	public static final DateTimeFormatter DATETIME_FORMAT = DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_PATTERN);
 	public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(DatePattern.NORM_DATE_PATTERN);
-	public static final DateTimeFormatter TIME_FORMAT =  DateTimeFormatter.ofPattern(DatePattern.NORM_TIME_PATTERN);
+	public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern(DatePattern.NORM_TIME_PATTERN);
 
 	/**
 	 * 日期时间格式化
@@ -67,7 +67,7 @@ public class DateTimeUtil {
 	 * 日期格式化
 	 *
 	 * @param temporal 时间
-	 * @param pattern 表达式
+	 * @param pattern  表达式
 	 * @return 格式化后的时间
 	 */
 	public static String format(TemporalAccessor temporal, String pattern) {
@@ -89,7 +89,7 @@ public class DateTimeUtil {
 	/**
 	 * 将字符串转换为时间
 	 *
-	 * @param dateStr 时间字符串
+	 * @param dateStr   时间字符串
 	 * @param formatter DateTimeFormatter
 	 * @return 时间
 	 */
@@ -99,6 +99,7 @@ public class DateTimeUtil {
 
 	/**
 	 * 时间转 Instant
+	 *
 	 * @param dateTime 时间
 	 * @return Instant
 	 */
@@ -108,6 +109,7 @@ public class DateTimeUtil {
 
 	/**
 	 * Instant 转 时间
+	 *
 	 * @param instant Instant
 	 * @return Instant
 	 */

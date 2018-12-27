@@ -22,11 +22,13 @@ import java.util.Map;
 
 /**
  * 错误日志事件
+ *
+ * @author smallchill
  */
 public class ErrorLogEvent extends ApplicationEvent {
 
-    public ErrorLogEvent(Map<String, Object> source) {
-        super(source);
-    }
+	public ErrorLogEvent(Map<String, Object> source) {
+		super(source);
+	}
 
 }

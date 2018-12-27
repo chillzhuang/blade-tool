@@ -34,8 +34,9 @@ public class Lazy<T> implements Supplier<T>, Serializable {
 
 	/**
 	 * Creates new instance of Lazy.
+	 *
 	 * @param supplier Supplier
-	 * @param <T> 泛型标记
+	 * @param <T>      泛型标记
 	 * @return Lazy
 	 */
 	public static <T> Lazy<T> of(final Supplier<T> supplier) {
@@ -48,6 +49,7 @@ public class Lazy<T> implements Supplier<T>, Serializable {
 
 	/**
 	 * Returns the value. Value will be computed on first call.
+	 *
 	 * @return lazy value
 	 */
 	@Nullable

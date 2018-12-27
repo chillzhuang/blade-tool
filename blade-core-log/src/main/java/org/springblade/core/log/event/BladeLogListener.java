@@ -37,34 +37,36 @@ import java.util.Map;
 
 /**
  * 异步监听日志事件
+ *
+ * @author smallchill
  */
 @Slf4j
 @Component
 @AllArgsConstructor
 public class BladeLogListener {
 
-    private final ILogClient logService;
-    private final ServerInfo serverInfo;
-    private final BladeProperties bladeProperties;
+	private final ILogClient logService;
+	private final ServerInfo serverInfo;
+	private final BladeProperties bladeProperties;
 
-    @Async
-    @Order
-    @EventListener(BladeLogEvent.class)
-    public void saveBladeLog(BladeLogEvent event) {
-        Map<String, Object> source = (Map<String, Object>) event.getSource();
-        LogBlade logBlade = (LogBlade) source.get(EventConstant.EVENT_LOG);
-        HttpServletRequest request = (HttpServletRequest) source.get(EventConstant.EVENT_REQUEST);
-        logBlade.setRequestUri(URLUtil.getPath(request.getRequestURI()));
-        logBlade.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
-        logBlade.setMethod(request.getMethod());
-        logBlade.setParams(WebUtil.getRequestParamString(request));
-        logBlade.setServerHost(serverInfo.getHostName());
-        logBlade.setServiceId(bladeProperties.getName());
-        logBlade.setEnv(bladeProperties.getEnv());
-        logBlade.setServerIp(serverInfo.getIPWithPort());
-        logBlade.setCreateBy(SecureUtil.getUserAccount(request));
-        logBlade.setCreateTime(LocalDateTime.now());
-        logService.saveBladeLog(logBlade);
-    }
+	@Async
+	@Order
+	@EventListener(BladeLogEvent.class)
+	public void saveBladeLog(BladeLogEvent event) {
+		Map<String, Object> source = (Map<String, Object>) event.getSource();
+		LogBlade logBlade = (LogBlade) source.get(EventConstant.EVENT_LOG);
+		HttpServletRequest request = (HttpServletRequest) source.get(EventConstant.EVENT_REQUEST);
+		logBlade.setRequestUri(URLUtil.getPath(request.getRequestURI()));
+		logBlade.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
+		logBlade.setMethod(request.getMethod());
+		logBlade.setParams(WebUtil.getRequestParamString(request));
+		logBlade.setServerHost(serverInfo.getHostName());
+		logBlade.setServiceId(bladeProperties.getName());
+		logBlade.setEnv(bladeProperties.getEnv());
+		logBlade.setServerIp(serverInfo.getIPWithPort());
+		logBlade.setCreateBy(SecureUtil.getUserAccount(request));
+		logBlade.setCreateTime(LocalDateTime.now());
+		logService.saveBladeLog(logBlade);
+	}
 
 }

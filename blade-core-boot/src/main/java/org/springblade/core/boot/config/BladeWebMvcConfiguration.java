@@ -33,6 +33,7 @@ import java.util.List;
 
 /**
  * WEB配置
+ * @author smallchill
  */
 @Slf4j
 @Configuration
@@ -40,10 +41,10 @@ import java.util.List;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class BladeWebMvcConfiguration implements WebMvcConfigurer {
 
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new TokenArgumentResolver());
-    }
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+		argumentResolvers.add(new TokenArgumentResolver());
+	}
 
 	@Bean
 	@ConditionalOnMissingBean

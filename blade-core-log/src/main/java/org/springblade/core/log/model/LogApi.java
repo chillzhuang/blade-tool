@@ -28,94 +28,94 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- *  实体类
+ * 实体类
  *
- * @author Blade
+ * @author smallchill
  */
 @Data
 @TableName("blade_log_api")
 public class LogApi implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 主键id
-     */
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
+	/**
+	 * 主键id
+	 */
+	@TableId(value = "id", type = IdType.ID_WORKER)
+	private Long id;
 
-    /**
-     * 日志类型
-     */
-    private String type;
-    /**
-     * 日志标题
-     */
-    private String title;
-    /**
-     * 服务ID
-     */
-    private String serviceId;
-    /**
-     * 服务器 ip
-     */
-    private String serverIp;
-    /**
-     * 服务器名
-     */
-    private String serverHost;
-    /**
-     * 环境
-     */
-    private String env;
-    /**
-     * 操作IP地址
-     */
-    private String remoteIp;
-    /**
-     * 用户代理
-     */
-    private String userAgent;
-    /**
-     * 请求URI
-     */
-    private String requestUri;
-    /**
-     * 操作方式
-     */
-    private String method;
-    /**
-     * 方法类
-     */
-    private String methodClass;
-    /**
-     * 方法名
-     */
-    private String methodName;
-    /**
-     * 操作提交的数据
-     */
-    private String params;
-    /**
-     * 执行时间
-     */
-    private String time;
-    /**
-     * 异常信息
-     */
-    private String exception;
+	/**
+	 * 日志类型
+	 */
+	private String type;
+	/**
+	 * 日志标题
+	 */
+	private String title;
+	/**
+	 * 服务ID
+	 */
+	private String serviceId;
+	/**
+	 * 服务器 ip
+	 */
+	private String serverIp;
+	/**
+	 * 服务器名
+	 */
+	private String serverHost;
+	/**
+	 * 环境
+	 */
+	private String env;
+	/**
+	 * 操作IP地址
+	 */
+	private String remoteIp;
+	/**
+	 * 用户代理
+	 */
+	private String userAgent;
+	/**
+	 * 请求URI
+	 */
+	private String requestUri;
+	/**
+	 * 操作方式
+	 */
+	private String method;
+	/**
+	 * 方法类
+	 */
+	private String methodClass;
+	/**
+	 * 方法名
+	 */
+	private String methodName;
+	/**
+	 * 操作提交的数据
+	 */
+	private String params;
+	/**
+	 * 执行时间
+	 */
+	private String time;
+	/**
+	 * 异常信息
+	 */
+	private String exception;
 
-    /**
-     * 创建人
-     */
-    private String createBy;
+	/**
+	 * 创建人
+	 */
+	private String createBy;
 
-    /**
-     * 创建时间
-     */
-    @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
-    private LocalDateTime createTime;
+	/**
+	 * 创建时间
+	 */
+	@DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	@JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+	private LocalDateTime createTime;
 
 
 }

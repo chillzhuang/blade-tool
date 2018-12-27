@@ -34,6 +34,7 @@ public class PathUtil {
 
 	/**
 	 * 获取jar包运行时的当前目录
+	 *
 	 * @return {String}
 	 */
 	@Nullable
@@ -49,7 +50,9 @@ public class PathUtil {
 
 	@Nullable
 	public static String toFilePath(@Nullable URL url) {
-		if (url == null) { return null; }
+		if (url == null) {
+			return null;
+		}
 		String protocol = url.getProtocol();
 		String file = URLUtil.decodeURL(url.getPath(), Charsets.UTF_8);
 		if (FILE_PROTOCOL.equals(protocol)) {

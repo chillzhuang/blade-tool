@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 节点基类
  *
- * @author zhuangqian
+ * @author smallchill
  */
 @Data
 public class BaseNode implements INode {
@@ -32,7 +32,7 @@ public class BaseNode implements INode {
 	/**
 	 * 主键ID
 	 */
-    protected Integer id;
+	protected Integer id;
 
 	/**
 	 * 父节点ID
@@ -43,6 +43,6 @@ public class BaseNode implements INode {
 	 * 子孙节点
 	 */
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-    protected List<INode> children = new ArrayList<>();
+	protected List<INode> children = new ArrayList<>();
 
 }

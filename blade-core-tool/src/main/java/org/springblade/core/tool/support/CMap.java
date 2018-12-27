@@ -24,172 +24,177 @@ import java.util.HashMap;
 
 /**
  * 链式map
+ *
+ * @author smallchill
  */
 public class CMap extends CaseInsensitiveHashMap<String, Object> {
 
 
-	private CMap(){
-		
+	private CMap() {
+
 	}
 
-    /**
-     * 创建CMap
-     * @return CMap
-     */
-    public static CMap init() {
-        return new CMap();
-    }
+	/**
+	 * 创建CMap
+	 *
+	 * @return CMap
+	 */
+	public static CMap init() {
+		return new CMap();
+	}
 
-    public static HashMap newHashMap() {
-        return new HashMap();
-    }
+	public static HashMap newHashMap() {
+		return new HashMap();
+	}
 
-    /**
-     * 设置列
-     * @param attr 属性
-     * @param value 值
-     * @return 本身
-     */
-    public CMap set(String attr, Object value) {
-        this.put(attr, value);
-        return this;
-    }
+	/**
+	 * 设置列
+	 *
+	 * @param attr  属性
+	 * @param value 值
+	 * @return 本身
+	 */
+	public CMap set(String attr, Object value) {
+		this.put(attr, value);
+		return this;
+	}
 
-    /**
-     * 设置列，当键或值为null时忽略
-     * @param attr 属性
-     * @param value 值
-     * @return 本身
-     */
-    public CMap setIgnoreNull(String attr, Object value) {
-        if(null != attr && null != value) {
-            set(attr, value);
-        }
-        return this;
-    }
+	/**
+	 * 设置列，当键或值为null时忽略
+	 *
+	 * @param attr  属性
+	 * @param value 值
+	 * @return 本身
+	 */
+	public CMap setIgnoreNull(String attr, Object value) {
+		if (null != attr && null != value) {
+			set(attr, value);
+		}
+		return this;
+	}
 
-    public Object getObj(String key) {
-        return super.get(key);
-    }
+	public Object getObj(String key) {
+		return super.get(key);
+	}
 
-    /**
-     * 获得特定类型值
-     *
-     * @param <T> 值类型
-     * @param attr 字段名
-     * @param defaultValue 默认值
-     * @return 字段值
-     */
-    public <T> T get(String attr, T defaultValue) {
-        final Object result = get(attr);
-        return (T)(result != null ? result : defaultValue);
-    }
-
-    /**
+	/**
 	 * 获得特定类型值
 	 *
-     * @param attr 字段名
-     * @return 字段值
-     */
-    public String getStr(String attr) {
-        return Func.toStr(get(attr), null);
-    }
+	 * @param <T>          值类型
+	 * @param attr         字段名
+	 * @param defaultValue 默认值
+	 * @return 字段值
+	 */
+	public <T> T get(String attr, T defaultValue) {
+		final Object result = get(attr);
+		return (T) (result != null ? result : defaultValue);
+	}
 
-    /**
+	/**
 	 * 获得特定类型值
 	 *
 	 * @param attr 字段名
-     * @return 字段值
-     */
-    public Integer getInt(String attr) {
-        return Func.toInt(get(attr), -1);
-    }
+	 * @return 字段值
+	 */
+	public String getStr(String attr) {
+		return Func.toStr(get(attr), null);
+	}
 
-    /**
+	/**
 	 * 获得特定类型值
 	 *
 	 * @param attr 字段名
-     * @return 字段值
-     */
-    public Long getLong(String attr) {
-        return Func.toLong(get(attr), -1l);
-    }
+	 * @return 字段值
+	 */
+	public Integer getInt(String attr) {
+		return Func.toInt(get(attr), -1);
+	}
 
-    /**
+	/**
 	 * 获得特定类型值
 	 *
 	 * @param attr 字段名
-     * @return 字段值
-     */
-    public Float getFloat(String attr) {
-        return Func.toFloat(get(attr), null);
-    }
+	 * @return 字段值
+	 */
+	public Long getLong(String attr) {
+		return Func.toLong(get(attr), -1l);
+	}
 
-    public Double getDouble(String attr) {
-        return Func.toDouble(get(attr), null);
-    }
-
-
-    /**
+	/**
 	 * 获得特定类型值
 	 *
 	 * @param attr 字段名
-     * @return 字段值
-     */
-    public Boolean getBool(String attr) {
-        return Func.toBoolean(get(attr), null);
-    }
+	 * @return 字段值
+	 */
+	public Float getFloat(String attr) {
+		return Func.toFloat(get(attr), null);
+	}
 
-    /**
+	public Double getDouble(String attr) {
+		return Func.toDouble(get(attr), null);
+	}
+
+
+	/**
 	 * 获得特定类型值
 	 *
 	 * @param attr 字段名
-     * @return 字段值
-     */
-    public byte[] getBytes(String attr) {
-        return get(attr, null);
-    }
+	 * @return 字段值
+	 */
+	public Boolean getBool(String attr) {
+		return Func.toBoolean(get(attr), null);
+	}
 
-    /**
+	/**
 	 * 获得特定类型值
 	 *
 	 * @param attr 字段名
-     * @return 字段值
-     */
-    public Date getDate(String attr) {
-        return get(attr, null);
-    }
+	 * @return 字段值
+	 */
+	public byte[] getBytes(String attr) {
+		return get(attr, null);
+	}
 
-    /**
+	/**
 	 * 获得特定类型值
 	 *
 	 * @param attr 字段名
-     * @return 字段值
-     */
-    public Time getTime(String attr) {
-        return get(attr, null);
-    }
+	 * @return 字段值
+	 */
+	public Date getDate(String attr) {
+		return get(attr, null);
+	}
 
-    /**
+	/**
 	 * 获得特定类型值
 	 *
 	 * @param attr 字段名
-     * @return 字段值
-     */
-    public Timestamp getTimestamp(String attr) {
-        return get(attr, null);
-    }
+	 * @return 字段值
+	 */
+	public Time getTime(String attr) {
+		return get(attr, null);
+	}
 
-    /**
+	/**
 	 * 获得特定类型值
 	 *
 	 * @param attr 字段名
-     * @return 字段值
-     */
-    public Number getNumber(String attr) {
-        return get(attr, null);
-    }
-	
+	 * @return 字段值
+	 */
+	public Timestamp getTimestamp(String attr) {
+		return get(attr, null);
+	}
+
+	/**
+	 * 获得特定类型值
+	 *
+	 * @param attr 字段名
+	 * @return 字段值
+	 */
+	public Number getNumber(String attr) {
+		return get(attr, null);
+	}
+
 	@Override
 	public CMap clone() {
 		return (CMap) super.clone();

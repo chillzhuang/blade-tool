@@ -22,11 +22,13 @@ import java.util.Map;
 
 /**
  * 系统日志事件
+ *
+ * @author smallchill
  */
 public class BladeLogEvent extends ApplicationEvent {
 
-    public BladeLogEvent(Map<String, Object> source) {
-        super(source);
-    }
+	public BladeLogEvent(Map<String, Object> source) {
+		super(source);
+	}
 
 }

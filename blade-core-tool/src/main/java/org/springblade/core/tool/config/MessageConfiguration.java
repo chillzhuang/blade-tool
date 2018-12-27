@@ -33,6 +33,11 @@ import javax.servlet.DispatcherType;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+/**
+ * 消息配置类
+ *
+ * @author smallchill
+ */
 @Configuration
 @AllArgsConstructor
 @Order(Ordered.HIGHEST_PRECEDENCE)

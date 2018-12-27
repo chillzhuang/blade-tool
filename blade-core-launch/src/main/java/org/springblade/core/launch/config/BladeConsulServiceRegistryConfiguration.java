@@ -31,6 +31,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Consul自定义注册规则
+ *
+ * @author smallchill
  */
 @Configuration
 @ConditionalOnConsulEnabled

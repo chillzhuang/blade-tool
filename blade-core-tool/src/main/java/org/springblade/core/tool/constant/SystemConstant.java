@@ -20,6 +20,8 @@ import lombok.Data;
 
 /**
  * Blade系统配置类
+ *
+ * @author smallchill
  */
 @Data
 public class SystemConstant {
@@ -34,10 +36,10 @@ public class SystemConstant {
 	 */
 	private boolean remoteMode = false;
 
-    /**
-     * 外网地址
-     */
-    private String domain = "http://localhost:8888";
+	/**
+	 * 外网地址
+	 */
+	private String domain = "http://localhost:8888";
 
 	/**
 	 * 上传下载路径(物理路径)
@@ -53,17 +55,17 @@ public class SystemConstant {
 	 * 下载路径
 	 */
 	private String downloadPath = "/download";
-	
+
 	/**
 	 * 图片压缩
 	 */
 	private boolean compress = false;
-	
+
 	/**
 	 * 图片压缩比例
 	 */
 	private Double compressScale = 2.00;
-	
+
 	/**
 	 * 图片缩放选择:true放大;false缩小
 	 */
@@ -89,12 +91,12 @@ public class SystemConstant {
 		return me;
 	}
 
-    public String getUploadRealPath() {
-        return (remoteMode ? remotePath : realPath) + uploadPath;
-    }
+	public String getUploadRealPath() {
+		return (remoteMode ? remotePath : realPath) + uploadPath;
+	}
 
-    public String getUploadCtxPath() {
-        return contextPath + uploadPath;
-    }
+	public String getUploadCtxPath() {
+		return contextPath + uploadPath;
+	}
 
 }

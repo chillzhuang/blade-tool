@@ -21,33 +21,35 @@ import lombok.Data;
 
 /**
  * 分页工具
+ *
+ * @author smallchill
  */
 @Data
 @ApiModel(description = "查询条件")
 public class Query {
 
-    /**
-     * 当前页
-     */
-    @ApiModelProperty(value = "当前页")
-    private Integer current;
+	/**
+	 * 当前页
+	 */
+	@ApiModelProperty(value = "当前页")
+	private Integer current;
 
-    /**
-     * 每页的数量
-     */
-    @ApiModelProperty(value = "每页的数量")
-    private Integer size;
+	/**
+	 * 每页的数量
+	 */
+	@ApiModelProperty(value = "每页的数量")
+	private Integer size;
 
-    /**
-     * 排序的字段名
-     */
-    @ApiModelProperty(value = "升序字段")
-    private String ascs;
+	/**
+	 * 排序的字段名
+	 */
+	@ApiModelProperty(value = "升序字段")
+	private String ascs;
 
-    /**
-     * 排序方式
-     */
-    @ApiModelProperty(value = "降序字段")
-    private String descs;
+	/**
+	 * 排序方式
+	 */
+	@ApiModelProperty(value = "降序字段")
+	private String descs;
 
 }

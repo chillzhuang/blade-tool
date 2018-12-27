@@ -21,6 +21,8 @@ import org.apache.ibatis.reflection.MetaObject;
 
 /**
  * mybatisplus自定义填充
+ *
+ * @author smallchill
  */
 @Slf4j
 public class BladeMetaObjectHandler implements MetaObjectHandler {

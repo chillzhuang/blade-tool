@@ -22,6 +22,8 @@ import org.springblade.core.tool.api.ResultCode;
 
 /**
  * 业务异常
+ *
+ * @author smallchill
  */
 public class ServiceException extends RuntimeException {
 	private static final long serialVersionUID = 2359767895161832954L;
@@ -29,23 +31,24 @@ public class ServiceException extends RuntimeException {
 	@Getter
 	private final IResultCode resultCode;
 
-    public ServiceException(String message) {
-        super(message);
-        this.resultCode = ResultCode.INTERNAL_SERVER_ERROR;
-    }
+	public ServiceException(String message) {
+		super(message);
+		this.resultCode = ResultCode.INTERNAL_SERVER_ERROR;
+	}
 
-    public ServiceException(IResultCode resultCode) {
-        super(resultCode.getMessage());
-        this.resultCode = resultCode;
-    }
+	public ServiceException(IResultCode resultCode) {
+		super(resultCode.getMessage());
+		this.resultCode = resultCode;
+	}
 
 	public ServiceException(IResultCode resultCode, Throwable cause) {
 		super(cause);
-        this.resultCode = resultCode;
+		this.resultCode = resultCode;
 	}
 
 	/**
 	 * 提高性能
+	 *
 	 * @return Throwable
 	 */
 	@Override

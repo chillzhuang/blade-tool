@@ -20,6 +20,8 @@ import java.lang.annotation.*;
 
 /**
  * 操作日志注解
+ *
+ * @author smallchill
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

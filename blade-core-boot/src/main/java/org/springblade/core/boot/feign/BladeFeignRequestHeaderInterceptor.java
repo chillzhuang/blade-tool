@@ -26,6 +26,8 @@ import java.util.Enumeration;
 
 /**
  * feign 传递Request header
+ *
+ * @author smallchill
  */
 @Slf4j
 public class BladeFeignRequestHeaderInterceptor implements RequestInterceptor {
@@ -40,16 +42,10 @@ public class BladeFeignRequestHeaderInterceptor implements RequestInterceptor {
 				while (headerNames.hasMoreElements()) {
 					String name = headerNames.nextElement();
 					String value = request.getHeader(name);
-					/**
-					 * 遍历请求头里面的属性字段，将Authorization添加到新的请求头中转发到下游服务
-					 * */
 					if ("Authorization".equals(name)) {
-						log.debug("添加自定义请求头key:" + name + ",value:" + value);
 						requestTemplate.header(name, value);
 					}
 				}
-			} else {
-				log.warn("FeignHeadConfiguration", "获取请求头失败！");
 			}
 		}
 	}

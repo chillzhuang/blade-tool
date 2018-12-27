@@ -34,6 +34,11 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.TimeZone;
 
+/**
+ * Jackson配置类
+ *
+ * @author smallchill
+ */
 @Configuration
 @ConditionalOnClass(ObjectMapper.class)
 @AutoConfigureBefore(JacksonAutoConfiguration.class)

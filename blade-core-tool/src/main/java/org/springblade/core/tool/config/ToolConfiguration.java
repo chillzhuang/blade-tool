@@ -23,17 +23,21 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
+/**
+ * 工具配置类
+ *
+ * @author smallchill
+ */
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ToolConfiguration implements WebMvcConfigurer {
 
-    /**
-     * Spring上下文缓存
-     */
-    @Bean
-    public SpringUtil springUtils() {
-        return new SpringUtil();
-    }
+	/**
+	 * Spring上下文缓存
+	 */
+	@Bean
+	public SpringUtil springUtils() {
+		return new SpringUtil();
+	}
 
 }

@@ -28,19 +28,21 @@ import java.util.Map;
 
 /**
  * BLADE日志信息事件发送
+ *
+ * @author smallchill
  */
 public class BladeLogPublisher {
 
-    public static void publishEvent(String level, String id, String data) {
-        HttpServletRequest request = WebUtil.getRequest();
-        LogBlade logBlade = new LogBlade();
-        logBlade.setLogLevel(level);
-        logBlade.setLogId(id);
-        logBlade.setLogData(data);
-        Map<String, Object> event = new HashMap<>();
-        event.put(EventConstant.EVENT_LOG, logBlade);
-        event.put(EventConstant.EVENT_REQUEST, request);
-        SpringUtil.publishEvent(new BladeLogEvent(event));
-    }
+	public static void publishEvent(String level, String id, String data) {
+		HttpServletRequest request = WebUtil.getRequest();
+		LogBlade logBlade = new LogBlade();
+		logBlade.setLogLevel(level);
+		logBlade.setLogId(id);
+		logBlade.setLogData(data);
+		Map<String, Object> event = new HashMap<>();
+		event.put(EventConstant.EVENT_LOG, logBlade);
+		event.put(EventConstant.EVENT_REQUEST, request);
+		SpringUtil.publishEvent(new BladeLogEvent(event));
+	}
 
 }

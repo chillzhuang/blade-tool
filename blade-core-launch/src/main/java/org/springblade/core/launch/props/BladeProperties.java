@@ -25,6 +25,8 @@ import java.util.Map;
 
 /**
  * 配置文件
+ *
+ * @author smallchill
  */
 @ConfigurationProperties("blade")
 public class BladeProperties {
@@ -36,19 +38,19 @@ public class BladeProperties {
 	@Setter
 	private String env;
 
-    /**
-     * 服务名
-     */
-    @Getter
-    @Setter
-    private String name;
+	/**
+	 * 服务名
+	 */
+	@Getter
+	@Setter
+	private String name;
 
-    /**
-     * 判断是否为 本地开发环境
-     */
-    @Getter
-    @Setter
-    private Boolean isLocal = Boolean.FALSE;
+	/**
+	 * 判断是否为 本地开发环境
+	 */
+	@Getter
+	@Setter
+	private Boolean isLocal = Boolean.FALSE;
 
 	/**
 	 * 装载自定义配置blade.prop.xxx
@@ -170,32 +172,32 @@ public class BladeProperties {
 		return defaultValue;
 	}
 
-    /**
-     * 获取配置
-     *
-     * @param key key
-     * @return double value
-     */
+	/**
+	 * 获取配置
+	 *
+	 * @param key key
+	 * @return double value
+	 */
 	@Nullable
-    public Double getDouble(String key) {
-        return getDouble(key, null);
-    }
+	public Double getDouble(String key) {
+		return getDouble(key, null);
+	}
 
-    /**
-     * 获取配置
-     *
-     * @param key          key
-     * @param defaultValue 默认值
-     * @return double value
-     */
+	/**
+	 * 获取配置
+	 *
+	 * @param key          key
+	 * @param defaultValue 默认值
+	 * @return double value
+	 */
 	@Nullable
-    public Double getDouble(String key, @Nullable  Double defaultValue) {
-        String value = prop.get(key);
-        if (value != null) {
-            return Double.parseDouble(value.trim());
-        }
-        return defaultValue;
-    }
+	public Double getDouble(String key, @Nullable Double defaultValue) {
+		String value = prop.get(key);
+		if (value != null) {
+			return Double.parseDouble(value.trim());
+		}
+		return defaultValue;
+	}
 
 	/**
 	 * 判断是否存在key

@@ -15,12 +15,15 @@
  */
 package org.springblade.core.secure;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * 用户实体
+ *
+ * @author smallchill
  */
 @Data
 public class BladeUser implements Serializable {
@@ -30,23 +33,27 @@ public class BladeUser implements Serializable {
 	/**
 	 * 主键
 	 */
+	@ApiModelProperty(hidden = true)
 	private Integer userId;
 	/**
 	 * 昵称
 	 */
+	@ApiModelProperty(hidden = true)
 	private String userName;
 	/**
 	 * 账号
 	 */
+	@ApiModelProperty(hidden = true)
 	private String account;
 	/**
 	 * 角色id
 	 */
+	@ApiModelProperty(hidden = true)
 	private String roleId;
 	/**
 	 * 角色名
 	 */
+	@ApiModelProperty(hidden = true)
 	private String roleName;
-
 
 }

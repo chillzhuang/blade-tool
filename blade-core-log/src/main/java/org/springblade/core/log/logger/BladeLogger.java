@@ -22,32 +22,34 @@ import org.springframework.beans.factory.annotation.Value;
 
 /**
  * 日志工具类
+ *
+ * @author smallchill
  */
 @Slf4j
 public class BladeLogger implements InitializingBean {
 
-    @Value("${spring.application.name}")
-    private String serviceId;
+	@Value("${spring.application.name}")
+	private String serviceId;
 
-    public void info(String id, String data) {
-        BladeLogPublisher.publishEvent("info", id, data);
-    }
+	public void info(String id, String data) {
+		BladeLogPublisher.publishEvent("info", id, data);
+	}
 
-    public void debug(String id, String data) {
-        BladeLogPublisher.publishEvent("debug", id, data);
-    }
+	public void debug(String id, String data) {
+		BladeLogPublisher.publishEvent("debug", id, data);
+	}
 
-    public void warn(String id, String data) {
-        BladeLogPublisher.publishEvent("warn", id, data);
-    }
+	public void warn(String id, String data) {
+		BladeLogPublisher.publishEvent("warn", id, data);
+	}
 
-    public void error(String id, String data) {
-        BladeLogPublisher.publishEvent("error", id, data);
-    }
+	public void error(String id, String data) {
+		BladeLogPublisher.publishEvent("error", id, data);
+	}
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        log.info(serviceId + ": BladeLogger init success!");
-    }
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		log.info(serviceId + ": BladeLogger init success!");
+	}
 
 }

@@ -26,39 +26,41 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Feign接口类
+ *
+ * @author smallchill
  */
 @FeignClient(
-        value = AppConstant.APPLICATION_LOG_NAME
+	value = AppConstant.APPLICATION_LOG_NAME
 )
 public interface ILogClient {
 
-    String API_PREFIX = "/log";
+	String API_PREFIX = "/log";
 
-    /**
-     * 保存错误日志
-     *
-     * @param log
-     * @return
-     */
-    @PostMapping(API_PREFIX + "/saveBladeLog")
+	/**
+	 * 保存错误日志
+	 *
+	 * @param log
+	 * @return
+	 */
+	@PostMapping(API_PREFIX + "/saveBladeLog")
 	R<Boolean> saveBladeLog(@RequestBody LogBlade log);
 
-    /**
-     * 保存操作日志
-     *
-     * @param log
-     * @return
-     */
-    @PostMapping(API_PREFIX + "/saveApiLog")
+	/**
+	 * 保存操作日志
+	 *
+	 * @param log
+	 * @return
+	 */
+	@PostMapping(API_PREFIX + "/saveApiLog")
 	R<Boolean> saveApiLog(@RequestBody LogApi log);
 
-    /**
-     * 保存错误日志
-     *
-     * @param log
-     * @return
-     */
-    @PostMapping(API_PREFIX + "/saveErrorLog")
+	/**
+	 * 保存错误日志
+	 *
+	 * @param log
+	 * @return
+	 */
+	@PostMapping(API_PREFIX + "/saveErrorLog")
 	R<Boolean> saveErrorLog(@RequestBody LogError log);
 
 }

@@ -38,26 +38,28 @@ import javax.servlet.Servlet;
 
 /**
  * 统一异常处理
+ *
+ * @author smallchill
  */
 @Configuration
 @AllArgsConstructor
 @ConditionalOnWebApplication
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
-@ConditionalOnClass({ Servlet.class, DispatcherServlet.class })
+@ConditionalOnClass({Servlet.class, DispatcherServlet.class})
 public class BladeErrorMvcAutoConfiguration {
 
-    private final ServerProperties serverProperties;
+	private final ServerProperties serverProperties;
 
-    @Bean
-    @ConditionalOnMissingBean(value = ErrorAttributes.class, search = SearchStrategy.CURRENT)
-    public DefaultErrorAttributes errorAttributes() {
-        return new BladeErrorAttributes();
-    }
+	@Bean
+	@ConditionalOnMissingBean(value = ErrorAttributes.class, search = SearchStrategy.CURRENT)
+	public DefaultErrorAttributes errorAttributes() {
+		return new BladeErrorAttributes();
+	}
 
-    @Bean
-    @ConditionalOnMissingBean(value = ErrorController.class, search = SearchStrategy.CURRENT)
-    public BasicErrorController basicErrorController(ErrorAttributes errorAttributes) {
-        return new BladeErrorController(errorAttributes, serverProperties.getError());
-    }
+	@Bean
+	@ConditionalOnMissingBean(value = ErrorController.class, search = SearchStrategy.CURRENT)
+	public BasicErrorController basicErrorController(ErrorAttributes errorAttributes) {
+		return new BladeErrorController(errorAttributes, serverProperties.getError());
+	}
 
 }

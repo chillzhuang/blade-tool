@@ -20,13 +20,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * 系统启动完毕后执行
+ *
+ * @author smallchill
  */
 @Component
 public class BladeLineRunner implements CommandLineRunner {
 
-    @Override
-    public void run(String... args) {
+	@Override
+	public void run(String... args) {
 
-    }
+	}
 
 }

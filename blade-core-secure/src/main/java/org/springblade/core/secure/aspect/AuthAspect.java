@@ -39,6 +39,8 @@ import java.lang.reflect.Method;
 
 /**
  * AOP 鉴权
+ *
+ * @author smallchill
  */
 @Aspect
 public class AuthAspect implements ApplicationContextAware {
@@ -50,13 +52,14 @@ public class AuthAspect implements ApplicationContextAware {
 
 	/**
 	 * 切 方法 和 类上的 @PreAuth 注解
+	 *
 	 * @param point 切点
 	 * @return Object
 	 * @throws Throwable 没有权限的异常
 	 */
 	@Around(
 		"@annotation(org.springblade.core.secure.annotation.PreAuth) || " +
-		"@within(org.springblade.core.secure.annotation.PreAuth)"
+			"@within(org.springblade.core.secure.annotation.PreAuth)"
 	)
 	public Object preAuth(ProceedingJoinPoint point) throws Throwable {
 		if (handleAuth(point)) {
@@ -91,7 +94,7 @@ public class AuthAspect implements ApplicationContextAware {
 	 * 获取方法上的参数
 	 *
 	 * @param method 方法
-	 * @param args 变量
+	 * @param args   变量
 	 * @return {SimpleEvaluationContext}
 	 */
 	private StandardEvaluationContext getEvaluationContext(Method method, Object[] args) {

@@ -22,11 +22,13 @@ import java.util.Map;
 
 /**
  * 系统日志事件
+ *
+ * @author smallchill
  */
 public class ApiLogEvent extends ApplicationEvent {
 
-    public ApiLogEvent(Map<String, Object> source) {
-        super(source);
-    }
+	public ApiLogEvent(Map<String, Object> source) {
+		super(source);
+	}
 
 }
