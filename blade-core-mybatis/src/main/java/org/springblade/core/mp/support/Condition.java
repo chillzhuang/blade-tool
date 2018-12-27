@@ -67,7 +67,9 @@ public class Condition {
 		qw.setEntity(BeanUtil.newInstance(clazz));
 		if (Func.isNotEmpty(query)) {
 			query.forEach((k, v) -> {
-				if (Func.isNotEmpty(v)) qw.like(k, v);
+				if (Func.isNotEmpty(v)) {
+					qw.like(k, v);
+				}
 			});
 		}
 		return qw;

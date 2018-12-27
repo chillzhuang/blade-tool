@@ -54,17 +54,23 @@ public class SpringUtil implements ApplicationContextAware {
 		if (null == beanName || "".equals(beanName.trim())) {
 			return null;
 		}
-		if (clazz == null) return null;
+		if (clazz == null) {
+			return null;
+		}
 		return (T) context.getBean(beanName, clazz);
 	}
 
 	public static ApplicationContext getContext() {
-		if (context == null) return null;
+		if (context == null) {
+			return null;
+		}
 		return context;
 	}
 
 	public static void publishEvent(ApplicationEvent event) {
-		if (context == null) return;
+		if (context == null) {
+			return;
+		}
 		try {
 			context.publishEvent(event);
 		} catch (Exception ex) {

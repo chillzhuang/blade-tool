@@ -1,5 +1,7 @@
 package org.springblade.core.tool.support.xss;
 
+import org.springblade.core.tool.utils.StringPool;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -27,7 +29,7 @@ import java.util.regex.Pattern;
  * <p>
  * Sample use:
  * String input = ...
- * String clean = new HTMLFilter().filter( input );
+ * String clean = new HtmlFilter().filter( input );
  * <p>
  * The class is not thread safe. Create a new instance if in doubt.
  * <p>
@@ -39,7 +41,7 @@ import java.util.regex.Pattern;
  * @author Cal Hendersen
  * @author Michael Semb Wever
  */
-public final class HTMLFilter {
+public final class HtmlFilter {
 
 	/**
 	 * regex flag union representing /si modifiers in php
@@ -69,7 +71,7 @@ public final class HTMLFilter {
 	private static final Pattern P_RIGHT_ARROW = Pattern.compile(">");
 	private static final Pattern P_BOTH_ARROWS = Pattern.compile("<>");
 
-	// @xxx could grow large... maybe use sesat's ReferenceMap
+
 	private static final ConcurrentMap<String, Pattern> P_REMOVE_PAIR_BLANKS = new ConcurrentHashMap<String, Pattern>();
 	private static final ConcurrentMap<String, Pattern> P_REMOVE_SELF_BLANKS = new ConcurrentHashMap<String, Pattern>();
 
@@ -126,31 +128,31 @@ public final class HTMLFilter {
 	/**
 	 * Default constructor.
 	 */
-	public HTMLFilter() {
+	public HtmlFilter() {
 		vAllowed = new HashMap<>();
 
-		final ArrayList<String> a_atts = new ArrayList<String>();
-		a_atts.add("href");
-		a_atts.add("target");
-		vAllowed.put("a", a_atts);
+		final ArrayList<String> aAtts = new ArrayList<String>();
+		aAtts.add("href");
+		aAtts.add("target");
+		vAllowed.put("a", aAtts);
 
-		final ArrayList<String> img_atts = new ArrayList<String>();
-		img_atts.add("src");
-		img_atts.add("width");
-		img_atts.add("height");
-		img_atts.add("alt");
-		vAllowed.put("img", img_atts);
+		final ArrayList<String> imgAtts = new ArrayList<String>();
+		imgAtts.add("src");
+		imgAtts.add("width");
+		imgAtts.add("height");
+		imgAtts.add("alt");
+		vAllowed.put("img", imgAtts);
 
-		final ArrayList<String> no_atts = new ArrayList<String>();
-		vAllowed.put("b", no_atts);
-		vAllowed.put("strong", no_atts);
-		vAllowed.put("i", no_atts);
-		vAllowed.put("em", no_atts);
+		final ArrayList<String> noAtts = new ArrayList<String>();
+		vAllowed.put("b", noAtts);
+		vAllowed.put("strong", noAtts);
+		vAllowed.put("i", noAtts);
+		vAllowed.put("em", noAtts);
 
 		vSelfClosingTags = new String[]{"img"};
 		vNeedClosingTags = new String[]{"a", "b", "strong", "i", "em"};
 		vDisallowed = new String[]{};
-		vAllowedProtocols = new String[]{"http", "mailto", "https"}; // no ftp.
+		vAllowedProtocols = new String[]{"http", "mailto", "https"};
 		vProtocolAtts = new String[]{"src", "href"};
 		vRemoveBlanks = new String[]{"a", "b", "strong", "i", "em"};
 		vAllowedEntities = new String[]{"amp", "gt", "lt", "quot"};
@@ -164,7 +166,7 @@ public final class HTMLFilter {
 	 *
 	 * @param debug turn debug on with a true argument
 	 */
-	public HTMLFilter(final boolean debug) {
+	public HtmlFilter(final boolean debug) {
 		this();
 		vDebug = debug;
 
@@ -175,7 +177,7 @@ public final class HTMLFilter {
 	 *
 	 * @param conf map containing configuration. keys match field names.
 	 */
-	public HTMLFilter(final Map<String, Object> conf) {
+	public HtmlFilter(final Map<String, Object> conf) {
 
 		assert conf.containsKey("vAllowed") : "configuration requires vAllowed";
 		assert conf.containsKey("vSelfClosingTags") : "configuration requires vSelfClosingTags";
@@ -209,8 +211,6 @@ public final class HTMLFilter {
 		}
 	}
 
-	//---------------------------------------------------------------
-	// my versions of some PHP library functions
 	public static String chr(final int decimal) {
 		return String.valueOf((char) decimal);
 	}
@@ -271,7 +271,7 @@ public final class HTMLFilter {
 		final Matcher m = P_COMMENTS.matcher(s);
 		final StringBuffer buf = new StringBuffer();
 		if (m.find()) {
-			final String match = m.group(1); //(.*?)
+			final String match = m.group(1);
 			m.appendReplacement(buf, Matcher.quoteReplacement("<!--" + htmlSpecialChars(match) + "-->"));
 		}
 		m.appendTail(buf);
@@ -346,13 +346,12 @@ public final class HTMLFilter {
 		return result;
 	}
 
-	private static String regexReplace(final Pattern regex_pattern, final String replacement, final String s) {
-		Matcher m = regex_pattern.matcher(s);
+	private static String regexReplace(final Pattern regexPattern, final String replacement, final String s) {
+		Matcher m = regexPattern.matcher(s);
 		return m.replaceAll(replacement);
 	}
 
 	private String processTag(final String s) {
-		// ending tags
 		Matcher m = P_END_TAG.matcher(s);
 		if (m.find()) {
 			final String name = m.group(1).toLowerCase();
@@ -365,40 +364,29 @@ public final class HTMLFilter {
 				}
 			}
 		}
-
-		// starting tags
 		m = P_START_TAG.matcher(s);
 		if (m.find()) {
 			final String name = m.group(1).toLowerCase();
 			final String body = m.group(2);
 			String ending = m.group(3);
-
-			//debug( "in a starting tag, name='" + name + "'; body='" + body + "'; ending='" + ending + "'" );
 			if (allowed(name)) {
 				String params = "";
-
 				final Matcher m2 = P_QUOTED_ATTRIBUTES.matcher(body);
 				final Matcher m3 = P_UNQUOTED_ATTRIBUTES.matcher(body);
 				final List<String> paramNames = new ArrayList<String>();
 				final List<String> paramValues = new ArrayList<String>();
 				while (m2.find()) {
-					paramNames.add(m2.group(1)); //([a-z0-9]+)
-					paramValues.add(m2.group(3)); //(.*?)
+					paramNames.add(m2.group(1));
+					paramValues.add(m2.group(3));
 				}
 				while (m3.find()) {
-					paramNames.add(m3.group(1)); //([a-z0-9]+)
-					paramValues.add(m3.group(3)); //([^\"\\s']+)
+					paramNames.add(m3.group(1));
+					paramValues.add(m3.group(3));
 				}
-
 				String paramName, paramValue;
 				for (int ii = 0; ii < paramNames.size(); ii++) {
 					paramName = paramNames.get(ii).toLowerCase();
 					paramValue = paramValues.get(ii);
-
-//          debug( "paramName='" + paramName + "'" );
-//          debug( "paramValue='" + paramValue + "'" );
-//          debug( "allowed? " + vAllowed.get( name ).contains( paramName ) );
-
 					if (allowedAttribute(name, paramName)) {
 						if (inArray(paramName, vProtocolAtts)) {
 							paramValue = processParamProtocol(paramValue);
@@ -406,15 +394,12 @@ public final class HTMLFilter {
 						params += " " + paramName + "=\"" + paramValue + "\"";
 					}
 				}
-
 				if (inArray(name, vSelfClosingTags)) {
 					ending = " /";
 				}
-
 				if (inArray(name, vNeedClosingTags)) {
 					ending = "";
 				}
-
 				if (ending == null || ending.length() < 1) {
 					if (vTagCounts.containsKey(name)) {
 						vTagCounts.put(name, vTagCounts.get(name) + 1);
@@ -429,13 +414,10 @@ public final class HTMLFilter {
 				return "";
 			}
 		}
-
-		// comments
 		m = P_COMMENT.matcher(s);
 		if (!stripComment && m.find()) {
 			return "<" + m.group() + ">";
 		}
-
 		return "";
 	}
 
@@ -446,9 +428,9 @@ public final class HTMLFilter {
 			final String protocol = m.group(1);
 			if (!inArray(protocol, vAllowedProtocols)) {
 				// bad protocol, turn into local anchor link instead
-				s = "#" + s.substring(protocol.length() + 1, s.length());
-				if (s.startsWith("#//")) {
-					s = "#" + s.substring(3, s.length());
+				s = "#" + s.substring(protocol.length() + 1);
+				if (s.startsWith(StringPool.DOUBLE_SLASH)) {
+					s = "#" + s.substring(3);
 				}
 			}
 		}
@@ -462,7 +444,7 @@ public final class HTMLFilter {
 		Matcher m = P_ENTITY.matcher(s);
 		while (m.find()) {
 			final String match = m.group(1);
-			final int decimal = Integer.decode(match).intValue();
+			final int decimal = Integer.decode(match);
 			m.appendReplacement(buf, Matcher.quoteReplacement(chr(decimal)));
 		}
 		m.appendTail(buf);
@@ -498,8 +480,8 @@ public final class HTMLFilter {
 		// validate entities throughout the string
 		Matcher m = P_VALID_ENTITIES.matcher(s);
 		while (m.find()) {
-			final String one = m.group(1); //([^&;]*)
-			final String two = m.group(2); //(?=(;|&|$))
+			final String one = m.group(1);
+			final String two = m.group(2);
 			m.appendReplacement(buf, Matcher.quoteReplacement(checkEntity(one, two)));
 		}
 		m.appendTail(buf);
@@ -512,9 +494,9 @@ public final class HTMLFilter {
 			StringBuffer buf = new StringBuffer();
 			Matcher m = P_VALID_QUOTES.matcher(s);
 			while (m.find()) {
-				final String one = m.group(1); //(>|^)
-				final String two = m.group(2); //([^<]+?)
-				final String three = m.group(3); //(<|$)
+				final String one = m.group(1);
+				final String two = m.group(2);
+				final String three = m.group(3);
 				m.appendReplacement(buf, Matcher.quoteReplacement(one + regexReplace(P_QUOTE, "&quot;", two) + three));
 			}
 			m.appendTail(buf);

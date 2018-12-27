@@ -447,7 +447,7 @@ public class Func {
 	 * @param defaultValue the default value
 	 * @return the int represented by the string, or the default if conversion fails
 	 */
-	public static int toInt(@Nullable final Object value, final int defaultValue) {
+	public static int toInt(final Object value, final int defaultValue) {
 		return NumberUtil.toInt(String.valueOf(value), defaultValue);
 	}
 
@@ -487,7 +487,7 @@ public class Func {
 	 * @param defaultValue the default value
 	 * @return the long represented by the string, or the default if conversion fails
 	 */
-	public static long toLong(@Nullable final Object value, final long defaultValue) {
+	public static long toLong(final Object value, final long defaultValue) {
 		return NumberUtil.toLong(String.valueOf(value), defaultValue);
 	}
 

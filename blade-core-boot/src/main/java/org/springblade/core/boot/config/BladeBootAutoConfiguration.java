@@ -47,7 +47,7 @@ public class BladeBootAutoConfiguration {
 		SystemConstant me = SystemConstant.me();
 
 		//设定开发模式
-		me.setDevMode((bladeProperties.getEnv().equals("dev") ? true : false));
+		me.setDevMode(("dev".equals(bladeProperties.getEnv())));
 
 		//设定文件上传远程地址
 		me.setDomain(bladeProperties.get("upload-domain", "http://localhost:8888"));

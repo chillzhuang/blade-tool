@@ -16,6 +16,7 @@
 package org.springblade.core.tool.support;
 
 import org.springblade.core.tool.utils.Func;
+import org.springframework.util.LinkedCaseInsensitiveMap;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -27,24 +28,24 @@ import java.util.HashMap;
  *
  * @author smallchill
  */
-public class CMap extends CaseInsensitiveHashMap<String, Object> {
+public class Kv extends LinkedCaseInsensitiveMap<Object> {
 
 
-	private CMap() {
+	private Kv() {
 
 	}
 
 	/**
-	 * 创建CMap
+	 * 创建Kv
 	 *
-	 * @return CMap
+	 * @return Kv
 	 */
-	public static CMap init() {
-		return new CMap();
+	public static Kv init() {
+		return new Kv();
 	}
 
-	public static HashMap newHashMap() {
-		return new HashMap();
+	public static HashMap newMap() {
+		return new HashMap(16);
 	}
 
 	/**
@@ -54,7 +55,7 @@ public class CMap extends CaseInsensitiveHashMap<String, Object> {
 	 * @param value 值
 	 * @return 本身
 	 */
-	public CMap set(String attr, Object value) {
+	public Kv set(String attr, Object value) {
 		this.put(attr, value);
 		return this;
 	}
@@ -66,7 +67,7 @@ public class CMap extends CaseInsensitiveHashMap<String, Object> {
 	 * @param value 值
 	 * @return 本身
 	 */
-	public CMap setIgnoreNull(String attr, Object value) {
+	public Kv setIgnoreNull(String attr, Object value) {
 		if (null != attr && null != value) {
 			set(attr, value);
 		}
@@ -117,7 +118,7 @@ public class CMap extends CaseInsensitiveHashMap<String, Object> {
 	 * @return 字段值
 	 */
 	public Long getLong(String attr) {
-		return Func.toLong(get(attr), -1l);
+		return Func.toLong(get(attr), -1L);
 	}
 
 	/**
@@ -196,8 +197,8 @@ public class CMap extends CaseInsensitiveHashMap<String, Object> {
 	}
 
 	@Override
-	public CMap clone() {
-		return (CMap) super.clone();
+	public Kv clone() {
+		return (Kv) super.clone();
 	}
 
 }
