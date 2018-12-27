@@ -23,40 +23,45 @@ import java.util.List;
  *
  * @author zhuangqian
  */
-public class ForestNodeManager {
+public class ForestNodeManager<T extends INode> {
 
-    private List<INode> list;// 森林的所有节点
+	/**
+	 * 森林的所有节点
+	 */
+	private List<T> list;
 
-    public ForestNodeManager(List<INode> items) {
-        list = items;
-    }
+	public ForestNodeManager(List<T> items) {
+		list = items;
+	}
 
-    /**
-     * 根据节点ID获取一个节点
-     *
-     * @param id 节点ID
-     * @return 对应的节点对象
-     */
-    public INode getTreeNodeAT(int id) {
-        for (INode forestNode : list) {
-            if (forestNode.getId() == id)
-                return forestNode;
-        }
-        return null;
-    }
+	/**
+	 * 根据节点ID获取一个节点
+	 *
+	 * @param id 节点ID
+	 * @return 对应的节点对象
+	 */
+	public INode getTreeNodeAT(int id) {
+		for (INode forestNode : list) {
+			if (forestNode.getId() == id) {
+				return forestNode;
+			}
+		}
+		return null;
+	}
 
-    /**
-     * 获取树的根节点(一个森林对应多颗树)
-     *
-     * @return 树的根节点集合
-     */
-    public List<INode> getRoot() {
-        List<INode> roots = new ArrayList<>();
-        for (INode forestNode : list) {
-            if (forestNode.getParentId() == 0)
-                roots.add(forestNode);
-        }
-        return roots;
-    }
+	/**
+	 * 获取树的根节点(一个森林对应多颗树)
+	 *
+	 * @return 树的根节点集合
+	 */
+	public List<T> getRoot() {
+		List<T> roots = new ArrayList<>();
+		for (T forestNode : list) {
+			if (forestNode.getParentId() == 0) {
+				roots.add(forestNode);
+			}
+		}
+		return roots;
+	}
 
 }

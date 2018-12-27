@@ -24,22 +24,22 @@ import java.util.List;
  */
 public class ForestNodeMerger {
 
-    /**
-     * 将节点数组归并为一个森林（多棵树）（填充节点的children域）
-     * 时间复杂度为O(n^2)
-     *
-     * @param items 节点域
-     * @return 多棵树的根节点集合
-     */
-    public static List<INode> merge(List<INode> items) {
-        ForestNodeManager forestNodeManager = new ForestNodeManager(items);
-        for (INode forestNode : items) {
-            if (forestNode.getParentId() != 0) {
-                INode node = forestNodeManager.getTreeNodeAT(forestNode.getParentId());
+	/**
+	 * 将节点数组归并为一个森林（多棵树）（填充节点的children域）
+	 * 时间复杂度为O(n^2)
+	 *
+	 * @param items 节点域
+	 * @return 多棵树的根节点集合
+	 */
+	public static <T extends INode> List<T> merge(List<T> items) {
+		ForestNodeManager<T> forestNodeManager = new ForestNodeManager<>(items);
+		for (T forestNode : items) {
+			if (forestNode.getParentId() != 0) {
+				INode node = forestNodeManager.getTreeNodeAT(forestNode.getParentId());
 				node.getChildren().add(forestNode);
-            }
-        }
-        return forestNodeManager.getRoot();
-    }
+			}
+		}
+		return forestNodeManager.getRoot();
+	}
 
 }
