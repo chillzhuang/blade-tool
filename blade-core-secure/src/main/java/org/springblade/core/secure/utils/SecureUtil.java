@@ -40,7 +40,7 @@ import java.util.Map;
 public class SecureUtil {
 	public static final String BLADE_USER_REQUEST_ATTR = "_BLADE_USER_REQUEST_ATTR_";
 
-	public final static String HEADER = "Authorization";
+	public final static String HEADER = "blade-auth";
 	public final static String BEARER = "bearer";
 	public final static String ACCOUNT = "account";
 	public final static String USER_ID = "userId";

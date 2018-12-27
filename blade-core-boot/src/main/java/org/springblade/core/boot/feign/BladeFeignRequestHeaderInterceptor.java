@@ -18,6 +18,7 @@ package org.springblade.core.boot.feign;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
+import org.springblade.core.secure.utils.SecureUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -42,7 +43,7 @@ public class BladeFeignRequestHeaderInterceptor implements RequestInterceptor {
 				while (headerNames.hasMoreElements()) {
 					String name = headerNames.nextElement();
 					String value = request.getHeader(name);
-					if ("Authorization".equals(name)) {
+					if (SecureUtil.HEADER.equals(name)) {
 						requestTemplate.header(name, value);
 					}
 				}
