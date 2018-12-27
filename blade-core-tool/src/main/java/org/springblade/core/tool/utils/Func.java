@@ -18,8 +18,6 @@ package org.springblade.core.tool.utils;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springblade.core.tool.date.ConcurrentDateFormat;
-import org.springblade.core.tool.date.DateUtil;
 import org.springblade.core.tool.jackson.JsonUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.core.MethodParameter;
@@ -608,12 +606,7 @@ public class Func {
 		if (value != null) {
 			String val = String.valueOf(value);
 			val = val.toLowerCase().trim();
-			if ("true".equalsIgnoreCase(val)) {
-				return true;
-			} else if ("false".equalsIgnoreCase(val)) {
-				return false;
-			}
-			throw new RuntimeException("The value can not parse to Boolean : " + val);
+			return Boolean.parseBoolean(val);
 		}
 		return defaultValue;
 	}
@@ -905,7 +898,7 @@ public class Func {
 	 * @param closeable 自动关闭
 	 */
 	public static void closeQuietly(@Nullable Closeable closeable) {
-		IOUtil.closeQuietly(closeable);
+		IoUtil.closeQuietly(closeable);
 	}
 
 	/**
@@ -916,7 +909,7 @@ public class Func {
 	 * @throws NullPointerException if the input is null
 	 */
 	public static String toString(InputStream input) {
-		return IOUtil.toString(input);
+		return IoUtil.toString(input);
 	}
 
 	/**
@@ -928,11 +921,11 @@ public class Func {
 	 * @throws NullPointerException if the input is null
 	 */
 	public static String toString(@Nullable InputStream input, Charset charset) {
-		return IOUtil.toString(input, charset);
+		return IoUtil.toString(input, charset);
 	}
 
 	public static byte[] toByteArray(@Nullable InputStream input) {
-		return IOUtil.toByteArray(input);
+		return IoUtil.toByteArray(input);
 	}
 
 	/**
@@ -1078,7 +1071,7 @@ public class Func {
 	 * @return the encoded String
 	 */
 	public static String encode(String source) {
-		return URLUtil.encode(source, Charsets.UTF_8);
+		return UrlUtil.encode(source, Charsets.UTF_8);
 	}
 
 	/**
@@ -1093,7 +1086,7 @@ public class Func {
 	 * @return the encoded String
 	 */
 	public static String encode(String source, Charset charset) {
-		return URLUtil.encode(source, charset);
+		return UrlUtil.encode(source, charset);
 	}
 
 	/**

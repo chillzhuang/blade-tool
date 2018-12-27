@@ -20,9 +20,6 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springblade.core.secure.BladeUser;
-import org.springblade.core.tool.date.DateField;
-import org.springblade.core.tool.date.DateTime;
-import org.springblade.core.tool.date.DateUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.WebUtil;
@@ -31,6 +28,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -42,16 +40,17 @@ import java.util.Map;
 public class SecureUtil {
 	public static final String BLADE_USER_REQUEST_ATTR = "_BLADE_USER_REQUEST_ATTR_";
 
-	public final static String header = "Authorization";
-	public final static String bearer = "bearer";
-	public final static String account = "account";
-	public final static String userId = "userId";
-	public final static String roleId = "roleId";
-	public final static String userName = "userName";
-	public final static String roleName = "roleName";
-	private static String base64Security = DatatypeConverter.printBase64Binary("SpringBlade".getBytes());
+	public final static String HEADER = "Authorization";
+	public final static String BEARER = "bearer";
+	public final static String ACCOUNT = "account";
+	public final static String USER_ID = "userId";
+	public final static String ROLE_ID = "roleId";
+	public final static String USER_NAME = "userName";
+	public final static String ROLE_NAME = "roleName";
+	public final static Integer AUTH_LENGTH = 7;
+	private static String BASE64_SECURITY = DatatypeConverter.printBase64Binary("SpringBlade".getBytes());
 
-	/**
+	/**6
 	 * 获取用户信息
 	 *
 	 * @return
@@ -80,10 +79,10 @@ public class SecureUtil {
 		if (claims == null) {
 			return null;
 		}
-		Integer userId = Func.toInt(claims.get(SecureUtil.userId));
-		String roleId = Func.toStr(claims.get(SecureUtil.roleId));
-		String account = Func.toStr(claims.get(SecureUtil.account));
-		String roleName = Func.toStr(claims.get(SecureUtil.roleName));
+		Integer userId = Func.toInt(claims.get(SecureUtil.USER_ID));
+		String roleId = Func.toStr(claims.get(SecureUtil.ROLE_ID));
+		String account = Func.toStr(claims.get(SecureUtil.ACCOUNT));
+		String roleName = Func.toStr(claims.get(SecureUtil.ROLE_NAME));
 		BladeUser bladeUser = new BladeUser();
 		bladeUser.setAccount(account);
 		bladeUser.setUserId(userId);
@@ -135,10 +134,10 @@ public class SecureUtil {
 	 * @return
 	 */
 	public static Claims getClaims(HttpServletRequest request) {
-		String auth = request.getHeader(SecureUtil.header);
-		if ((auth != null) && (auth.length() > 7)) {
-			String HeadStr = auth.substring(0, 6).toLowerCase();
-			if (HeadStr.compareTo(SecureUtil.bearer) == 0) {
+		String auth = request.getHeader(SecureUtil.HEADER);
+		if ((auth != null) && (auth.length() > AUTH_LENGTH)) {
+			String headStr = auth.substring(0, 6).toLowerCase();
+			if (headStr.compareTo(SecureUtil.BEARER) == 0) {
 				auth = auth.substring(7);
 				return SecureUtil.parseJWT(auth);
 			}
@@ -162,7 +161,7 @@ public class SecureUtil {
 	 * @return
 	 */
 	public static String getHeader(HttpServletRequest request) {
-		return request.getHeader(header);
+		return request.getHeader(HEADER);
 	}
 
 	/**
@@ -174,7 +173,7 @@ public class SecureUtil {
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
 			Claims claims = Jwts.parser()
-				.setSigningKey(DatatypeConverter.parseBase64Binary(base64Security))
+				.setSigningKey(DatatypeConverter.parseBase64Binary(BASE64_SECURITY))
 				.parseClaimsJws(jsonWebToken).getBody();
 			return claims;
 		} catch (Exception ex) {
@@ -198,7 +197,7 @@ public class SecureUtil {
 		Date now = new Date(nowMillis);
 
 		//生成签名密钥
-		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(base64Security);
+		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(BASE64_SECURITY);
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
 		//添加构成JWT的类
@@ -227,9 +226,13 @@ public class SecureUtil {
 	 * @return
 	 */
 	public static long getExpire() {
-		DateTime dateTime = DateUtil.endOfDay(new Date());
-		DateTime offset = DateUtil.offset(dateTime, DateField.HOUR, 3);
-
-		return offset.getTime() - System.currentTimeMillis();
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_YEAR, 1);
+		cal.set(Calendar.HOUR_OF_DAY, 3);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTimeInMillis() - System.currentTimeMillis();
 	}
+
 }

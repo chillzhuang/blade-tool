@@ -26,6 +26,12 @@ public class Try {
 
 	@FunctionalInterface
 	public interface UncheckedFunction<T, R> {
+		/**
+		 * 调用
+		 * @param t
+		 * @return
+		 * @throws Exception
+		 */
 		R apply(T t) throws Exception;
 	}
 }

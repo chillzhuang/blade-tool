@@ -23,11 +23,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * IOUtil
+ * IoUtil
  *
  * @author L.cm
  */
-public class IOUtil extends org.springframework.util.StreamUtils {
+public class IoUtil extends org.springframework.util.StreamUtils {
 
 	/**
 	 * closeQuietly
@@ -63,21 +63,21 @@ public class IOUtil extends org.springframework.util.StreamUtils {
 	 */
 	public static String toString(@Nullable InputStream input, java.nio.charset.Charset charset) {
 		try {
-			return IOUtil.copyToString(input, charset);
+			return IoUtil.copyToString(input, charset);
 		} catch (IOException e) {
 			throw Exceptions.unchecked(e);
 		} finally {
-			IOUtil.closeQuietly(input);
+			IoUtil.closeQuietly(input);
 		}
 	}
 
 	public static byte[] toByteArray(@Nullable InputStream input) {
 		try {
-			return IOUtil.copyToByteArray(input);
+			return IoUtil.copyToByteArray(input);
 		} catch (IOException e) {
 			throw Exceptions.unchecked(e);
 		} finally {
-			IOUtil.closeQuietly(input);
+			IoUtil.closeQuietly(input);
 		}
 	}
 

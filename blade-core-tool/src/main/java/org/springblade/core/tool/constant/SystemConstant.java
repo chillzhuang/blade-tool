@@ -81,14 +81,14 @@ public class SystemConstant {
 	 */
 	private String contextPath = "/";
 
-	private static final SystemConstant me = new SystemConstant();
+	private static final SystemConstant ME = new SystemConstant();
 
 	private SystemConstant() {
 
 	}
 
 	public static SystemConstant me() {
-		return me;
+		return ME;
 	}
 
 	public String getUploadRealPath() {

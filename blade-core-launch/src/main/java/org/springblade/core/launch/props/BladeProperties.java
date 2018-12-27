@@ -162,12 +162,7 @@ public class BladeProperties {
 		String value = prop.get(key);
 		if (value != null) {
 			value = value.toLowerCase().trim();
-			if ("true".equals(value)) {
-				return Boolean.TRUE;
-			} else if ("false".equals(value)) {
-				return Boolean.FALSE;
-			}
-			throw new RuntimeException("The value can not parse to Boolean : " + value);
+			return Boolean.parseBoolean(value);
 		}
 		return defaultValue;
 	}

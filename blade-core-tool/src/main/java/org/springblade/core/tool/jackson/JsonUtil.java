@@ -23,8 +23,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
-import org.springblade.core.tool.date.DatePattern;
+import org.springblade.core.tool.utils.DateUtil;
 import org.springblade.core.tool.utils.Exceptions;
+import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.StringUtil;
 
 import java.io.IOException;
@@ -35,6 +36,8 @@ import java.util.*;
 
 /**
  * Jackson工具类
+ *
+ * @author smallchill
  */
 @Slf4j
 public class JsonUtil {
@@ -177,8 +180,8 @@ public class JsonUtil {
 	public static <T> List<T> parseArray(String content, Class<T> valueTypeRef) {
 		try {
 
-			if (!StringUtil.startsWithIgnoreCase(content, "[")) {
-				content = "[" + content + "]";
+			if (!StringUtil.startsWithIgnoreCase(content, StringPool.LEFT_SQ_BRACKET)) {
+				content = StringPool.LEFT_SQ_BRACKET + content + StringPool.RIGHT_SQ_BRACKET;
 			}
 
 			List<Map<String, Object>> list = getInstance().readValue(content, new TypeReference<List<T>>() {
@@ -207,7 +210,7 @@ public class JsonUtil {
 		try {
 			Map<String, Map<String, Object>> map = getInstance().readValue(content, new TypeReference<Map<String, T>>() {
 			});
-			Map<String, T> result = new HashMap<>();
+			Map<String, T> result = new HashMap<>(16);
 			for (Map.Entry<String, Map<String, Object>> entry : map.entrySet()) {
 				result.put(entry.getKey(), toPojo(entry.getValue(), valueTypeRef));
 			}
@@ -300,7 +303,7 @@ public class JsonUtil {
 			//设置为中国上海时区
 			super.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
 			//序列化时，日期的统一格式
-			super.setDateFormat(new SimpleDateFormat(DatePattern.NORM_DATETIME_PATTERN, Locale.CHINA));
+			super.setDateFormat(new SimpleDateFormat(DateUtil.PATTERN_DATETIME, Locale.CHINA));
 			//序列化处理
 			super.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
 			super.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);

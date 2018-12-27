@@ -43,7 +43,7 @@ public class ApiLogPublisher {
 		logApi.setTime(String.valueOf(time));
 		logApi.setMethodClass(methodClass);
 		logApi.setMethodName(methodName);
-		Map<String, Object> event = new HashMap<>();
+		Map<String, Object> event = new HashMap<>(16);
 		event.put(EventConstant.EVENT_LOG, logApi);
 		event.put(EventConstant.EVENT_REQUEST, request);
 		SpringUtil.publishEvent(new ApiLogEvent(event));

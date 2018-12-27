@@ -43,6 +43,8 @@ import java.util.Enumeration;
 public class WebUtil extends org.springframework.web.util.WebUtils {
 
 	public static final String USER_AGENT_HEADER = "user-agent";
+	
+	public static final String UN_KNOWN = "unknown";
 
 	/**
 	 * 判断是否ajax请求
@@ -164,22 +166,22 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	public static String getIP(HttpServletRequest request) {
 		Assert.notNull(request, "HttpServletRequest is null");
 		String ip = request.getHeader("X-Requested-For");
-		if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("X-Forwarded-For");
 		}
-		if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("Proxy-Client-IP");
 		}
-		if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("WL-Proxy-Client-IP");
 		}
-		if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_CLIENT_IP");
 		}
-		if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
 		}
-		if (StringUtil.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+		if (StringUtil.isBlank(ip) || UN_KNOWN.equalsIgnoreCase(ip)) {
 			ip = request.getRemoteAddr();
 		}
 		return StringUtil.isBlank(ip) ? null : ip.split(",")[0];
@@ -227,7 +229,7 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 		if (contentLength < 0) {
 			return null;
 		}
-		byte buffer[] = new byte[contentLength];
+		byte[] buffer = new byte[contentLength];
 		for (int i = 0; i < contentLength; ) {
 
 			int readlen = request.getInputStream().read(buffer, i, contentLength - i);
@@ -247,7 +249,7 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String getRequestStr(HttpServletRequest request, byte buffer[]) throws IOException {
+	public static String getRequestStr(HttpServletRequest request, byte[] buffer) throws IOException {
 		String charEncoding = request.getCharacterEncoding();
 		if (charEncoding == null) {
 			charEncoding = StringPool.UTF_8;

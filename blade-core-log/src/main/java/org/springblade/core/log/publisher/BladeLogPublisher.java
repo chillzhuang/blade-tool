@@ -39,7 +39,7 @@ public class BladeLogPublisher {
 		logBlade.setLogLevel(level);
 		logBlade.setLogId(id);
 		logBlade.setLogData(data);
-		Map<String, Object> event = new HashMap<>();
+		Map<String, Object> event = new HashMap<>(16);
 		event.put(EventConstant.EVENT_LOG, logBlade);
 		event.put(EventConstant.EVENT_REQUEST, request);
 		SpringUtil.publishEvent(new BladeLogEvent(event));

@@ -75,7 +75,7 @@ public class XmlUtil {
 		StringReader sr = new StringReader(xmlStr.trim());
 		InputSource inputSource = new InputSource(sr);
 		XmlUtil xmlUtil = create(inputSource);
-		IOUtil.closeQuietly(sr);
+		IoUtil.closeQuietly(sr);
 		return xmlUtil;
 	}
 
@@ -201,7 +201,7 @@ public class XmlUtil {
 	 */
 	public Map<String, String> toMap() {
 		Element root = doc.getDocumentElement();
-		Map<String, String> params = new HashMap<String, String>();
+		Map<String, String> params = new HashMap<>(16);
 
 		// 将节点封装成map形式
 		NodeList list = root.getChildNodes();
@@ -224,7 +224,11 @@ public class XmlUtil {
 		return dbf;
 	}
 
-	// https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=23_5
+	/**
+	 * preventXXE
+	 * @param dbf
+	 * @throws ParserConfigurationException
+	 */
 	private static void preventXXE(DocumentBuilderFactory dbf) throws ParserConfigurationException {
 		// This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all XML entity attacks are prevented
 		// Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl

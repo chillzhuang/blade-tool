@@ -78,5 +78,9 @@ public interface StringPool {
 	String ONE				= "1";
 	String ZERO				= "0";
 	String DOLLAR_LEFT_BRACE= "${";
+	char U_A				= 'A';
+	char L_A				= 'a';
+	char U_Z				= 'Z';
+	char L_Z				= 'z';
 
 }

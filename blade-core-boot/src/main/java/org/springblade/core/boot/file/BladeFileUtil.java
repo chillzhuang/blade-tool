@@ -15,6 +15,7 @@
  */
 package org.springblade.core.boot.file;
 
+import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.StringUtil;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,6 +32,9 @@ public class BladeFileUtil {
 	 * 定义允许上传的文件扩展名
 	 */
 	private static HashMap<String, String> extMap = new HashMap<String, String>();
+	private static String IS_DIR = "is_dir";
+	private static String FILE_NAME = "filename";
+	private static String FILE_SIZE = "filesize";
 
 	/**
 	 * 图片扩展名
@@ -53,7 +57,7 @@ public class BladeFileUtil {
 	 * @return String 返回类型
 	 */
 	public static String getFileExt(String fileName) {
-		return fileName.substring(fileName.lastIndexOf('.'), fileName.length());
+		return fileName.substring(fileName.lastIndexOf(StringPool.DOT));
 	}
 
 	/**
@@ -75,7 +79,21 @@ public class BladeFileUtil {
 	 * 文件管理排序
 	 */
 	public enum FileSort {
-		size, type, name;
+
+		/**
+		 * 大小
+		 */
+		size,
+
+		/**
+		 * 类型
+		 */
+		type,
+
+		/**
+		 * 名称
+		 */
+		name;
 
 		/**
 		 * 文本排序转换成枚举
@@ -97,12 +115,12 @@ public class BladeFileUtil {
 		public int compare(Object a, Object b) {
 			Hashtable hashA = (Hashtable) a;
 			Hashtable hashB = (Hashtable) b;
-			if (((Boolean) hashA.get("is_dir")) && !((Boolean) hashB.get("is_dir"))) {
+			if (((Boolean) hashA.get(IS_DIR)) && !((Boolean) hashB.get(IS_DIR))) {
 				return -1;
-			} else if (!((Boolean) hashA.get("is_dir")) && ((Boolean) hashB.get("is_dir"))) {
+			} else if (!((Boolean) hashA.get(IS_DIR)) && ((Boolean) hashB.get(IS_DIR))) {
 				return 1;
 			} else {
-				return ((String) hashA.get("filename")).compareTo((String) hashB.get("filename"));
+				return ((String) hashA.get(FILE_NAME)).compareTo((String) hashB.get(FILE_NAME));
 			}
 		}
 	}
@@ -112,14 +130,14 @@ public class BladeFileUtil {
 		public int compare(Object a, Object b) {
 			Hashtable hashA = (Hashtable) a;
 			Hashtable hashB = (Hashtable) b;
-			if (((Boolean) hashA.get("is_dir")) && !((Boolean) hashB.get("is_dir"))) {
+			if (((Boolean) hashA.get(IS_DIR)) && !((Boolean) hashB.get(IS_DIR))) {
 				return -1;
-			} else if (!((Boolean) hashA.get("is_dir")) && ((Boolean) hashB.get("is_dir"))) {
+			} else if (!((Boolean) hashA.get(IS_DIR)) && ((Boolean) hashB.get(IS_DIR))) {
 				return 1;
 			} else {
-				if (((Long) hashA.get("filesize")) > ((Long) hashB.get("filesize"))) {
+				if (((Long) hashA.get(FILE_SIZE)) > ((Long) hashB.get(FILE_SIZE))) {
 					return 1;
-				} else if (((Long) hashA.get("filesize")) < ((Long) hashB.get("filesize"))) {
+				} else if (((Long) hashA.get(FILE_SIZE)) < ((Long) hashB.get(FILE_SIZE))) {
 					return -1;
 				} else {
 					return 0;
@@ -133,9 +151,9 @@ public class BladeFileUtil {
 		public int compare(Object a, Object b) {
 			Hashtable hashA = (Hashtable) a;
 			Hashtable hashB = (Hashtable) b;
-			if (((Boolean) hashA.get("is_dir")) && !((Boolean) hashB.get("is_dir"))) {
+			if (((Boolean) hashA.get(IS_DIR)) && !((Boolean) hashB.get(IS_DIR))) {
 				return -1;
-			} else if (!((Boolean) hashA.get("is_dir")) && ((Boolean) hashB.get("is_dir"))) {
+			} else if (!((Boolean) hashA.get(IS_DIR)) && ((Boolean) hashB.get(IS_DIR))) {
 				return 1;
 			} else {
 				return ((String) hashA.get("filetype")).compareTo((String) hashB.get("filetype"));

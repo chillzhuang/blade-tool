@@ -15,8 +15,6 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springblade.core.tool.date.DatePattern;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -29,9 +27,9 @@ import java.time.temporal.TemporalAccessor;
  * @author L.cm
  */
 public class DateTimeUtil {
-	public static final DateTimeFormatter DATETIME_FORMAT = DateTimeFormatter.ofPattern(DatePattern.NORM_DATETIME_PATTERN);
-	public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(DatePattern.NORM_DATE_PATTERN);
-	public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern(DatePattern.NORM_TIME_PATTERN);
+	public static final DateTimeFormatter DATETIME_FORMAT = DateTimeFormatter.ofPattern(DateUtil.PATTERN_DATETIME);
+	public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(DateUtil.PATTERN_DATE);
+	public static final DateTimeFormatter TIME_FORMAT =  DateTimeFormatter.ofPattern(DateUtil.PATTERN_TIME);
 
 	/**
 	 * 日期时间格式化

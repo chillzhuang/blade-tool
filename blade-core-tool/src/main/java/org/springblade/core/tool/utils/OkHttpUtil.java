@@ -26,7 +26,7 @@ import java.util.Map;
  * @author smallchill
  */
 @Slf4j
-public class OKHttpUtil {
+public class OkHttpUtil {
 
 	public static MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 	public static MediaType XML = MediaType.parse("application/xml; charset=utf-8");

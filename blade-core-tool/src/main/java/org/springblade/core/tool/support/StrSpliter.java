@@ -157,11 +157,11 @@ public class StrSpliter {
 
 		final ArrayList<String> list = new ArrayList<>(limit > 0 ? limit : 16);
 		int len = str.length();
-		int start = 0;//切分后每个部分的起始
+		int start = 0;
 		for (int i = 0; i < len; i++) {
 			if (Func.equals(separator, str.charAt(i))) {
 				addToList(list, str.substring(start, i), isTrim, ignoreEmpty);
-				start = i + 1;//i+1同时将start与i保持一致
+				start = i + 1;
 
 				//检查是否超出范围（最大允许limit-1个，剩下一个留给末尾字符串）
 				if (limit > 0 && list.size() > limit - 2) {
@@ -169,7 +169,7 @@ public class StrSpliter {
 				}
 			}
 		}
-		return addToList(list, str.substring(start, len), isTrim, ignoreEmpty);//收尾
+		return addToList(list, str.substring(start, len), isTrim, ignoreEmpty);
 	}
 
 	/**
@@ -294,9 +294,9 @@ public class StrSpliter {
 			return addToList(new ArrayList<String>(1), str, isTrim, ignoreEmpty);
 		}
 
-		if (StringUtil.isEmpty(separator)) {//分隔符为空时按照空白符切分
+		if (StringUtil.isEmpty(separator)) {
 			return split(str, limit);
-		} else if (separator.length() == 1) {//分隔符只有一个字符长度时按照单分隔符切分
+		} else if (separator.length() == 1) {
 			return split(str, separator.charAt(0), limit, isTrim, ignoreEmpty, ignoreCase);
 		}
 
@@ -358,19 +358,17 @@ public class StrSpliter {
 
 		final ArrayList<String> list = new ArrayList<>();
 		int len = str.length();
-		int start = 0;//切分后每个部分的起始
+		int start = 0;
 		for (int i = 0; i < len; i++) {
 			if (Func.isEmpty(str.charAt(i))) {
 				addToList(list, str.substring(start, i), true, true);
-				start = i + 1;//i+1同时将start与i保持一致
-
-				//检查是否超出范围（最大允许limit-1个，剩下一个留给末尾字符串）
+				start = i + 1;
 				if (limit > 0 && list.size() > limit - 2) {
 					break;
 				}
 			}
 		}
-		return addToList(list, str.substring(start, len), true, true);//收尾
+		return addToList(list, str.substring(start, len), true, true);
 	}
 
 	/**
@@ -406,7 +404,7 @@ public class StrSpliter {
 			return addToList(new ArrayList<String>(1), str, isTrim, ignoreEmpty);
 		}
 
-		if (null == separatorPattern) {//分隔符为空时按照空白符切分
+		if (null == separatorPattern) {
 			return split(str, limit);
 		}
 
@@ -418,7 +416,6 @@ public class StrSpliter {
 			addToList(list, str.substring(start, matcher.start()), isTrim, ignoreEmpty);
 			start = matcher.end();
 
-			//检查是否超出范围（最大允许limit-1个，剩下一个留给末尾字符串）
 			if (limit > 0 && list.size() > limit - 2) {
 				break;
 			}

@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
  *
  * @author L.cm
  */
-public class URLUtil extends org.springframework.web.util.UriUtils {
+public class UrlUtil extends org.springframework.web.util.UriUtils {
 
 	/**
 	 * url 编码，同js decodeURIComponent
@@ -34,7 +34,7 @@ public class URLUtil extends org.springframework.web.util.UriUtils {
 	 * @return 编码后的url
 	 */
 	public static String encodeURL(String source, Charset charset) {
-		return URLUtil.encode(source, charset.name());
+		return UrlUtil.encode(source, charset.name());
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class URLUtil extends org.springframework.web.util.UriUtils {
 	 * @return 解码url
 	 */
 	public static String decodeURL(String source, Charset charset) {
-		return URLUtil.decode(source, charset.name());
+		return UrlUtil.decode(source, charset.name());
 	}
 
 	/**

@@ -28,9 +28,9 @@ import java.util.Arrays;
  *
  * @author L.cm
  */
-public class AESUtil {
+public class AesUtil {
 
-	private AESUtil() {
+	private AesUtil() {
 	}
 
 	public static String genAesKey() {
@@ -68,7 +68,7 @@ public class AESUtil {
 			SecretKeySpec keySpec = new SecretKeySpec(aesKey, "AES");
 			IvParameterSpec iv = new IvParameterSpec(aesKey, 0, 16);
 			cipher.init(Cipher.ENCRYPT_MODE, keySpec, iv);
-			return cipher.doFinal(PKCS7Encoder.encode(content));
+			return cipher.doFinal(Pkcs7Encoder.encode(content));
 		} catch (Exception e) {
 			throw Exceptions.unchecked(e);
 		}
@@ -81,7 +81,7 @@ public class AESUtil {
 			SecretKeySpec keySpec = new SecretKeySpec(aesKey, "AES");
 			IvParameterSpec iv = new IvParameterSpec(Arrays.copyOfRange(aesKey, 0, 16));
 			cipher.init(Cipher.DECRYPT_MODE, keySpec, iv);
-			return PKCS7Encoder.decode(cipher.doFinal(encrypted));
+			return Pkcs7Encoder.decode(cipher.doFinal(encrypted));
 		} catch (Exception e) {
 			throw Exceptions.unchecked(e);
 		}
@@ -90,7 +90,7 @@ public class AESUtil {
 	/**
 	 * 提供基于PKCS7算法的加解密接口.
 	 */
-	static class PKCS7Encoder {
+	static class Pkcs7Encoder {
 		static int BLOCK_SIZE = 32;
 
 		static byte[] encode(byte[] src) {
@@ -115,7 +115,7 @@ public class AESUtil {
 
 		static byte[] decode(byte[] decrypted) {
 			int pad = (int) decrypted[decrypted.length - 1];
-			if (pad < 1 || pad > 32) {
+			if (pad < 1 || pad > BLOCK_SIZE) {
 				pad = 0;
 			}
 			if (pad > 0) {

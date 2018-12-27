@@ -26,7 +26,7 @@ import java.util.Properties;
  *
  * @author smallchil
  */
-public class ConsulLauncherService implements LauncherService {
+public class ConsulLauncherServiceImpl implements LauncherService {
 
 	@Override
 	public void launcher(SpringApplicationBuilder builder, String appName, String profile) {

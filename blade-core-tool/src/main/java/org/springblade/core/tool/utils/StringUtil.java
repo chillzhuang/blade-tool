@@ -199,10 +199,10 @@ public class StringUtil extends org.springframework.util.StringUtils {
 		return txt.replaceAll("[ 　`·•�\\f\\t\\v\\s]", "");
 	}
 
-	// 随机字符串
-	private static final String _INT = "0123456789";
-	private static final String _STR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	private static final String _ALL = _INT + _STR;
+	
+	private static final String S_INT = "0123456789";
+	private static final String S_STR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	private static final String S_ALL = S_INT + S_STR;
 
 	/**
 	 * 随机数生成
@@ -230,11 +230,11 @@ public class StringUtil extends org.springframework.util.StringUtils {
 		char[] buffer = new char[count];
 		for (int i = 0; i < count; i++) {
 			if (RandomType.INT == randomType) {
-				buffer[i] = _INT.charAt(random.nextInt(_INT.length()));
+				buffer[i] = S_INT.charAt(random.nextInt(S_INT.length()));
 			} else if (RandomType.STRING == randomType) {
-				buffer[i] = _STR.charAt(random.nextInt(_STR.length()));
+				buffer[i] = S_STR.charAt(random.nextInt(S_STR.length()));
 			} else {
-				buffer[i] = _ALL.charAt(random.nextInt(_ALL.length()));
+				buffer[i] = S_ALL.charAt(random.nextInt(S_ALL.length()));
 			}
 		}
 		return new String(buffer);
@@ -749,7 +749,7 @@ public class StringUtil extends org.springframework.util.StringUtils {
 
 		final String str2 = str.toString();
 		if (str2.startsWith(prefix.toString())) {
-			return subSuf(str2, prefix.length());// 截取后半段
+			return subSuf(str2, prefix.length());
 		}
 		return str2;
 	}
@@ -768,7 +768,7 @@ public class StringUtil extends org.springframework.util.StringUtils {
 
 		final String str2 = str.toString();
 		if (str2.toLowerCase().startsWith(prefix.toString().toLowerCase())) {
-			return subSuf(str2, prefix.length());// 截取后半段
+			return subSuf(str2, prefix.length());
 		}
 		return str2;
 	}
@@ -787,7 +787,7 @@ public class StringUtil extends org.springframework.util.StringUtils {
 
 		final String str2 = str.toString();
 		if (str2.endsWith(suffix.toString())) {
-			return subPre(str2, str2.length() - suffix.length());// 截取前半段
+			return subPre(str2, str2.length() - suffix.length());
 		}
 		return str2;
 	}
@@ -830,9 +830,9 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	 */
 	public static String lowerFirst(String str) {
 		char firstChar = str.charAt(0);
-		if (firstChar >= 'A' && firstChar <= 'Z') {
+		if (firstChar >= StringPool.U_A && firstChar <= StringPool.U_Z) {
 			char[] arr = str.toCharArray();
-			arr[0] += ('a' - 'A');
+			arr[0] += (StringPool.L_A - StringPool.U_A);
 			return new String(arr);
 		}
 		return str;
@@ -846,9 +846,9 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	 */
 	public static String upperFirst(String str) {
 		char firstChar = str.charAt(0);
-		if (firstChar >= 'a' && firstChar <= 'z') {
+		if (firstChar >= StringPool.L_A && firstChar <= StringPool.L_Z) {
 			char[] arr = str.toCharArray();
-			arr[0] -= ('a' - 'A');
+			arr[0] -= (StringPool.L_A - StringPool.U_A);
 			return new String(arr);
 		}
 		return str;

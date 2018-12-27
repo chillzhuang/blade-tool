@@ -1,4 +1,18 @@
-
+/**
+ * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
+ * <p>
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.gnu.org/licenses/lgpl.html
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.springblade.core.tool.utils;
 
 import org.slf4j.Logger;
@@ -14,6 +28,11 @@ import java.awt.image.*;
 import java.io.*;
 import java.net.URL;
 
+/**
+ * 图片工具类
+ *
+ * @author smallchill
+ */
 public final class ImageUtil {
 
 	/**
@@ -130,12 +149,12 @@ public final class ImageUtil {
 			Image image = src.getScaledInstance(width, height, Image.SCALE_DEFAULT);
 			BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 			Graphics g = tag.getGraphics();
-			// 绘制缩小后的图
+
 			g.drawImage(image, 0, 0, null);
 			g.dispose();
-			// 输出为文件
+
 			ImageIO.write(tag, defaultString(type, DEFAULT_IMG_TYPE), output);
-			// 关闭流
+
 			output.close();
 		} catch (IOException e) {
 			LOGGER.error("Error in zoom image", e);
@@ -154,7 +173,7 @@ public final class ImageUtil {
 	 */
 	public final static void zoomFixed(BufferedImage src, OutputStream output, String type, int height, int width, boolean bb, Color fillColor) {
 		try {
-			double ratio = 0.0; // 缩放比例
+			double ratio = 0.0;
 			Image itemp = src.getScaledInstance(width, height, BufferedImage.SCALE_SMOOTH);
 			// 计算比例
 			if (src.getHeight() > src.getWidth()) {
@@ -212,7 +231,7 @@ public final class ImageUtil {
 				Image img = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(image.getSource(), cropFilter));
 				BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 				Graphics g = tag.getGraphics();
-				g.drawImage(img, 0, 0, width, height, null); // 绘制切割后的图
+				g.drawImage(img, 0, 0, width, height, null);
 				g.dispose();
 				// 输出为文件
 				ImageIO.write(tag, defaultString(type, DEFAULT_IMG_TYPE), output);
