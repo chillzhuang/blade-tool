@@ -15,6 +15,7 @@
  */
 package org.springblade.core.tool.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -23,6 +24,7 @@ import org.springframework.context.ApplicationEvent;
 /**
  * spring 工具类
  */
+@Slf4j
 public class SpringUtil implements ApplicationContextAware {
 
     private static ApplicationContext context;
@@ -61,7 +63,11 @@ public class SpringUtil implements ApplicationContextAware {
 
     public static void publishEvent(ApplicationEvent event) {
         if (context == null) return;
-        context.publishEvent(event);
+        try {
+        	context.publishEvent(event);
+		} catch (Exception ex) {
+        	log.error(ex.getMessage());
+		}
     }
 
 }
