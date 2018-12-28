@@ -7,6 +7,33 @@
     <artifactId>blade-tool</artifactId>
     <version>1.0.0-RC1</version>
     <packaging>pom</packaging>
+    <name>blade-tool</name>
+    <description>
+        blade-tool is a powerful toolbox for SpringBlade
+    </description>
+    <url>https://github.com/chillzhuang/blade-tool</url>
+    <developers>
+        <developer>
+            <id>smallchill</id>
+            <name>庄骞</name>
+            <email>smallchill@163.com</email>
+            <roles>
+                <role>Java Development Engineer</role>
+            </roles>
+            <timezone>2018-12-28 23:33:33</timezone>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>GNU LESSER GENERAL PUBLIC LICENSE</name>
+            <url>http://www.gnu.org/licenses/lgpl.html</url>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git@github.com:chillzhuang/blade-tool.git</connection>
+        <developerConnection>scm:git@github.com:chillzhuang/blade-tool.git</developerConnection>
+        <url>git@github.com:chillzhuang/blade-tool.git</url>
+    </scm>
 
     <properties>
         <blade.tool.version>1.0.0-RC1</blade.tool.version>
@@ -194,11 +221,58 @@
     </pluginRepositories>
 
     <distributionManagement>
+        <snapshotRepository>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
         <repository>
-            <id>release</id>
-            <name>Release Repository</name>
-            <url>http://nexus.gitee.ltd/repository/maven-releases/</url>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!-- 打jar包 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <version>3.1.0</version>
+                    </plugin>
+                    <!-- 打source包 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <configuration>
+                            <attach>true</attach>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <!-- 这里的id oss需要和setting.xml里面server节点配置的id一致-->
+                <snapshotRepository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
 </project>
