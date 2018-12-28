@@ -30,6 +30,11 @@ public class ForestNodeManager<T extends INode> {
 	 */
 	private List<T> list;
 
+	/**
+	 * 森林的父节点ID
+	 */
+	private List<Integer> parentIds = new ArrayList<>();
+
 	public ForestNodeManager(List<T> items) {
 		list = items;
 	}
@@ -50,6 +55,15 @@ public class ForestNodeManager<T extends INode> {
 	}
 
 	/**
+	 * 增加父节点ID
+	 *
+	 * @param parentId
+	 */
+	public void addParentId(Integer parentId) {
+		parentIds.add(parentId);
+	}
+
+	/**
 	 * 获取树的根节点(一个森林对应多颗树)
 	 *
 	 * @return 树的根节点集合
@@ -57,7 +71,7 @@ public class ForestNodeManager<T extends INode> {
 	public List<T> getRoot() {
 		List<T> roots = new ArrayList<>();
 		for (T forestNode : list) {
-			if (forestNode.getParentId() == 0) {
+			if (forestNode.getParentId() == 0 || parentIds.contains(forestNode.getId())) {
 				roots.add(forestNode);
 			}
 		}

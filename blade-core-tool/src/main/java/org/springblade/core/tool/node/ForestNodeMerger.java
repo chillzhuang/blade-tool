@@ -15,6 +15,7 @@
  */
 package org.springblade.core.tool.node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,13 +33,18 @@ public class ForestNodeMerger {
 	 * @return 多棵树的根节点集合
 	 */
 	public static <T extends INode> List<T> merge(List<T> items) {
+		List<Integer> parentIds = new ArrayList<>();
 		ForestNodeManager<T> forestNodeManager = new ForestNodeManager<>(items);
-		for (T forestNode : items) {
+		items.forEach(forestNode -> {
 			if (forestNode.getParentId() != 0) {
 				INode node = forestNodeManager.getTreeNodeAT(forestNode.getParentId());
-				node.getChildren().add(forestNode);
+				if (node != null) {
+					node.getChildren().add(forestNode);
+				} else {
+					forestNodeManager.addParentId(forestNode.getId());
+				}
 			}
-		}
+		});
 		return forestNodeManager.getRoot();
 	}
 

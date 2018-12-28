@@ -18,8 +18,8 @@ package org.springblade.core.mp.support;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.BeanUtil;
+import org.springblade.core.tool.utils.Func;
 
 import java.util.Map;
 
@@ -63,6 +63,8 @@ public class Condition {
 	 * @return
 	 */
 	public static <T> QueryWrapper<T> getQueryWrapper(Map<String, Object> query, Class<T> clazz) {
+		query.remove("current");
+		query.remove("size");
 		QueryWrapper<T> qw = new QueryWrapper<>();
 		qw.setEntity(BeanUtil.newInstance(clazz));
 		if (Func.isNotEmpty(query)) {
