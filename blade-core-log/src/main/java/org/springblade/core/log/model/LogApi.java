@@ -100,10 +100,6 @@ public class LogApi implements Serializable {
 	 * 执行时间
 	 */
 	private String time;
-	/**
-	 * 异常信息
-	 */
-	private String exception;
 
 	/**
 	 * 创建人

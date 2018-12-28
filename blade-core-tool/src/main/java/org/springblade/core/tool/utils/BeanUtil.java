@@ -17,12 +17,16 @@ package org.springblade.core.tool.utils;
 
 
 import org.springblade.core.tool.support.BeanProperty;
+import org.springblade.core.tool.support.BladeBeanCopier;
 import org.springframework.beans.BeansException;
-import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.beans.BeanGenerator;
 import org.springframework.cglib.beans.BeanMap;
+import org.springframework.cglib.core.CodeGenerationException;
 import org.springframework.util.Assert;
 
+import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -105,7 +109,7 @@ public class BeanUtil extends org.springframework.beans.BeanUtils {
 	 * @return T
 	 */
 	public static <T> T copy(Object source, Class<T> clazz) {
-		BeanCopier copier = BeanCopier.create(source.getClass(), clazz, false);
+		BladeBeanCopier copier = BladeBeanCopier.create(source.getClass(), clazz, false);
 
 		T to = newInstance(clazz);
 		copier.copy(source, to, null);
@@ -121,7 +125,7 @@ public class BeanUtil extends org.springframework.beans.BeanUtils {
 	 * @param targetBean 需要赋值的对象
 	 */
 	public static void copy(Object source, Object targetBean) {
-		BeanCopier copier = BeanCopier
+		BladeBeanCopier copier = BladeBeanCopier
 			.create(source.getClass(), targetBean.getClass(), false);
 
 		copier.copy(source, targetBean, null);
@@ -195,6 +199,45 @@ public class BeanUtil extends org.springframework.beans.BeanUtils {
 			generator.addProperty(prop.getName(), prop.getType());
 		}
 		return generator.create();
+	}
+
+	/**
+	 * 获取 Bean 的所有 get方法
+	 * @param type 类
+	 * @return PropertyDescriptor数组
+	 */
+	public static PropertyDescriptor[] getBeanGetters(Class type) {
+		return getPropertiesHelper(type, true, false);
+	}
+
+	/**
+	 * 获取 Bean 的所有 set方法
+	 * @param type 类
+	 * @return PropertyDescriptor数组
+	 */
+	public static PropertyDescriptor[] getBeanSetters(Class type) {
+		return getPropertiesHelper(type, false, true);
+	}
+
+	private static PropertyDescriptor[] getPropertiesHelper(Class type, boolean read, boolean write) {
+		try {
+			PropertyDescriptor[] all = BeanUtil.getPropertyDescriptors(type);
+			if (read && write) {
+				return all;
+			} else {
+				List<PropertyDescriptor> properties = new ArrayList<>(all.length);
+				for (PropertyDescriptor pd : all) {
+					if (read && pd.getReadMethod() != null) {
+						properties.add(pd);
+					} else if (write && pd.getWriteMethod() != null) {
+						properties.add(pd);
+					}
+				}
+				return properties.toArray(new PropertyDescriptor[0]);
+			}
+		} catch (BeansException ex) {
+			throw new CodeGenerationException(ex);
+		}
 	}
 
 }
