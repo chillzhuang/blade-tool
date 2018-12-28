@@ -45,13 +45,13 @@ public class Query {
 	/**
 	 * 排序的字段名
 	 */
-	@ApiModelProperty(value = "升序字段")
+	@ApiModelProperty(hidden = true)
 	private String ascs;
 
 	/**
 	 * 排序方式
 	 */
-	@ApiModelProperty(value = "降序字段")
+	@ApiModelProperty(hidden = true)
 	private String descs;
 
 }

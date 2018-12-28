@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.StringUtil;
 
 import java.util.Map;
 
@@ -70,7 +71,7 @@ public class Condition {
 		if (Func.isNotEmpty(query)) {
 			query.forEach((k, v) -> {
 				if (Func.isNotEmpty(v)) {
-					qw.like(k, v);
+					qw.like(StringUtil.humpToUnderline(k), v);
 				}
 			});
 		}

@@ -199,7 +199,7 @@ public class StringUtil extends org.springframework.util.StringUtils {
 		return txt.replaceAll("[ 　`·•�\\f\\t\\v\\s]", "");
 	}
 
-	
+
 	private static final String S_INT = "0123456789";
 	private static final String S_STR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	private static final String S_ALL = S_INT + S_STR;
@@ -1336,6 +1336,44 @@ public class StringUtil extends org.springframework.util.StringUtils {
 			}
 		}
 		return count;
+	}
+
+	/**
+	 * 下划线转驼峰
+	 *
+	 * @param para
+	 * @return
+	 */
+	public static String underlineToHump(String para) {
+		StringBuilder result = new StringBuilder();
+		String[] a = para.split("_");
+		for (String s : a) {
+			if (result.length() == 0) {
+				result.append(s.toLowerCase());
+			} else {
+				result.append(s.substring(0, 1).toUpperCase());
+				result.append(s.substring(1).toLowerCase());
+			}
+		}
+		return result.toString();
+	}
+
+	/**
+	 * 驼峰转下划线
+	 *
+	 * @param para
+	 * @return
+	 */
+	public static String humpToUnderline(String para) {
+		StringBuilder sb = new StringBuilder(para);
+		int temp = 0;
+		for (int i = 0; i < para.length(); i++) {
+			if (Character.isUpperCase(para.charAt(i))) {
+				sb.insert(i + temp, "_");
+				temp += 1;
+			}
+		}
+		return sb.toString().toLowerCase();
 	}
 
 
