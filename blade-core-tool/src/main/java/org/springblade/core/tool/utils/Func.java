@@ -625,7 +625,7 @@ public class Func {
 	 * 转换为Integer数组<br>
 	 *
 	 * @param split 分隔符
-	 * @param split 被转换的值
+	 * @param str   被转换的值
 	 * @return 结果
 	 */
 	public static Integer[] toIntArray(String split, String str) {
@@ -639,6 +639,27 @@ public class Func {
 			ints[i] = v;
 		}
 		return ints;
+	}
+
+	/**
+	 * 转换为Integer集合<br>
+	 *
+	 * @param str 结果被转换的值
+	 * @return 结果
+	 */
+	public static List<Integer> toIntList(String str) {
+		return Arrays.asList(toIntArray(str));
+	}
+
+	/**
+	 * 转换为Integer集合<br>
+	 *
+	 * @param split 分隔符
+	 * @param str   被转换的值
+	 * @return 结果
+	 */
+	public static List<Integer> toIntList(String split, String str) {
+		return Arrays.asList(toIntArray(split, str));
 	}
 
 	/**
@@ -663,6 +684,27 @@ public class Func {
 			return new String[]{};
 		}
 		return str.split(split);
+	}
+
+	/**
+	 * 转换为String集合<br>
+	 *
+	 * @param str 结果被转换的值
+	 * @return 结果
+	 */
+	public static List<String> toStrList(String str) {
+		return Arrays.asList(toStrArray(str));
+	}
+
+	/**
+	 * 转换为String集合<br>
+	 *
+	 * @param split 分隔符
+	 * @param str   被转换的值
+	 * @return 结果
+	 */
+	public static List<String> toStrList(String split, String str) {
+		return Arrays.asList(toStrArray(split, str));
 	}
 
 	/**
