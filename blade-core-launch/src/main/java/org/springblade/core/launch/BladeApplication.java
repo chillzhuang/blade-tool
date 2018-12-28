@@ -35,12 +35,11 @@ public class BladeApplication {
 
 	/**
 	 * Create an application context
+	 * java -jar app.jar --spring.profiles.active=prod --server.port=2333
 	 *
 	 * @param appName application name
 	 * @param source  The sources
-	 * @param args    args the command line arguments
 	 * @return an application context created from the current state
-	 * @run java -jar app.jar --spring.profiles.active=prod --server.port=2333
 	 */
 	public static ConfigurableApplicationContext run(String appName, Class source, String... args) {
 		SpringApplicationBuilder builder = createSpringApplicationBuilder(appName, source, args);
