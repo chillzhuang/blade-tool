@@ -18,6 +18,7 @@ package org.springblade.core.mp.support;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 分页工具
@@ -25,6 +26,7 @@ import lombok.Data;
  * @author smallchill
  */
 @Data
+@Accessors(chain = true)
 @ApiModel(description = "查询条件")
 public class Query {
 
