@@ -22,7 +22,7 @@ import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.launch.server.ServerInfo;
 import org.springblade.core.log.constant.EventConstant;
 import org.springblade.core.log.feign.ILogClient;
-import org.springblade.core.log.model.LogBlade;
+import org.springblade.core.log.model.LogUsual;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.utils.UrlUtil;
 import org.springblade.core.tool.utils.WebUtil;
@@ -43,7 +43,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @AllArgsConstructor
-public class BladeLogListener {
+public class UsualLogListener {
 
 	private final ILogClient logService;
 	private final ServerInfo serverInfo;
@@ -51,22 +51,22 @@ public class BladeLogListener {
 
 	@Async
 	@Order
-	@EventListener(BladeLogEvent.class)
-	public void saveBladeLog(BladeLogEvent event) {
+	@EventListener(UsualLogEvent.class)
+	public void saveUsualLog(UsualLogEvent event) {
 		Map<String, Object> source = (Map<String, Object>) event.getSource();
-		LogBlade logBlade = (LogBlade) source.get(EventConstant.EVENT_LOG);
+		LogUsual logUsual = (LogUsual) source.get(EventConstant.EVENT_LOG);
 		HttpServletRequest request = (HttpServletRequest) source.get(EventConstant.EVENT_REQUEST);
-		logBlade.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
-		logBlade.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
-		logBlade.setMethod(request.getMethod());
-		logBlade.setParams(WebUtil.getRequestParamString(request));
-		logBlade.setServerHost(serverInfo.getHostName());
-		logBlade.setServiceId(bladeProperties.getName());
-		logBlade.setEnv(bladeProperties.getEnv());
-		logBlade.setServerIp(serverInfo.getIPWithPort());
-		logBlade.setCreateBy(SecureUtil.getUserAccount(request));
-		logBlade.setCreateTime(LocalDateTime.now());
-		logService.saveBladeLog(logBlade);
+		logUsual.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
+		logUsual.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
+		logUsual.setMethod(request.getMethod());
+		logUsual.setParams(WebUtil.getRequestParamString(request));
+		logUsual.setServerHost(serverInfo.getHostName());
+		logUsual.setServiceId(bladeProperties.getName());
+		logUsual.setEnv(bladeProperties.getEnv());
+		logUsual.setServerIp(serverInfo.getIPWithPort());
+		logUsual.setCreateBy(SecureUtil.getUserAccount(request));
+		logUsual.setCreateTime(LocalDateTime.now());
+		logService.saveUsualLog(logUsual);
 	}
 
 }

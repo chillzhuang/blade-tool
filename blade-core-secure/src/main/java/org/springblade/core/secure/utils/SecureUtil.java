@@ -50,7 +50,7 @@ public class SecureUtil {
 	public final static Integer AUTH_LENGTH = 7;
 	private static String BASE64_SECURITY = DatatypeConverter.printBase64Binary("SpringBlade".getBytes());
 
-	/**6
+	/**
 	 * 获取用户信息
 	 *
 	 * @return

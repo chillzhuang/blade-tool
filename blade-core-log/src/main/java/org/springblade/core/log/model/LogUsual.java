@@ -34,8 +34,8 @@ import java.time.LocalDateTime;
  * @since 2018-10-12
  */
 @Data
-@TableName("blade_log")
-public class LogBlade implements Serializable {
+@TableName("blade_log_usual")
+public class LogUsual implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -17,7 +17,7 @@ package org.springblade.core.log.feign;
 
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.log.model.LogApi;
-import org.springblade.core.log.model.LogBlade;
+import org.springblade.core.log.model.LogUsual;
 import org.springblade.core.log.model.LogError;
 import org.springblade.core.tool.api.R;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -42,8 +42,8 @@ public interface ILogClient {
 	 * @param log
 	 * @return
 	 */
-	@PostMapping(API_PREFIX + "/saveBladeLog")
-	R<Boolean> saveBladeLog(@RequestBody LogBlade log);
+	@PostMapping(API_PREFIX + "/saveUsualLog")
+	R<Boolean> saveUsualLog(@RequestBody LogUsual log);
 
 	/**
 	 * 保存操作日志

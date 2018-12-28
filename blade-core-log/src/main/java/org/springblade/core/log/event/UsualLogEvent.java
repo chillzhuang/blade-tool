@@ -25,9 +25,9 @@ import java.util.Map;
  *
  * @author smallchill
  */
-public class BladeLogEvent extends ApplicationEvent {
+public class UsualLogEvent extends ApplicationEvent {
 
-	public BladeLogEvent(Map<String, Object> source) {
+	public UsualLogEvent(Map<String, Object> source) {
 		super(source);
 	}
 

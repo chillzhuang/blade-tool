@@ -19,7 +19,7 @@ package org.springblade.core.log.config;
 import lombok.AllArgsConstructor;
 import org.springblade.core.log.aspect.ApiLogAspect;
 import org.springblade.core.log.event.ApiLogListener;
-import org.springblade.core.log.event.BladeLogListener;
+import org.springblade.core.log.event.UsualLogListener;
 import org.springblade.core.log.event.ErrorLogListener;
 import org.springblade.core.log.logger.BladeLogger;
 import org.springblade.core.launch.props.BladeProperties;
@@ -64,8 +64,8 @@ public class BladeLogToolAutoConfiguration {
 	}
 
 	@Bean
-	public BladeLogListener bladeEventListener() {
-		return new BladeLogListener(logService, serverInfo, bladeProperties);
+	public UsualLogListener bladeEventListener() {
+		return new UsualLogListener(logService, serverInfo, bladeProperties);
 	}
 
 }

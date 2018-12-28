@@ -17,10 +17,10 @@
 package org.springblade.core.log.publisher;
 
 import org.springblade.core.log.constant.EventConstant;
-import org.springblade.core.log.event.BladeLogEvent;
+import org.springblade.core.log.event.UsualLogEvent;
 import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.core.tool.utils.WebUtil;
-import org.springblade.core.log.model.LogBlade;
+import org.springblade.core.log.model.LogUsual;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -35,14 +35,14 @@ public class BladeLogPublisher {
 
 	public static void publishEvent(String level, String id, String data) {
 		HttpServletRequest request = WebUtil.getRequest();
-		LogBlade logBlade = new LogBlade();
-		logBlade.setLogLevel(level);
-		logBlade.setLogId(id);
-		logBlade.setLogData(data);
+		LogUsual logUsual = new LogUsual();
+		logUsual.setLogLevel(level);
+		logUsual.setLogId(id);
+		logUsual.setLogData(data);
 		Map<String, Object> event = new HashMap<>(16);
-		event.put(EventConstant.EVENT_LOG, logBlade);
+		event.put(EventConstant.EVENT_LOG, logUsual);
 		event.put(EventConstant.EVENT_REQUEST, request);
-		SpringUtil.publishEvent(new BladeLogEvent(event));
+		SpringUtil.publishEvent(new UsualLogEvent(event));
 	}
 
 }

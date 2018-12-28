@@ -54,12 +54,9 @@ public class RequestLogAspect {
 		MethodSignature ms = (MethodSignature) point.getSignature();
 		Method method = ms.getMethod();
 		Object[] args = point.getArgs();
-		// 请求参数处理
 		final Map<String, Object> paraMap = new HashMap<>(16);
 		for (int i = 0; i < args.length; i++) {
-			// 读取方法参数
 			MethodParameter methodParam = ClassUtil.getMethodParameter(method, i);
-			// PathVariable 参数跳过
 			PathVariable pathVariable = methodParam.getParameterAnnotation(PathVariable.class);
 			if (pathVariable != null) {
 				continue;
@@ -70,7 +67,6 @@ public class RequestLogAspect {
 			if (requestBody != null && object != null) {
 				paraMap.putAll(BeanUtil.toMap(object));
 			} else {
-				// 参数名
 				RequestParam requestParam = methodParam.getParameterAnnotation(RequestParam.class);
 				String paraName;
 				if (requestParam != null && StringUtil.isNotBlank(requestParam.value())) {
@@ -106,6 +102,7 @@ public class RequestLogAspect {
 		});
 		needRemoveKeys.forEach(paraMap::remove);
 		// 打印请求
+		log.info("================  Request Start  ================");
 		if (paraMap.isEmpty()) {
 			log.info("===> {}: {}", requestMethod, requestURI);
 		} else {
@@ -127,6 +124,7 @@ public class RequestLogAspect {
 		} finally {
 			long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
 			log.info("<=== {}: {} ({} ms)", request.getMethod(), requestURI, tookMs);
+			log.info("================   Request End   ================");
 		}
 	}
 
