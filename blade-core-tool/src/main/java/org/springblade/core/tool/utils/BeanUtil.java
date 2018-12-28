@@ -17,7 +17,7 @@ package org.springblade.core.tool.utils;
 
 
 import org.springblade.core.tool.support.BeanProperty;
-import org.springblade.core.tool.support.BladeBeanCopier;
+import org.springblade.core.tool.support.BaseBeanCopier;
 import org.springframework.beans.BeansException;
 import org.springframework.cglib.beans.BeanGenerator;
 import org.springframework.cglib.beans.BeanMap;
@@ -109,7 +109,7 @@ public class BeanUtil extends org.springframework.beans.BeanUtils {
 	 * @return T
 	 */
 	public static <T> T copy(Object source, Class<T> clazz) {
-		BladeBeanCopier copier = BladeBeanCopier.create(source.getClass(), clazz, false);
+		BaseBeanCopier copier = BaseBeanCopier.create(source.getClass(), clazz, false);
 
 		T to = newInstance(clazz);
 		copier.copy(source, to, null);
@@ -125,7 +125,7 @@ public class BeanUtil extends org.springframework.beans.BeanUtils {
 	 * @param targetBean 需要赋值的对象
 	 */
 	public static void copy(Object source, Object targetBean) {
-		BladeBeanCopier copier = BladeBeanCopier
+		BaseBeanCopier copier = BaseBeanCopier
 			.create(source.getClass(), targetBean.getClass(), false);
 
 		copier.copy(source, targetBean, null);

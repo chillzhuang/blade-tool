@@ -1,3 +1,18 @@
+/**
+ * Copyright (c) 2018-2028, DreamLu 卢春梦 (qq596392912@gmail.com).
+ * <p>
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE;
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.gnu.org/licenses/lgpl.html
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.springblade.core.tool.support;
 
 import org.springblade.core.tool.utils.BeanUtil;
@@ -21,22 +36,29 @@ import java.util.Map;
  *
  * @author L.cm
  */
-public abstract class BladeBeanCopier {
+public abstract class BaseBeanCopier {
 	private static final BeanCopierKey KEY_FACTORY = (BeanCopierKey) KeyFactory.create(BeanCopierKey.class);
 	private static final Type CONVERTER = TypeUtils.parseType("org.springframework.cglib.core.Converter");
-	private static final Type BEAN_COPIER = TypeUtils.parseType(BladeBeanCopier.class.getName());
+	private static final Type BEAN_COPIER = TypeUtils.parseType(BaseBeanCopier.class.getName());
 	private static final Signature COPY = new Signature("copy", Type.VOID_TYPE, new Type[]{Constants.TYPE_OBJECT, Constants.TYPE_OBJECT, CONVERTER});
 	private static final Signature CONVERT = TypeUtils.parseSignature("Object convert(Object, Class, Object)");
 
 	interface BeanCopierKey {
+		/**
+		 * 实例化
+		 * @param source
+		 * @param target
+		 * @param useConverter
+		 * @return
+		 */
 		Object newInstance(String source, String target, boolean useConverter);
 	}
 
-	public static BladeBeanCopier create(Class source, Class target, boolean useConverter) {
-		return BladeBeanCopier.create(source, target, null, useConverter);
+	public static BaseBeanCopier create(Class source, Class target, boolean useConverter) {
+		return BaseBeanCopier.create(source, target, null, useConverter);
 	}
 
-	public static BladeBeanCopier create(Class source, Class target, ClassLoader classLoader, boolean useConverter) {
+	public static BaseBeanCopier create(Class source, Class target, ClassLoader classLoader, boolean useConverter) {
 		Generator gen;
 		if (classLoader == null) {
 			gen = new Generator();
@@ -49,10 +71,16 @@ public abstract class BladeBeanCopier {
 		return gen.create();
 	}
 
+	/**
+	 * 拷贝
+	 * @param from
+	 * @param to
+	 * @param converter
+	 */
 	abstract public void copy(Object from, Object to, Converter converter);
 
 	public static class Generator extends AbstractClassGenerator {
-		private static final Source SOURCE = new Source(BladeBeanCopier.class.getName());
+		private static final Source SOURCE = new Source(BaseBeanCopier.class.getName());
 		private final ClassLoader classLoader;
 		private Class source;
 		private Class target;
@@ -97,9 +125,9 @@ public abstract class BladeBeanCopier {
 			return ReflectUtils.getProtectionDomain(source);
 		}
 
-		public BladeBeanCopier create() {
+		public BaseBeanCopier create() {
 			Object key = KEY_FACTORY.newInstance(source.getName(), target.getName(), useConverter);
-			return (BladeBeanCopier) super.create(key);
+			return (BaseBeanCopier) super.create(key);
 		}
 
 		@Override
@@ -120,7 +148,7 @@ public abstract class BladeBeanCopier {
 			// 2018.12.27 by L.cm 支持链式 bean
 			PropertyDescriptor[] getters = BeanUtil.getBeanGetters(source);
 			PropertyDescriptor[] setters = BeanUtil.getBeanSetters(target);
-			Map<String, Object> names = new HashMap<>();
+			Map<String, Object> names = new HashMap<>(16);
 			for (PropertyDescriptor getter : getters) {
 				names.put(getter.getName(), getter);
 			}
@@ -167,7 +195,6 @@ public abstract class BladeBeanCopier {
 		}
 
 		private static boolean compatible(PropertyDescriptor getter, PropertyDescriptor setter) {
-			// TODO: allow automatic widening conversions?
 			return setter.getPropertyType().isAssignableFrom(getter.getPropertyType());
 		}
 
