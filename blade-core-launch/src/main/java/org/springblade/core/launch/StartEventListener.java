@@ -27,7 +27,7 @@ import org.springframework.util.StringUtils;
 /**
  * 项目启动事件通知
  *
- * @author smallchill
+ * @author Chill
  */
 @Slf4j
 @Configuration

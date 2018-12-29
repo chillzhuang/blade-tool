@@ -25,7 +25,7 @@ import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 /**
  * 重试机制
  *
- * @author smallchill
+ * @author Chill
  */
 @Slf4j
 @Configuration

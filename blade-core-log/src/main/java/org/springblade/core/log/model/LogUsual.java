@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 /**
  * 实体类
  *
- * @author smallchill
+ * @author Chill
  * @since 2018-10-12
  */
 @Data

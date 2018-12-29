@@ -23,7 +23,7 @@ import java.io.Serializable;
 /**
  * 用户实体
  *
- * @author smallchill
+ * @author Chill
  */
 @Data
 public class BladeUser implements Serializable {

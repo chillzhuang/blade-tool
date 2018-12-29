@@ -18,7 +18,7 @@ package org.springblade.core.tool.constant;
 /**
  * 系统默认角色
  *
- * @author smallchill
+ * @author Chill
  */
 public class RoleConstant {
 

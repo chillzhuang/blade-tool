@@ -36,7 +36,7 @@ import java.time.Duration;
 /**
  * RedisTemplate 配置
  *
- * @author smallchill
+ * @author Chill
  */
 @EnableCaching
 @Configuration

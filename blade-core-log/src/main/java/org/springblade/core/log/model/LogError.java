@@ -31,7 +31,7 @@ import java.time.LocalDateTime;
 /**
  * 服务 异常
  *
- * @author smallchill
+ * @author Chill
  */
 @Data
 @TableName("blade_log_error")

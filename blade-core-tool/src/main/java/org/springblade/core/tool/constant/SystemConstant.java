@@ -21,7 +21,7 @@ import lombok.Data;
 /**
  * Blade系统配置类
  *
- * @author smallchill
+ * @author Chill
  */
 @Data
 public class SystemConstant {

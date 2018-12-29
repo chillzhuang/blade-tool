@@ -18,7 +18,7 @@ package org.springblade.core.launch.constant;
 /**
  * 系统常量
  *
- * @author smallchill
+ * @author Chill
  */
 public interface AppConstant {
 

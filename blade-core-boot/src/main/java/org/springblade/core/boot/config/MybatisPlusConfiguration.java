@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Profile;
 /**
  * mybatisplus 配置
  *
- * @author smallchill
+ * @author Chill
  */
 @Configuration
 @MapperScan("org.springblade.**.mapper.**")

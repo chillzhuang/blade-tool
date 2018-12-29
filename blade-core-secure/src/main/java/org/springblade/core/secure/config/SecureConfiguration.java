@@ -29,7 +29,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * 配置类
  *
- * @author smallchill
+ * @author Chill
  */
 @Order
 @Configuration

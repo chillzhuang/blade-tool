@@ -21,7 +21,7 @@ import org.springframework.cloud.commons.util.InetUtils;
 /**
  * 服务器信息
  *
- * @author smallchill
+ * @author Chill
  */
 public class ServerInfo {
 

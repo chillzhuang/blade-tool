@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * secure模块api放行默认配置
  *
- * @author smallchill
+ * @author Chill
  */
 @Configuration
 @AutoConfigureBefore(SecureConfiguration.class)

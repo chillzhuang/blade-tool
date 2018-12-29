@@ -33,7 +33,7 @@ import java.util.Objects;
 /**
  * jwt拦截器校验
  *
- * @author smallchill
+ * @author Chill
  */
 @Slf4j
 public class SecureInterceptor extends HandlerInterceptorAdapter {

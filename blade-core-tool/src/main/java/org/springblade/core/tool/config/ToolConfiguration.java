@@ -26,7 +26,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * 工具配置类
  *
- * @author smallchill
+ * @author Chill
  */
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)

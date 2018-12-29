@@ -32,7 +32,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Consul自定义注册规则
  *
- * @author smallchill
+ * @author Chill
  */
 @Configuration
 @ConditionalOnConsulEnabled

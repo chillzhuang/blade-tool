@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 /**
  * 分页工具
  *
- * @author smallchill
+ * @author Chill
  */
 @Data
 @Accessors(chain = true)

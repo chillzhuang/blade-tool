@@ -20,7 +20,7 @@ import java.io.File;
 /**
  * 文件代理接口
  *
- * @author smallchill
+ * @author Chill
  */
 public interface IFileProxy {
 

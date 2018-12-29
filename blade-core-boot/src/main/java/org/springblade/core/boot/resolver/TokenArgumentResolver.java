@@ -27,7 +27,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 /**
  * Token转化BladeUser
  *
- * @author smallchill
+ * @author Chill
  */
 @Slf4j
 public class TokenArgumentResolver implements HandlerMethodArgumentResolver {

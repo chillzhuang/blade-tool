@@ -20,7 +20,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 /**
  * launcher 扩展 用于一些组件发现
  *
- * @author smallchill
+ * @author Chill
  */
 public interface LauncherService {
 

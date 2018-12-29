@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * XSS过滤
  *
- * @author smallchill
+ * @author Chill
  */
 public class XssFilter implements Filter {
 

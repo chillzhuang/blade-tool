@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 /**
  * LogUsual视图实体类
  *
- * @author smallchill
+ * @author Chill
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

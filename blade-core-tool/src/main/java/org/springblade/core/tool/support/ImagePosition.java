@@ -18,7 +18,7 @@ package org.springblade.core.tool.support;
 /**
  * 图片操作类
  *
- * @author smallchill
+ * @author Chill
  */
 public class ImagePosition {
 

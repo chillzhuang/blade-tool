@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * 异常信息事件发送
  *
- * @author smallchill
+ * @author Chill
  */
 public class ErrorLogPublisher {
 

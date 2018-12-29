@@ -29,7 +29,7 @@ import org.springframework.core.annotation.Order;
 /**
  * 配置类
  *
- * @author smallchill
+ * @author Chill
  */
 @Configuration
 @AllArgsConstructor

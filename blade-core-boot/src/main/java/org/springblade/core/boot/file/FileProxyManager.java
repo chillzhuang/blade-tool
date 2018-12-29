@@ -20,7 +20,7 @@ import java.io.File;
 /**
  * 文件管理类
  *
- * @author smallchill
+ * @author Chill
  */
 public class FileProxyManager {
 	private IFileProxy defaultFileProxyFactory = new BladeFileProxyFactory();

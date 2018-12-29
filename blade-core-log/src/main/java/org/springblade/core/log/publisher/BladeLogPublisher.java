@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * BLADE日志信息事件发送
  *
- * @author smallchill
+ * @author Chill
  */
 public class BladeLogPublisher {
 

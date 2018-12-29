@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 /**
  * 日志工具类
  *
- * @author smallchill
+ * @author Chill
  */
 @Slf4j
 public class BladeLogger implements InitializingBean {

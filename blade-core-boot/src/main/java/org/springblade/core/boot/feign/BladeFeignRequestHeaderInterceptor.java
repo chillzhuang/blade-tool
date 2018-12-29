@@ -28,7 +28,7 @@ import java.util.Enumeration;
 /**
  * feign 传递Request header
  *
- * @author smallchill
+ * @author Chill
  */
 @Slf4j
 public class BladeFeignRequestHeaderInterceptor implements RequestInterceptor {

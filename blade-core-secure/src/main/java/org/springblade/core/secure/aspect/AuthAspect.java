@@ -40,7 +40,7 @@ import java.lang.reflect.Method;
 /**
  * AOP 鉴权
  *
- * @author smallchill
+ * @author Chill
  */
 @Aspect
 public class AuthAspect implements ApplicationContextAware {

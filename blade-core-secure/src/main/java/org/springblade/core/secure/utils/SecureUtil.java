@@ -35,7 +35,7 @@ import java.util.Map;
 /**
  * Secure工具类
  *
- * @author smallchill
+ * @author Chill
  */
 public class SecureUtil {
 	public static final String BLADE_USER_REQUEST_ATTR = "_BLADE_USER_REQUEST_ATTR_";

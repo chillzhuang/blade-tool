@@ -6,7 +6,7 @@ import org.springblade.core.tool.utils.StringPool;
 /**
  * 字符串格式化
  *
- * @author smallchill
+ * @author Chill
  */
 public class StrFormatter {
 

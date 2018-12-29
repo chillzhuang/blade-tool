@@ -22,7 +22,7 @@ import org.springblade.core.tool.api.ResultCode;
 /**
  * Secure异常
  *
- * @author smallchill
+ * @author Chill
  */
 public class SecureException extends RuntimeException {
 	private static final long serialVersionUID = 2359767895161832954L;

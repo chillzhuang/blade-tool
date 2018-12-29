@@ -20,7 +20,7 @@ import java.io.OutputStream;
 /**
  * A factory for creating MultiOutputStream objects.
  *
- * @author smallchill
+ * @author Chill
  */
 public interface IMultiOutputStream {
 

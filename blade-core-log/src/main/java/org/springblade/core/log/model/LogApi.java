@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 /**
  * 实体类
  *
- * @author smallchill
+ * @author Chill
  */
 @Data
 @TableName("blade_log_api")

@@ -28,7 +28,7 @@ import java.util.Date;
 /**
  * 文件代理类
  *
- * @author smallchill
+ * @author Chill
  */
 public class BladeFileProxyFactory implements IFileProxy {
 

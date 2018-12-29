@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * 更改html请求异常为ajax
  *
- * @author smallchill
+ * @author Chill
  */
 public class BladeErrorController extends BasicErrorController {
 

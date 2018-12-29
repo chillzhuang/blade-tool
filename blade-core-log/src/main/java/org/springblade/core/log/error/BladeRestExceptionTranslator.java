@@ -52,7 +52,7 @@ import java.util.Set;
 /**
  * 全局异常处理，处理可预见的异常
  *
- * @author smallchill
+ * @author Chill
  */
 @Slf4j
 @Configuration

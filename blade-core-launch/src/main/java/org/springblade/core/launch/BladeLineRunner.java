@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 /**
  * 系统启动完毕后执行
  *
- * @author smallchill
+ * @author Chill
  */
 @Component
 public class BladeLineRunner implements CommandLineRunner {

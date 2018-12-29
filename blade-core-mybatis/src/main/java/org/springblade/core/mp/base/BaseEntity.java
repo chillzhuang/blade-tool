@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 /**
  * 基础实体类
  *
- * @author smallchill
+ * @author Chill
  */
 @Data
 public class BaseEntity implements Serializable {

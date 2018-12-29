@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * 分页工具
  *
- * @author smallchill
+ * @author Chill
  */
 public class Condition {
 

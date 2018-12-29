@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * 业务代码接口
  *
- * @author smallchill
+ * @author Chill
  */
 public interface IResultCode extends Serializable {
 

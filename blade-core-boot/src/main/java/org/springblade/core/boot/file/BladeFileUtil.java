@@ -24,7 +24,7 @@ import java.util.*;
 /**
  * 文件工具类
  *
- * @author smallchill
+ * @author Chill
  */
 public class BladeFileUtil {
 

@@ -18,7 +18,7 @@ package org.springblade.core.log.constant;
 /**
  * 事件常量
  *
- * @author smallchill
+ * @author Chill
  */
 public interface EventConstant {
 

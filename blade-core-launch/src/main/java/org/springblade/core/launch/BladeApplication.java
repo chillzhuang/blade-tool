@@ -29,7 +29,7 @@ import java.util.function.Function;
 /**
  * 项目启动器，搞定环境变量问题
  *
- * @author smallchill
+ * @author Chill
  */
 public class BladeApplication {
 

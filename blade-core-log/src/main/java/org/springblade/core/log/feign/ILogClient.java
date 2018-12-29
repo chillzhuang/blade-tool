@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * Feign接口类
  *
- * @author smallchill
+ * @author Chill
  */
 @FeignClient(
 	value = AppConstant.APPLICATION_LOG_NAME

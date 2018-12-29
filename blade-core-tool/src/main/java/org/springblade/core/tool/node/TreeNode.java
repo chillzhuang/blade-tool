@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 树型节点类
  *
- * @author smallchill
+ * @author Chill
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

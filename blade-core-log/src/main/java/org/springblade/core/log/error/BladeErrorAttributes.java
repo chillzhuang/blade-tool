@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * 全局异常处理
  *
- * @author smallchill
+ * @author Chill
  */
 @Slf4j
 public class BladeErrorAttributes extends DefaultErrorAttributes {

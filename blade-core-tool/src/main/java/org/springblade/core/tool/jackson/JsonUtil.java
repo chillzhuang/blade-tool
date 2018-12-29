@@ -37,7 +37,7 @@ import java.util.*;
 /**
  * Jackson工具类
  *
- * @author smallchill
+ * @author Chill
  */
 @Slf4j
 public class JsonUtil {

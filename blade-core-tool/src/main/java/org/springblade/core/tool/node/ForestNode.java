@@ -22,7 +22,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 森林节点类
  *
- * @author smallchill
+ * @author Chill
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

@@ -24,7 +24,7 @@ import org.springblade.core.tool.utils.StringUtil;
 /**
  * 权限判断
  *
- * @author smallchill
+ * @author Chill
  */
 public class AuthFun {
 

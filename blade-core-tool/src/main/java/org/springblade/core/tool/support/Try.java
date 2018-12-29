@@ -9,7 +9,7 @@ import java.util.function.Function;
  * 当 Lambda 遇上受检异常
  * https://segmentfault.com/a/1190000007832130
  *
- * @author smallchill
+ * @author Chill
  */
 public class Try {
 

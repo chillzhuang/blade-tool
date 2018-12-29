@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * swagger配置
  *
- * @author smallchill
+ * @author Chill
  */
 @Configuration
 @EnableSwagger2
