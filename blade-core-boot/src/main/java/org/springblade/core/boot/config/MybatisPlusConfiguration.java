@@ -16,11 +16,12 @@
 package org.springblade.core.boot.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springblade.core.mp.BladeMetaObjectHandler;
 import org.springblade.core.launch.constant.AppConstant;
+import org.springblade.core.mp.BladeMetaObjectHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -42,6 +43,11 @@ public class MybatisPlusConfiguration {
 	@Bean
 	public MetaObjectHandler metaObjectHandler() {
 		return new BladeMetaObjectHandler();
+	}
+
+	@Bean
+	public LogicSqlInjector logicSqlInjector() {
+		return new LogicSqlInjector();
 	}
 
 	/**
