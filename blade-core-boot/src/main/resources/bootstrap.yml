@@ -65,9 +65,9 @@ mybatis-plus:
       #驼峰下划线转换
       column-underline: true
       # 逻辑删除配置
-      # 逻辑删除全局值（1表示已删除，这也是Mybatis Plus的默认配置）
+      # 逻辑删除全局值（1表示已删除，Mybatis Plus的默认配置）
       logic-delete-value: 1
-      # 逻辑未删除全局值（0表示未删除，这也是Mybatis Plus的默认配置）
+      # 逻辑未删除全局值（0表示未删除，Mybatis Plus的默认配置）
       logic-not-delete-value: 0
   configuration:
     map-underscore-to-camel-case: true
