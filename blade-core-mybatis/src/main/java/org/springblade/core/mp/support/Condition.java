@@ -18,7 +18,6 @@ package org.springblade.core.mp.support;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringUtil;
@@ -76,7 +75,6 @@ public class Condition {
 				}
 			});
 		}
-		qw.eq(BladeConstant.IS_DELETED_FIELD, BladeConstant.DB_NOT_DELETED);
 		return qw;
 	}
 
