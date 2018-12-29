@@ -62,6 +62,7 @@ public class CollectionUtil extends org.springframework.util.CollectionUtils {
 	 * i.e. {@code null} or of zero length.
 	 *
 	 * @param coll the Collection to check
+	 * @return boolean
 	 */
 	public static boolean isNotEmpty(@Nullable Collection<?> coll) {
 		return !CollectionUtils.isEmpty(coll);
@@ -72,6 +73,7 @@ public class CollectionUtil extends org.springframework.util.CollectionUtils {
 	 * i.e. {@code null} or of zero length.
 	 *
 	 * @param map the Map to check
+	 * @return boolean
 	 */
 	public static boolean isNotEmpty(@Nullable Map<?, ?> map) {
 		return !CollectionUtils.isEmpty(map);

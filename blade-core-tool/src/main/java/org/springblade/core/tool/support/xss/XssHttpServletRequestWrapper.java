@@ -165,6 +165,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	 * 获取最原始的request
+	 * @return HttpServletRequest
 	 */
 	public HttpServletRequest getOrgRequest() {
 		return orgRequest;
@@ -172,6 +173,8 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	 * 获取最原始的request
+	 * @param request request
+	 * @return HttpServletRequest
 	 */
 	public static HttpServletRequest getOrgRequest(HttpServletRequest request) {
 		if (request instanceof XssHttpServletRequestWrapper) {

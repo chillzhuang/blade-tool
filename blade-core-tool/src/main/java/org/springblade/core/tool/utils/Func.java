@@ -286,7 +286,7 @@ public class Func {
 	 * 对象组中是否存在 Empty Object
 	 *
 	 * @param os 对象组
-	 * @return
+	 * @return boolean
 	 */
 	public static boolean hasEmpty(Object... os) {
 		for (Object o : os) {
@@ -300,8 +300,8 @@ public class Func {
 	/**
 	 * 对象组中是否全是 Empty Object
 	 *
-	 * @param os
-	 * @return
+	 * @param os 对象组
+	 * @return boolean
 	 */
 	public static boolean allEmpty(Object... os) {
 		for (Object o : os) {
@@ -315,14 +315,13 @@ public class Func {
 	/**
 	 * 比较两个对象是否相等。<br>
 	 * 相同的条件有两个，满足其一即可：<br>
-	 * 1. obj1 == null && obj2 == null; 2. obj1.equals(obj2)
 	 *
 	 * @param obj1 对象1
 	 * @param obj2 对象2
 	 * @return 是否相等
 	 */
 	public static boolean equals(Object obj1, Object obj2) {
-		return (obj1 != null) ? (obj1.equals(obj2)) : (obj2 == null);
+		return Objects.equals(obj1, obj2);
 	}
 
 	/**
@@ -376,21 +375,21 @@ public class Func {
 	}
 
 	/**
-	 * 强转->string,并去掉多余空格
+	 * 强转string,并去掉多余空格
 	 *
-	 * @param str
-	 * @return
+	 * @param str 字符串
+	 * @return String
 	 */
 	public static String toStr(Object str) {
 		return toStr(str, "");
 	}
 
 	/**
-	 * 强转->string,并去掉多余空格
+	 * 强转string,并去掉多余空格
 	 *
-	 * @param str
-	 * @param defaultValue
-	 * @return
+	 * @param str          字符串
+	 * @param defaultValue 默认值
+	 * @return String
 	 */
 	public static String toStr(Object str, String defaultValue) {
 		if (null == str) {
@@ -676,7 +675,7 @@ public class Func {
 	 * 转换为String数组<br>
 	 *
 	 * @param split 分隔符
-	 * @param split 被转换的值
+	 * @param str   被转换的值
 	 * @return 结果
 	 */
 	public static String[] toStrArray(String split, String str) {
@@ -843,8 +842,8 @@ public class Func {
 	/**
 	 * 自定义加密 先MD5再SHA1
 	 *
-	 * @param data
-	 * @return
+	 * @param data 字符串
+	 * @return String
 	 */
 	public static String encrypt(String data) {
 		return DigestUtil.encrypt(data);

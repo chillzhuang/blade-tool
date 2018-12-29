@@ -51,8 +51,8 @@ public class UrlUtil extends org.springframework.web.util.UriUtils {
 	/**
 	 * 获取url路径
 	 *
-	 * @param uriStr
-	 * @return
+	 * @param uriStr 路径
+	 * @return url路径
 	 */
 	public static String getPath(String uriStr) {
 		URI uri;

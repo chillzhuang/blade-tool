@@ -42,6 +42,11 @@ public class BladeController {
 	 * ============================     BINDER    =================================================
 	 */
 
+	/**
+	 * initBinder
+	 *
+	 * @param binder binder
+	 */
 	@InitBinder
 	protected void initBinder(ServletRequestDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -58,6 +63,8 @@ public class BladeController {
 
 	/**
 	 * 获取request
+	 *
+	 * @return HttpServletRequest
 	 */
 	public HttpServletRequest getRequest() {
 		return this.request;
@@ -66,7 +73,7 @@ public class BladeController {
 	/**
 	 * 获取当前用户
 	 *
-	 * @return
+	 * @return BladeUser
 	 */
 	public BladeUser getUser() {
 		return SecureUtil.getUser();
@@ -77,7 +84,8 @@ public class BladeController {
 	/**
 	 * 返回ApiResult
 	 *
-	 * @param data
+	 * @param data 数据
+	 * @param <T>  T 泛型标记
 	 * @return R
 	 */
 	public <T> R<T> data(T data) {
@@ -87,50 +95,52 @@ public class BladeController {
 	/**
 	 * 返回ApiResult
 	 *
-	 * @param data
-	 * @param message
+	 * @param data 数据
+	 * @param msg  消息
+	 * @param <T>  T 泛型标记
 	 * @return R
 	 */
-	public <T> R<T> data(T data, String message) {
-		return R.data(data, message);
+	public <T> R<T> data(T data, String msg) {
+		return R.data(data, msg);
 	}
 
 	/**
 	 * 返回ApiResult
 	 *
-	 * @param data
-	 * @param message
-	 * @param code
+	 * @param data 数据
+	 * @param msg  消息
+	 * @param code 状态码
+	 * @param <T>  T 泛型标记
 	 * @return R
 	 */
-	public <T> R<T> data(T data, String message, int code) {
-		return R.data(code, data, message);
+	public <T> R<T> data(T data, String msg, int code) {
+		return R.data(code, data, msg);
 	}
 
 	/**
 	 * 返回ApiResult
 	 *
-	 * @param message
+	 * @param msg 消息
 	 * @return R
 	 */
-	public R success(String message) {
-		return R.success(message);
+	public R success(String msg) {
+		return R.success(msg);
 	}
 
 	/**
 	 * 返回ApiResult
 	 *
-	 * @param message
+	 * @param msg 消息
 	 * @return R
 	 */
-	public R failure(String message) {
-		return R.failure(message);
+	public R failure(String msg) {
+		return R.failure(msg);
 	}
 
 	/**
 	 * 返回ApiResult
 	 *
-	 * @param flag
+	 * @param flag 是否成功
 	 * @return R
 	 */
 	public R status(boolean flag) {
@@ -143,8 +153,8 @@ public class BladeController {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param file
-	 * @return
+	 * @param file 文件
+	 * @return BladeFile
 	 */
 	public BladeFile getFile(MultipartFile file) {
 		return BladeFileUtil.getFile(file);
@@ -153,9 +163,9 @@ public class BladeController {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param file
-	 * @param dir
-	 * @return
+	 * @param file 文件
+	 * @param dir  目录
+	 * @return BladeFile
 	 */
 	public BladeFile getFile(MultipartFile file, String dir) {
 		return BladeFileUtil.getFile(file, dir);
@@ -164,11 +174,11 @@ public class BladeController {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param file
-	 * @param dir
-	 * @param path
-	 * @param virtualPath
-	 * @return
+	 * @param file        文件
+	 * @param dir         目录
+	 * @param path        路径
+	 * @param virtualPath 虚拟路径
+	 * @return BladeFile
 	 */
 	public BladeFile getFile(MultipartFile file, String dir, String path, String virtualPath) {
 		return BladeFileUtil.getFile(file, dir, path, virtualPath);
@@ -177,8 +187,8 @@ public class BladeController {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param files
-	 * @return
+	 * @param files 文件集合
+	 * @return BladeFile
 	 */
 	public List<BladeFile> getFiles(List<MultipartFile> files) {
 		return BladeFileUtil.getFiles(files);
@@ -187,9 +197,9 @@ public class BladeController {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param files
-	 * @param dir
-	 * @return
+	 * @param files 文件集合
+	 * @param dir   目录
+	 * @return BladeFile
 	 */
 	public List<BladeFile> getFiles(List<MultipartFile> files, String dir) {
 		return BladeFileUtil.getFiles(files, dir);
@@ -198,10 +208,11 @@ public class BladeController {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param files
-	 * @param path
-	 * @param virtualPath
-	 * @return
+	 * @param files       文件集合
+	 * @param dir         目录
+	 * @param path        目录
+	 * @param virtualPath 虚拟路径
+	 * @return BladeFile
 	 */
 	public List<BladeFile> getFiles(List<MultipartFile> files, String dir, String path, String virtualPath) {
 		return BladeFileUtil.getFiles(files, dir, path, virtualPath);

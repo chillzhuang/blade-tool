@@ -27,14 +27,14 @@ public interface IResultCode extends Serializable {
 	/**
 	 * 消息
 	 *
-	 * @return
+	 * @return String
 	 */
 	String getMessage();
 
 	/**
 	 * 状态码
 	 *
-	 * @return
+	 * @return int
 	 */
 	int getCode();
 

@@ -33,7 +33,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
 
 	/**
-	 * 1. 入参筛选
+	 * 入参筛选
 	 *
 	 * @param methodParameter 参数集合
 	 * @return 格式化后的参数
@@ -44,12 +44,13 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
 	}
 
 	/**
+	 * 出参设置
+	 *
 	 * @param methodParameter       入参集合
 	 * @param modelAndViewContainer model 和 view
 	 * @param nativeWebRequest      web相关
 	 * @param webDataBinderFactory  入参解析
 	 * @return 包装对象
-	 * @throws Exception exception
 	 */
 	@Override
 	public Object resolveArgument(MethodParameter methodParameter,

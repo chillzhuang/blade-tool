@@ -52,9 +52,8 @@ public class BladeFileUtil {
 	/**
 	 * 获取文件后缀
 	 *
-	 * @param @param  fileName
-	 * @param @return 设定文件
-	 * @return String 返回类型
+	 * @param fileName 文件名
+	 * @return String 返回后缀
 	 */
 	public static String getFileExt(String fileName) {
 		return fileName.substring(fileName.lastIndexOf(StringPool.DOT));
@@ -63,7 +62,9 @@ public class BladeFileUtil {
 	/**
 	 * 测试文件后缀 只让指定后缀的文件上传，像jsp,war,sh等危险的后缀禁止
 	 *
-	 * @return
+	 * @param dir      目录
+	 * @param fileName 文件名
+	 * @return 返回成功与否
 	 */
 	public static boolean testExt(String dir, String fileName) {
 		String fileExt = getFileExt(fileName);
@@ -171,8 +172,8 @@ public class BladeFileUtil {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param file
-	 * @return
+	 * @param file 文件
+	 * @return BladeFile
 	 */
 	public static BladeFile getFile(MultipartFile file) {
 		return getFile(file, "image", null, null);
@@ -181,9 +182,9 @@ public class BladeFileUtil {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param file
-	 * @param dir
-	 * @return
+	 * @param file 文件
+	 * @param dir  目录
+	 * @return BladeFile
 	 */
 	public static BladeFile getFile(MultipartFile file, String dir) {
 		return getFile(file, dir, null, null);
@@ -192,11 +193,11 @@ public class BladeFileUtil {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param file
-	 * @param dir
-	 * @param path
-	 * @param virtualPath
-	 * @return
+	 * @param file        文件
+	 * @param dir         目录
+	 * @param path        路径
+	 * @param virtualPath 虚拟路径
+	 * @return BladeFile
 	 */
 	public static BladeFile getFile(MultipartFile file, String dir, String path, String virtualPath) {
 		return new BladeFile(file, dir, path, virtualPath);
@@ -205,8 +206,8 @@ public class BladeFileUtil {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param files
-	 * @return
+	 * @param files 文件集合
+	 * @return BladeFile
 	 */
 	public static List<BladeFile> getFiles(List<MultipartFile> files) {
 		return getFiles(files, "image", null, null);
@@ -215,9 +216,9 @@ public class BladeFileUtil {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param files
-	 * @param dir
-	 * @return
+	 * @param files 文件集合
+	 * @param dir   目录
+	 * @return BladeFile
 	 */
 	public static List<BladeFile> getFiles(List<MultipartFile> files, String dir) {
 		return getFiles(files, dir, null, null);
@@ -226,10 +227,10 @@ public class BladeFileUtil {
 	/**
 	 * 获取BladeFile封装类
 	 *
-	 * @param files
-	 * @param path
-	 * @param virtualPath
-	 * @return
+	 * @param files       文件集合
+	 * @param path        路径
+	 * @param virtualPath 虚拟路径
+	 * @return BladeFile
 	 */
 	public static List<BladeFile> getFiles(List<MultipartFile> files, String dir, String path, String virtualPath) {
 		List<BladeFile> list = new ArrayList<>();

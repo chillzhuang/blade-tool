@@ -26,20 +26,23 @@ public interface INode {
 
 	/**
 	 * 主键
-	 * @return
+	 *
+	 * @return Integer
 	 */
-    Integer getId();
+	Integer getId();
 
 	/**
 	 * 父主键
-	 * @return
+	 *
+	 * @return Integer
 	 */
 	Integer getParentId();
 
 	/**
 	 * 子孙节点
-	 * @return
+	 *
+	 * @return List
 	 */
-    List<INode> getChildren();
+	List<INode> getChildren();
 
 }

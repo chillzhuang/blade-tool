@@ -57,7 +57,7 @@ public class ForestNodeManager<T extends INode> {
 	/**
 	 * 增加父节点ID
 	 *
-	 * @param parentId
+	 * @param parentId 父节点ID
 	 */
 	public void addParentId(Integer parentId) {
 		parentIds.add(parentId);

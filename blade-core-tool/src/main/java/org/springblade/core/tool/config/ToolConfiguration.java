@@ -34,6 +34,8 @@ public class ToolConfiguration implements WebMvcConfigurer {
 
 	/**
 	 * Spring上下文缓存
+	 *
+	 * @return SpringUtil
 	 */
 	@Bean
 	public SpringUtil springUtils() {

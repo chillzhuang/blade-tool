@@ -52,9 +52,10 @@ public final class ImageUtil {
 	/**
 	 * 转换输入流到byte
 	 *
-	 * @param src
-	 * @return
-	 * @throws IOException
+	 * @param src  源
+	 * @param type 类型
+	 * @return byte[]
+	 * @throws IOException 异常
 	 */
 	public static byte[] toByteArray(BufferedImage src, String type) throws IOException {
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -66,7 +67,7 @@ public final class ImageUtil {
 	 * 获取图像内容
 	 *
 	 * @param srcImageFile 文件路径
-	 * @return
+	 * @return BufferedImage
 	 */
 	public static BufferedImage readImage(String srcImageFile) {
 		try {
@@ -81,7 +82,7 @@ public final class ImageUtil {
 	 * 获取图像内容
 	 *
 	 * @param srcImageFile 文件
-	 * @return
+	 * @return BufferedImage
 	 */
 	public static BufferedImage readImage(File srcImageFile) {
 		try {
@@ -96,7 +97,7 @@ public final class ImageUtil {
 	 * 获取图像内容
 	 *
 	 * @param srcInputStream 输入流
-	 * @return
+	 * @return BufferedImage
 	 */
 	public static BufferedImage readImage(InputStream srcInputStream) {
 		try {
@@ -111,7 +112,7 @@ public final class ImageUtil {
 	 * 获取图像内容
 	 *
 	 * @param url URL地址
-	 * @return
+	 * @return BufferedImage
 	 */
 	public static BufferedImage readImage(URL url) {
 		try {
@@ -128,6 +129,7 @@ public final class ImageUtil {
 	 *
 	 * @param src    源图像
 	 * @param output 输出流
+	 * @param type   类型
 	 * @param scale  缩放比例
 	 * @param flag   缩放选择:true 放大; false 缩小;
 	 */
@@ -166,6 +168,7 @@ public final class ImageUtil {
 	 *
 	 * @param src       源图像
 	 * @param output    输出流
+	 * @param type      类型
 	 * @param height    缩放后的高度
 	 * @param width     缩放后的宽度
 	 * @param bb        比例不对时是否需要补白：true为补白; false为不补白;
@@ -213,6 +216,7 @@ public final class ImageUtil {
 	 *
 	 * @param src    源图像
 	 * @param output 切片后的图像地址
+	 * @param type   类型
 	 * @param x      目标切片起点坐标X
 	 * @param y      目标切片起点坐标Y
 	 * @param width  目标切片宽度
@@ -248,6 +252,7 @@ public final class ImageUtil {
 	 *
 	 * @param src   源图像地址
 	 * @param mos   切片目标文件夹
+	 * @param type  类型
 	 * @param prows 目标切片行数。默认2，必须是范围 [1, 20] 之内
 	 * @param pcols 目标切片列数。默认2，必须是范围 [1, 20] 之内
 	 */
@@ -294,6 +299,7 @@ public final class ImageUtil {
 	 *
 	 * @param src         源图像地址
 	 * @param mos         切片目标文件夹
+	 * @param type        类型
 	 * @param pdestWidth  目标切片宽度。默认200
 	 * @param pdestHeight 目标切片高度。默认150
 	 */
@@ -336,7 +342,7 @@ public final class ImageUtil {
 	}
 
 	/**
-	 * 图像类型转换：GIF->JPG、GIF->PNG、PNG->JPG、PNG->GIF(X)、BMP->PNG
+	 * 图像类型转换：GIF-JPG、GIF-PNG、PNG-JPG、PNG-GIF(X)、BMP-PNG
 	 *
 	 * @param src        源图像地址
 	 * @param formatName 包含格式非正式名称的 String：如JPG、JPEG、GIF等
@@ -358,6 +364,7 @@ public final class ImageUtil {
 	 *
 	 * @param src    源图像地址
 	 * @param output 目标图像地址
+	 * @param type      类型
 	 */
 	public final static void gray(BufferedImage src, OutputStream output, String type) {
 		try {
@@ -378,6 +385,7 @@ public final class ImageUtil {
 	 *
 	 * @param src      源图像
 	 * @param output   输出流
+	 * @param type      类型
 	 * @param text     水印文字
 	 * @param font     水印的字体
 	 * @param color    水印的字体颜色
@@ -416,6 +424,7 @@ public final class ImageUtil {
 	 *
 	 * @param src      源图像
 	 * @param output   输出流
+	 * @param type      类型
 	 * @param stamp    水印图片
 	 * @param position 水印位置 {@link ImagePosition}
 	 * @param x        修正值
@@ -451,8 +460,8 @@ public final class ImageUtil {
 	/**
 	 * 计算text的长度（一个中文算两个字符）
 	 *
-	 * @param text
-	 * @return
+	 * @param text text
+	 * @return int
 	 */
 	public final static int calcTextWidth(String text) {
 		int length = 0;
@@ -466,6 +475,12 @@ public final class ImageUtil {
 		return length / 2;
 	}
 
+	/**
+	 * 默认字符串
+	 * @param str 字符串
+	 * @param defaultStr 默认值
+	 * @return
+	 */
 	public static String defaultString(String str, String defaultStr) {
 		return ((str == null) ? defaultStr : str);
 	}

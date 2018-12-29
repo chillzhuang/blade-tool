@@ -46,6 +46,8 @@ public class MybatisPlusConfiguration {
 
 	/**
 	 * SQL执行效率插件
+	 *
+	 * @return PerformanceInterceptor
 	 */
 	@Bean
 	@Profile({AppConstant.DEV_CDOE, AppConstant.TEST_CODE})

@@ -43,9 +43,9 @@ public class ProtostuffUtil {
 	/**
 	 * 序列化方法，把指定对象序列化成字节数组
 	 *
-	 * @param obj
-	 * @param <T>
-	 * @return
+	 * @param obj obj
+	 * @param <T> T
+	 * @return byte[]
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> byte[] serialize(T obj) {
@@ -63,10 +63,10 @@ public class ProtostuffUtil {
 	/**
 	 * 反序列化方法，将字节数组反序列化成指定Class类型
 	 *
-	 * @param data
-	 * @param clazz
-	 * @param <T>
-	 * @return
+	 * @param data data
+	 * @param clazz clazz
+	 * @param <T> T
+	 * @return T
 	 */
 	public static <T> T deserialize(byte[] data, Class<T> clazz) {
 		Schema<T> schema = getSchema(clazz);
@@ -75,6 +75,12 @@ public class ProtostuffUtil {
 		return obj;
 	}
 
+	/**
+	 * 获取Schema
+	 * @param clazz clazz
+	 * @param <T> T
+	 * @return T
+	 */
 	@SuppressWarnings("unchecked")
 	private static <T> Schema<T> getSchema(Class<T> clazz) {
 		Schema<T> schema = (Schema<T>) schemaCache.get(clazz);

@@ -59,6 +59,9 @@ public class BladeFileProxyFactory implements IFileProxy {
 
 	/**
 	 * 获取文件后缀
+	 *
+	 * @param fileName 文件名
+	 * @return 文件后缀
 	 */
 	public static String getFileExt(String fileName) {
 		if (!fileName.contains(StringPool.DOT)) {
@@ -71,8 +74,9 @@ public class BladeFileProxyFactory implements IFileProxy {
 	/**
 	 * 获取文件保存地址
 	 *
-	 * @param saveDir
-	 * @return
+	 * @param dir     目录
+	 * @param saveDir 保存目录
+	 * @return 地址
 	 */
 	public static String getFileDir(String dir, String saveDir) {
 		StringBuilder newFileDir = new StringBuilder();
@@ -87,7 +91,6 @@ public class BladeFileProxyFactory implements IFileProxy {
 	 * 图片压缩
 	 *
 	 * @param path 文件地址
-	 * @return
 	 */
 	@Override
 	public void compress(String path) {

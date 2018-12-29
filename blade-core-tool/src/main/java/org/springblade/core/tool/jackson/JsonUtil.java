@@ -46,6 +46,7 @@ public class JsonUtil {
 	 * 将对象序列化成json字符串
 	 *
 	 * @param value javaBean
+	 * @param <T>   T 泛型标记
 	 * @return jsonString json字符串
 	 */
 	public static <T> String toJson(T value) {
@@ -171,11 +172,10 @@ public class JsonUtil {
 
 	/**
 	 * 将json反序列化成List对象
-	 *
-	 * @param content      content
+	 * @param content content
 	 * @param valueTypeRef class
-	 * @param <T>          T 泛型标记
-	 * @return
+	 * @param <T> T 泛型标记
+	 * @return List
 	 */
 	public static <T> List<T> parseArray(String content, Class<T> valueTypeRef) {
 		try {

@@ -60,6 +60,8 @@ public class MessageConfiguration implements WebMvcConfigurer {
 
 	/**
 	 * 防XSS注入
+	 *
+	 * @return FilterRegistrationBean
 	 */
 	@Bean
 	public FilterRegistrationBean xssFilterRegistration() {

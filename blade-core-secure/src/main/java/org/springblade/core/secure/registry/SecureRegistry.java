@@ -48,6 +48,9 @@ public class SecureRegistry {
 
 	/**
 	 * 设置放行api
+	 *
+	 * @param patterns api配置
+	 * @return SecureRegistry
 	 */
 	public SecureRegistry excludePathPatterns(String... patterns) {
 		return excludePathPatterns(Arrays.asList(patterns));
@@ -55,6 +58,9 @@ public class SecureRegistry {
 
 	/**
 	 * 设置放行api
+	 *
+	 * @param patterns api配置
+	 * @return SecureRegistry
 	 */
 	public SecureRegistry excludePathPatterns(List<String> patterns) {
 		this.excludePatterns.addAll(patterns);

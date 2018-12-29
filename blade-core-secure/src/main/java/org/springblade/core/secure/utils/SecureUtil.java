@@ -53,7 +53,7 @@ public class SecureUtil {
 	/**
 	 * 获取用户信息
 	 *
-	 * @return
+	 * @return BladeUser
 	 */
 	public static BladeUser getUser() {
 		HttpServletRequest request = WebUtil.getRequest();
@@ -72,7 +72,8 @@ public class SecureUtil {
 	/**
 	 * 获取用户信息
 	 *
-	 * @return
+	 * @param request request
+	 * @return BladeUser
 	 */
 	public static BladeUser getUser(HttpServletRequest request) {
 		Claims claims = getClaims(request);
@@ -95,7 +96,7 @@ public class SecureUtil {
 	/**
 	 * 获取用户id
 	 *
-	 * @return
+	 * @return userId
 	 */
 	public static Integer getUserId() {
 		return (null == getUser()) ? -1 : getUser().getUserId();
@@ -104,7 +105,8 @@ public class SecureUtil {
 	/**
 	 * 获取用户id
 	 *
-	 * @return
+	 * @param request request
+	 * @return userId
 	 */
 	public static Integer getUserId(HttpServletRequest request) {
 		return (null == getUser(request)) ? -1 : getUser().getUserId();
@@ -113,7 +115,7 @@ public class SecureUtil {
 	/**
 	 * 获取用户账号
 	 *
-	 * @return
+	 * @return userAccount
 	 */
 	public static String getUserAccount() {
 		return (null == getUser()) ? StringPool.EMPTY : getUser().getAccount();
@@ -122,7 +124,8 @@ public class SecureUtil {
 	/**
 	 * 获取用户账号
 	 *
-	 * @return
+	 * @param request request
+	 * @return userAccount
 	 */
 	public static String getUserAccount(HttpServletRequest request) {
 		return (null == getUser(request)) ? StringPool.EMPTY : getUser().getAccount();
@@ -131,7 +134,8 @@ public class SecureUtil {
 	/**
 	 * 获取Claims
 	 *
-	 * @return
+	 * @param request request
+	 * @return Claims
 	 */
 	public static Claims getClaims(HttpServletRequest request) {
 		String auth = request.getHeader(SecureUtil.HEADER);
@@ -148,7 +152,7 @@ public class SecureUtil {
 	/**
 	 * 获取请求头
 	 *
-	 * @return
+	 * @return header
 	 */
 	public static String getHeader() {
 		return getHeader(WebUtil.getRequest());
@@ -157,8 +161,8 @@ public class SecureUtil {
 	/**
 	 * 获取请求头
 	 *
-	 * @param request
-	 * @return
+	 * @param request request
+	 * @return header
 	 */
 	public static String getHeader(HttpServletRequest request) {
 		return request.getHeader(HEADER);
@@ -167,8 +171,8 @@ public class SecureUtil {
 	/**
 	 * 解析jsonWebToken
 	 *
-	 * @param jsonWebToken
-	 * @return
+	 * @param jsonWebToken jsonWebToken
+	 * @return Claims
 	 */
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
@@ -184,11 +188,11 @@ public class SecureUtil {
 	/**
 	 * 创建jwt
 	 *
-	 * @param user     用户
+	 * @param user     user
 	 * @param audience audience
 	 * @param issuer   issuer
 	 * @param isExpire isExpire
-	 * @return
+	 * @return jwt
 	 */
 	public static String createJWT(Map<String, String> user, String audience, String issuer, boolean isExpire) {
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -223,7 +227,7 @@ public class SecureUtil {
 	/**
 	 * 获取过期时间(次日凌晨3点)
 	 *
-	 * @return
+	 * @return expire
 	 */
 	public static long getExpire() {
 		Calendar cal = Calendar.getInstance();

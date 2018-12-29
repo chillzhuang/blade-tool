@@ -1086,7 +1086,6 @@ public class StringUtil extends org.springframework.util.StringUtils {
 
 	/**
 	 * 返回字符串 searchStr 在字符串 str 中第 ordinal 次出现的位置。<br>
-	 * 如果 str=null 或 searchStr=null 或 ordinal<=0 则返回-1<br>
 	 * 此方法来自：Apache-Commons-Lang
 	 * <p>
 	 * 栗子（*代表任意字符）：
@@ -1251,6 +1250,7 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	/**
 	 * 创建StringBuilder对象
 	 *
+	 * @param sb 初始StringBuilder
 	 * @param strs 初始字符串列表
 	 * @return StringBuilder对象
 	 */
@@ -1341,8 +1341,8 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	/**
 	 * 下划线转驼峰
 	 *
-	 * @param para
-	 * @return
+	 * @param para 字符串
+	 * @return String
 	 */
 	public static String underlineToHump(String para) {
 		StringBuilder result = new StringBuilder();
@@ -1361,8 +1361,8 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	/**
 	 * 驼峰转下划线
 	 *
-	 * @param para
-	 * @return
+	 * @param para 字符串
+	 * @return String
 	 */
 	public static String humpToUnderline(String para) {
 		StringBuilder sb = new StringBuilder(para);

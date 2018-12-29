@@ -46,9 +46,9 @@ public abstract class BaseBeanCopier {
 	interface BeanCopierKey {
 		/**
 		 * 实例化
-		 * @param source
-		 * @param target
-		 * @param useConverter
+		 * @param source 源
+		 * @param target 目标
+		 * @param useConverter 是否使用转换
 		 * @return
 		 */
 		Object newInstance(String source, String target, boolean useConverter);
@@ -73,9 +73,9 @@ public abstract class BaseBeanCopier {
 
 	/**
 	 * 拷贝
-	 * @param from
-	 * @param to
-	 * @param converter
+	 * @param from 源
+	 * @param to 目标
+	 * @param converter 转换器
 	 */
 	abstract public void copy(Object from, Object to, Converter converter);
 

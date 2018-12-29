@@ -98,6 +98,8 @@ public class R<T> implements Serializable {
 	 * 返回R
 	 *
 	 * @param data 数据
+	 * @param <T>  T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> data(T data) {
 		return data(data, BladeConstant.DEFAULT_SUCCESS_MESSAGE);
@@ -108,6 +110,8 @@ public class R<T> implements Serializable {
 	 *
 	 * @param data 数据
 	 * @param msg  消息
+	 * @param <T>  T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> data(T data, String msg) {
 		return data(HttpServletResponse.SC_OK, data, msg);
@@ -119,6 +123,8 @@ public class R<T> implements Serializable {
 	 * @param code 状态码
 	 * @param data 数据
 	 * @param msg  消息
+	 * @param <T>  T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> data(int code, T data, String msg) {
 		return new R<>(code, data, data == null ? BladeConstant.DEFAULT_NULL_MESSAGE : msg);
@@ -128,6 +134,8 @@ public class R<T> implements Serializable {
 	 * 返回R
 	 *
 	 * @param msg 消息
+	 * @param <T> T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> success(String msg) {
 		return new R<>(ResultCode.SUCCESS, msg);
@@ -137,6 +145,8 @@ public class R<T> implements Serializable {
 	 * 返回R
 	 *
 	 * @param resultCode 业务代码
+	 * @param <T>        T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> success(IResultCode resultCode) {
 		return new R<>(resultCode);
@@ -146,6 +156,9 @@ public class R<T> implements Serializable {
 	 * 返回R
 	 *
 	 * @param resultCode 业务代码
+	 * @param msg        消息
+	 * @param <T>        T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> success(IResultCode resultCode, String msg) {
 		return new R<>(resultCode, msg);
@@ -155,6 +168,8 @@ public class R<T> implements Serializable {
 	 * 返回R
 	 *
 	 * @param msg 消息
+	 * @param <T> T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> failure(String msg) {
 		return new R<>(ResultCode.FAILURE, msg);
@@ -166,6 +181,8 @@ public class R<T> implements Serializable {
 	 *
 	 * @param code 状态码
 	 * @param msg  消息
+	 * @param <T>  T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> failure(int code, String msg) {
 		return new R<>(code, null, msg);
@@ -175,6 +192,8 @@ public class R<T> implements Serializable {
 	 * 返回R
 	 *
 	 * @param resultCode 业务代码
+	 * @param <T>        T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> failure(IResultCode resultCode) {
 		return new R<>(resultCode);
@@ -184,6 +203,9 @@ public class R<T> implements Serializable {
 	 * 返回R
 	 *
 	 * @param resultCode 业务代码
+	 * @param msg        消息
+	 * @param <T>        T 泛型标记
+	 * @return R
 	 */
 	public static <T> R<T> failure(IResultCode resultCode, String msg) {
 		return new R<>(resultCode, msg);
@@ -193,6 +215,7 @@ public class R<T> implements Serializable {
 	 * 返回R
 	 *
 	 * @param flag 成功状态
+	 * @return R
 	 */
 	public static R status(boolean flag) {
 		return flag ? success(BladeConstant.DEFAULT_SUCCESS_MESSAGE) : failure(BladeConstant.DEFAULT_FAILURE_MESSAGE);

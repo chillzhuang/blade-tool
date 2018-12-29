@@ -43,7 +43,7 @@ import java.util.Enumeration;
 public class WebUtil extends org.springframework.web.util.WebUtils {
 
 	public static final String USER_AGENT_HEADER = "user-agent";
-	
+
 	public static final String UN_KNOWN = "unknown";
 
 	/**
@@ -191,8 +191,8 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	/***
 	 * 获取 request 中 json 字符串的内容
 	 *
-	 * @param request
-	 * @throws IOException
+	 * @param request request
+	 * @return 字符串内容
 	 */
 	public static String getRequestParamString(HttpServletRequest request) {
 		try {
@@ -205,9 +205,9 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	/**
 	 * 获取 request 请求内容
 	 *
-	 * @param request
-	 * @return
-	 * @throws IOException
+	 * @param request request
+	 * @return String
+	 * @throws IOException IOException
 	 */
 	public static String getRequestStr(HttpServletRequest request) throws IOException {
 		String queryString = request.getQueryString();
@@ -220,9 +220,9 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	/**
 	 * 获取 request 请求的 byte[] 数组
 	 *
-	 * @param request
-	 * @return
-	 * @throws IOException
+	 * @param request request
+	 * @return byte[]
+	 * @throws IOException IOException
 	 */
 	public static byte[] getRequestBytes(HttpServletRequest request) throws IOException {
 		int contentLength = request.getContentLength();
@@ -244,10 +244,10 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
 	/**
 	 * 获取 request 请求内容
 	 *
-	 * @param request
-	 * @param buffer
-	 * @return
-	 * @throws IOException
+	 * @param request request
+	 * @param buffer buffer
+	 * @return String
+	 * @throws IOException IOException
 	 */
 	public static String getRequestStr(HttpServletRequest request, byte[] buffer) throws IOException {
 		String charEncoding = request.getCharacterEncoding();

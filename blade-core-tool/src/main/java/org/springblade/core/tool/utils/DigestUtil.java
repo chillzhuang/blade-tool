@@ -108,8 +108,8 @@ public class DigestUtil extends org.springframework.util.DigestUtils {
 	/**
 	 * 自定义加密 先MD5再SHA1
 	 *
-	 * @param data
-	 * @return
+	 * @param data 数据
+	 * @return String
 	 */
 	public static String encrypt(String data) {
 		return sha1(md5Hex(data));

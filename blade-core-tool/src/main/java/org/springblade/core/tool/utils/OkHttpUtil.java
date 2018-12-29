@@ -36,7 +36,7 @@ public class OkHttpUtil {
 	 *
 	 * @param url     请求的url
 	 * @param queries 请求的参数，在浏览器？后面的数据，没有可以传null
-	 * @return
+	 * @return String
 	 */
 	public static String get(String url, Map<String, String> queries) {
 		return get(url, null, queries);
@@ -48,7 +48,7 @@ public class OkHttpUtil {
 	 * @param url     请求的url
 	 * @param header  请求头
 	 * @param queries 请求的参数，在浏览器？后面的数据，没有可以传null
-	 * @return
+	 * @return String
 	 */
 	public static String get(String url, Map<String, String> header, Map<String, String> queries) {
 		StringBuffer sb = new StringBuffer(url);
@@ -72,7 +72,7 @@ public class OkHttpUtil {
 	 *
 	 * @param url    请求的url
 	 * @param params post form 提交的参数
-	 * @return
+	 * @return String
 	 */
 	public static String post(String url, Map<String, String> params) {
 		return post(url, null, params);
@@ -84,7 +84,7 @@ public class OkHttpUtil {
 	 * @param url    请求的url
 	 * @param header 请求头
 	 * @param params post form 提交的参数
-	 * @return
+	 * @return String
 	 */
 	public static String post(String url, Map<String, String> header, Map<String, String> params) {
 		FormBody.Builder formBuilder = new FormBody.Builder().add("clientId", "blade");
@@ -106,9 +106,9 @@ public class OkHttpUtil {
 	/**
 	 * POST请求发送JSON数据
 	 *
-	 * @param url
-	 * @param json
-	 * @return
+	 * @param url     请求的url
+	 * @param json    请求的json串
+	 * @return String
 	 */
 	public static String postJson(String url, String json) {
 		return postJson(url, null, json);
@@ -116,10 +116,10 @@ public class OkHttpUtil {
 
 	/**
 	 * POST请求发送JSON数据
-	 * @param url
-	 * @param header
-	 * @param json
-	 * @return
+	 * @param url     请求的url
+	 * @param header  请求头
+	 * @param json    请求的json串
+	 * @return String
 	 */
 	public static String postJson(String url, Map<String, String> header, String json) {
 		return postContent(url, header, json, JSON);
@@ -128,9 +128,9 @@ public class OkHttpUtil {
 	/**
 	 * POST请求发送xml数据
 	 *
-	 * @param url
-	 * @param xml
-	 * @return
+	 * @param url     请求的url
+	 * @param xml     请求的xml串
+	 * @return String
 	 */
 	public static String postXml(String url, String xml) {
 		return postXml(url, null, xml);
@@ -139,10 +139,10 @@ public class OkHttpUtil {
 	/**
 	 * POST请求发送xml数据
 	 *
-	 * @param url
-	 * @param header
-	 * @param xml
-	 * @return
+	 * @param url     请求的url
+	 * @param header  请求头
+	 * @param xml     请求的xml串
+	 * @return String
 	 */
 	public static String postXml(String url, Map<String, String> header, String xml) {
 		return postContent(url, header, xml, XML);
@@ -151,11 +151,11 @@ public class OkHttpUtil {
 	/**
 	 * 发送POST请求
 	 *
-	 * @param url
-	 * @param header
-	 * @param content
-	 * @param mediaType
-	 * @return
+	 * @param url     请求的url
+	 * @param header  请求头
+	 * @param content 请求内容
+	 * @param mediaType 请求类型
+	 * @return String
 	 */
 	public static String postContent(String url, Map<String, String> header, String content, MediaType mediaType) {
 		RequestBody requestBody = RequestBody.create(mediaType, content);
@@ -171,8 +171,8 @@ public class OkHttpUtil {
 	/**
 	 * 获取body
 	 *
-	 * @param request
-	 * @return
+	 * @param request request
+	 * @return String
 	 */
 	private static String getBody(Request request) {
 		String responseBody = "";

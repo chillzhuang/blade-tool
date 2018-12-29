@@ -124,7 +124,7 @@ public class NumberUtil extends org.springframework.util.NumberUtils {
 	/**
 	 * <p>Convert a <code>String</code> to a <code>Double</code>
 	 *
-	 * @param value
+	 * @param value value
 	 * @return double value
 	 */
 	public static Double toDouble(String value) {
@@ -134,7 +134,7 @@ public class NumberUtil extends org.springframework.util.NumberUtils {
 	/**
 	 * <p>Convert a <code>String</code> to a <code>Double</code>
 	 *
-	 * @param value
+	 * @param value value
 	 * @param defaultValue 默认值
 	 * @return double value
 	 */
@@ -148,7 +148,7 @@ public class NumberUtil extends org.springframework.util.NumberUtils {
 	/**
 	 * <p>Convert a <code>String</code> to a <code>Double</code>
 	 *
-	 * @param value
+	 * @param value value
 	 * @return double value
 	 */
 	public static Float toFloat(String value) {
@@ -158,7 +158,7 @@ public class NumberUtil extends org.springframework.util.NumberUtils {
 	/**
 	 * <p>Convert a <code>String</code> to a <code>Double</code>
 	 *
-	 * @param value
+	 * @param value value
 	 * @param defaultValue 默认值
 	 * @return double value
 	 */

@@ -28,9 +28,9 @@ public class Try {
 	public interface UncheckedFunction<T, R> {
 		/**
 		 * 调用
-		 * @param t
-		 * @return
-		 * @throws Exception
+		 * @param t t
+		 * @return R
+		 * @throws Exception Exception
 		 */
 		R apply(T t) throws Exception;
 	}
