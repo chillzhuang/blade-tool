@@ -18,6 +18,19 @@ blade-tool 是如梦技术团队作品， 是一个基于 Spring Boot 2 & Spring
 * gitee.ltd（[gitee.ltd](https://gitee.ltd/)）
 * 鲸宵（<a href="https://raw.githubusercontent.com/chillzhuang/blade-tool/master/pic/jx.png" target="_blank">鲸宵</a>）
 
+## 工程结构
+``` 
+blade-tool
+├── blade-core-boot -- 业务包综合模块
+├── blade-core-launch -- 基础启动模块
+├── blade-core-log -- 日志封装模块 
+├── blade-core-mybatis -- mybatis拓展封装模块 
+├── blade-core-secure -- 安全模块 
+├── blade-core-swagger -- swagger拓展封装模块 
+└── blade-core-tool -- 工具包模块 
+	 
+```
+
 ## 开源协议
 LGPL（[GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html)）
 
@@ -31,7 +44,7 @@ LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求�
 
 ## 禁止事项
 * 直接将本项目挂淘宝等商业平台出售。
-* 非界面代码60%以上相识度的二次开源，二次开源需先联系作者。
+* 非界面代码50%以上相似度的二次开源，二次开源需先联系作者。
 
 注意：若禁止条款被发现有权追讨19999的授权费。
 
