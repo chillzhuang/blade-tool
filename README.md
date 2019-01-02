@@ -48,7 +48,7 @@ LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求�
 
 注意：若禁止条款被发现有权追讨19999的授权费。
 
-## [SpringBlade2.0](https://gitee.com/smallc/SpringBlade) 界面一览（开源协议为Apache License）（即将开源敬请期待）
+## [SpringBlade2.0](https://gitee.com/smallc/SpringBlade) 界面一览（开源协议为Apache License）
 ![业务系统](https://raw.githubusercontent.com/chillzhuang/blade-tool/master/pic/springblade-k8s.png "业务系统")
 ![业务系统](https://raw.githubusercontent.com/chillzhuang/blade-tool/master/pic/springblade-traefik.png "业务系统")
 ![业务系统](https://raw.githubusercontent.com/chillzhuang/blade-tool/master/pic/springblade-traefik-health.png "业务系统")
