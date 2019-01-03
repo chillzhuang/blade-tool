@@ -30,7 +30,7 @@ public interface ConsulConstant {
 	/**
 	 * port key
 	 */
-	String CONSUL_PORT_KEY = "spring.cloud.consul.host";
+	String CONSUL_PORT_KEY = "spring.cloud.consul.port";
 
 	/**
 	 * format key
