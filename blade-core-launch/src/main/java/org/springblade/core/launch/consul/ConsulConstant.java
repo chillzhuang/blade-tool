@@ -23,31 +23,6 @@ package org.springblade.core.launch.consul;
 public interface ConsulConstant {
 
 	/**
-	 * host key
-	 */
-	String CONSUL_HOST_KEY = "spring.cloud.consul.host";
-
-	/**
-	 * port key
-	 */
-	String CONSUL_PORT_KEY = "spring.cloud.consul.port";
-
-	/**
-	 * format key
-	 */
-	String CONSUL_CONFIG_FORMAT_KEY = "spring.cloud.consul.config.format";
-
-	/**
-	 * delay key
-	 */
-	String CONSUL_WATCH_DELAY_KEY = "spring.cloud.consul.watch.delay";
-
-	/**
-	 * enabled key
-	 */
-	String CONSUL_WATCH_ENABLED_KEY = "spring.cloud.consul.watch.enabled";
-
-	/**
 	 * consul dev 地址
 	 */
 	String CONSUL_HOST = "http://localhost";
