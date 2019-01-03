@@ -16,7 +16,7 @@
 package org.springblade.core.log.logger;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springblade.core.log.publisher.BladeLogPublisher;
+import org.springblade.core.log.publisher.UsualLogPublisher;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -32,19 +32,19 @@ public class BladeLogger implements InitializingBean {
 	private String serviceId;
 
 	public void info(String id, String data) {
-		BladeLogPublisher.publishEvent("info", id, data);
+		UsualLogPublisher.publishEvent("info", id, data);
 	}
 
 	public void debug(String id, String data) {
-		BladeLogPublisher.publishEvent("debug", id, data);
+		UsualLogPublisher.publishEvent("debug", id, data);
 	}
 
 	public void warn(String id, String data) {
-		BladeLogPublisher.publishEvent("warn", id, data);
+		UsualLogPublisher.publishEvent("warn", id, data);
 	}
 
 	public void error(String id, String data) {
-		BladeLogPublisher.publishEvent("error", id, data);
+		UsualLogPublisher.publishEvent("error", id, data);
 	}
 
 	@Override

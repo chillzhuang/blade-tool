@@ -31,7 +31,7 @@ import java.util.Map;
  *
  * @author Chill
  */
-public class BladeLogPublisher {
+public class UsualLogPublisher {
 
 	public static void publishEvent(String level, String id, String data) {
 		HttpServletRequest request = WebUtil.getRequest();
