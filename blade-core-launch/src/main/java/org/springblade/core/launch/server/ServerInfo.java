@@ -29,7 +29,7 @@ public class ServerInfo {
 	private InetUtils inetUtils;
 	private String hostName;
 	private String ip;
-	private Integer prot;
+	private Integer port;
 	private String ipWithPort;
 
 	public ServerInfo(ServerProperties serverProperties, InetUtils inetUtils) {
@@ -37,8 +37,8 @@ public class ServerInfo {
 		this.inetUtils = inetUtils;
 		this.hostName = getHostInfo().getHostname();
 		this.ip = getHostInfo().getIpAddress();
-		this.prot = serverProperties.getPort();
-		this.ipWithPort = String.format("%s:%d", ip, prot);
+		this.port = serverProperties.getPort();
+		this.ipWithPort = String.format("%s:%d", ip, port);
 	}
 
 	public InetUtils.HostInfo getHostInfo() {
@@ -50,7 +50,7 @@ public class ServerInfo {
 	}
 
 	public Integer getPort() {
-		return this.prot;
+		return this.port;
 	}
 
 	public String getHostName() {
