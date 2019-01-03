@@ -39,7 +39,7 @@ public class ConsulLauncherServiceImpl implements LauncherService {
 		}
 		props.setProperty(ConsulConstant.CONSUL_CONFIG_FORMAT_KEY, ConsulConstant.CONSUL_CONFIG_FORMAT);
 		props.setProperty(ConsulConstant.CONSUL_WATCH_DELAY_KEY, ConsulConstant.CONSUL_WATCH_DELAY);
-		props.setProperty(ConsulConstant.CONSUL_WATCH_ENABLEd_KEY, ConsulConstant.CONSUL_WATCH_ENABLED);
+		props.setProperty(ConsulConstant.CONSUL_WATCH_ENABLED_KEY, ConsulConstant.CONSUL_WATCH_ENABLED);
 	}
 
 }

@@ -45,7 +45,7 @@ public interface ConsulConstant {
 	/**
 	 * enabled key
 	 */
-	String CONSUL_WATCH_ENABLEd_KEY = "spring.cloud.consul.watch.enabled";
+	String CONSUL_WATCH_ENABLED_KEY = "spring.cloud.consul.watch.enabled";
 
 	/**
 	 * consul dev 地址
