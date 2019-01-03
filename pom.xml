@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>1.0.0-RC2</version>
+    <version>1.0.0-RC3</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,7 +36,7 @@
     </scm>
 
     <properties>
-        <blade.tool.version>1.0.0-RC2</blade.tool.version>
+        <blade.tool.version>1.0.0-RC3</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.0</maven.plugin.version>
