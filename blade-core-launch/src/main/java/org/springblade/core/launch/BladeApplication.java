@@ -92,7 +92,7 @@ public class BladeApplication {
 		props.setProperty("blade.is-local", String.valueOf(isLocalDev()));
 		props.setProperty("blade.dev-mode", profile.equals(AppConstant.PROD_CODE) ? "false" : "true");
 		props.setProperty("blade.service.version", AppConstant.APPLICATION_VERSION);
-		props.setProperty(ConsulConstant.CONSUL_HOST_KEY, profile.equals(AppConstant.DEV_CDOE) ? ConsulConstant.CONSUL_DEV_HOST : ConsulConstant.CONSUL_PROD_HOST);
+		props.setProperty(ConsulConstant.CONSUL_HOST_KEY, ConsulConstant.CONSUL_HOST);
 		props.setProperty(ConsulConstant.CONSUL_PORT_KEY, ConsulConstant.CONSUL_PORT);
 		props.setProperty(ConsulConstant.CONSUL_CONFIG_FORMAT_KEY, ConsulConstant.CONSUL_CONFIG_FORMAT);
 		props.setProperty(ConsulConstant.CONSUL_WATCH_DELAY_KEY, ConsulConstant.CONSUL_WATCH_DELAY);

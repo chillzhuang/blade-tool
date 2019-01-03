@@ -50,12 +50,7 @@ public interface ConsulConstant {
 	/**
 	 * consul dev 地址
 	 */
-	String CONSUL_DEV_HOST = "http://localhost";
-
-	/**
-	 * consul prod 地址
-	 */
-	String CONSUL_PROD_HOST = "http://192.168.186.129";
+	String CONSUL_HOST = "http://localhost";
 
 	/**
 	 * consul端口
