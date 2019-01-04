@@ -47,7 +47,7 @@ public class BladeApplication {
 		return builder.run(args);
 	}
 
-	private static SpringApplicationBuilder createSpringApplicationBuilder(String appName, Class source, String... args) {
+	public static SpringApplicationBuilder createSpringApplicationBuilder(String appName, Class source, String... args) {
 		Assert.hasText(appName, "[appName]服务名不能为空");
 		// 读取环境变量，使用spring boot的规则
 		ConfigurableEnvironment environment = new StandardEnvironment();
@@ -108,7 +108,7 @@ public class BladeApplication {
 	 *
 	 * @return boolean
 	 */
-	private static boolean isLocalDev() {
+	public static boolean isLocalDev() {
 		String osName = System.getProperty("os.name");
 		return StringUtils.hasText(osName) && !(AppConstant.OS_NAME_LINUX.equals(osName.toUpperCase()));
 	}
