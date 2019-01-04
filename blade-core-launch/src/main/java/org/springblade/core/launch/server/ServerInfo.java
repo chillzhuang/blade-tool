@@ -61,4 +61,7 @@ public class ServerInfo {
 		return this.ipWithPort;
 	}
 
+	public ServerProperties getServerProperties() {
+		return this.serverProperties;
+	}
 }
