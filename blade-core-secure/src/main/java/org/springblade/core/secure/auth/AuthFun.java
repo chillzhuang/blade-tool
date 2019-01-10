@@ -68,8 +68,10 @@ public class AuthFun {
 			return false;
 		}
 		String[] roles = Func.toStrArray(userRole);
-		if (CollectionUtil.contains(roles, role)) {
-			return true;
+		for (String r : role) {
+			if (CollectionUtil.contains(roles, r)) {
+				return true;
+			}
 		}
 		return false;
 	}
