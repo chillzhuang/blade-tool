@@ -50,7 +50,7 @@ logging:
 mybatis-plus:
   mapper-locations: classpath:org/springblade/**/mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: org.springblade.**.model
+  typeAliasesPackage: org.springblade.**.entity
   #typeEnumsPackage: org.springblade.dashboard.entity.enums
   global-config:
     #刷新mapper 调试神器
