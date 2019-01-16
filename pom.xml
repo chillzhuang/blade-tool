@@ -36,7 +36,7 @@
     </scm>
 
     <properties>
-        <blade.tool.version>1.0.0-RC3</blade.tool.version>
+        <blade.tool.version>1.0.0-RC4</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.0</maven.plugin.version>
@@ -142,6 +142,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-auto</artifactId>
+            <version>0.0.1</version>
         </dependency>
         <!--<dependency>
             <groupId>org.springframework</groupId>

@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  org.springblade.core.launch.config.BladeLaunchConfiguration,\
-  org.springblade.core.launch.StartEventListener,\
-  org.springblade.core.launch.config.BladeConsulServiceRegistryConfiguration

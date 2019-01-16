@@ -43,10 +43,10 @@ public class BladeErrorAttributes extends DefaultErrorAttributes {
 		R result;
 		if (error == null) {
 			log.error("URL:{} error status:{}", requestUri, status);
-			result = R.failure(ResultCode.FAILURE, "系统未知异常[HttpStatus]:" + status);
+			result = R.fail(ResultCode.FAILURE, "系统未知异常[HttpStatus]:" + status);
 		} else {
 			log.error(String.format("URL:%s error status:%d", requestUri, status), error);
-			result = R.failure(status, error.getMessage());
+			result = R.fail(status, error.getMessage());
 		}
 		//发送服务异常事件
 		ErrorLogPublisher.publishEvent(error, requestUri);

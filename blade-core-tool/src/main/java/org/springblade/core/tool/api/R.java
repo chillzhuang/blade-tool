@@ -171,7 +171,7 @@ public class R<T> implements Serializable {
 	 * @param <T> T 泛型标记
 	 * @return R
 	 */
-	public static <T> R<T> failure(String msg) {
+	public static <T> R<T> fail(String msg) {
 		return new R<>(ResultCode.FAILURE, msg);
 	}
 
@@ -184,7 +184,7 @@ public class R<T> implements Serializable {
 	 * @param <T>  T 泛型标记
 	 * @return R
 	 */
-	public static <T> R<T> failure(int code, String msg) {
+	public static <T> R<T> fail(int code, String msg) {
 		return new R<>(code, null, msg);
 	}
 
@@ -195,7 +195,7 @@ public class R<T> implements Serializable {
 	 * @param <T>        T 泛型标记
 	 * @return R
 	 */
-	public static <T> R<T> failure(IResultCode resultCode) {
+	public static <T> R<T> fail(IResultCode resultCode) {
 		return new R<>(resultCode);
 	}
 
@@ -207,7 +207,7 @@ public class R<T> implements Serializable {
 	 * @param <T>        T 泛型标记
 	 * @return R
 	 */
-	public static <T> R<T> failure(IResultCode resultCode, String msg) {
+	public static <T> R<T> fail(IResultCode resultCode, String msg) {
 		return new R<>(resultCode, msg);
 	}
 
@@ -218,7 +218,7 @@ public class R<T> implements Serializable {
 	 * @return R
 	 */
 	public static R status(boolean flag) {
-		return flag ? success(BladeConstant.DEFAULT_SUCCESS_MESSAGE) : failure(BladeConstant.DEFAULT_FAILURE_MESSAGE);
+		return flag ? success(BladeConstant.DEFAULT_SUCCESS_MESSAGE) : fail(BladeConstant.DEFAULT_FAILURE_MESSAGE);
 	}
 
 }

@@ -133,8 +133,8 @@ public class BladeController {
 	 * @param msg 消息
 	 * @return R
 	 */
-	public R failure(String msg) {
-		return R.failure(msg);
+	public R fail(String msg) {
+		return R.fail(msg);
 	}
 
 	/**
