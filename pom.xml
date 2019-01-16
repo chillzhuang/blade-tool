@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>1.0.0-RC3</version>
+    <version>1.0.0-RC4</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
