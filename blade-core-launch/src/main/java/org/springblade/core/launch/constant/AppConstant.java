@@ -55,23 +55,23 @@ public interface AppConstant {
 	/**
 	 * 应用名前缀
 	 */
-	String APPLICATION_NAME_FREFIX = "blade-";
+	String APPLICATION_NAME_PREFIX = "blade-";
 	/**
 	 * 网关模块名称
 	 */
-	String APPLICATION_GATEWAY_NAME = APPLICATION_NAME_FREFIX + "gateway";
+	String APPLICATION_GATEWAY_NAME = APPLICATION_NAME_PREFIX + "gateway";
 	/**
 	 * 授权模块名称
 	 */
-	String APPLICATION_AUTH_NAME = APPLICATION_NAME_FREFIX + "auth";
+	String APPLICATION_AUTH_NAME = APPLICATION_NAME_PREFIX + "auth";
 	/**
 	 * 监控模块名称
 	 */
-	String APPLICATION_ADMIN_NAME = APPLICATION_NAME_FREFIX + "admin";
+	String APPLICATION_ADMIN_NAME = APPLICATION_NAME_PREFIX + "admin";
 	/**
 	 * 配置中心模块名称
 	 */
-	String APPLICATION_CONFIG_NAME = APPLICATION_NAME_FREFIX + "config-server";
+	String APPLICATION_CONFIG_NAME = APPLICATION_NAME_PREFIX + "config-server";
 	/**
 	 * TX模块名称
 	 */
@@ -79,23 +79,23 @@ public interface AppConstant {
 	/**
 	 * 首页模块名称
 	 */
-	String APPLICATION_DESK_NAME = APPLICATION_NAME_FREFIX + "desk";
+	String APPLICATION_DESK_NAME = APPLICATION_NAME_PREFIX + "desk";
 	/**
 	 * 系统模块名称
 	 */
-	String APPLICATION_SYSTEM_NAME = APPLICATION_NAME_FREFIX + "system";
+	String APPLICATION_SYSTEM_NAME = APPLICATION_NAME_PREFIX + "system";
 	/**
 	 * 用户模块名称
 	 */
-	String APPLICATION_USER_NAME = APPLICATION_NAME_FREFIX + "user";
+	String APPLICATION_USER_NAME = APPLICATION_NAME_PREFIX + "user";
 	/**
 	 * 日志模块名称
 	 */
-	String APPLICATION_LOG_NAME = APPLICATION_NAME_FREFIX + "log";
+	String APPLICATION_LOG_NAME = APPLICATION_NAME_PREFIX + "log";
 	/**
 	 * 测试模块名称
 	 */
-	String APPLICATION_TEST_NAME = APPLICATION_NAME_FREFIX + "test";
+	String APPLICATION_TEST_NAME = APPLICATION_NAME_PREFIX + "test";
 
 	/**
 	 * 开发环境
