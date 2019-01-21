@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springblade.core.tool.jackson.MappingApiJackson2HttpMessageConverter;
 import org.springblade.core.tool.support.xss.XssFilter;
+import org.springblade.core.tool.utils.Charsets;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +31,6 @@ import org.springframework.http.converter.json.AbstractJackson2HttpMessageConver
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.DispatcherType;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -51,7 +51,7 @@ public class MessageConfiguration implements WebMvcConfigurer {
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.removeIf(x -> x instanceof StringHttpMessageConverter || x instanceof AbstractJackson2HttpMessageConverter);
-		converters.add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
+		converters.add(new StringHttpMessageConverter(Charsets.UTF_8));
 		converters.add(new ByteArrayHttpMessageConverter());
 		converters.add(new ResourceHttpMessageConverter());
 		converters.add(new ResourceRegionHttpMessageConverter());

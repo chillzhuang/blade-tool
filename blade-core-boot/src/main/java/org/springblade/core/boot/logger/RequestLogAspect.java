@@ -46,7 +46,7 @@ public class RequestLogAspect {
 	 * @throws Throwable 异常
 	 */
 	@Around(
-		"execution(!static org.springblade.core.tool.api.R<*> *(..)) && " +
+		"execution(!static org.springblade.core.tool.api.R *(..)) && " +
 			"(@within(org.springframework.stereotype.Controller) || " +
 			"@within(org.springframework.web.bind.annotation.RestController))"
 	)

@@ -21,14 +21,9 @@ import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,22 +32,6 @@ import java.util.List;
  * @author Chill
  */
 public class BladeController {
-
-	/**
-	 * ============================     BINDER    =================================================
-	 */
-
-	/**
-	 * initBinder
-	 *
-	 * @param binder binder
-	 */
-	@InitBinder
-	protected void initBinder(ServletRequestDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		dateFormat.setLenient(false);
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
-	}
 
 	/**
 	 * ============================     REQUEST    =================================================

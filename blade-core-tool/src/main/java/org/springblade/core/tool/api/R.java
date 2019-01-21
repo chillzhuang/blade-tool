@@ -35,7 +35,7 @@ import java.util.Optional;
 @Setter
 @ToString
 @ApiModel(description = "返回信息")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class R<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -217,7 +217,7 @@ public class R<T> implements Serializable {
 	 * @param flag 成功状态
 	 * @return R
 	 */
-	public static R status(boolean flag) {
+	public static <T> R<T> status(boolean flag) {
 		return flag ? success(BladeConstant.DEFAULT_SUCCESS_MESSAGE) : fail(BladeConstant.DEFAULT_FAILURE_MESSAGE);
 	}
 
