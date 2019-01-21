@@ -93,6 +93,10 @@ public interface AppConstant {
 	 */
 	String APPLICATION_LOG_NAME = APPLICATION_NAME_PREFIX + "log";
 	/**
+	 * 开发模块名称
+	 */
+	String APPLICATION_DEVELOP_NAME = APPLICATION_NAME_PREFIX + "develop";
+	/**
 	 * 测试模块名称
 	 */
 	String APPLICATION_TEST_NAME = APPLICATION_NAME_PREFIX + "test";
