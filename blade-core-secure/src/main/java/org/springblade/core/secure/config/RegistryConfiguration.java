@@ -21,12 +21,14 @@ import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 /**
  * secure模块api放行默认配置
  *
  * @author Chill
  */
+@Order
 @Configuration
 @AutoConfigureBefore(SecureConfiguration.class)
 public class RegistryConfiguration {
