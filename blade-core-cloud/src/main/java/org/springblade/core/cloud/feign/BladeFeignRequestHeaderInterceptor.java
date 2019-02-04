@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.boot.feign;
+package org.springblade.core.cloud.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.springblade.core.secure.utils.SecureUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -43,7 +42,7 @@ public class BladeFeignRequestHeaderInterceptor implements RequestInterceptor {
 				while (headerNames.hasMoreElements()) {
 					String name = headerNames.nextElement();
 					String value = request.getHeader(name);
-					if (SecureUtil.HEADER.equals(name)) {
+					if ("blade-auth".equals(name)) {
 						requestTemplate.header(name, value);
 					}
 				}

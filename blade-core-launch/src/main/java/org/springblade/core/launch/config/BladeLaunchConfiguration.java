@@ -17,11 +17,7 @@ package org.springblade.core.launch.config;
 
 import lombok.AllArgsConstructor;
 import org.springblade.core.launch.props.BladeProperties;
-import org.springblade.core.launch.server.ServerInfo;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.commons.util.InetUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -38,17 +34,5 @@ import org.springframework.core.annotation.Order;
 	BladeProperties.class
 })
 public class BladeLaunchConfiguration {
-
-	private ServerProperties serverProperties;
-	private InetUtils inetUtils;
-
-
-	/**
-	 * 服务器信息
-	 */
-	@Bean
-	public ServerInfo serverInfo() {
-		return new ServerInfo(serverProperties, inetUtils);
-	}
 
 }

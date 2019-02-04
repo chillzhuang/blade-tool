@@ -15,53 +15,37 @@
  */
 package org.springblade.core.launch.server;
 
+import lombok.Getter;
+import org.springblade.core.launch.utils.INetUtil;
+import org.springframework.beans.factory.SmartInitializingSingleton;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.cloud.commons.util.InetUtils;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 服务器信息
  *
  * @author Chill
  */
-public class ServerInfo {
-
-	private ServerProperties serverProperties;
-	private InetUtils inetUtils;
+@Getter
+@Configuration
+public class ServerInfo implements SmartInitializingSingleton {
+	private final ServerProperties serverProperties;
 	private String hostName;
 	private String ip;
 	private Integer port;
 	private String ipWithPort;
 
-	public ServerInfo(ServerProperties serverProperties, InetUtils inetUtils) {
+	@Autowired(required = false)
+	public ServerInfo(ServerProperties serverProperties) {
 		this.serverProperties = serverProperties;
-		this.inetUtils = inetUtils;
-		this.hostName = getHostInfo().getHostname();
-		this.ip = getHostInfo().getIpAddress();
+	}
+
+	@Override
+	public void afterSingletonsInstantiated() {
+		this.hostName = INetUtil.getHostName();
+		this.ip = INetUtil.getHostIp();
 		this.port = serverProperties.getPort();
 		this.ipWithPort = String.format("%s:%d", ip, port);
-	}
-
-	public InetUtils.HostInfo getHostInfo() {
-		return inetUtils.findFirstNonLoopbackHostInfo();
-	}
-
-	public String getIP() {
-		return this.ip;
-	}
-
-	public Integer getPort() {
-		return this.port;
-	}
-
-	public String getHostName() {
-		return this.hostName;
-	}
-
-	public String getIPWithPort() {
-		return this.ipWithPort;
-	}
-
-	public ServerProperties getServerProperties() {
-		return this.serverProperties;
 	}
 }

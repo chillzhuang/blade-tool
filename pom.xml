@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>1.0.0-RC6</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,7 +36,7 @@
     </scm>
 
     <properties>
-        <blade.tool.version>1.0.0-RC6</blade.tool.version>
+        <blade.tool.version>1.0.0</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.0</maven.plugin.version>
@@ -48,7 +48,7 @@
         <protostuff.version>1.6.0</protostuff.version>
         <disruptor.version>3.4.2</disruptor.version>
         <spring.boot.admin.version>2.0.2</spring.boot.admin.version>
-        <mica.auto.version>1.0.0</mica.auto.version>
+        <mica.auto.version>1.0.1</mica.auto.version>
 
         <spring.boot.version>2.0.7.RELEASE</spring.boot.version>
         <spring.cloud.version>Finchley.SR2</spring.cloud.version>
@@ -66,6 +66,7 @@
         <module>blade-core-log</module>
         <module>blade-core-mybatis</module>
         <module>blade-core-swagger</module>
+        <module>blade-core-cloud</module>
     </modules>
 
     <dependencyManagement>
@@ -105,11 +106,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>${spring.boot.admin.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
@@ -117,24 +113,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!--<dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
-        </dependency>-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.retry</groupId>
@@ -156,11 +134,6 @@
             <version>${mica.auto.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-indexer</artifactId>
-            <optional>true</optional>
-        </dependency>-->
     </dependencies>
 
     <build>

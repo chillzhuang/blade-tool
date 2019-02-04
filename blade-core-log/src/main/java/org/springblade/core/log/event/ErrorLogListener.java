@@ -60,7 +60,7 @@ public class ErrorLogListener {
 		logError.setParams(WebUtil.getRequestParamString(request));
 		logError.setServiceId(bladeProperties.getName());
 		logError.setServerHost(serverInfo.getHostName());
-		logError.setServerIp(serverInfo.getIPWithPort());
+		logError.setServerIp(serverInfo.getIpWithPort());
 		logError.setEnv(bladeProperties.getEnv());
 		logError.setCreateBy(SecureUtil.getUserAccount(request));
 		logError.setCreateTime(LocalDateTime.now());

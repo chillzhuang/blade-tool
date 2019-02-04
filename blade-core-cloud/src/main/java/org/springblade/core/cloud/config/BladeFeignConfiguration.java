@@ -13,32 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.boot.config;
+package org.springblade.core.cloud.config;
 
+import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;
-import org.springblade.core.boot.resolver.TokenArgumentResolver;
+import org.springblade.core.cloud.feign.BladeFeignRequestHeaderInterceptor;
+import org.springblade.core.cloud.feign.FeignHystrixConcurrencyStrategy;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 /**
  * WEB配置
+ *
  * @author Chill
  */
 @Slf4j
 @Configuration
 @EnableCaching
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class BladeWebMvcConfiguration implements WebMvcConfigurer {
+public class BladeFeignConfiguration implements WebMvcConfigurer {
 
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		argumentResolvers.add(new TokenArgumentResolver());
+	@Bean
+	@ConditionalOnMissingBean
+	public RequestInterceptor requestInterceptor() {
+		return new BladeFeignRequestHeaderInterceptor();
+	}
+
+	@Bean
+	public FeignHystrixConcurrencyStrategy feignHystrixConcurrencyStrategy() {
+		return new FeignHystrixConcurrencyStrategy();
 	}
 
 }

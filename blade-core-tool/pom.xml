@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springblade</groupId>
         <artifactId>blade-tool</artifactId>
-        <version>1.0.0-RC6</version>
+        <version>1.0.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -22,11 +22,6 @@
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-launch</artifactId>
             <version>${blade.tool.version}</version>
-        </dependency>
-        <!-- Cloud -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-commons</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>

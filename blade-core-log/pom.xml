@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-tool</artifactId>
         <groupId>org.springblade</groupId>
-        <version>1.0.0-RC6</version>
+        <version>1.0.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -27,22 +27,16 @@
             <artifactId>blade-core-secure</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-core-cloud</artifactId>
+            <version>${blade.tool.version}</version>
+        </dependency>
         <!--Mybatis-->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus</artifactId>
             <version>${mybatis.plus.version}</version>
-        </dependency>
-        <!--Feign-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 

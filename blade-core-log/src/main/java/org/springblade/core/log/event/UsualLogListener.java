@@ -63,7 +63,7 @@ public class UsualLogListener {
 		logUsual.setServerHost(serverInfo.getHostName());
 		logUsual.setServiceId(bladeProperties.getName());
 		logUsual.setEnv(bladeProperties.getEnv());
-		logUsual.setServerIp(serverInfo.getIPWithPort());
+		logUsual.setServerIp(serverInfo.getIpWithPort());
 		logUsual.setCreateBy(SecureUtil.getUserAccount(request));
 		logUsual.setCreateTime(LocalDateTime.now());
 		logService.saveUsualLog(logUsual);

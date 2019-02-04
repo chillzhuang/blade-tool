@@ -60,7 +60,7 @@ public class ApiLogListener {
 		HttpServletRequest request = (HttpServletRequest) source.get(EventConstant.EVENT_REQUEST);
 		logApi.setServiceId(bladeProperties.getName());
 		logApi.setServerHost(serverInfo.getHostName());
-		logApi.setServerIp(serverInfo.getIPWithPort());
+		logApi.setServerIp(serverInfo.getIpWithPort());
 		logApi.setEnv(bladeProperties.getEnv());
 		logApi.setRemoteIp(WebUtil.getIP(request));
 		logApi.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
