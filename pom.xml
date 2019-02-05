@@ -51,7 +51,7 @@
         <mica.auto.version>1.0.1</mica.auto.version>
         <nacos.version>0.2.1.RELEASE</nacos.version>
 
-        <spring.boot.version>2.0.7.RELEASE</spring.boot.version>
+        <spring.boot.version>2.0.8.RELEASE</spring.boot.version>
         <spring.cloud.version>Finchley.SR2</spring.cloud.version>
         <spring.platform.version>Cairo-RELEASE</spring.platform.version>
         

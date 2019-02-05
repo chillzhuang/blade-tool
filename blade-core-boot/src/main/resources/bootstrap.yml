@@ -12,14 +12,6 @@ server:
 
 #spring配置
 spring:
-  cloud:
-    config:
-      label: master
-      profile: ${blade.env}
-      fail-fast: true
-      discovery:
-        enabled: true
-        service-id: blade-config-server
   cache:
     ehcache:
       config: classpath:config/ehcache.xml
