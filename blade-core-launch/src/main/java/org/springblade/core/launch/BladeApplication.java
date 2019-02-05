@@ -16,7 +16,7 @@
 package org.springblade.core.launch;
 
 import org.springblade.core.launch.constant.AppConstant;
-import org.springblade.core.launch.consul.ConsulConstant;
+import org.springblade.core.launch.constant.NacosConstant;
 import org.springblade.core.launch.service.LauncherService;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -92,11 +92,10 @@ public class BladeApplication {
 		props.setProperty("blade.is-local", String.valueOf(isLocalDev()));
 		props.setProperty("blade.dev-mode", profile.equals(AppConstant.PROD_CODE) ? "false" : "true");
 		props.setProperty("blade.service.version", AppConstant.APPLICATION_VERSION);
-		props.setProperty("spring.cloud.consul.host", ConsulConstant.CONSUL_HOST);
-		props.setProperty("spring.cloud.consul.port", ConsulConstant.CONSUL_PORT);
-		props.setProperty("spring.cloud.consul.config.format", ConsulConstant.CONSUL_CONFIG_FORMAT);
-		props.setProperty("spring.cloud.consul.watch.delay", ConsulConstant.CONSUL_WATCH_DELAY);
-		props.setProperty("spring.cloud.consul.watch.enabled", ConsulConstant.CONSUL_WATCH_ENABLED);
+		props.setProperty("spring.cloud.nacos.discovery.server-addr", NacosConstant.NACOS_ADDR);
+		props.setProperty("spring.cloud.nacos.config.server-addr", NacosConstant.NACOS_ADDR);
+		props.setProperty("spring.cloud.nacos.config.prefix", NacosConstant.NACOS_CONFIG_PREFIX);
+		props.setProperty("spring.cloud.nacos.config.file-extension", NacosConstant.NACOS_CONFIG_FORMAT);
 		// 加载自定义组件
 		ServiceLoader<LauncherService> loader = ServiceLoader.load(LauncherService.class);
 		loader.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
