@@ -315,9 +315,6 @@ public class JsonUtil {
 			super.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 			//反序列化时，属性不存在的兼容处理s
 			super.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-			//序列化处理
-			super.setSerializerFactory(this.getSerializerFactory().withSerializerModifier(new BladeBeanSerializerModifier()));
-			super.getSerializerProvider().setNullValueSerializer(BladeBeanSerializerModifier.NullJsonSerializers.STRING_JSON_SERIALIZER);
 			//日期格式化
 			super.registerModule(new BladeJavaTimeModule());
 			super.findAndRegisterModules();
