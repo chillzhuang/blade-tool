@@ -99,7 +99,8 @@ public class SecureUtil {
 	 * @return userId
 	 */
 	public static Integer getUserId() {
-		return (null == getUser()) ? -1 : getUser().getUserId();
+		BladeUser user = getUser();
+		return (null == user) ? -1 : user.getUserId();
 	}
 
 	/**
@@ -109,7 +110,8 @@ public class SecureUtil {
 	 * @return userId
 	 */
 	public static Integer getUserId(HttpServletRequest request) {
-		return (null == getUser(request)) ? -1 : getUser().getUserId();
+		BladeUser user = getUser(request);
+		return (null == user) ? -1 : user.getUserId();
 	}
 
 	/**
@@ -118,7 +120,8 @@ public class SecureUtil {
 	 * @return userAccount
 	 */
 	public static String getUserAccount() {
-		return (null == getUser()) ? StringPool.EMPTY : getUser().getAccount();
+		BladeUser user = getUser();
+		return (null == user) ? StringPool.EMPTY : user.getAccount();
 	}
 
 	/**
@@ -128,7 +131,8 @@ public class SecureUtil {
 	 * @return userAccount
 	 */
 	public static String getUserAccount(HttpServletRequest request) {
-		return (null == getUser(request)) ? StringPool.EMPTY : getUser().getAccount();
+		BladeUser user = getUser(request);
+		return (null == user) ? StringPool.EMPTY : user.getAccount();
 	}
 
 	/**
