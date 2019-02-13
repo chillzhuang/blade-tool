@@ -33,26 +33,6 @@ public interface AppConstant {
 	String BASE_PACKAGES = "org.springblade";
 
 	/**
-	 * zookeeper id
-	 */
-	String ZOOKEEPER_ID = "zk";
-
-	/**
-	 * zookeeper connect string
-	 */
-	String ZOOKEEPER_CONNECT_STRING = "127.0.0.1:2181";
-
-	/**
-	 * zookeeper address
-	 */
-	String ZOOKEEPER_ADDRESS = "zookeeper://" + ZOOKEEPER_CONNECT_STRING;
-
-	/**
-	 * zookeeper root
-	 */
-	String ZOOKEEPER_ROOT = "/blade-services";
-
-	/**
 	 * 应用名前缀
 	 */
 	String APPLICATION_NAME_PREFIX = "blade-";
@@ -68,14 +48,6 @@ public interface AppConstant {
 	 * 监控模块名称
 	 */
 	String APPLICATION_ADMIN_NAME = APPLICATION_NAME_PREFIX + "admin";
-	/**
-	 * 配置中心模块名称
-	 */
-	String APPLICATION_CONFIG_NAME = APPLICATION_NAME_PREFIX + "config-server";
-	/**
-	 * TX模块名称
-	 */
-	String APPLICATION_TX_MANAGER = "tx-manager";
 	/**
 	 * 首页模块名称
 	 */
