@@ -20,17 +20,15 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springblade.core.secure.BladeUser;
+import org.springblade.core.tool.utils.Charsets;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.WebUtil;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Secure工具类
@@ -48,7 +46,7 @@ public class SecureUtil {
 	public final static String USER_NAME = "userName";
 	public final static String ROLE_NAME = "roleName";
 	public final static Integer AUTH_LENGTH = 7;
-	private static String BASE64_SECURITY = DatatypeConverter.printBase64Binary("SpringBlade".getBytes());
+	private static String BASE64_SECURITY = Base64.getEncoder().encodeToString("SpringBlade".getBytes(Charsets.UTF_8));
 
 	/**
 	 * 获取用户信息
@@ -159,7 +157,7 @@ public class SecureUtil {
 	 * @return header
 	 */
 	public static String getHeader() {
-		return getHeader(WebUtil.getRequest());
+		return getHeader(Objects.requireNonNull(WebUtil.getRequest()));
 	}
 
 	/**
@@ -181,7 +179,7 @@ public class SecureUtil {
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
 			Claims claims = Jwts.parser()
-				.setSigningKey(DatatypeConverter.parseBase64Binary(BASE64_SECURITY))
+				.setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY))
 				.parseClaimsJws(jsonWebToken).getBody();
 			return claims;
 		} catch (Exception ex) {
@@ -205,7 +203,7 @@ public class SecureUtil {
 		Date now = new Date(nowMillis);
 
 		//生成签名密钥
-		byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(BASE64_SECURITY);
+		byte[] apiKeySecretBytes = Base64.getDecoder().decode(BASE64_SECURITY);
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
 		//添加构成JWT的类
