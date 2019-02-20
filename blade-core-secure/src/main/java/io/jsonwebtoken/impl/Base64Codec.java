@@ -17,6 +17,11 @@ package io.jsonwebtoken.impl;
 
 import java.util.Base64;
 
+/**
+ * Base64Codec
+ *
+ * @author jjwt
+ */
 public class Base64Codec extends AbstractTextCodec {
 
 	@Override
