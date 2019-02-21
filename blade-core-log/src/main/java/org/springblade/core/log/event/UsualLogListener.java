@@ -29,7 +29,6 @@ import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -41,7 +40,6 @@ import java.util.Map;
  * @author Chill
  */
 @Slf4j
-@Component
 @AllArgsConstructor
 public class UsualLogListener {
 
