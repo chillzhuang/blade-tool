@@ -71,8 +71,8 @@ swagger:
   description: SpringBlade 接口文档系统
   version: 2.0.0
   license: Powered By SpringBlade
-  licenseUrl: https://springblade.org
-  terms-of-service-url: https://springblade.org
+  licenseUrl: https://bladex.vip
+  terms-of-service-url: https://bladex.vip
   contact:
     name: smallchill
     email: smallchill@163.com
