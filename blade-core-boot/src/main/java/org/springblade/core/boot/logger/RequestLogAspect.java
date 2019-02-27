@@ -101,30 +101,47 @@ public class RequestLogAspect {
 			}
 		});
 		needRemoveKeys.forEach(paraMap::remove);
+
+		// 构建成一条长 日志，避免并发下日志错乱
+		StringBuilder logBuilder = new StringBuilder(500);
+		// 日志参数
+		List<Object> logArgs = new ArrayList<>();
+		logBuilder.append("\n\n================  Request Start  ================\n");
 		// 打印请求
-		log.info("================  Request Start  ================");
 		if (paraMap.isEmpty()) {
-			log.info("===> {}: {}", requestMethod, requestURI);
+			logBuilder.append("===> {}: {}\n");
+			logArgs.add(requestMethod);
+			logArgs.add(requestURI);
 		} else {
-			log.info("===> {}: {} Parameters: {}", requestMethod, requestURI, JsonUtil.toJson(paraMap));
+			logBuilder.append("===> {}: {} Parameters: {}\n");
+			logArgs.add(requestMethod);
+			logArgs.add(requestURI);
+			logArgs.add(JsonUtil.toJson(paraMap));
 		}
 		// 打印请求头
 		Enumeration<String> headers = request.getHeaderNames();
 		while (headers.hasMoreElements()) {
 			String headerName = headers.nextElement();
 			String headerValue = request.getHeader(headerName);
-			log.info("===headers===  {} : {}", headerName, headerValue);
+			logBuilder.append("===headers===  {} : {}\n");
+			logArgs.add(headerName);
+			logArgs.add(headerValue);
 		}
 		// 打印执行时间
 		long startNs = System.nanoTime();
 		try {
 			Object result = point.proceed();
-			log.info("===Result===  {}", JsonUtil.toJson(result));
+			logBuilder.append("===Result===  {}\n");
+			logArgs.add(JsonUtil.toJson(result));
 			return result;
 		} finally {
 			long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-			log.info("<=== {}: {} ({} ms)", request.getMethod(), requestURI, tookMs);
-			log.info("================   Request End   ================");
+			logBuilder.append("<=== {}: {} ({} ms)");
+			logArgs.add(requestMethod);
+			logArgs.add(requestURI);
+			logArgs.add(tookMs);
+			logBuilder.append("\n================   Request End   ================\n");
+			log.info(logBuilder.toString(), logArgs.toArray());
 		}
 	}
 
