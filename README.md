@@ -1,17 +1,8 @@
 ## 简介
 blade-tool 是如梦技术团队作品， 是一个基于 Spring Boot 2 & Spring Cloud Finchley ，封装组合大量组件，用于快速构建中大型API、RESTful API项目的核心包。
 
-注意事项
-* 注册中心为 Consul 
-* 基于 SpringBoot2.x 版本 以及 SpringCloud Finchley 版本
-
-技术选型&文档
-* Spring Boot（[查看Spring Boot学习&使用指南](http://www.jianshu.com/p/1a9fd8936bd8)）
-* Spring Cloud（[查看Spring Cloud学习&使用指南](https://springcloud.cc/)）
-* Mybatis-Plus（[查看官方文档](https://baomidou.gitee.io/mybatis-plus-doc/#/quick-start)）
-* JsonWebToken（[查看官方文档](https://jwt.io/)） 
-
 ## 鸣谢
+* mica（[Mica](https://github.com/lets-mica/mica)）
 * 如梦技术（[DreamLu](https://www.dreamlu.net/)）
 * pigx（[Pig Microservice](https://www.pig4cloud.com/zh-cn/)）
 * avue（[avue](https://avue.top/)）
