@@ -13,25 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tool.constant;
+package org.springblade.core.tenant;
 
 /**
- * 系统默认角色
+ * 租户id生成器
  *
  * @author Chill
  */
-public class RoleConstant {
+public interface TenantId {
 
-	public static final String ADMIN = "administrator";
-
-	public static final String HAS_ROLE_ADMIN = "hasRole('" + ADMIN + "')";
-
-	public static final String USER = "user";
-
-	public static final String HAS_ROLE_USER = "hasRole('" + USER + "')";
-
-	public static final String TEST = "test";
-
-	public static final String HAS_ROLE_TEST = "hasRole('" + TEST + "')";
+	/**
+	 * 生成自定义租户id
+	 * @return
+	 */
+	String generate();
 
 }

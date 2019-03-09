@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tool.constant;
+package org.springblade.core.tenant.mp;
+
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.springblade.core.mp.base.BaseEntity;
 
 /**
- * 系统默认角色
+ * 租户基础实体类
  *
  * @author Chill
  */
-public class RoleConstant {
+@Data
+public class TenantEntity extends BaseEntity {
 
-	public static final String ADMIN = "administrator";
-
-	public static final String HAS_ROLE_ADMIN = "hasRole('" + ADMIN + "')";
-
-	public static final String USER = "user";
-
-	public static final String HAS_ROLE_USER = "hasRole('" + USER + "')";
-
-	public static final String TEST = "test";
-
-	public static final String HAS_ROLE_TEST = "hasRole('" + TEST + "')";
+	/**
+	 * 租户编号
+	 */
+	@ApiModelProperty(value = "租户编号")
+	private String tenantCode;
 
 }

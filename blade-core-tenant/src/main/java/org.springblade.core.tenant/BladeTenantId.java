@@ -13,25 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tool.constant;
+package org.springblade.core.tenant;
+
+import org.springblade.core.tool.utils.RandomType;
+import org.springblade.core.tool.utils.StringUtil;
 
 /**
- * 系统默认角色
+ * blade租户id生成器
  *
  * @author Chill
  */
-public class RoleConstant {
-
-	public static final String ADMIN = "administrator";
-
-	public static final String HAS_ROLE_ADMIN = "hasRole('" + ADMIN + "')";
-
-	public static final String USER = "user";
-
-	public static final String HAS_ROLE_USER = "hasRole('" + USER + "')";
-
-	public static final String TEST = "test";
-
-	public static final String HAS_ROLE_TEST = "hasRole('" + TEST + "')";
-
+public class BladeTenantId implements TenantId {
+	@Override
+	public String generate() {
+		return StringUtil.random(6, RandomType.INT);
+	}
 }

@@ -31,10 +31,15 @@ public class BladeUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 主键
+	 * 用户id
 	 */
 	@ApiModelProperty(hidden = true)
 	private Integer userId;
+	/**
+	 * 租户编号
+	 */
+	@ApiModelProperty(hidden = true)
+	private String tenantCode;
 	/**
 	 * 昵称
 	 */

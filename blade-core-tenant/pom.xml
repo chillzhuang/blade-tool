@@ -7,29 +7,18 @@
         <groupId>org.springblade</groupId>
         <version>2.1.0</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-launch</artifactId>
+    <artifactId>blade-core-tenant</artifactId>
     <name>${project.artifactId}</name>
     <version>${blade.tool.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
-        <!--Spring-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-core-mybatis</artifactId>
+            <version>${blade.tool.version}</version>
         </dependency>
     </dependencies>
 

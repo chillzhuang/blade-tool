@@ -42,8 +42,10 @@ public class SecureRegistry {
 		this.defaultExcludePatterns.add("/auth/**");
 		this.defaultExcludePatterns.add("/token/**");
 		this.defaultExcludePatterns.add("/log/**");
-		this.defaultExcludePatterns.add("/user/userInfo");
+		this.defaultExcludePatterns.add("/user/user-info");
+		this.defaultExcludePatterns.add("/menu/auth-routes");
 		this.defaultExcludePatterns.add("/error/**");
+		this.defaultExcludePatterns.add("/assets/**");
 	}
 
 	/**
