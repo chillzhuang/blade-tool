@@ -68,7 +68,6 @@
         <module>blade-core-mybatis</module>
         <module>blade-core-swagger</module>
         <module>blade-core-cloud</module>
-        <module>blade-core-tenant</module>
     </modules>
 
     <dependencyManagement>

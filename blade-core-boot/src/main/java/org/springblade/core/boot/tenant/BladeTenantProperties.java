@@ -13,25 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tenant.mp;
+package org.springblade.core.boot.tenant;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import org.springblade.core.mp.base.BaseEntity;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * 租户基础实体类
+ * 多租户配置
  *
  * @author Chill
  */
-@Data
-public class TenantEntity extends BaseEntity {
+@Getter
+@Setter
+@ConfigurationProperties(prefix = "blade.tenant")
+public class BladeTenantProperties {
 
 	/**
-	 * 租户编号
+	 * 多租户字段名称
 	 */
-	@ApiModelProperty(value = "租户编号")
-	private String tenantCode;
+	private String column = "tenant_code";
 
+	/**
+	 * 多租户数据表
+	 */
+	private List<String> tables = new ArrayList<>();
+
+	/**
+	 * 多租户系统数据表
+	 */
+	private List<String> bladeTables = Arrays.asList("blade_notice", "blade_log_api", "blade_log_error", "blade_log_usual");
 }

@@ -13,19 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tenant;
+package org.springblade.core.mp.base;
+
+
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
- * 租户id生成器
+ * 租户基础实体类
  *
  * @author Chill
  */
-public interface TenantId {
+@Data
+public class TenantEntity extends BaseEntity {
 
 	/**
-	 * 生成自定义租户id
-	 * @return
+	 * 租户编号
 	 */
-	String generate();
+	@ApiModelProperty(value = "租户编号")
+	private String tenantCode;
 
 }

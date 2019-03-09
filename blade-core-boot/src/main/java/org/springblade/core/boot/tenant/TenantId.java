@@ -13,38 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tenant;
-
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package org.springblade.core.boot.tenant;
 
 /**
- * 多租户配置
+ * 租户id生成器
  *
  * @author Chill
  */
-@Getter
-@Setter
-@ConfigurationProperties(prefix = "blade.tenant")
-public class BladeTenantProperties {
+public interface TenantId {
 
 	/**
-	 * 多租户字段名称
+	 * 生成自定义租户id
+	 *
+	 * @return string
 	 */
-	private String column = "tenant_code";
+	String generate();
 
-	/**
-	 * 多租户数据表
-	 */
-	private List<String> tables = new ArrayList<>();
-
-	/**
-	 * 多租户系统数据表
-	 */
-	private List<String> bladeTables = Arrays.asList("blade_notice", "blade_log_api", "blade_log_error", "blade_log_usual");
 }
