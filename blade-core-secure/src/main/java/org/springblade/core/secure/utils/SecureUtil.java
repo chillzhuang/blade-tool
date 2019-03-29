@@ -163,6 +163,28 @@ public class SecureUtil {
 	}
 
 	/**
+	 * 获取用户角色
+	 *
+	 * @return userName
+	 */
+	public static String getUserRole() {
+		BladeUser user = getUser();
+		return (null == user) ? StringPool.EMPTY : user.getRoleName();
+	}
+
+	/**
+	 * 获取用角色
+	 *
+	 * @param request request
+	 * @return userName
+	 */
+	public static String getUserRole(HttpServletRequest request) {
+		BladeUser user = getUser(request);
+		return (null == user) ? StringPool.EMPTY : user.getRoleName();
+	}
+
+
+	/**
 	 * 获取租户编号
 	 *
 	 * @return tenantCode
