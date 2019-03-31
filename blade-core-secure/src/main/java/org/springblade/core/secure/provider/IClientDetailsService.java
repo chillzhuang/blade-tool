@@ -26,7 +26,7 @@ public interface IClientDetailsService {
 	 * 根据clientId获取Client详情
 	 *
 	 * @param clientId 客户端id
-	 * @return
+	 * @return IClientDetails
 	 */
 	IClientDetails loadClientByClientId(String clientId);
 
