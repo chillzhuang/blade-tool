@@ -13,28 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.secure.annotation;
+package org.springblade.core.secure.provider;
 
-import java.lang.annotation.*;
+import java.io.Serializable;
 
 /**
- * 权限注解 用于检查权限 规定访问权限
+ * 多终端详情接口
  *
- * @example @PreAuth("#userVO.id<10")
- * @example @PreAuth("hasRole(#test, #test1)")
- * @example @PreAuth("hasPermission(#test) and @PreAuth.hasPermission(#test)")
+ * @author Chill
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Inherited
-@Documented
-public @interface PreAuth {
+public interface IClientDetails extends Serializable {
 
 	/**
-	 * Spring el
-	 * 文档地址：https://docs.spring.io/spring/docs/4.3.16.RELEASE/spring-framework-reference/htmlsingle/#expressions-operators-logical
+	 * 客户端id.
+	 *
+	 * @return String.
 	 */
-	String value();
+	String getClientId();
+
+	/**
+	 * 客户端密钥.
+	 *
+	 * @return String.
+	 */
+	String getClientSecret();
+
+	/**
+	 * 客户端token过期时间
+	 *
+	 * @return Integer
+	 */
+	Integer getAccessTokenValidity();
+
+	/**
+	 * 客户端刷新token过期时间
+	 *
+	 * @return Integer
+	 */
+	Integer getRefreshTokenValidity();
 
 }
-

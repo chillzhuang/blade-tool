@@ -29,6 +29,11 @@ import java.io.Serializable;
 public class BladeUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 * 客户端id
+	 */
+	@ApiModelProperty(hidden = true)
+	private String clientId;
 
 	/**
 	 * 用户id

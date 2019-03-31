@@ -19,19 +19,19 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.SneakyThrows;
+import org.springblade.core.launch.constant.TokenConstant;
 import org.springblade.core.secure.BladeUser;
-import org.springblade.core.tool.utils.Charsets;
-import org.springblade.core.tool.utils.Func;
-import org.springblade.core.tool.utils.StringPool;
-import org.springblade.core.tool.utils.WebUtil;
+import org.springblade.core.secure.constant.SecureConstant;
+import org.springblade.core.secure.exception.SecureException;
+import org.springblade.core.secure.provider.IClientDetails;
+import org.springblade.core.secure.provider.IClientDetailsService;
+import org.springblade.core.tool.utils.*;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
-import java.util.Base64;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Secure工具类
@@ -39,18 +39,25 @@ import java.util.Map;
  * @author Chill
  */
 public class SecureUtil {
-	public static final String BLADE_USER_REQUEST_ATTR = "_BLADE_USER_REQUEST_ATTR_";
+	private static final String BLADE_USER_REQUEST_ATTR = "_BLADE_USER_REQUEST_ATTR_";
 
-	public final static String HEADER = "blade-auth";
-	public final static String BEARER = "bearer";
-	public final static String ACCOUNT = "account";
-	public final static String USER_ID = "userId";
-	public final static String ROLE_ID = "roleId";
-	public final static String USER_NAME = "userName";
-	public final static String ROLE_NAME = "roleName";
-	public final static String TENANT_CODE = "tenantCode";
-	public final static Integer AUTH_LENGTH = 7;
-	public static String BASE64_SECURITY = Base64.getEncoder().encodeToString("BladeX".getBytes(Charsets.UTF_8));
+	private final static String HEADER = TokenConstant.HEADER;
+	private final static String BEARER = TokenConstant.BEARER;
+	private final static String ACCOUNT = TokenConstant.ACCOUNT;
+	private final static String USER_ID = TokenConstant.USER_ID;
+	private final static String ROLE_ID = TokenConstant.ROLE_ID;
+	private final static String USER_NAME = TokenConstant.USER_NAME;
+	private final static String ROLE_NAME = TokenConstant.ROLE_NAME;
+	private final static String TENANT_CODE = TokenConstant.TENANT_CODE;
+	private final static String CLIENT_ID = TokenConstant.CLIENT_ID;
+	private final static Integer AUTH_LENGTH = TokenConstant.AUTH_LENGTH;
+	private static String BASE64_SECURITY = Base64.getEncoder().encodeToString(TokenConstant.SIGN_KEY.getBytes(Charsets.UTF_8));
+
+	private static IClientDetailsService clientDetailsService;
+
+	static {
+		clientDetailsService = SpringUtil.getBean(IClientDetailsService.class);
+	}
 
 	/**
 	 * 获取用户信息
@@ -59,8 +66,11 @@ public class SecureUtil {
 	 */
 	public static BladeUser getUser() {
 		HttpServletRequest request = WebUtil.getRequest();
+		if (request == null) {
+			return null;
+		}
 		// 优先从 request 中获取
-		BladeUser bladeUser = (BladeUser) request.getAttribute(BLADE_USER_REQUEST_ATTR);
+		Object bladeUser = request.getAttribute(BLADE_USER_REQUEST_ATTR);
 		if (bladeUser == null) {
 			bladeUser = getUser(request);
 			if (bladeUser != null) {
@@ -68,7 +78,7 @@ public class SecureUtil {
 				request.setAttribute(BLADE_USER_REQUEST_ATTR, bladeUser);
 			}
 		}
-		return bladeUser;
+		return (BladeUser) bladeUser;
 	}
 
 	/**
@@ -82,6 +92,7 @@ public class SecureUtil {
 		if (claims == null) {
 			return null;
 		}
+		String clientId = Func.toStr(claims.get(SecureUtil.CLIENT_ID));
 		Integer userId = Func.toInt(claims.get(SecureUtil.USER_ID));
 		String tenantCode = Func.toStr(claims.get(SecureUtil.TENANT_CODE));
 		String roleId = Func.toStr(claims.get(SecureUtil.ROLE_ID));
@@ -89,6 +100,7 @@ public class SecureUtil {
 		String roleName = Func.toStr(claims.get(SecureUtil.ROLE_NAME));
 		String userName = Func.toStr(claims.get(SecureUtil.USER_NAME));
 		BladeUser bladeUser = new BladeUser();
+		bladeUser.setClientId(clientId);
 		bladeUser.setUserId(userId);
 		bladeUser.setTenantCode(tenantCode);
 		bladeUser.setAccount(account);
@@ -183,7 +195,6 @@ public class SecureUtil {
 		return (null == user) ? StringPool.EMPTY : user.getRoleName();
 	}
 
-
 	/**
 	 * 获取租户编号
 	 *
@@ -203,6 +214,27 @@ public class SecureUtil {
 	public static String getTenantCode(HttpServletRequest request) {
 		BladeUser user = getUser(request);
 		return (null == user) ? StringPool.EMPTY : user.getTenantCode();
+	}
+
+	/**
+	 * 获取客户端id
+	 *
+	 * @return tenantCode
+	 */
+	public static String getClientId() {
+		BladeUser user = getUser();
+		return (null == user) ? StringPool.EMPTY : user.getClientId();
+	}
+
+	/**
+	 * 获取客户端id
+	 *
+	 * @param request request
+	 * @return tenantCode
+	 */
+	public static String getClientId(HttpServletRequest request) {
+		BladeUser user = getUser(request);
+		return (null == user) ? StringPool.EMPTY : user.getClientId();
 	}
 
 	/**
@@ -229,7 +261,7 @@ public class SecureUtil {
 	 * @return header
 	 */
 	public static String getHeader() {
-		return getHeader(WebUtil.getRequest());
+		return getHeader(Objects.requireNonNull(WebUtil.getRequest()));
 	}
 
 	/**
@@ -250,17 +282,16 @@ public class SecureUtil {
 	 */
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
-			Claims claims = Jwts.parser()
+			return Jwts.parser()
 				.setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY))
 				.parseClaimsJws(jsonWebToken).getBody();
-			return claims;
 		} catch (Exception ex) {
 			return null;
 		}
 	}
 
 	/**
-	 * 创建jwt
+	 * 创建令牌
 	 *
 	 * @param user     user
 	 * @param audience audience
@@ -269,6 +300,17 @@ public class SecureUtil {
 	 * @return jwt
 	 */
 	public static String createJWT(Map<String, String> user, String audience, String issuer, boolean isExpire) {
+
+		String[] tokens = extractAndDecodeHeader();
+		assert tokens.length == 2;
+		String clientId = tokens[0];
+		String clientSecret = tokens[1];
+
+		// 校验客户端信息
+		if (!validateClient(clientId, clientSecret)) {
+			throw new SecureException("客户端认证失败!");
+		}
+
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
 		long nowMillis = System.currentTimeMillis();
@@ -286,6 +328,9 @@ public class SecureUtil {
 
 		//设置JWT参数
 		user.forEach(builder::claim);
+
+		//设置应用id
+		builder.claim(CLIENT_ID, clientId);
 
 		//添加Token过期时间
 		if (isExpire) {
@@ -311,6 +356,67 @@ public class SecureUtil {
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTimeInMillis() - System.currentTimeMillis();
+	}
+
+	/**
+	 * 获取过期时间的秒数(次日凌晨3点)
+	 *
+	 * @return expire
+	 */
+	public static int getExpireSeconds() {
+		return (int) (getExpire() / 1000);
+	}
+
+	/**
+	 * 客户端信息解码
+	 */
+	@SneakyThrows
+	public static String[] extractAndDecodeHeader() {
+		// 获取请求头客户端信息
+		String header = Objects.requireNonNull(WebUtil.getRequest()).getHeader(SecureConstant.BASIC_HEADER_KEY);
+		if (header == null || !header.startsWith(SecureConstant.BASIC_HEADER_PREFIX)) {
+			throw new SecureException("No client information in request header");
+		}
+		byte[] base64Token = header.substring(6).getBytes(Charsets.UTF_8_NAME);
+
+		byte[] decoded;
+		try {
+			decoded = Base64.getDecoder().decode(base64Token);
+		} catch (IllegalArgumentException var7) {
+			throw new RuntimeException("Failed to decode basic authentication token");
+		}
+
+		String token = new String(decoded, Charsets.UTF_8_NAME);
+		int index = token.indexOf(StringPool.COLON);
+		if (index == -1) {
+			throw new RuntimeException("Invalid basic authentication token");
+		} else {
+			return new String[]{token.substring(0, index), token.substring(index + 1)};
+		}
+	}
+
+	/**
+	 * 获取请求头中的客户端id
+	 */
+	public static String getClientIdFromHeader() {
+		String[] tokens = extractAndDecodeHeader();
+		assert tokens.length == 2;
+		return tokens[0];
+	}
+
+	/**
+	 * 校验Client
+	 *
+	 * @param clientId     客户端id
+	 * @param clientSecret 客户端密钥
+	 * @return boolean
+	 */
+	private static boolean validateClient(String clientId, String clientSecret) {
+		IClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
+		if (clientDetails != null) {
+			return StringUtil.equals(clientId, clientDetails.getClientId()) && StringUtil.equals(clientSecret, clientDetails.getClientSecret());
+		}
+		return false;
 	}
 
 }

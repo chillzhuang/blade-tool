@@ -17,11 +17,13 @@ package org.springblade.core.secure.interceptor;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.api.ResultCode;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.jackson.JsonUtil;
+import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -32,23 +34,26 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * jwt拦截器校验
+ * 客户端校验
  *
  * @author Chill
  */
 @Slf4j
 @AllArgsConstructor
-public class SecureInterceptor extends HandlerInterceptorAdapter {
+public class ClientInterceptor extends HandlerInterceptorAdapter {
+
+	private final String clientId;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-		if (null != SecureUtil.getUser()) {
+		BladeUser user = SecureUtil.getUser();
+		if (user != null && StringUtil.equals(clientId, SecureUtil.getClientIdFromHeader()) && StringUtil.equals(clientId, user.getClientId())) {
 			return true;
 		} else {
-			log.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}", request.getRequestURI(), WebUtil.getIP(request), JsonUtil.toJson(request.getParameterMap()));
+			log.warn("客户端认证失败，请求接口：{}，请求IP：{}，请求参数：{}", request.getRequestURI(), WebUtil.getIP(request), JsonUtil.toJson(request.getParameterMap()));
 			R result = R.fail(ResultCode.UN_AUTHORIZED);
-			response.setCharacterEncoding(BladeConstant.UTF_8);
 			response.setHeader(BladeConstant.CONTENT_TYPE_NAME, MediaType.APPLICATION_JSON_UTF8_VALUE);
+			response.setCharacterEncoding(BladeConstant.UTF_8);
 			response.setStatus(HttpServletResponse.SC_OK);
 			try {
 				response.getWriter().write(Objects.requireNonNull(JsonUtil.toJson(result)));

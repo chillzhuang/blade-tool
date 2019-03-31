@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
 /**
- * secure模块api放行默认配置
+ * secure注册默认配置
  *
  * @author Chill
  */

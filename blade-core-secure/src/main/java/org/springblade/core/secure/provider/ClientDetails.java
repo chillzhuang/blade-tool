@@ -13,28 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.secure.annotation;
+package org.springblade.core.secure.provider;
 
-import java.lang.annotation.*;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
- * 权限注解 用于检查权限 规定访问权限
+ * 客户端详情
  *
- * @example @PreAuth("#userVO.id<10")
- * @example @PreAuth("hasRole(#test, #test1)")
- * @example @PreAuth("hasPermission(#test) and @PreAuth.hasPermission(#test)")
+ * @author Chill
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Inherited
-@Documented
-public @interface PreAuth {
+@Data
+public class ClientDetails implements IClientDetails {
 
 	/**
-	 * Spring el
-	 * 文档地址：https://docs.spring.io/spring/docs/4.3.16.RELEASE/spring-framework-reference/htmlsingle/#expressions-operators-logical
+	 * 客户端id
 	 */
-	String value();
+	@ApiModelProperty(value = "客户端id")
+	private String clientId;
+	/**
+	 * 客户端密钥
+	 */
+	@ApiModelProperty(value = "客户端密钥")
+	private String clientSecret;
+
+	/**
+	 * 令牌过期秒数
+	 */
+	@ApiModelProperty(value = "令牌过期秒数")
+	private Integer accessTokenValidity;
+	/**
+	 * 刷新令牌过期秒数
+	 */
+	@ApiModelProperty(value = "刷新令牌过期秒数")
+	private Integer refreshTokenValidity;
 
 }
-

@@ -32,7 +32,7 @@ public class SecureException extends RuntimeException {
 
 	public SecureException(String message) {
 		super(message);
-		this.resultCode = ResultCode.INTERNAL_SERVER_ERROR;
+		this.resultCode = ResultCode.UN_AUTHORIZED;
 	}
 
 	public SecureException(IResultCode resultCode) {

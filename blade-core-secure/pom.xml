@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-tool</artifactId>
         <groupId>org.springblade</groupId>
-        <version>2.1.1</version>
+        <version>2.2.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -27,6 +27,17 @@
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-tool</artifactId>
             <version>${blade.tool.version}</version>
+        </dependency>
+        <!--Jdbc-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>tomcat-jdbc</artifactId>
+                    <groupId>org.apache.tomcat</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

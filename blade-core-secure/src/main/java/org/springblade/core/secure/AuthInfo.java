@@ -42,5 +42,5 @@ public class AuthInfo {
 	@ApiModelProperty(value = "过期时间")
 	private long expiresIn;
 	@ApiModelProperty(value = "许可证")
-	private String license = "made by blade";
+	private String license = "powered by blade";
 }

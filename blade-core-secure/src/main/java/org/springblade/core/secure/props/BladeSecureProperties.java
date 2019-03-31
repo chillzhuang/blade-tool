@@ -13,28 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.secure.annotation;
+package org.springblade.core.secure.props;
 
-import java.lang.annotation.*;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 权限注解 用于检查权限 规定访问权限
+ * secure放行额外配置
  *
- * @example @PreAuth("#userVO.id<10")
- * @example @PreAuth("hasRole(#test, #test1)")
- * @example @PreAuth("hasPermission(#test) and @PreAuth.hasPermission(#test)")
+ * @author Chill
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Inherited
-@Documented
-public @interface PreAuth {
+@Data
+@ConfigurationProperties("blade.secure.url")
+public class BladeSecureProperties {
 
-	/**
-	 * Spring el
-	 * 文档地址：https://docs.spring.io/spring/docs/4.3.16.RELEASE/spring-framework-reference/htmlsingle/#expressions-operators-logical
-	 */
-	String value();
+	private final List<String> excludePatterns = new ArrayList<>();
 
 }
-

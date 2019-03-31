@@ -13,28 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.secure.annotation;
-
-import java.lang.annotation.*;
+package org.springblade.core.secure.provider;
 
 /**
- * 权限注解 用于检查权限 规定访问权限
+ * 多终端注册接口
  *
- * @example @PreAuth("#userVO.id<10")
- * @example @PreAuth("hasRole(#test, #test1)")
- * @example @PreAuth("hasPermission(#test) and @PreAuth.hasPermission(#test)")
+ * @author Chill
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Inherited
-@Documented
-public @interface PreAuth {
+public interface IClientDetailsService {
 
 	/**
-	 * Spring el
-	 * 文档地址：https://docs.spring.io/spring/docs/4.3.16.RELEASE/spring-framework-reference/htmlsingle/#expressions-operators-logical
+	 * 根据clientId获取Client详情
+	 *
+	 * @param clientId 客户端id
+	 * @return
 	 */
-	String value();
+	IClientDetails loadClientByClientId(String clientId);
 
 }
-

@@ -29,6 +29,12 @@ spring:
     add-mappings: false
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      connection-test-query: SELECT 1 FROM DUAL
+      connection-timeout: 30000
+      maximum-pool-size: 5
+      max-lifetime: 1800000
+      minimum-idle: 1
   devtools:
     restart:
       log-condition-evaluation-delta: false
