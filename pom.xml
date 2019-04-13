@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>2.2.0</version>
+    <version>2.2.1</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,13 +36,13 @@
     </scm>
 
     <properties>
-        <blade.tool.version>2.2.0</blade.tool.version>
+        <blade.tool.version>2.2.1</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.0</maven.plugin.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.models.version>1.5.21</swagger.models.version>
-        <swagger.bootstrapui.version>1.9.0</swagger.bootstrapui.version>
+        <swagger.bootstrapui.version>1.9.2</swagger.bootstrapui.version>
         <mybatis.plus.version>3.1.0</mybatis.plus.version>
         <curator.framework.version>4.0.1</curator.framework.version>
         <protostuff.version>1.6.0</protostuff.version>
@@ -61,13 +61,14 @@
 
     <modules>
         <module>blade-core-boot</module>
+        <module>blade-core-cloud</module>
+        <module>blade-core-develop</module>
         <module>blade-core-launch</module>
-        <module>blade-core-secure</module>
-        <module>blade-core-tool</module>
         <module>blade-core-log</module>
         <module>blade-core-mybatis</module>
+        <module>blade-core-secure</module>
         <module>blade-core-swagger</module>
-        <module>blade-core-cloud</module>
+        <module>blade-core-tool</module>
     </modules>
 
     <dependencyManagement>

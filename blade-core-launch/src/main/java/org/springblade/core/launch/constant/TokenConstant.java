@@ -22,7 +22,7 @@ package org.springblade.core.launch.constant;
  */
 public interface TokenConstant {
 
-	String SIGN_KEY = "BladeX";
+	String SIGN_KEY = "Blade";
 	String AVATAR = "avatar";
 	String HEADER = "blade-auth";
 	String BEARER = "bearer";
@@ -38,7 +38,7 @@ public interface TokenConstant {
 	String TENANT_CODE = "tenant_code";
 	String CLIENT_ID = "client_id";
 	String LICENSE = "license";
-	String LICENSE_NAME = "powered by bladex";
+	String LICENSE_NAME = "powered by blade";
 	String DEFAULT_AVATAR = "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
 	Integer AUTH_LENGTH = 7;
 
