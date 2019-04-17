@@ -24,10 +24,10 @@ public interface DevelopConstant {
 	/**
 	 * sword 系统名
 	 */
-	String SWORD_NAME = "templates/sword";
+	String SWORD_NAME = "sword";
 
 	/**
 	 * saber 系统名
 	 */
-	String SABER_NAME = "templates/saber";
+	String SABER_NAME = "saber";
 }

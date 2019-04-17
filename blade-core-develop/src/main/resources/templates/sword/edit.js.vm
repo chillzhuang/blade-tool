@@ -4,7 +4,7 @@ import { Form, Input, Card, Button } from 'antd';
 import { connect } from 'dva';
 import Panel from '../../../components/Panel';
 import styles from '../../../layouts/Sword.less';
-import { $!{upperEntityPath}_DETAIL, $!{upperEntityPath}_SUBMIT } from './edit.js$!{table.entityPath}';
+import { $!{upperEntityPath}_DETAIL, $!{upperEntityPath}_SUBMIT } from '../../../actions/$!{table.entityPath}';
 
 const FormItem = Form.Item;
 

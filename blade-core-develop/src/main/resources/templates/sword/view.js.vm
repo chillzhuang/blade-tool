@@ -5,7 +5,7 @@ import { Form, Card, Button } from 'antd';
 import { connect } from 'dva';
 import Panel from '../../../components/Panel';
 import styles from '../../../layouts/Sword.less';
-import { $!{upperEntityPath}_DETAIL } from './view.js$!{table.entityPath}';
+import { $!{upperEntityPath}_DETAIL } from '../../../actions/$!{table.entityPath}';
 
 const FormItem = Form.Item;
 
