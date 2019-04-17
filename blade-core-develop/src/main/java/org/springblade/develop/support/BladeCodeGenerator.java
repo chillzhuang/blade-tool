@@ -194,7 +194,7 @@ public class BladeCodeGenerator {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				map.put("entityKey", (tableInfo.getEntityName().toLowerCase()));
-				return getOutputDir() + "/" + "/sql/" + tableInfo.getEntityName().toLowerCase() + ".menu.mysql";
+				return getOutputDir() + "/" + "/templates/sql/" + tableInfo.getEntityName().toLowerCase() + ".menu.mysql";
 			}
 		});
 		focList.add(new FileOutConfig("/templates/entityVO.java.vm") {

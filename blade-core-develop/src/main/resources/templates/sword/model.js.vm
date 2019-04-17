@@ -1,8 +1,8 @@
 #set($upperEntityPath=$table.entityPath.toUpperCase())
 import { message } from 'antd';
 import router from 'umi/router';
-import { $!{upperEntityPath}_NAMESPACE } from '../actions/$!{table.entityPath}';
-import { list, submit, detail, remove } from '../services/$!{table.entityPath}';
+import { $!{upperEntityPath}_NAMESPACE } from './model.js$!{table.entityPath}';
+import { list, submit, detail, remove } from './model.js$!{table.entityPath}';
 
 export default {
   namespace: $!{upperEntityPath}_NAMESPACE,

@@ -40,7 +40,7 @@ public class CodeGenerator {
 	/**
 	 * 前端代码生成所属系统
 	 */
-	public static String SYSTEM_NAME = "saber";
+	public static String SYSTEM_NAME = "templates/saber";
 	/**
 	 * 前端代码生成地址
 	 */

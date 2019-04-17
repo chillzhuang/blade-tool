@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {getList, getDetail, add, update, remove} from "@/api/$!{cfg.servicePackage}/$!{cfg.entityKey}";
+  import {getList, getDetail, add, update, remove} from "templates/saber/crud.vue$!{cfg.servicePackage}/$!{cfg.entityKey}";
   import {mapGetters} from "vuex";
 
   export default {
