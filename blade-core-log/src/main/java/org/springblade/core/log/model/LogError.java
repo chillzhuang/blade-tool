@@ -16,17 +16,10 @@
 package org.springblade.core.log.model;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springblade.core.tool.utils.DateUtil;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.Nullable;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * 服务 异常
@@ -35,44 +28,10 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("blade_log_error")
-public class LogError implements Serializable {
+public class LogError extends LogAbstract implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 主键id
-	 */
-	@TableId(value = "id", type = IdType.ID_WORKER)
-	private Long id;
-	/**
-	 * 应用名
-	 */
-	private String serviceId;
-	/**
-	 * 环境
-	 */
-	private String env;
-	/**
-	 * 服务器 ip
-	 */
-	private String serverIp;
-	/**
-	 * 服务器名
-	 */
-	private String serverHost;
-	/**
-	 * 用户代理
-	 */
-	private String userAgent;
-	/**
-	 * 请求url
-	 */
-	@Nullable
-	private String requestUri;
-	/**
-	 * 操作方式
-	 */
-	private String method;
 	/**
 	 * 堆栈信息
 	 */
@@ -85,36 +44,16 @@ public class LogError implements Serializable {
 	 * 异常消息
 	 */
 	private String message;
-	/**
-	 * 类名
-	 */
-	private String methodClass;
+
 	/**
 	 * 文件名
 	 */
 	private String fileName;
-	/**
-	 * 方法名
-	 */
-	private String methodName;
-	/**
-	 * 操作提交的数据
-	 */
-	private String params;
+
 	/**
 	 * 代码行数
 	 */
 	private Integer lineNumber;
 
-	/**
-	 * 创建人
-	 */
-	private String createBy;
 
-	/**
-	 * 创建时间
-	 */
-	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
-	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
-	private LocalDateTime createTime;
 }
