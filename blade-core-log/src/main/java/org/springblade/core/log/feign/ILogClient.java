@@ -16,6 +16,7 @@
 package org.springblade.core.log.feign;
 
 import org.springblade.core.launch.constant.AppConstant;
+import org.springblade.core.log.feign.fallback.ILogClientHystric;
 import org.springblade.core.log.model.LogApi;
 import org.springblade.core.log.model.LogUsual;
 import org.springblade.core.log.model.LogError;
@@ -30,7 +31,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author Chill
  */
 @FeignClient(
-	value = AppConstant.APPLICATION_LOG_NAME
+	value = AppConstant.APPLICATION_LOG_NAME,
+	fallback = ILogClientHystric.class
 )
 public interface ILogClient {
 

@@ -18,9 +18,11 @@ package org.springblade.core.log.publisher;
 
 import org.springblade.core.log.constant.EventConstant;
 import org.springblade.core.log.event.UsualLogEvent;
+import org.springblade.core.log.model.LogAbstract;
+import org.springblade.core.log.model.LogUsual;
+import org.springblade.core.log.utils.LogAbstractUtil;
 import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.core.tool.utils.WebUtil;
-import org.springblade.core.log.model.LogUsual;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -39,6 +41,8 @@ public class UsualLogPublisher {
 		logUsual.setLogLevel(level);
 		logUsual.setLogId(id);
 		logUsual.setLogData(data);
+
+		LogAbstractUtil.addRequestInfoToLog(request, logUsual);
 		Map<String, Object> event = new HashMap<>(16);
 		event.put(EventConstant.EVENT_LOG, logUsual);
 		event.put(EventConstant.EVENT_REQUEST, request);
