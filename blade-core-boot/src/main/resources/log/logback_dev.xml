@@ -77,5 +77,8 @@
     <Logger name="org.springblade" level="DEBUG" />
     <Logger name="org.springblade.core.version" level="INFO"/>
 
+    <!-- 减少nacos日志 -->
+    <logger name="com.alibaba.nacos" level="ERROR"/>
+
 
 </configuration>

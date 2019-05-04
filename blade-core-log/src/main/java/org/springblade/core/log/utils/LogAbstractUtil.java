@@ -25,12 +25,7 @@ import org.springblade.core.tool.utils.UrlUtil;
 import org.springblade.core.tool.utils.WebUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.ServerSocket;
-import java.net.UnknownHostException;
 import java.time.LocalDateTime;
-import java.util.Enumeration;
 
 /**
  * INet 相关工具
@@ -41,8 +36,9 @@ public class LogAbstractUtil {
 
 	/**
 	 * 向log中添加补齐request的信息
-	 * @param request
-	 * @param logAbstract
+	 *
+	 * @param request     请求
+	 * @param logAbstract 日志基础类
 	 */
 	public static void addRequestInfoToLog(HttpServletRequest request, LogAbstract logAbstract) {
 		logAbstract.setRemoteIp(WebUtil.getIP(request));
@@ -55,9 +51,10 @@ public class LogAbstractUtil {
 
 	/**
 	 * 向log中添加补齐其他的信息（eg：blade、server等）
-	 * @param logAbstract
-	 * @param bladeProperties
-	 * @param serverInfo
+	 *
+	 * @param logAbstract     日志基础类
+	 * @param bladeProperties 配置信息
+	 * @param serverInfo      服务信息
 	 */
 	public static void addOtherInfoToLog(LogAbstract logAbstract, BladeProperties bladeProperties, ServerInfo serverInfo) {
 		logAbstract.setServiceId(bladeProperties.getName());
@@ -67,7 +64,7 @@ public class LogAbstractUtil {
 		logAbstract.setCreateTime(LocalDateTime.now());
 
 		//这里判断一下params为null的情况，否则blade-log服务在解析该字段的时候，可能会报出NPE
-		if(logAbstract.getParams() == null){
+		if (logAbstract.getParams() == null) {
 			logAbstract.setParams(StringPool.EMPTY);
 		}
 	}

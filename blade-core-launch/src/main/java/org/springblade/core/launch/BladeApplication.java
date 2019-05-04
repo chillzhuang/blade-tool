@@ -61,7 +61,7 @@ public class BladeApplication {
 		// 判断环境:dev、test、prod
 		List<String> profiles = Arrays.asList(activeProfiles);
 		// 预设的环境
-		List<String> presetProfiles = new ArrayList<>(Arrays.asList(AppConstant.DEV_CDOE, AppConstant.TEST_CODE, AppConstant.PROD_CODE));
+		List<String> presetProfiles = new ArrayList<>(Arrays.asList(AppConstant.DEV_CODE, AppConstant.TEST_CODE, AppConstant.PROD_CODE));
 		// 交集
 		presetProfiles.retainAll(profiles);
 		// 当前使用
@@ -71,7 +71,7 @@ public class BladeApplication {
 		String profile;
 		if (activeProfileList.isEmpty()) {
 			// 默认dev开发
-			profile = AppConstant.DEV_CDOE;
+			profile = AppConstant.DEV_CODE;
 			activeProfileList.add(profile);
 			builder.profiles(profile);
 		} else if (activeProfileList.size() == 1) {

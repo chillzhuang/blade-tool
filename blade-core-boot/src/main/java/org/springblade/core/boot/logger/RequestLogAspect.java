@@ -5,6 +5,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.tool.jackson.JsonUtil;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.ClassUtil;
@@ -35,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Aspect
 @Configuration
-@Profile({"dev", "test"})
+@Profile({AppConstant.DEV_CODE, AppConstant.TEST_CODE})
 public class RequestLogAspect {
 
 	/**
@@ -54,19 +55,42 @@ public class RequestLogAspect {
 		MethodSignature ms = (MethodSignature) point.getSignature();
 		Method method = ms.getMethod();
 		Object[] args = point.getArgs();
+		// 请求参数处理
 		final Map<String, Object> paraMap = new HashMap<>(16);
 		for (int i = 0; i < args.length; i++) {
+			// 读取方法参数
 			MethodParameter methodParam = ClassUtil.getMethodParameter(method, i);
+			// PathVariable 参数跳过
 			PathVariable pathVariable = methodParam.getParameterAnnotation(PathVariable.class);
 			if (pathVariable != null) {
 				continue;
 			}
 			RequestBody requestBody = methodParam.getParameterAnnotation(RequestBody.class);
-			Object object = args[i];
+			Object value = args[i];
 			// 如果是body的json则是对象
-			if (requestBody != null && object != null) {
-				paraMap.putAll(BeanUtil.toMap(object));
+			if (requestBody != null && value != null) {
+				paraMap.putAll(BeanUtil.toMap(value));
+				continue;
+			}
+			// 处理 List
+			if (value instanceof List) {
+				value = ((List) value).get(0);
+			}
+			// 处理 参数
+			if (value instanceof HttpServletRequest) {
+				paraMap.putAll(((HttpServletRequest) value).getParameterMap());
+			} else if (value instanceof WebRequest) {
+				paraMap.putAll(((WebRequest) value).getParameterMap());
+			} else if (value instanceof MultipartFile) {
+				MultipartFile multipartFile = (MultipartFile) value;
+				String name = multipartFile.getName();
+				String fileName = multipartFile.getOriginalFilename();
+				paraMap.put(name, fileName);
+			} else if (value instanceof HttpServletResponse) {
+			} else if (value instanceof InputStream) {
+			} else if (value instanceof InputStreamSource) {
 			} else {
+				// 参数名
 				RequestParam requestParam = methodParam.getParameterAnnotation(RequestParam.class);
 				String paraName;
 				if (requestParam != null && StringUtil.isNotBlank(requestParam.value())) {
@@ -74,74 +98,61 @@ public class RequestLogAspect {
 				} else {
 					paraName = methodParam.getParameterName();
 				}
-				paraMap.put(paraName, object);
+				paraMap.put(paraName, value);
 			}
 		}
 		HttpServletRequest request = WebUtil.getRequest();
-		String requestURI = request.getRequestURI();
+		String requestURI = Objects.requireNonNull(request).getRequestURI();
 		String requestMethod = request.getMethod();
-		// 处理 参数
-		List<String> needRemoveKeys = new ArrayList<>(paraMap.size());
-		paraMap.forEach((key, value) -> {
-			if (value instanceof HttpServletRequest) {
-				needRemoveKeys.add(key);
-				paraMap.putAll(((HttpServletRequest) value).getParameterMap());
-			} else if (value instanceof HttpServletResponse) {
-				needRemoveKeys.add(key);
-			} else if (value instanceof InputStream) {
-				needRemoveKeys.add(key);
-			} else if (value instanceof MultipartFile) {
-				String fileName = ((MultipartFile) value).getOriginalFilename();
-				paraMap.put(key, fileName);
-			} else if (value instanceof InputStreamSource) {
-				needRemoveKeys.add(key);
-			} else if (value instanceof WebRequest) {
-				needRemoveKeys.add(key);
-				paraMap.putAll(((WebRequest) value).getParameterMap());
-			}
-		});
-		needRemoveKeys.forEach(paraMap::remove);
 
 		// 构建成一条长 日志，避免并发下日志错乱
-		StringBuilder logBuilder = new StringBuilder(500);
+		StringBuilder beforeReqLog = new StringBuilder(300);
 		// 日志参数
-		List<Object> logArgs = new ArrayList<>();
-		logBuilder.append("\n\n================  Request Start  ================\n");
-		// 打印请求
+		List<Object> beforeReqArgs = new ArrayList<>();
+		beforeReqLog.append("\n\n================  Request Start  ================\n");
+		// 打印路由
+		beforeReqLog.append("===> {}: {}");
+		beforeReqArgs.add(requestMethod);
+		beforeReqArgs.add(requestURI);
+		// 请求参数
 		if (paraMap.isEmpty()) {
-			logBuilder.append("===> {}: {}\n");
-			logArgs.add(requestMethod);
-			logArgs.add(requestURI);
+			beforeReqLog.append("\n");
 		} else {
-			logBuilder.append("===> {}: {} Parameters: {}\n");
-			logArgs.add(requestMethod);
-			logArgs.add(requestURI);
-			logArgs.add(JsonUtil.toJson(paraMap));
+			beforeReqLog.append(" Parameters: {}\n");
+			beforeReqArgs.add(JsonUtil.toJson(paraMap));
 		}
 		// 打印请求头
 		Enumeration<String> headers = request.getHeaderNames();
 		while (headers.hasMoreElements()) {
 			String headerName = headers.nextElement();
 			String headerValue = request.getHeader(headerName);
-			logBuilder.append("===headers===  {} : {}\n");
-			logArgs.add(headerName);
-			logArgs.add(headerValue);
+			beforeReqLog.append("===Headers===  {} : {}\n");
+			beforeReqArgs.add(headerName);
+			beforeReqArgs.add(headerValue);
 		}
+		beforeReqLog.append("================  Request End   ================\n");
 		// 打印执行时间
 		long startNs = System.nanoTime();
+		log.info(beforeReqLog.toString(), beforeReqArgs.toArray());
+		// aop 执行后的日志
+		StringBuilder afterReqLog = new StringBuilder(200);
+		// 日志参数
+		List<Object> afterReqArgs = new ArrayList<>();
+		afterReqLog.append("\n\n================  Response Start  ================\n");
 		try {
 			Object result = point.proceed();
-			logBuilder.append("===Result===  {}\n");
-			logArgs.add(JsonUtil.toJson(result));
+			// 打印返回结构体
+			afterReqLog.append("===Result===  {}\n");
+			afterReqArgs.add(JsonUtil.toJson(result));
 			return result;
 		} finally {
 			long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
-			logBuilder.append("<=== {}: {} ({} ms)");
-			logArgs.add(requestMethod);
-			logArgs.add(requestURI);
-			logArgs.add(tookMs);
-			logBuilder.append("\n================   Request End   ================\n");
-			log.info(logBuilder.toString(), logArgs.toArray());
+			afterReqLog.append("<=== {}: {} ({} ms)\n");
+			afterReqArgs.add(requestMethod);
+			afterReqArgs.add(requestURI);
+			afterReqArgs.add(tookMs);
+			afterReqLog.append("================  Response End   ================\n");
+			log.info(afterReqLog.toString(), afterReqArgs.toArray());
 		}
 	}
 

@@ -28,7 +28,7 @@ spring:
   resources:
     add-mappings: false
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-test-query: SELECT 1 FROM DUAL
       connection-timeout: 30000
@@ -75,7 +75,7 @@ mybatis-plus:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 2.0.0
+  version: 2.3.0
   license: Powered By SpringBlade
   licenseUrl: https://bladex.vip
   terms-of-service-url: https://bladex.vip

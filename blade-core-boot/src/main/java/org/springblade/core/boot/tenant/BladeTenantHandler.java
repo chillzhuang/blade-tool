@@ -62,6 +62,12 @@ public class BladeTenantHandler implements TenantHandler {
 	 */
 	@Override
 	public boolean doTableFilter(String tableName) {
-		return (properties.getTables().size() > 0 && !properties.getTables().contains(tableName)) || !properties.getBladeTables().contains(tableName) || StringUtil.isBlank(SecureUtil.getTenantCode());
+		return !(
+			(
+				(properties.getTables().size() > 0 && properties.getTables().contains(tableName))
+					|| properties.getBladeTables().contains(tableName)
+			)
+				&& StringUtil.isNotBlank(SecureUtil.getTenantCode())
+		);
 	}
 }

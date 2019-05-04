@@ -20,23 +20,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springblade.core.launch.props.BladeProperties;
-import org.springblade.core.launch.server.ServerInfo;
-import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.utils.DateUtil;
-import org.springblade.core.tool.utils.StringPool;
-import org.springblade.core.tool.utils.UrlUtil;
-import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * logApi、logError、logUsual的父类，拥有相同的属性值
- * @Auther: jiang
- * @Date: 2019/04/26 23:00
+ *
+ * @author jiang
  */
 @Data
 public class LogAbstract implements Serializable {

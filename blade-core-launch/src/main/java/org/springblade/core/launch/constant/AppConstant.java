@@ -25,7 +25,7 @@ public interface AppConstant {
 	/**
 	 * 应用版本
 	 */
-	String APPLICATION_VERSION = "2.0.0";
+	String APPLICATION_VERSION = "2.3.0";
 
 	/**
 	 * 基础包
@@ -76,7 +76,7 @@ public interface AppConstant {
 	/**
 	 * 开发环境
 	 */
-	String DEV_CDOE = "dev";
+	String DEV_CODE = "dev";
 	/**
 	 * 生产环境
 	 */

@@ -33,7 +33,7 @@ public class ServiceException extends RuntimeException {
 
 	public ServiceException(String message) {
 		super(message);
-		this.resultCode = ResultCode.INTERNAL_SERVER_ERROR;
+		this.resultCode = ResultCode.FAILURE;
 	}
 
 	public ServiceException(IResultCode resultCode) {
