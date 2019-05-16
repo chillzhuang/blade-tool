@@ -16,7 +16,6 @@
 package org.springblade.core.mp.base;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
@@ -29,6 +28,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 业务封装基础类
@@ -52,7 +52,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 	public boolean save(T entity) {
 		BladeUser user = SecureUtil.getUser();
 		LocalDateTime now = LocalDateTime.now();
-		entity.setCreateUser(user.getUserId());
+		entity.setCreateUser(Objects.requireNonNull(user).getUserId());
 		entity.setCreateTime(now);
 		entity.setUpdateUser(user.getUserId());
 		entity.setUpdateTime(now);
@@ -64,7 +64,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 	@Override
 	public boolean updateById(T entity) {
 		BladeUser user = SecureUtil.getUser();
-		entity.setUpdateUser(user.getUserId());
+		entity.setUpdateUser(Objects.requireNonNull(user).getUserId());
 		entity.setUpdateTime(LocalDateTime.now());
 		return super.updateById(entity);
 	}
@@ -73,9 +73,9 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 	public boolean deleteLogic(@NotEmpty List<Integer> ids) {
 		BladeUser user = SecureUtil.getUser();
 		T entity = BeanUtil.newInstance(modelClass);
-		entity.setUpdateUser(user.getUserId());
+		entity.setUpdateUser(Objects.requireNonNull(user).getUserId());
 		entity.setUpdateTime(LocalDateTime.now());
-		return super.update(entity, Wrappers.<T>update().lambda().in(T::getId, ids)) && super.removeByIds(ids);
+		return super.removeByIds(ids);
 	}
 
 }

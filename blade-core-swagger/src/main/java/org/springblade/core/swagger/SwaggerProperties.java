@@ -53,7 +53,7 @@ public class SwaggerProperties {
 	/**
 	 * 版本
 	 **/
-	private String version = "2.3.0";
+	private String version = "2.3.1";
 	/**
 	 * 许可证
 	 **/

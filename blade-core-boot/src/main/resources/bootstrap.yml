@@ -75,7 +75,7 @@ mybatis-plus:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 2.3.0
+  version: 2.3.1
   license: Powered By SpringBlade
   licenseUrl: https://bladex.vip
   terms-of-service-url: https://bladex.vip
