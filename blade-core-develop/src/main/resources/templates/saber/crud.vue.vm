@@ -12,13 +12,15 @@
                @search-change="searchChange"
                @search-reset="searchReset"
                @selection-change="selectionChange"
+               @current-change="currentChange"
+               @size-change="sizeChange"
                @on-load="onLoad">
       <template slot="menuLeft">
         <el-button type="danger"
                    size="small"
                    icon="el-icon-delete"
                    plain
-                   v-if="permission.$!{table.entityPath}_delete"
+                   v-if="permission.$!{cfg.entityKey}_delete"
                    @click="handleDelete">删 除
         </el-button>
       </template>
@@ -69,10 +71,10 @@
       ...mapGetters(["permission"]),
       permissionList() {
         return {
-          addBtn: this.permission.$!{table.entityPath}_add,
-          viewBtn: this.permission.$!{table.entityPath}_view,
-          delBtn: this.permission.$!{table.entityPath}_delete,
-          editBtn: this.permission.$!{table.entityPath}_edit
+          addBtn: this.vaildData(this.permission.$!{cfg.entityKey}_add),
+          viewBtn: this.vaildData(this.permission.$!{cfg.entityKey}_view),
+          delBtn: this.vaildData(this.permission.$!{cfg.entityKey}_delete),
+          editBtn: this.vaildData(this.permission.$!{cfg.entityKey}_edit)
         };
       },
       ids() {
@@ -84,7 +86,7 @@
       }
     },
     methods: {
-      rowSave(row, loading) {
+      rowSave(row, loading, done) {
         add(row).then(() => {
           loading();
           this.onLoad(this.page);
@@ -92,9 +94,12 @@
             type: "success",
             message: "操作成功!"
           });
+        }, error => {
+          done();
+          console.log(error);
         });
       },
-      rowUpdate(row, index, loading) {
+      rowUpdate(row, index, loading, done) {
         update(row).then(() => {
           loading();
           this.onLoad(this.page);
@@ -102,6 +107,9 @@
             type: "success",
             message: "操作成功!"
           });
+        }, error => {
+          done();
+          console.log(error);
         });
       },
       rowDel(row) {
@@ -152,7 +160,6 @@
             this.$refs.crud.toggleSelection();
           });
       },
-
       beforeOpen(done, type) {
         if (["edit", "view"].includes(type)) {
           getDetail(this.form.id).then(res => {
@@ -160,6 +167,12 @@
           });
         }
         done();
+      },
+      currentChange(currentPage){
+        this.page.currentPage = currentPage;
+      },
+      sizeChange(pageSize){
+        this.page.pageSize = pageSize;
       },
       onLoad(page, params = {}) {
         getList(page.currentPage, page.pageSize, params).then(res => {
