@@ -27,6 +27,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 项目启动器，搞定环境变量问题
@@ -100,8 +101,10 @@ public class BladeApplication {
 		props.setProperty("spring.cloud.nacos.config.file-extension", NacosConstant.NACOS_CONFIG_FORMAT);
 		props.setProperty("spring.cloud.sentinel.transport.dashboard", SentinelConstant.SENTINEL_ADDR);
 		// 加载自定义组件
-		ServiceLoader<LauncherService> loader = ServiceLoader.load(LauncherService.class);
-		loader.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
+		List<LauncherService> launcherList = new ArrayList<>();
+		ServiceLoader.load(LauncherService.class).forEach(launcherList::add);
+		launcherList.stream().sorted(Comparator.comparing(LauncherService::getOrder)).collect(Collectors.toList())
+			.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
 		return builder;
 	}
 

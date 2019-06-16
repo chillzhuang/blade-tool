@@ -3,41 +3,28 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>blade-tool</artifactId>
         <groupId>org.springblade</groupId>
+        <artifactId>blade-tool</artifactId>
         <version>2.3.2</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-secure</artifactId>
+    <artifactId>blade-core-test</artifactId>
     <name>${project.artifactId}</name>
     <version>${blade.tool.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- JWT -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
-        </dependency>
-        <!--Blade-->
+        <!-- Blade -->
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-tool</artifactId>
+            <artifactId>blade-core-launch</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
-        <!--Jdbc-->
+        <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>tomcat-jdbc</artifactId>
-                    <groupId>org.apache.tomcat</groupId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
     </dependencies>
 

@@ -7,37 +7,25 @@
         <groupId>org.springblade</groupId>
         <version>2.3.2</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-secure</artifactId>
+    <artifactId>blade-core-oss</artifactId>
     <name>${project.artifactId}</name>
     <version>${blade.tool.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- JWT -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.9.1</version>
-        </dependency>
         <!--Blade-->
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-tool</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
-        <!--Jdbc-->
+        <!--QiNiu-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>tomcat-jdbc</artifactId>
-                    <groupId>org.apache.tomcat</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.2.18</version>
         </dependency>
     </dependencies>
 

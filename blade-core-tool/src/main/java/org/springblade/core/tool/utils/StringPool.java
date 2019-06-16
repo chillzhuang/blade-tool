@@ -27,7 +27,7 @@ public interface StringPool {
 	String AT				= "@";
 	String ASTERISK			= "*";
 	String STAR				= ASTERISK;
-	char SLASH				= '/';
+	String SLASH				= "/";
 	char BACK_SLASH			= '\\';
 	String DOUBLE_SLASH		= "#//";
 	String COLON			= ":";
