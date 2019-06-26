@@ -3,12 +3,12 @@
     <avue-crud :option="option"
                :data="data"
                :page="page"
-               @row-del="rowDel"
-               v-model="form"
                :permission="permissionList"
+               :before-open="beforeOpen"
+               v-model="form"
                @row-update="rowUpdate"
                @row-save="rowSave"
-               :before-open="beforeOpen"
+               @row-del="rowDel"
                @search-change="searchChange"
                @search-reset="searchReset"
                @selection-change="selectionChange"
@@ -36,6 +36,7 @@
     data() {
       return {
         form: {},
+        query: {},
         page: {
           pageSize: 10,
           currentPage: 1,
@@ -71,10 +72,10 @@
       ...mapGetters(["permission"]),
       permissionList() {
         return {
-          addBtn: this.vaildData(this.permission.$!{cfg.entityKey}_add),
-          viewBtn: this.vaildData(this.permission.$!{cfg.entityKey}_view),
-          delBtn: this.vaildData(this.permission.$!{cfg.entityKey}_delete),
-          editBtn: this.vaildData(this.permission.$!{cfg.entityKey}_edit)
+          addBtn: this.vaildData(this.permission.$!{cfg.entityKey}_add, false),
+          viewBtn: this.vaildData(this.permission.$!{cfg.entityKey}_view, false),
+          delBtn: this.vaildData(this.permission.$!{cfg.entityKey}_delete, false),
+          editBtn: this.vaildData(this.permission.$!{cfg.entityKey}_edit, false)
         };
       },
       ids() {
@@ -129,15 +130,6 @@
             });
           });
       },
-      searchReset() {
-        this.onLoad(this.page);
-      },
-      searchChange(params) {
-        this.onLoad(this.page, params);
-      },
-      selectionChange(list) {
-        this.selectionList = list;
-      },
       handleDelete() {
         if (this.selectionList.length === 0) {
           this.$message.warning("请选择至少一条数据");
@@ -168,6 +160,17 @@
         }
         done();
       },
+      searchReset() {
+        this.query = {};
+        this.onLoad(this.page);
+      },
+      searchChange(params) {
+        this.query = params;
+        this.onLoad(this.page, params);
+      },
+      selectionChange(list) {
+        this.selectionList = list;
+      },
       currentChange(currentPage){
         this.page.currentPage = currentPage;
       },
@@ -175,7 +178,7 @@
         this.page.pageSize = pageSize;
       },
       onLoad(page, params = {}) {
-        getList(page.currentPage, page.pageSize, params).then(res => {
+        getList(page.currentPage, page.pageSize, Object.assign(params, this.query)).then(res => {
           const data = res.data.data;
           this.page.total = data.total;
           this.data = data.records;
