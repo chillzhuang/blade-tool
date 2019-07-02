@@ -28,7 +28,7 @@ import java.util.Map;
  * @author Chill
  */
 public class SqlKeyword {
-	private final static String SQL_REGEX = "'|%|--|insert|delete|update|select|count|group|union|create|drop|truncate|alter|grant|execute|exec|xp_cmdshell|call|declare|sql";
+	private final static String SQL_REGEX = "'|%|--|insert|delete|update|select|count|group|union|drop|truncate|alter|grant|execute|exec|xp_cmdshell|call|declare|sql";
 
 	private static final String EQUAL = "_equal";
 	private static final String NOT_EQUAL = "_notequal";
