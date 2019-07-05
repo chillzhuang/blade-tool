@@ -20,7 +20,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.constant.BladeConstant;
-import org.springblade.core.tool.utils.BeanUtil;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
@@ -28,7 +27,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 业务封装基础类
@@ -51,12 +49,16 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 	@Override
 	public boolean save(T entity) {
 		BladeUser user = SecureUtil.getUser();
+		if (user != null) {
+			entity.setCreateUser(user.getUserId());
+			entity.setUpdateUser(user.getUserId());
+		}
 		LocalDateTime now = LocalDateTime.now();
-		entity.setCreateUser(Objects.requireNonNull(user).getUserId());
 		entity.setCreateTime(now);
-		entity.setUpdateUser(user.getUserId());
 		entity.setUpdateTime(now);
-		entity.setStatus(BladeConstant.DB_STATUS_NORMAL);
+		if (entity.getStatus() == null) {
+			entity.setStatus(BladeConstant.DB_STATUS_NORMAL);
+		}
 		entity.setIsDeleted(BladeConstant.DB_NOT_DELETED);
 		return super.save(entity);
 	}
@@ -64,17 +66,15 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 	@Override
 	public boolean updateById(T entity) {
 		BladeUser user = SecureUtil.getUser();
-		entity.setUpdateUser(Objects.requireNonNull(user).getUserId());
+		if (user != null) {
+			entity.setUpdateUser(user.getUserId());
+		}
 		entity.setUpdateTime(LocalDateTime.now());
 		return super.updateById(entity);
 	}
 
 	@Override
 	public boolean deleteLogic(@NotEmpty List<Integer> ids) {
-		BladeUser user = SecureUtil.getUser();
-		T entity = BeanUtil.newInstance(modelClass);
-		entity.setUpdateUser(Objects.requireNonNull(user).getUserId());
-		entity.setUpdateTime(LocalDateTime.now());
 		return super.removeByIds(ids);
 	}
 

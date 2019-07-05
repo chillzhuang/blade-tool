@@ -26,7 +26,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -79,7 +78,7 @@ public class SwaggerAutoConfiguration {
 		return new Docket(DocumentationType.SWAGGER_2)
 			.host(swaggerProperties.getHost())
 			.apiInfo(apiInfo(swaggerProperties)).select()
-			.apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
+			.apis(SwaggerUtil.basePackages(swaggerProperties.getBasePackages()))
 			.paths(Predicates.and(Predicates.not(Predicates.or(excludePath)), Predicates.or(basePath)))
 			.build()
 			.securitySchemes(Collections.singletonList(securitySchema()))

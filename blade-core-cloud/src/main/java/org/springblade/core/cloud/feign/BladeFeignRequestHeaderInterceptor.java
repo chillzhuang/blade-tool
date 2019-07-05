@@ -42,7 +42,7 @@ public class BladeFeignRequestHeaderInterceptor implements RequestInterceptor {
 				while (headerNames.hasMoreElements()) {
 					String name = headerNames.nextElement();
 					String value = request.getHeader(name);
-					if ("blade-auth".equals(name)) {
+					if ("blade-auth".equals(name.toLowerCase())) {
 						requestTemplate.header(name, value);
 					}
 				}

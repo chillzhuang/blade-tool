@@ -22,6 +22,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.SneakyThrows;
 import org.springblade.core.launch.constant.TokenConstant;
 import org.springblade.core.secure.BladeUser;
+import org.springblade.core.secure.TokenInfo;
 import org.springblade.core.secure.constant.SecureConstant;
 import org.springblade.core.secure.exception.SecureException;
 import org.springblade.core.secure.provider.IClientDetails;
@@ -293,21 +294,24 @@ public class SecureUtil {
 	/**
 	 * 创建令牌
 	 *
-	 * @param user     user
-	 * @param audience audience
-	 * @param issuer   issuer
-	 * @param isExpire isExpire
+	 * @param user      user
+	 * @param audience  audience
+	 * @param issuer    issuer
+	 * @param tokenType tokenType
 	 * @return jwt
 	 */
-	public static String createJWT(Map<String, String> user, String audience, String issuer, boolean isExpire) {
+	public static TokenInfo createJWT(Map<String, String> user, String audience, String issuer, String tokenType) {
 
 		String[] tokens = extractAndDecodeHeader();
 		assert tokens.length == 2;
 		String clientId = tokens[0];
 		String clientSecret = tokens[1];
 
+		// 获取客户端信息
+		IClientDetails clientDetails = clientDetails(clientId);
+
 		// 校验客户端信息
-		if (!validateClient(clientId, clientSecret)) {
+		if (!validateClient(clientDetails, clientId, clientSecret)) {
 			throw new SecureException("客户端认证失败!");
 		}
 
@@ -333,14 +337,24 @@ public class SecureUtil {
 		builder.claim(CLIENT_ID, clientId);
 
 		//添加Token过期时间
-		if (isExpire) {
-			long expMillis = nowMillis + getExpire();
-			Date exp = new Date(expMillis);
-			builder.setExpiration(exp).setNotBefore(now);
+		long expireMillis;
+		if (tokenType.equals(TokenConstant.ACCESS_TOKEN)) {
+			expireMillis = clientDetails.getAccessTokenValidity() * 1000;
+		} else if (tokenType.equals(TokenConstant.REFRESH_TOKEN)) {
+			expireMillis = clientDetails.getRefreshTokenValidity() * 1000;
+		} else {
+			expireMillis = getExpire();
 		}
+		long expMillis = nowMillis + expireMillis;
+		Date exp = new Date(expMillis);
+		builder.setExpiration(exp).setNotBefore(now);
 
-		//生成JWT
-		return builder.compact();
+		// 组装Token信息
+		TokenInfo tokenInfo = new TokenInfo();
+		tokenInfo.setToken(builder.compact());
+		tokenInfo.setExpire((int) expireMillis / 1000);
+
+		return tokenInfo;
 	}
 
 	/**
@@ -356,15 +370,6 @@ public class SecureUtil {
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTimeInMillis() - System.currentTimeMillis();
-	}
-
-	/**
-	 * 获取过期时间的秒数(次日凌晨3点)
-	 *
-	 * @return expire
-	 */
-	public static int getExpireSeconds() {
-		return (int) (getExpire() / 1000);
 	}
 
 	/**
@@ -405,14 +410,23 @@ public class SecureUtil {
 	}
 
 	/**
+	 * 获取客户端信息
+	 *
+	 * @param clientId 客户端id
+	 * @return clientDetails
+	 */
+	private static IClientDetails clientDetails(String clientId) {
+		return clientDetailsService.loadClientByClientId(clientId);
+	}
+
+	/**
 	 * 校验Client
 	 *
 	 * @param clientId     客户端id
 	 * @param clientSecret 客户端密钥
 	 * @return boolean
 	 */
-	private static boolean validateClient(String clientId, String clientSecret) {
-		IClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
+	private static boolean validateClient(IClientDetails clientDetails, String clientId, String clientSecret) {
 		if (clientDetails != null) {
 			return StringUtil.equals(clientId, clientDetails.getClientId()) && StringUtil.equals(clientSecret, clientDetails.getClientSecret());
 		}
