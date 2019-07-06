@@ -19,7 +19,6 @@ package $!{wrapperPackage};
 import lombok.AllArgsConstructor;
 import org.springblade.core.mp.support.BaseEntityWrapper;
 import org.springblade.core.tool.utils.BeanUtil;
-import org.springblade.system.feign.IDictClient;
 import $!{package.Entity}.$!{entity};
 #set($voPackage=$package.Entity.replace("entity","vo"))
 import $!{voPackage}.$!{entity}VO;
@@ -30,20 +29,15 @@ import $!{voPackage}.$!{entity}VO;
  * @author $!{author}
  * @since $!{date}
  */
-@AllArgsConstructor
 public class $!{entity}Wrapper extends BaseEntityWrapper<$!{entity}, $!{entity}VO>  {
 
-	private IDictClient dictClient;
+    public static $!{entity}Wrapper build() {
+        return new $!{entity}Wrapper();
+    }
 
 	@Override
 	public $!{entity}VO entityVO($!{entity} $!{table.entityPath}) {
 		$!{entity}VO $!{table.entityPath}VO = BeanUtil.copy($!{table.entityPath}, $!{entity}VO.class);
-
-		/*R<String> dict = dictClient.getValue("$!{table.entityPath}" , $!{table.entityPath}VO.getCategory());
-		if (dict.isSuccess()) {
-			String categoryName = dict.getData();
-			$!{table.entityPath}VO.setCategoryName(categoryName);
-		}*/
 
 		return $!{table.entityPath}VO;
 	}

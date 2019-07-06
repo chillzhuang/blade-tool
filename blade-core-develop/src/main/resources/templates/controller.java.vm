@@ -24,7 +24,6 @@ import javax.validation.Valid;
 
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
-import org.springblade.system.feign.IDictClient;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.Func;
 import org.springframework.web.bind.annotation.*;
@@ -63,8 +62,6 @@ public class $!{table.controllerName} {
 
 	private $!{table.serviceName} $!{table.entityPath}Service;
 
-	private IDictClient dictClient;
-
 	/**
 	* 详情
 	*/
@@ -73,8 +70,7 @@ public class $!{table.controllerName} {
 	@ApiOperation(value = "详情", notes = "传入$!{table.entityPath}", position = 1)
 	public R<$!{entity}VO> detail($!{entity} $!{table.entityPath}) {
 		$!{entity} detail = $!{table.entityPath}Service.getOne(Condition.getQueryWrapper($!{table.entityPath}));
-		$!{entity}Wrapper $!{table.entityPath}Wrapper = new $!{entity}Wrapper(dictClient);
-		return R.data($!{table.entityPath}Wrapper.entityVO(detail));
+		return R.data($!{entity}Wrapper.build().entityVO(detail));
 	}
 
 	/**
@@ -85,8 +81,7 @@ public class $!{table.controllerName} {
 	@ApiOperation(value = "分页", notes = "传入$!{table.entityPath}")
 	public R<IPage<$!{entity}VO>> list($!{entity} $!{table.entityPath}, Query query) {
 		IPage<$!{entity}> pages = $!{table.entityPath}Service.page(Condition.getPage(query), Condition.getQueryWrapper($!{table.entityPath}));
-		$!{entity}Wrapper $!{table.entityPath}Wrapper = new $!{entity}Wrapper(dictClient);
-		return R.data($!{table.entityPath}Wrapper.pageVO(pages));
+		return R.data($!{entity}Wrapper.build().pageVO(pages));
 	}
 
 	/**
