@@ -67,7 +67,7 @@ public class $!{table.controllerName} {
 	*/
 	@GetMapping("/detail")
     @ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入$!{table.entityPath}", position = 1)
+	@ApiOperation(value = "详情", notes = "传入$!{table.entityPath}")
 	public R<$!{entity}VO> detail($!{entity} $!{table.entityPath}) {
 		$!{entity} detail = $!{table.entityPath}Service.getOne(Condition.getQueryWrapper($!{table.entityPath}));
 		return R.data($!{entity}Wrapper.build().entityVO(detail));
