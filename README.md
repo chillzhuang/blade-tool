@@ -69,7 +69,7 @@ LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求�
 * 允许以引入不改源码的形式免费用于学习、毕设、公司项目、私活等。
 * 特殊情况修改代码，但仍然想闭源需经过作者同意。
 * 对未经过授权和不遵循 LGPL 协议二次开源或者商业化我们将追究到底。
-* 参考请注明：参考自 mica：https://github.com/lets-mica/mica ，另请遵循 LGPL 协议。
+* 参考请注明：参考自 mica：https://github.com/lets-mica/mica ，blade-tool：https://github.com/chillzhuang/blade-tool 。另请遵循 LGPL 协议。
 * `注意`：若禁止条款被发现有权追讨 **19999** 的授权费。
 
 # 界面
