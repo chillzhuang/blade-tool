@@ -49,7 +49,7 @@ public class SecureUtil {
 	private final static String ROLE_ID = TokenConstant.ROLE_ID;
 	private final static String USER_NAME = TokenConstant.USER_NAME;
 	private final static String ROLE_NAME = TokenConstant.ROLE_NAME;
-	private final static String TENANT_CODE = TokenConstant.TENANT_CODE;
+	private final static String TENANT_ID = TokenConstant.TENANT_ID;
 	private final static String CLIENT_ID = TokenConstant.CLIENT_ID;
 	private final static Integer AUTH_LENGTH = TokenConstant.AUTH_LENGTH;
 	private static String BASE64_SECURITY = Base64.getEncoder().encodeToString(TokenConstant.SIGN_KEY.getBytes(Charsets.UTF_8));
@@ -95,7 +95,7 @@ public class SecureUtil {
 		}
 		String clientId = Func.toStr(claims.get(SecureUtil.CLIENT_ID));
 		Integer userId = Func.toInt(claims.get(SecureUtil.USER_ID));
-		String tenantCode = Func.toStr(claims.get(SecureUtil.TENANT_CODE));
+		String tenantId = Func.toStr(claims.get(SecureUtil.TENANT_ID));
 		String roleId = Func.toStr(claims.get(SecureUtil.ROLE_ID));
 		String account = Func.toStr(claims.get(SecureUtil.ACCOUNT));
 		String roleName = Func.toStr(claims.get(SecureUtil.ROLE_NAME));
@@ -103,7 +103,7 @@ public class SecureUtil {
 		BladeUser bladeUser = new BladeUser();
 		bladeUser.setClientId(clientId);
 		bladeUser.setUserId(userId);
-		bladeUser.setTenantCode(tenantCode);
+		bladeUser.setTenantId(tenantId);
 		bladeUser.setAccount(account);
 		bladeUser.setRoleId(roleId);
 		bladeUser.setRoleName(roleName);
@@ -197,30 +197,30 @@ public class SecureUtil {
 	}
 
 	/**
-	 * 获取租户编号
+	 * 获取租户ID
 	 *
-	 * @return tenantCode
+	 * @return tenantId
 	 */
-	public static String getTenantCode() {
+	public static String getTenantId() {
 		BladeUser user = getUser();
-		return (null == user) ? StringPool.EMPTY : user.getTenantCode();
+		return (null == user) ? StringPool.EMPTY : user.getTenantId();
 	}
 
 	/**
-	 * 获取租户编号
+	 * 获取租户ID
 	 *
 	 * @param request request
-	 * @return tenantCode
+	 * @return tenantId
 	 */
-	public static String getTenantCode(HttpServletRequest request) {
+	public static String getTenantId(HttpServletRequest request) {
 		BladeUser user = getUser(request);
-		return (null == user) ? StringPool.EMPTY : user.getTenantCode();
+		return (null == user) ? StringPool.EMPTY : user.getTenantId();
 	}
 
 	/**
 	 * 获取客户端id
 	 *
-	 * @return tenantCode
+	 * @return tenantId
 	 */
 	public static String getClientId() {
 		BladeUser user = getUser();
@@ -231,7 +231,7 @@ public class SecureUtil {
 	 * 获取客户端id
 	 *
 	 * @param request request
-	 * @return tenantCode
+	 * @return tenantId
 	 */
 	public static String getClientId(HttpServletRequest request) {
 		BladeUser user = getUser(request);

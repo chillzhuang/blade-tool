@@ -36,13 +36,13 @@ public class BladeTenantHandler implements TenantHandler {
 	private final BladeTenantProperties properties;
 
 	/**
-	 * 获取租户编号
+	 * 获取租户ID
 	 *
-	 * @return 租户编号
+	 * @return 租户ID
 	 */
 	@Override
 	public Expression getTenantId() {
-		return new StringValue(Func.toStr(SecureUtil.getTenantCode(), TenantConstant.DEFAULT_TENANT_CODE));
+		return new StringValue(Func.toStr(SecureUtil.getTenantId(), TenantConstant.DEFAULT_TENANT_ID));
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class BladeTenantHandler implements TenantHandler {
 				(properties.getTables().size() > 0 && properties.getTables().contains(tableName))
 					|| properties.getBladeTables().contains(tableName)
 			)
-				&& StringUtil.isNotBlank(SecureUtil.getTenantCode())
+				&& StringUtil.isNotBlank(SecureUtil.getTenantId())
 		);
 	}
 }

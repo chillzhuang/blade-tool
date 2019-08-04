@@ -36,7 +36,7 @@ public class BladeTenantProperties {
 	/**
 	 * 多租户字段名称
 	 */
-	private String column = "tenant_code";
+	private String column = "tenant_id";
 
 	/**
 	 * 多租户数据表

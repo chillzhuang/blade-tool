@@ -51,21 +51,21 @@ mybatis-plus:
   typeAliasesPackage: org.springblade.**.entity
   #typeEnumsPackage: org.springblade.dashboard.entity.enums
   global-config:
-    #刷新mapper 调试神器
-    refresh: ${blade.dev-mode}
     # 关闭MP3.0自带的banner
     banner: false
     db-config:
-      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-      id-type: 0
-      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-      field-strategy: 2
+      #主键类型  0:"数据库ID自增", 1:"不操作", 2:"用户输入ID",3:"数字型snowflake", 4:"全局唯一ID UUID", 5:"字符串型snowflake";
+      id-type: id_worker
+      #字段策略
+      insert-strategy: not_null
+      update-strategy: not_null
+      select-strategy: not_null
       #驼峰下划线转换
-      column-underline: true
+      table-underline: true
       # 逻辑删除配置
-      # 逻辑删除全局值（1表示已删除，Mybatis Plus的默认配置）
+      # 逻辑删除全局值（1表示已删除，这也是Mybatis Plus的默认配置）
       logic-delete-value: 1
-      # 逻辑未删除全局值（0表示未删除，Mybatis Plus的默认配置）
+      # 逻辑未删除全局值（0表示未删除，这也是Mybatis Plus的默认配置）
       logic-not-delete-value: 0
   configuration:
     map-underscore-to-camel-case: true
