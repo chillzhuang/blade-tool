@@ -379,7 +379,8 @@ public class SecureUtil {
 	public static String[] extractAndDecodeHeader() {
 		// 获取请求头客户端信息
 		String header = Objects.requireNonNull(WebUtil.getRequest()).getHeader(SecureConstant.BASIC_HEADER_KEY);
-		if (header == null || !header.startsWith(SecureConstant.BASIC_HEADER_PREFIX)) {
+		header = Func.toStr(header).replace(SecureConstant.BASIC_HEADER_PREFIX_EXT, SecureConstant.BASIC_HEADER_PREFIX);
+		if (!header.startsWith(SecureConstant.BASIC_HEADER_PREFIX)) {
 			throw new SecureException("No client information in request header");
 		}
 		byte[] base64Token = header.substring(6).getBytes(Charsets.UTF_8_NAME);
