@@ -16,12 +16,14 @@
 package org.springblade.develop.support;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
+import com.baomidou.mybatisplus.generator.config.converts.OracleTypeConvert;
 import com.baomidou.mybatisplus.generator.config.converts.PostgreSqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -87,9 +89,13 @@ public class BladeCodeGenerator {
 	 */
 	private Boolean hasSuperEntity = Boolean.FALSE;
 	/**
+	 * 是否包含包装器
+	 */
+	private Boolean hasWrapper = Boolean.FALSE;
+	/**
 	 * 基础业务字段
 	 */
-	private String[] superEntityColumns = {"id", "create_time", "create_user", "update_time", "update_user", "status", "is_deleted"};
+	private String[] superEntityColumns = {"create_time", "create_user", "create_dept", "update_time", "update_user", "status", "is_deleted"};
 	/**
 	 * 租户字段
 	 */
@@ -98,6 +104,22 @@ public class BladeCodeGenerator {
 	 * 是否启用swagger
 	 */
 	private Boolean isSwagger2 = Boolean.TRUE;
+	/**
+	 * 数据库驱动名
+	 */
+	private String driverName;
+	/**
+	 * 数据库链接地址
+	 */
+	private String url;
+	/**
+	 * 数据库用户名
+	 */
+	private String username;
+	/**
+	 * 数据库密码
+	 */
+	private String password;
 
 	public void run() {
 		Properties props = getProperties();
@@ -121,18 +143,21 @@ public class BladeCodeGenerator {
 		gc.setSwagger2(isSwagger2);
 		mpg.setGlobalConfig(gc);
 		DataSourceConfig dsc = new DataSourceConfig();
-		String driverName = props.getProperty("spring.datasource.driver-class-name");
+		String driverName = Func.toStr(this.driverName, props.getProperty("spring.datasource.driver-class-name"));
 		if (StringUtil.containsAny(driverName, DbType.MYSQL.getDb())) {
 			dsc.setDbType(DbType.MYSQL);
 			dsc.setTypeConvert(new MySqlTypeConvert());
-		} else {
+		} else if (StringUtil.containsAny(driverName, DbType.POSTGRE_SQL.getDb())) {
 			dsc.setDbType(DbType.POSTGRE_SQL);
 			dsc.setTypeConvert(new PostgreSqlTypeConvert());
+		} else {
+			dsc.setDbType(DbType.ORACLE);
+			dsc.setTypeConvert(new OracleTypeConvert());
 		}
-		dsc.setUrl(props.getProperty("spring.datasource.url"));
 		dsc.setDriverName(driverName);
-		dsc.setUsername(props.getProperty("spring.datasource.username"));
-		dsc.setPassword(props.getProperty("spring.datasource.password"));
+		dsc.setUrl(Func.toStr(this.url, props.getProperty("spring.datasource.url")));
+		dsc.setUsername(Func.toStr(this.username, props.getProperty("spring.datasource.username")));
+		dsc.setPassword(Func.toStr(this.password, props.getProperty("spring.datasource.password")));
 		mpg.setDataSource(dsc);
 		// 策略配置
 		StrategyConfig strategy = new StrategyConfig();
@@ -186,6 +211,7 @@ public class BladeCodeGenerator {
 				map.put("serviceName", serviceName);
 				map.put("servicePackage", servicePackage);
 				map.put("tenantColumn", tenantColumn);
+				map.put("hasWrapper", hasWrapper);
 				this.setMap(map);
 			}
 		};
@@ -194,7 +220,12 @@ public class BladeCodeGenerator {
 			@Override
 			public String outputFile(TableInfo tableInfo) {
 				map.put("entityKey", (tableInfo.getEntityName().toLowerCase()));
-				return getOutputDir() + "/" + "/templates/sql/" + tableInfo.getEntityName().toLowerCase() + ".menu.mysql";
+				map.put("menuId", IdWorker.getId());
+				map.put("addMenuId", IdWorker.getId());
+				map.put("editMenuId", IdWorker.getId());
+				map.put("removeMenuId", IdWorker.getId());
+				map.put("viewMenuId", IdWorker.getId());
+				return getOutputDir() + "/" + "/sql/" + tableInfo.getEntityName().toLowerCase() + ".menu.mysql";
 			}
 		});
 		focList.add(new FileOutConfig("/templates/entityVO.java.vm") {
@@ -209,12 +240,14 @@ public class BladeCodeGenerator {
 				return getOutputDir() + "/" + packageName.replace(".", "/") + "/" + "dto" + "/" + tableInfo.getEntityName() + "DTO" + StringPool.DOT_JAVA;
 			}
 		});
-		focList.add(new FileOutConfig("/templates/wrapper.java.vm") {
-			@Override
-			public String outputFile(TableInfo tableInfo) {
-				return getOutputDir() + "/" + packageName.replace(".", "/") + "/" + "wrapper" + "/" + tableInfo.getEntityName() + "Wrapper" + StringPool.DOT_JAVA;
-			}
-		});
+		if (hasWrapper) {
+			focList.add(new FileOutConfig("/templates/wrapper.java.vm") {
+				@Override
+				public String outputFile(TableInfo tableInfo) {
+					return getOutputDir() + "/" + packageName.replace(".", "/") + "/" + "wrapper" + "/" + tableInfo.getEntityName() + "Wrapper" + StringPool.DOT_JAVA;
+				}
+			});
+		}
 		if (Func.isNotBlank(packageWebDir)) {
 			if (Func.equals(systemName, DevelopConstant.SWORD_NAME)) {
 				focList.add(new FileOutConfig("/templates/sword/action.js.vm") {
