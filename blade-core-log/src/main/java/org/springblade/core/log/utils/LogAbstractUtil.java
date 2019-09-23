@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2029, DreamLu 卢春梦 (596392912@qq.com & www.dreamlu.net).
+ * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -20,17 +20,17 @@ import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.launch.server.ServerInfo;
 import org.springblade.core.log.model.LogAbstract;
 import org.springblade.core.secure.utils.SecureUtil;
+import org.springblade.core.tool.utils.DateUtil;
 import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.UrlUtil;
 import org.springblade.core.tool.utils.WebUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 
 /**
- * INet 相关工具
+ * Log 相关工具
  *
- * @author L.cm
+ * @author Chill
  */
 public class LogAbstractUtil {
 
@@ -61,7 +61,7 @@ public class LogAbstractUtil {
 		logAbstract.setServerHost(serverInfo.getHostName());
 		logAbstract.setServerIp(serverInfo.getIpWithPort());
 		logAbstract.setEnv(bladeProperties.getEnv());
-		logAbstract.setCreateTime(LocalDateTime.now());
+		logAbstract.setCreateTime(DateUtil.now());
 
 		//这里判断一下params为null的情况，否则blade-log服务在解析该字段的时候，可能会报出NPE
 		if (logAbstract.getParams() == null) {

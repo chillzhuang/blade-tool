@@ -33,6 +33,11 @@ public interface NacosConstant {
 	String NACOS_CONFIG_PREFIX = "blade";
 
 	/**
+	 * nacos 组配置后缀
+	 */
+	String NACOS_GROUP_SUFFIX = "-group";
+
+	/**
 	 * nacos 配置文件类型
 	 */
 	String NACOS_CONFIG_FORMAT = "yaml";

@@ -40,6 +40,15 @@ public class DateUtil {
 	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(DateUtil.PATTERN_TIME);
 
 	/**
+	 * 获取当前日期
+	 *
+	 * @return 当前日期
+	 */
+	public static Date now() {
+		return new Date();
+	}
+
+	/**
 	 * 添加年
 	 *
 	 * @param date       时间

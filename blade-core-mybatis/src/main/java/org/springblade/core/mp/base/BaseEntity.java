@@ -24,7 +24,7 @@ import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 基础实体类
@@ -46,7 +46,7 @@ public class BaseEntity implements Serializable {
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@ApiModelProperty(value = "创建时间")
-	private LocalDateTime createTime;
+	private Date createTime;
 
 	/**
 	 * 更新人
@@ -60,7 +60,7 @@ public class BaseEntity implements Serializable {
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@ApiModelProperty(value = "更新时间")
-	private LocalDateTime updateTime;
+	private Date updateTime;
 
 	/**
 	 * 状态[1:正常]

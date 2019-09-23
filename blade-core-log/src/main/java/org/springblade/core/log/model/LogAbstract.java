@@ -24,7 +24,7 @@ import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * logApi、logError、logUsual的父类，拥有相同的属性值
@@ -101,6 +101,6 @@ public class LogAbstract implements Serializable {
 	 */
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
-	protected LocalDateTime createTime;
+	protected Date createTime;
 
 }

@@ -29,12 +29,37 @@ spring:
     add-mappings: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      connection-test-query: SELECT 1 FROM DUAL
-      connection-timeout: 30000
-      maximum-pool-size: 5
-      max-lifetime: 1800000
-      minimum-idle: 1
+    druid:
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      # MySql、PostgreSQL校验
+      validation-query: select 1
+      # Oracle校验
+      #validation-query: select 1 from dual
+      validation-query-timeout: 2000
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      stat-view-servlet:
+        enabled: true
+        login-username: blade
+        login-password: 1qaz@WSX
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+        session-stat-enable: true
+        session-stat-max-count: 10
+      #hikari:
+      #connection-test-query: SELECT 1 FROM DUAL
+      #connection-timeout: 30000
+      #maximum-pool-size: 5
+      #max-lifetime: 1800000
+      #minimum-idle: 1
   devtools:
     restart:
       log-condition-evaluation-delta: false
@@ -75,7 +100,7 @@ mybatis-plus:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 2.4.1
+  version: 2.5.0
   license: Powered By SpringBlade
   licenseUrl: https://bladex.vip
   terms-of-service-url: https://bladex.vip

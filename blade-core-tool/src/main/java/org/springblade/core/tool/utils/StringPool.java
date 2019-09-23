@@ -82,5 +82,8 @@ public interface StringPool {
 	char L_A				= 'a';
 	char U_Z				= 'Z';
 	char L_Z				= 'z';
+	String UNKNOWN			= "unknown";
+	String GET				= "GET";
+	String POST				= "POST";
 
 }
