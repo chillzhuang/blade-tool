@@ -25,7 +25,7 @@ public interface AppConstant {
 	/**
 	 * 应用版本
 	 */
-	String APPLICATION_VERSION = "2.0.0";
+	String APPLICATION_VERSION = "2.5.2";
 
 	/**
 	 * 基础包
@@ -69,6 +69,10 @@ public interface AppConstant {
 	 */
 	String APPLICATION_DEVELOP_NAME = APPLICATION_NAME_PREFIX + "develop";
 	/**
+	 * 资源模块名称
+	 */
+	String APPLICATION_RESOURCE_NAME = APPLICATION_NAME_PREFIX + "resource";
+	/**
 	 * 测试模块名称
 	 */
 	String APPLICATION_TEST_NAME = APPLICATION_NAME_PREFIX + "test";
@@ -76,7 +80,7 @@ public interface AppConstant {
 	/**
 	 * 开发环境
 	 */
-	String DEV_CDOE = "dev";
+	String DEV_CODE = "dev";
 	/**
 	 * 生产环境
 	 */

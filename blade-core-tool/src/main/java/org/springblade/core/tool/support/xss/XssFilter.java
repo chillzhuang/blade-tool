@@ -15,6 +15,8 @@
  */
 package org.springblade.core.tool.support.xss;
 
+import lombok.AllArgsConstructor;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -24,23 +26,24 @@ import java.io.IOException;
  *
  * @author Chill
  */
+@AllArgsConstructor
 public class XssFilter implements Filter {
 
+	private XssProperties xssProperties;
+
 	@Override
-	public void init(FilterConfig config) throws ServletException {
+	public void init(FilterConfig config) {
 
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		ServletRequest requestWrapper = null;
-		if (request instanceof HttpServletRequest) {
-			requestWrapper = new XssHttpServletRequestWrapper((HttpServletRequest) request);
-		}
-		if (requestWrapper == null) {
+		String path = ((HttpServletRequest) request).getServletPath();
+		if (xssProperties.getExcludePatterns().stream().anyMatch(path::contains)) {
 			chain.doFilter(request, response);
 		} else {
-			chain.doFilter(requestWrapper, response);
+			XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request);
+			chain.doFilter(xssRequest, response);
 		}
 	}
 

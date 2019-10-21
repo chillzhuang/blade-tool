@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.StringValue;
 import org.springblade.core.secure.utils.SecureUtil;
+import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringUtil;
 
 /**
@@ -35,13 +36,13 @@ public class BladeTenantHandler implements TenantHandler {
 	private final BladeTenantProperties properties;
 
 	/**
-	 * 获取租户编号
+	 * 获取租户ID
 	 *
-	 * @return 租户编号
+	 * @return 租户ID
 	 */
 	@Override
 	public Expression getTenantId() {
-		return new StringValue(SecureUtil.getTenantCode());
+		return new StringValue(Func.toStr(SecureUtil.getTenantId(), TenantConstant.DEFAULT_TENANT_ID));
 	}
 
 	/**
@@ -62,6 +63,12 @@ public class BladeTenantHandler implements TenantHandler {
 	 */
 	@Override
 	public boolean doTableFilter(String tableName) {
-		return (properties.getTables().size() > 0 && !properties.getTables().contains(tableName)) || !properties.getBladeTables().contains(tableName) || StringUtil.isBlank(SecureUtil.getTenantCode());
+		return !(
+			(
+				(properties.getTables().size() > 0 && properties.getTables().contains(tableName))
+					|| properties.getBladeTables().contains(tableName)
+			)
+				&& StringUtil.isNotBlank(SecureUtil.getTenantId())
+		);
 	}
 }

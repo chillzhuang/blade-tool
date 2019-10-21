@@ -86,4 +86,7 @@
     <logger name="net.sf.ehcache" level="INFO"/>
     <logger name="druid.sql" level="INFO"/>
 
+    <!-- 减少nacos日志 -->
+    <logger name="com.alibaba.nacos" level="ERROR"/>
+
 </configuration>

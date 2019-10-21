@@ -17,9 +17,11 @@ package org.springblade.core.swagger;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springblade.core.launch.constant.AppConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,7 +35,7 @@ public class SwaggerProperties {
 	/**
 	 * swagger会解析的包路径
 	 **/
-	private String basePackage = "org.springblade";
+	private List<String> basePackages = new ArrayList<>(Collections.singletonList(AppConstant.BASE_PACKAGES));
 	/**
 	 * swagger会解析的url规则
 	 **/
@@ -53,7 +55,7 @@ public class SwaggerProperties {
 	/**
 	 * 版本
 	 **/
-	private String version = "2.0.0";
+	private String version = "2.5.2";
 	/**
 	 * 许可证
 	 **/

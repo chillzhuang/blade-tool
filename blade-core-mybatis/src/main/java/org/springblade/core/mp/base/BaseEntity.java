@@ -16,8 +16,6 @@
 package org.springblade.core.mp.base;
 
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,7 +24,7 @@ import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 基础实体类
@@ -35,12 +33,6 @@ import java.time.LocalDateTime;
  */
 @Data
 public class BaseEntity implements Serializable {
-	/**
-	 * 主键id
-	 */
-	@TableId(value = "id", type = IdType.AUTO)
-	@ApiModelProperty(value = "主键id")
-	private Integer id;
 
 	/**
 	 * 创建人
@@ -54,7 +46,7 @@ public class BaseEntity implements Serializable {
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@ApiModelProperty(value = "创建时间")
-	private LocalDateTime createTime;
+	private Date createTime;
 
 	/**
 	 * 更新人
@@ -68,7 +60,7 @@ public class BaseEntity implements Serializable {
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@ApiModelProperty(value = "更新时间")
-	private LocalDateTime updateTime;
+	private Date updateTime;
 
 	/**
 	 * 状态[1:正常]

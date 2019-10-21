@@ -15,13 +15,10 @@
  */
 package org.springblade.core.boot.config;
 
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springblade.core.launch.constant.AppConstant;
-import org.springblade.core.mp.BladeMetaObjectHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,23 +39,13 @@ public class MybatisPlusConfiguration {
 		return new PaginationInterceptor();
 	}
 
-	@Bean
-	public MetaObjectHandler metaObjectHandler() {
-		return new BladeMetaObjectHandler();
-	}
-
-	@Bean
-	public LogicSqlInjector logicSqlInjector() {
-		return new LogicSqlInjector();
-	}
-
 	/**
 	 * SQL执行效率插件
 	 *
 	 * @return PerformanceInterceptor
 	 */
 	@Bean
-	@Profile({AppConstant.DEV_CDOE, AppConstant.TEST_CODE})
+	@Profile({AppConstant.DEV_CODE, AppConstant.TEST_CODE})
 	public PerformanceInterceptor performanceInterceptor() {
 		return new PerformanceInterceptor();
 	}

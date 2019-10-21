@@ -22,16 +22,13 @@ import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.launch.server.ServerInfo;
 import org.springblade.core.log.constant.EventConstant;
 import org.springblade.core.log.feign.ILogClient;
+import org.springblade.core.log.model.LogAbstract;
 import org.springblade.core.log.model.LogUsual;
-import org.springblade.core.secure.utils.SecureUtil;
-import org.springblade.core.tool.utils.UrlUtil;
-import org.springblade.core.tool.utils.WebUtil;
+import org.springblade.core.log.utils.LogAbstractUtil;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Async;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
@@ -53,17 +50,7 @@ public class UsualLogListener {
 	public void saveUsualLog(UsualLogEvent event) {
 		Map<String, Object> source = (Map<String, Object>) event.getSource();
 		LogUsual logUsual = (LogUsual) source.get(EventConstant.EVENT_LOG);
-		HttpServletRequest request = (HttpServletRequest) source.get(EventConstant.EVENT_REQUEST);
-		logUsual.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
-		logUsual.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
-		logUsual.setMethod(request.getMethod());
-		logUsual.setParams(WebUtil.getRequestParamString(request));
-		logUsual.setServerHost(serverInfo.getHostName());
-		logUsual.setServiceId(bladeProperties.getName());
-		logUsual.setEnv(bladeProperties.getEnv());
-		logUsual.setServerIp(serverInfo.getIpWithPort());
-		logUsual.setCreateBy(SecureUtil.getUserAccount(request));
-		logUsual.setCreateTime(LocalDateTime.now());
+		LogAbstractUtil.addOtherInfoToLog(logUsual, bladeProperties, serverInfo);
 		logService.saveUsualLog(logUsual);
 	}
 

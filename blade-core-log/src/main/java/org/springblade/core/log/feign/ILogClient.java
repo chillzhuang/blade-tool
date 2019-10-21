@@ -30,7 +30,8 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author Chill
  */
 @FeignClient(
-	value = AppConstant.APPLICATION_LOG_NAME
+	value = AppConstant.APPLICATION_LOG_NAME,
+	fallback = LogClientFallback.class
 )
 public interface ILogClient {
 
@@ -39,8 +40,8 @@ public interface ILogClient {
 	/**
 	 * 保存错误日志
 	 *
-	 * @param log
-	 * @return
+	 * @param log 日志实体
+	 * @return boolean
 	 */
 	@PostMapping(API_PREFIX + "/saveUsualLog")
 	R<Boolean> saveUsualLog(@RequestBody LogUsual log);
@@ -48,8 +49,8 @@ public interface ILogClient {
 	/**
 	 * 保存操作日志
 	 *
-	 * @param log
-	 * @return
+	 * @param log 日志实体
+	 * @return boolean
 	 */
 	@PostMapping(API_PREFIX + "/saveApiLog")
 	R<Boolean> saveApiLog(@RequestBody LogApi log);
@@ -57,8 +58,8 @@ public interface ILogClient {
 	/**
 	 * 保存错误日志
 	 *
-	 * @param log
-	 * @return
+	 * @param log 日志实体
+	 * @return boolean
 	 */
 	@PostMapping(API_PREFIX + "/saveErrorLog")
 	R<Boolean> saveErrorLog(@RequestBody LogError log);

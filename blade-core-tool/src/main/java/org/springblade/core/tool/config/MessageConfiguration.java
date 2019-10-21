@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springblade.core.tool.jackson.MappingApiJackson2HttpMessageConverter;
 import org.springblade.core.tool.support.xss.XssFilter;
+import org.springblade.core.tool.support.xss.XssProperties;
 import org.springblade.core.tool.utils.Charsets;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -45,6 +46,8 @@ public class MessageConfiguration implements WebMvcConfigurer {
 
 	private final ObjectMapper objectMapper;
 
+	private final XssProperties xssProperties;
+
 	/**
 	 * 使用 JACKSON 作为JSON MessageConverter
 	 */
@@ -67,7 +70,7 @@ public class MessageConfiguration implements WebMvcConfigurer {
 	public FilterRegistrationBean xssFilterRegistration() {
 		FilterRegistrationBean registration = new FilterRegistrationBean();
 		registration.setDispatcherTypes(DispatcherType.REQUEST);
-		registration.setFilter(new XssFilter());
+		registration.setFilter(new XssFilter(xssProperties));
 		registration.addUrlPatterns("/*");
 		registration.setName("xssFilter");
 		registration.setOrder(Ordered.LOWEST_PRECEDENCE);

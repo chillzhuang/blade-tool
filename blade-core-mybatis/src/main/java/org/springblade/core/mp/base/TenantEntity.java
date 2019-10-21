@@ -28,9 +28,9 @@ import lombok.Data;
 public class TenantEntity extends BaseEntity {
 
 	/**
-	 * 租户编号
+	 * 租户ID
 	 */
-	@ApiModelProperty(value = "租户编号")
-	private String tenantCode;
+	@ApiModelProperty(value = "租户ID")
+	private String tenantId;
 
 }

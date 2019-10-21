@@ -16,18 +16,17 @@
 package org.springblade.core.mp.base;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.constant.BladeConstant;
-import org.springblade.core.tool.utils.BeanUtil;
+import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,12 +50,16 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 	@Override
 	public boolean save(T entity) {
 		BladeUser user = SecureUtil.getUser();
-		LocalDateTime now = LocalDateTime.now();
-		entity.setCreateUser(user.getUserId());
+		if (user != null) {
+			entity.setCreateUser(user.getUserId());
+			entity.setUpdateUser(user.getUserId());
+		}
+		Date now = DateUtil.now();
 		entity.setCreateTime(now);
-		entity.setUpdateUser(user.getUserId());
 		entity.setUpdateTime(now);
-		entity.setStatus(BladeConstant.DB_STATUS_NORMAL);
+		if (entity.getStatus() == null) {
+			entity.setStatus(BladeConstant.DB_STATUS_NORMAL);
+		}
 		entity.setIsDeleted(BladeConstant.DB_NOT_DELETED);
 		return super.save(entity);
 	}
@@ -64,18 +67,16 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 	@Override
 	public boolean updateById(T entity) {
 		BladeUser user = SecureUtil.getUser();
-		entity.setUpdateUser(user.getUserId());
-		entity.setUpdateTime(LocalDateTime.now());
+		if (user != null) {
+			entity.setUpdateUser(user.getUserId());
+		}
+		entity.setUpdateTime(DateUtil.now());
 		return super.updateById(entity);
 	}
 
 	@Override
 	public boolean deleteLogic(@NotEmpty List<Integer> ids) {
-		BladeUser user = SecureUtil.getUser();
-		T entity = BeanUtil.newInstance(modelClass);
-		entity.setUpdateUser(user.getUserId());
-		entity.setUpdateTime(LocalDateTime.now());
-		return super.update(entity, Wrappers.<T>update().lambda().in(T::getId, ids)) && super.removeByIds(ids);
+		return super.removeByIds(ids);
 	}
 
 }

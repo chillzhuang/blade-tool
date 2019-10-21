@@ -27,6 +27,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 项目启动器，搞定环境变量问题
@@ -61,7 +62,7 @@ public class BladeApplication {
 		// 判断环境:dev、test、prod
 		List<String> profiles = Arrays.asList(activeProfiles);
 		// 预设的环境
-		List<String> presetProfiles = new ArrayList<>(Arrays.asList(AppConstant.DEV_CDOE, AppConstant.TEST_CODE, AppConstant.PROD_CODE));
+		List<String> presetProfiles = new ArrayList<>(Arrays.asList(AppConstant.DEV_CODE, AppConstant.TEST_CODE, AppConstant.PROD_CODE));
 		// 交集
 		presetProfiles.retainAll(profiles);
 		// 当前使用
@@ -71,7 +72,7 @@ public class BladeApplication {
 		String profile;
 		if (activeProfileList.isEmpty()) {
 			// 默认dev开发
-			profile = AppConstant.DEV_CDOE;
+			profile = AppConstant.DEV_CODE;
 			activeProfileList.add(profile);
 			builder.profiles(profile);
 		} else if (activeProfileList.size() == 1) {
@@ -99,9 +100,12 @@ public class BladeApplication {
 		props.setProperty("spring.cloud.nacos.config.prefix", NacosConstant.NACOS_CONFIG_PREFIX);
 		props.setProperty("spring.cloud.nacos.config.file-extension", NacosConstant.NACOS_CONFIG_FORMAT);
 		props.setProperty("spring.cloud.sentinel.transport.dashboard", SentinelConstant.SENTINEL_ADDR);
+		props.setProperty("spring.cloud.alibaba.seata.tx-service-group", appName.concat(NacosConstant.NACOS_GROUP_SUFFIX));
 		// 加载自定义组件
-		ServiceLoader<LauncherService> loader = ServiceLoader.load(LauncherService.class);
-		loader.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
+		List<LauncherService> launcherList = new ArrayList<>();
+		ServiceLoader.load(LauncherService.class).forEach(launcherList::add);
+		launcherList.stream().sorted(Comparator.comparing(LauncherService::getOrder)).collect(Collectors.toList())
+			.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
 		return builder;
 	}
 
