@@ -73,6 +73,10 @@ public interface AppConstant {
 	 */
 	String APPLICATION_RESOURCE_NAME = APPLICATION_NAME_PREFIX + "resource";
 	/**
+	 * 链路追踪模块名称
+	 */
+	String APPLICATION_ZIPKIN_NAME = APPLICATION_NAME_PREFIX + "zipkin";
+	/**
 	 * 测试模块名称
 	 */
 	String APPLICATION_TEST_NAME = APPLICATION_NAME_PREFIX + "test";
