@@ -25,7 +25,7 @@ public interface AppConstant {
 	/**
 	 * 应用版本
 	 */
-	String APPLICATION_VERSION = "2.5.2";
+	String APPLICATION_VERSION = "2.5.4";
 
 	/**
 	 * 基础包
@@ -72,6 +72,10 @@ public interface AppConstant {
 	 * 资源模块名称
 	 */
 	String APPLICATION_RESOURCE_NAME = APPLICATION_NAME_PREFIX + "resource";
+	/**
+	 * 链路追踪模块名称
+	 */
+	String APPLICATION_ZIPKIN_NAME = APPLICATION_NAME_PREFIX + "zipkin";
 	/**
 	 * 测试模块名称
 	 */
