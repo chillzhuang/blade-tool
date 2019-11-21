@@ -15,12 +15,12 @@
  */
 package org.springblade.core.boot.tenant;
 
-import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import lombok.AllArgsConstructor;
+import org.springblade.core.boot.config.MybatisPlusConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -37,7 +37,7 @@ import java.util.List;
  */
 @Configuration
 @AllArgsConstructor
-@AutoConfigureBefore(MybatisConfiguration.class)
+@AutoConfigureBefore(MybatisPlusConfiguration.class)
 @EnableConfigurationProperties(BladeTenantProperties.class)
 public class TenantConfiguration {
 
