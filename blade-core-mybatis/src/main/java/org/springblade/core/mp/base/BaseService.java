@@ -32,7 +32,7 @@ public interface BaseService<T> extends IService<T> {
 	 * 逻辑删除
 	 *
 	 * @param ids id集合(逗号分隔)
-	 * @return
+	 * @return boolean
 	 */
 	boolean deleteLogic(@NotEmpty List<Integer> ids);
 

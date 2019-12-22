@@ -13,33 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tool.config;
+package org.springblade.core.tool.support.xss;
 
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import org.springblade.core.tool.utils.SpringUtil;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 工具配置类
+ * Xss配置类
  *
  * @author Chill
  */
-@Configuration
-@Order(Ordered.HIGHEST_PRECEDENCE)
-public class ToolConfiguration implements WebMvcConfigurer {
+@Data
+@ConfigurationProperties("blade.xss.url")
+public class XssUrlProperties {
 
-	/**
-	 * Spring上下文缓存
-	 *
-	 * @return SpringUtil
-	 */
-	@Bean
-	public SpringUtil springUtils() {
-		return new SpringUtil();
-	}
+	private final List<String> excludePatterns = new ArrayList<>();
 
 }

@@ -33,8 +33,8 @@ public class Condition {
 	/**
 	 * 转化成mybatis plus中的Page
 	 *
-	 * @param query
-	 * @return
+	 * @param query 查询包装类
+	 * @return Page T
 	 */
 	public static <T> IPage<T> getPage(Query query) {
 		Page<T> page = new Page<>(Func.toInt(query.getCurrent(), 1), Func.toInt(query.getSize(), 10));
@@ -46,9 +46,9 @@ public class Condition {
 	/**
 	 * 获取mybatis plus中的QueryWrapper
 	 *
-	 * @param entity
-	 * @param <T>
-	 * @return
+	 * @param entity 实体类
+	 * @param <T>    泛型
+	 * @return QueryWrapper
 	 */
 	public static <T> QueryWrapper<T> getQueryWrapper(T entity) {
 		return new QueryWrapper<>(entity);
@@ -57,10 +57,10 @@ public class Condition {
 	/**
 	 * 获取mybatis plus中的QueryWrapper
 	 *
-	 * @param query
-	 * @param clazz
-	 * @param <T>
-	 * @return
+	 * @param query 查询包装类
+	 * @param clazz 实体类
+	 * @param <T>   泛型
+	 * @return QueryWrapper
 	 */
 	public static <T> QueryWrapper<T> getQueryWrapper(Map<String, Object> query, Class<T> clazz) {
 		query.remove("current");

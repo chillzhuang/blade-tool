@@ -27,9 +27,17 @@ import java.util.List;
  * @author Chill
  */
 @Data
-@ConfigurationProperties("blade.xss.url")
+@ConfigurationProperties("blade.xss")
 public class XssProperties {
 
-	private final List<String> excludePatterns = new ArrayList<>();
+	/**
+	 * 开启xss
+	 */
+	private Boolean enable = true;
+
+	/**
+	 * 放行url
+	 */
+	private List<String> skipUrl = new ArrayList<>();
 
 }

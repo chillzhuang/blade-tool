@@ -19,11 +19,7 @@ package org.springblade.core.tool.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springblade.core.tool.jackson.MappingApiJackson2HttpMessageConverter;
-import org.springblade.core.tool.support.xss.XssFilter;
-import org.springblade.core.tool.support.xss.XssProperties;
 import org.springblade.core.tool.utils.Charsets;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -31,7 +27,6 @@ import org.springframework.http.converter.*;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.DispatcherType;
 import java.util.List;
 
 /**
@@ -46,8 +41,6 @@ public class MessageConfiguration implements WebMvcConfigurer {
 
 	private final ObjectMapper objectMapper;
 
-	private final XssProperties xssProperties;
-
 	/**
 	 * 使用 JACKSON 作为JSON MessageConverter
 	 */
@@ -59,22 +52,6 @@ public class MessageConfiguration implements WebMvcConfigurer {
 		converters.add(new ResourceHttpMessageConverter());
 		converters.add(new ResourceRegionHttpMessageConverter());
 		converters.add(new MappingApiJackson2HttpMessageConverter(objectMapper));
-	}
-
-	/**
-	 * 防XSS注入
-	 *
-	 * @return FilterRegistrationBean
-	 */
-	@Bean
-	public FilterRegistrationBean xssFilterRegistration() {
-		FilterRegistrationBean registration = new FilterRegistrationBean();
-		registration.setDispatcherTypes(DispatcherType.REQUEST);
-		registration.setFilter(new XssFilter(xssProperties));
-		registration.addUrlPatterns("/*");
-		registration.setName("xssFilter");
-		registration.setOrder(Ordered.LOWEST_PRECEDENCE);
-		return registration;
 	}
 
 }

@@ -30,15 +30,17 @@ public abstract class BaseEntityWrapper<E, V> {
 
 	/**
 	 * 单个实体类包装
-	 * @param entity
-	 * @return
+	 *
+	 * @param entity 实体类
+	 * @return V
 	 */
 	public abstract V entityVO(E entity);
 
 	/**
 	 * 实体类集合包装
-	 * @param list
-	 * @return
+	 *
+	 * @param list 猎豹
+	 * @return List V
 	 */
 	public List<V> listVO(List<E> list) {
 		return list.stream().map(this::entityVO).collect(Collectors.toList());
@@ -46,8 +48,9 @@ public abstract class BaseEntityWrapper<E, V> {
 
 	/**
 	 * 分页实体类集合包装
-	 * @param pages
-	 * @return
+	 *
+	 * @param pages 分页
+	 * @return Page V
 	 */
 	public IPage<V> pageVO(IPage<E> pages) {
 		List<V> records = listVO(pages.getRecords());

@@ -186,7 +186,7 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	 * @return {String}
 	 */
 	public static String escapeHtml(String html) {
-		return HtmlUtils.htmlEscape(html);
+		return StringUtil.isBlank(html) ? StringPool.EMPTY : HtmlUtils.htmlEscape(html);
 	}
 
 	/**
@@ -1250,7 +1250,7 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	/**
 	 * 创建StringBuilder对象
 	 *
-	 * @param sb 初始StringBuilder
+	 * @param sb   初始StringBuilder
 	 * @param strs 初始字符串列表
 	 * @return StringBuilder对象
 	 */

@@ -17,6 +17,7 @@ package org.springblade.core.tool.jackson;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -97,7 +98,7 @@ public class JsonUtil {
 	 * @param <T>           T 泛型标记
 	 * @return Bean
 	 */
-	public static <T> T parse(String content, TypeReference<?> typeReference) {
+	public static <T> T parse(String content, TypeReference<T> typeReference) {
 		try {
 			return getInstance().readValue(content, typeReference);
 		} catch (IOException e) {
@@ -130,7 +131,7 @@ public class JsonUtil {
 	 * @param <T>           T 泛型标记
 	 * @return Bean
 	 */
-	public static <T> T parse(byte[] bytes, TypeReference<?> typeReference) {
+	public static <T> T parse(byte[] bytes, TypeReference<T> typeReference) {
 		try {
 			return getInstance().readValue(bytes, typeReference);
 		} catch (IOException e) {
@@ -162,7 +163,7 @@ public class JsonUtil {
 	 * @param <T>           T 泛型标记
 	 * @return Bean
 	 */
-	public static <T> T parse(InputStream in, TypeReference<?> typeReference) {
+	public static <T> T parse(InputStream in, TypeReference<T> typeReference) {
 		try {
 			return getInstance().readValue(in, typeReference);
 		} catch (IOException e) {
@@ -184,7 +185,7 @@ public class JsonUtil {
 				content = StringPool.LEFT_SQ_BRACKET + content + StringPool.RIGHT_SQ_BRACKET;
 			}
 
-			List<Map<String, Object>> list = getInstance().readValue(content, new TypeReference<List<T>>() {
+			List<Map<String, Object>> list = getInstance().readValue(content, new TypeReference<List<Map<String, Object>>>() {
 			});
 			List<T> result = new ArrayList<>();
 			for (Map<String, Object> map : list) {
@@ -208,7 +209,7 @@ public class JsonUtil {
 
 	public static <T> Map<String, T> toMap(String content, Class<T> valueTypeRef) {
 		try {
-			Map<String, Map<String, Object>> map = getInstance().readValue(content, new TypeReference<Map<String, T>>() {
+			Map<String, Map<String, Object>> map = getInstance().readValue(content, new TypeReference<Map<String, Map<String, Object>>>() {
 			});
 			Map<String, T> result = new HashMap<>(16);
 			for (Map.Entry<String, Map<String, Object>> entry : map.entrySet()) {
@@ -305,8 +306,8 @@ public class JsonUtil {
 			//序列化时，日期的统一格式
 			super.setDateFormat(new SimpleDateFormat(DateUtil.PATTERN_DATETIME, Locale.CHINA));
 			//序列化处理
-			super.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true);
-			super.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
+			super.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
+			super.configure(JsonReadFeature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER.mappedFeature(), true);
 			super.findAndRegisterModules();
 			//失败处理
 			super.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);

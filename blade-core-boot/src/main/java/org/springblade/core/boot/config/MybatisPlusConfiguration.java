@@ -16,13 +16,12 @@
 package org.springblade.core.boot.config;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springblade.core.launch.constant.AppConstant;
+import org.springblade.core.mp.plugins.SqlLogInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 /**
  * mybatisplus 配置
@@ -40,14 +39,12 @@ public class MybatisPlusConfiguration {
 	}
 
 	/**
-	 * SQL执行效率插件
-	 *
-	 * @return PerformanceInterceptor
+	 * sql 日志
 	 */
 	@Bean
-	@Profile({AppConstant.DEV_CODE, AppConstant.TEST_CODE})
-	public PerformanceInterceptor performanceInterceptor() {
-		return new PerformanceInterceptor();
+	@ConditionalOnProperty(value = "blade.mybatis-plus.sql-log.enable", matchIfMissing = true)
+	public SqlLogInterceptor sqlLogInterceptor() {
+		return new SqlLogInterceptor();
 	}
 
 }

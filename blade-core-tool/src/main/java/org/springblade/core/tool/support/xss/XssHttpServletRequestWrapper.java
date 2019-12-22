@@ -15,9 +15,7 @@
  */
 package org.springblade.core.tool.support.xss;
 
-import org.springblade.core.tool.utils.Charsets;
 import org.springblade.core.tool.utils.StringUtil;
-import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -29,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -49,15 +48,9 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	 */
 	private final static HtmlFilter HTML_FILTER = new HtmlFilter();
 
-	/**
-	 * 缓存报文,支持多次读取流
-	 */
-	private final byte[] body;
-
-	public XssHttpServletRequestWrapper(HttpServletRequest request) throws IOException {
+	public XssHttpServletRequestWrapper(HttpServletRequest request) {
 		super(request);
 		orgRequest = request;
-		body = WebUtil.getRequestBytes(request);
 	}
 
 	@Override
@@ -67,51 +60,67 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	@Override
 	public ServletInputStream getInputStream() throws IOException {
-
-		//为空，直接返回
 		if (null == super.getHeader(HttpHeaders.CONTENT_TYPE)) {
 			return super.getInputStream();
 		}
 
-		//非json类型，直接返回
-		if (!super.getHeader(HttpHeaders.CONTENT_TYPE).equalsIgnoreCase(MediaType.APPLICATION_JSON_VALUE)
-			&& !super.getHeader(HttpHeaders.CONTENT_TYPE).equalsIgnoreCase(MediaType.APPLICATION_JSON_UTF8_VALUE)) {
+		if (super.getHeader(HttpHeaders.CONTENT_TYPE).startsWith(MediaType.MULTIPART_FORM_DATA_VALUE)) {
 			return super.getInputStream();
 		}
 
-		//为空，直接返回
-		String requestStr = WebUtil.getRequestStr(orgRequest, body);
-		if (StringUtil.isBlank(requestStr)) {
-			return super.getInputStream();
-		}
-
-		requestStr = xssEncode(requestStr);
-
-		final ByteArrayInputStream bis = new ByteArrayInputStream(requestStr.getBytes(Charsets.UTF_8));
+		final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(inputHandlers(super.getInputStream()).getBytes());
 
 		return new ServletInputStream() {
 
 			@Override
+			public int read() {
+				return byteArrayInputStream.read();
+			}
+
+			@Override
 			public boolean isFinished() {
-				return true;
+				return false;
 			}
 
 			@Override
 			public boolean isReady() {
-				return true;
+				return false;
 			}
 
 			@Override
 			public void setReadListener(ReadListener readListener) {
-
-			}
-
-			@Override
-			public int read() throws IOException {
-				return bis.read();
 			}
 		};
+	}
 
+	private String inputHandlers(ServletInputStream servletInputStream) {
+		StringBuilder sb = new StringBuilder();
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new InputStreamReader(servletInputStream, StandardCharsets.UTF_8));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (servletInputStream != null) {
+				try {
+					servletInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return xssEncode(sb.toString());
 	}
 
 	@Override
@@ -129,7 +138,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		if (parameters == null || parameters.length == 0) {
 			return null;
 		}
-
 		for (int i = 0; i < parameters.length; i++) {
 			parameters[i] = xssEncode(parameters[i]);
 		}
@@ -165,6 +173,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	 * 获取最原始的request
+	 *
 	 * @return HttpServletRequest
 	 */
 	public HttpServletRequest getOrgRequest() {
@@ -173,6 +182,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	/**
 	 * 获取最原始的request
+	 *
 	 * @param request request
 	 * @return HttpServletRequest
 	 */
@@ -180,7 +190,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		if (request instanceof XssHttpServletRequestWrapper) {
 			return ((XssHttpServletRequestWrapper) request).getOrgRequest();
 		}
-
 		return request;
 	}
 

@@ -24,8 +24,6 @@ import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;
 
@@ -38,14 +36,6 @@ import java.util.List;
  */
 @Validated
 public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> extends ServiceImpl<M, T> implements BaseService<T> {
-
-	private Class<T> modelClass;
-
-	@SuppressWarnings("unchecked")
-	public BaseServiceImpl() {
-		Type type = this.getClass().getGenericSuperclass();
-		this.modelClass = (Class<T>) ((ParameterizedType) type).getActualTypeArguments()[1];
-	}
 
 	@Override
 	public boolean save(T entity) {
