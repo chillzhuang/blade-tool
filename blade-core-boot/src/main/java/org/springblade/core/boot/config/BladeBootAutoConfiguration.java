@@ -26,6 +26,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * 配置类
+ *
  * @author Chill
  */
 @Slf4j
@@ -41,6 +42,8 @@ public class BladeBootAutoConfiguration {
 
 	/**
 	 * 全局变量定义
+	 *
+	 * @return SystemConstant
 	 */
 	@Bean
 	public SystemConstant fileConst() {

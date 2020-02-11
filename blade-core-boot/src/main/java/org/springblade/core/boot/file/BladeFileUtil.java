@@ -99,8 +99,8 @@ public class BladeFileUtil {
 		/**
 		 * 文本排序转换成枚举
 		 *
-		 * @param sort
-		 * @return
+		 * @param sort 排序
+		 * @return FileSort
 		 */
 		public static FileSort of(String sort) {
 			try {
@@ -228,6 +228,7 @@ public class BladeFileUtil {
 	 * 获取BladeFile封装类
 	 *
 	 * @param files       文件集合
+	 * @param dir         路径
 	 * @param path        路径
 	 * @param virtualPath 虚拟路径
 	 * @return BladeFile

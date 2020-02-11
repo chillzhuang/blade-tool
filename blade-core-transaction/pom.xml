@@ -31,13 +31,6 @@
             <artifactId>spring-cloud-alibaba-seata</artifactId>
             <version>${alibaba.cloud.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-all</artifactId>
-            <version>${alibaba.seata.version}</version>
-        </dependency>
     </dependencies>
-
-
 
 </project>

@@ -18,8 +18,10 @@ package org.springblade.core.transaction.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import io.seata.rm.datasource.DataSourceProxy;
+import io.seata.spring.boot.autoconfigure.util.SpringUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,8 +45,7 @@ public class DataSourceConfiguration {
 		bean.setDataSource(dataSourceProxy);
 		ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 		bean.setMapperLocations(resolver.getResources("classpath:org/springblade/**/mapper/*Mapper.xml"));
-
-		SqlSessionFactory factory = null;
+		SqlSessionFactory factory;
 		try {
 			factory = bean.getObject();
 		} catch (Exception e) {
@@ -74,6 +75,12 @@ public class DataSourceConfiguration {
 	@Bean("dataSource")
 	public DataSourceProxy dataSourceProxy(DataSource druidDataSource) {
 		return new DataSourceProxy(druidDataSource);
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(SpringUtils.class)
+	public SpringUtils springUtils() {
+		return new SpringUtils();
 	}
 
 }

@@ -29,7 +29,7 @@ public interface IFileProxy {
 	 *
 	 * @param file 文件
 	 * @param dir  目录
-	 * @return
+	 * @return String
 	 */
 	String[] path(File file, String dir);
 
@@ -38,7 +38,7 @@ public interface IFileProxy {
 	 *
 	 * @param file 文件
 	 * @param path 路径
-	 * @return
+	 * @return File
 	 */
 	File rename(File file, String path);
 
