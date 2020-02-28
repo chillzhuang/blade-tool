@@ -210,6 +210,7 @@ public class BladeCodeGenerator {
 				map.put("codeName", codeName);
 				map.put("serviceName", serviceName);
 				map.put("servicePackage", servicePackage);
+				map.put("servicePackageLowerCase", servicePackage.toLowerCase());
 				map.put("tenantColumn", tenantColumn);
 				map.put("hasWrapper", hasWrapper);
 				this.setMap(map);
