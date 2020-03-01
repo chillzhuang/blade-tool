@@ -60,9 +60,6 @@ spring:
       #maximum-pool-size: 5
       #max-lifetime: 1800000
       #minimum-idle: 1
-  devtools:
-    restart:
-      log-condition-evaluation-delta: false
 
 
 #配置日志地址
@@ -100,7 +97,7 @@ mybatis-plus:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 2.6.1
+  version: 2.6.2
   license: Powered By SpringBlade
   licenseUrl: https://bladex.vip
   terms-of-service-url: https://bladex.vip

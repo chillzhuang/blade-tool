@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>2.6.1</version>
+    <version>2.6.2</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,7 +36,7 @@
     </scm>
 
     <properties>
-        <blade.tool.version>2.6.1</blade.tool.version>
+        <blade.tool.version>2.6.2</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.0</maven.plugin.version>
@@ -49,10 +49,10 @@
         <spring.boot.admin.version>2.2.2</spring.boot.admin.version>
         <mica.auto.version>1.1.0</mica.auto.version>
         <alibaba.cloud.version>2.2.0.RELEASE</alibaba.cloud.version>
-        <alibaba.seata.version>1.0.0</alibaba.seata.version>
+        <alibaba.seata.version>1.1.0</alibaba.seata.version>
 
-        <spring.boot.version>2.2.4.RELEASE</spring.boot.version>
-        <spring.cloud.version>Hoxton.SR1</spring.cloud.version>
+        <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
+        <spring.cloud.version>Hoxton.SR2</spring.cloud.version>
         <spring.platform.version>Cairo-SR8</spring.platform.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

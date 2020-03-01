@@ -16,6 +16,7 @@
 package org.springblade.core.oss.props;
 
 import lombok.Data;
+import org.springblade.core.tool.support.Kv;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -61,5 +62,10 @@ public class OssProperties {
 	 * 默认的存储桶名称
 	 */
 	private String bucketName = "bladex";
+
+	/**
+	 * 自定义属性
+	 */
+	private Kv args;
 
 }

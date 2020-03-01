@@ -39,8 +39,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @AllArgsConstructor
 @EnableConfigurationProperties(OssProperties.class)
-@ConditionalOnProperty(value = "oss.enable", havingValue = "true")
-public class OssConfiguration {
+@ConditionalOnProperty(value = "oss.name", havingValue = "qiniu")
+public class QiniuConfiguration {
 
 	private OssProperties ossProperties;
 
