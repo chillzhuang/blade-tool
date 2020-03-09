@@ -42,7 +42,7 @@
         <maven.plugin.version>3.8.0</maven.plugin.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.models.version>1.5.21</swagger.models.version>
-        <knife4j.version>2.0.1</knife4j.version>
+        <knife4j.version>2.0.2</knife4j.version>
         <mybatis.plus.version>3.3.1</mybatis.plus.version>
         <protostuff.version>1.6.0</protostuff.version>
         <disruptor.version>3.4.2</disruptor.version>
