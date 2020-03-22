@@ -38,7 +38,7 @@ public class ToolConfiguration implements WebMvcConfigurer {
 	 * @return SpringUtil
 	 */
 	@Bean
-	public SpringUtil springUtils() {
+	public SpringUtil springUtil() {
 		return new SpringUtil();
 	}
 
