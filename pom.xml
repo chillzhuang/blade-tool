@@ -48,11 +48,11 @@
         <disruptor.version>3.4.2</disruptor.version>
         <spring.boot.admin.version>2.2.2</spring.boot.admin.version>
         <mica.auto.version>1.1.0</mica.auto.version>
-        <alibaba.cloud.version>2.2.0.RELEASE</alibaba.cloud.version>
+        <alibaba.cloud.version>2.2.1.RELEASE</alibaba.cloud.version>
         <alibaba.seata.version>1.1.0</alibaba.seata.version>
 
-        <spring.boot.version>2.2.5.RELEASE</spring.boot.version>
-        <spring.cloud.version>Hoxton.SR2</spring.cloud.version>
+        <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+        <spring.cloud.version>Hoxton.SR3</spring.cloud.version>
         <spring.platform.version>Cairo-SR8</spring.platform.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
