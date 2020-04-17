@@ -57,7 +57,7 @@ public class SecureConfiguration implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		clientProperties.getClient().forEach(cs -> registry.addInterceptor(new ClientInterceptor(cs.getClientId())).addPathPatterns(cs.getPathPatterns()));
 
-		if (secureRegistry.isEnable()) {
+		if (secureRegistry.isEnabled()) {
 			registry.addInterceptor(new SecureInterceptor())
 				.excludePathPatterns(secureRegistry.getExcludePatterns())
 				.excludePathPatterns(secureRegistry.getDefaultExcludePatterns())

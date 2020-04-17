@@ -35,7 +35,7 @@ import javax.servlet.DispatcherType;
  */
 @Configuration
 @AllArgsConstructor
-@ConditionalOnProperty(value = "blade.xss.enable", havingValue = "true")
+@ConditionalOnProperty(value = "blade.xss.enabled", havingValue = "true")
 @EnableConfigurationProperties({XssProperties.class, XssUrlProperties.class})
 public class XssConfiguration {
 
