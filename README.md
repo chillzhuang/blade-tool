@@ -41,11 +41,14 @@ blade-tool
 * 官网地址：[https://bladex.vip](https://bladex.vip)
 * 问答社区：[https://sns.bladex.vip](https://sns.bladex.vip)
 * 会员计划：[SpringBlade会员计划](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade会员计划)
-* 交流群：`477853168`
+* 交流一群：`477853168`(满)
+* 交流二群：`751253339`(满)
+* 交流三群：`784729540`
 
 ## 在线演示
 * Sword演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
 * Saber演示地址：[https://saber.bladex.vip](https://saber.bladex.vip)
+* 数据大屏演示地址：[https://data.avuejs.com](https://data.avuejs.com)
 
 ## 项目地址
 * 后端Gitee地址：[https://gitee.com/smallc/SpringBlade](https://gitee.com/smallc/SpringBlade)
