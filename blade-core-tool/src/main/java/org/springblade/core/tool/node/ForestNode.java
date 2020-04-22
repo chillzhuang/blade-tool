@@ -28,12 +28,14 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class ForestNode extends BaseNode {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 节点内容
 	 */
 	private Object content;
 
-	public ForestNode(Integer id, Integer parentId, Object content) {
+	public ForestNode(Long id, Long parentId, Object content) {
 		this.id = id;
 		this.parentId = parentId;
 		this.content = content;

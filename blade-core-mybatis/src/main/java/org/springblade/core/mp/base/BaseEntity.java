@@ -18,6 +18,8 @@ package org.springblade.core.mp.base;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springblade.core.tool.utils.DateUtil;
@@ -37,8 +39,9 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建人
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	@ApiModelProperty(value = "创建人")
-	private Integer createUser;
+	private Long createUser;
 
 	/**
 	 * 创建时间
@@ -51,8 +54,9 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 更新人
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	@ApiModelProperty(value = "更新人")
-	private Integer updateUser;
+	private Long updateUser;
 
 	/**
 	 * 更新时间

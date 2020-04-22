@@ -34,6 +34,6 @@ public interface BaseService<T> extends IService<T> {
 	 * @param ids id集合(逗号分隔)
 	 * @return boolean
 	 */
-	boolean deleteLogic(@NotEmpty List<Integer> ids);
+	boolean deleteLogic(@NotEmpty List<Long> ids);
 
 }
