@@ -51,4 +51,22 @@ public class BaseNode implements INode {
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	protected List<INode> children = new ArrayList<>();
 
+	/**
+	 * 是否有子孙节点
+	 */
+	@JsonInclude(JsonInclude.Include.NON_EMPTY)
+	private Boolean hasChildren;
+
+	/**
+	 * 是否有子孙节点
+	 */
+	@Override
+	public Boolean getHasChildren() {
+		if (children.size() > 0) {
+			return true;
+		} else {
+			return this.hasChildren;
+		}
+	}
+
 }

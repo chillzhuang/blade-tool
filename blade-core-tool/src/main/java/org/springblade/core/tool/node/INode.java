@@ -46,4 +46,13 @@ public interface INode extends Serializable {
 	 */
 	List<INode> getChildren();
 
+	/**
+	 * 是否有子孙节点
+	 *
+	 * @return Boolean
+	 */
+	default Boolean getHasChildren() {
+		return false;
+	}
+
 }

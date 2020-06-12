@@ -20,10 +20,7 @@ import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.launch.server.ServerInfo;
 import org.springblade.core.log.model.LogAbstract;
 import org.springblade.core.secure.utils.SecureUtil;
-import org.springblade.core.tool.utils.DateUtil;
-import org.springblade.core.tool.utils.StringPool;
-import org.springblade.core.tool.utils.UrlUtil;
-import org.springblade.core.tool.utils.WebUtil;
+import org.springblade.core.tool.utils.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,12 +38,14 @@ public class LogAbstractUtil {
 	 * @param logAbstract 日志基础类
 	 */
 	public static void addRequestInfoToLog(HttpServletRequest request, LogAbstract logAbstract) {
-		logAbstract.setRemoteIp(WebUtil.getIP(request));
-		logAbstract.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
-		logAbstract.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
-		logAbstract.setMethod(request.getMethod());
-		logAbstract.setParams(WebUtil.getRequestParamString(request));
-		logAbstract.setCreateBy(SecureUtil.getUserAccount(request));
+		if (ObjectUtil.isNotEmpty(request)) {
+			logAbstract.setRemoteIp(WebUtil.getIP(request));
+			logAbstract.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
+			logAbstract.setRequestUri(UrlUtil.getPath(request.getRequestURI()));
+			logAbstract.setMethod(request.getMethod());
+			logAbstract.setParams(WebUtil.getRequestParamString(request));
+			logAbstract.setCreateBy(SecureUtil.getUserAccount(request));
+		}
 	}
 
 	/**
