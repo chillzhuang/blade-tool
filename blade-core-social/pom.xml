@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-develop</artifactId>
+    <artifactId>blade-core-social</artifactId>
     <name>${project.artifactId}</name>
     <version>${blade.tool.version}</version>
     <packaging>jar</packaging>
@@ -21,19 +21,16 @@
             <artifactId>blade-core-tool</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
-        <!--Mybatis-Plus-->
+        <!-- 第三方登陆 -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-generator</artifactId>
-            <version>${mybatis.plus.version}</version>
+            <groupId>me.zhyd.oauth</groupId>
+            <artifactId>JustAuth</artifactId>
+            <version>1.15.6</version>
         </dependency>
-        <!--Velocity-->
         <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>1.7</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
         </dependency>
     </dependencies>
-
 
 </project>
