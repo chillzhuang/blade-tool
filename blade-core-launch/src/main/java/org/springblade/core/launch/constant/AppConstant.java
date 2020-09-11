@@ -25,7 +25,7 @@ public interface AppConstant {
 	/**
 	 * 应用版本
 	 */
-	String APPLICATION_VERSION = "2.7.2";
+	String APPLICATION_VERSION = "2.7.3";
 
 	/**
 	 * 基础包
