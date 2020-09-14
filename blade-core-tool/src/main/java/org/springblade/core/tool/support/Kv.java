@@ -30,9 +30,8 @@ import java.util.HashMap;
  */
 public class Kv extends LinkedCaseInsensitiveMap<Object> {
 
-
 	private Kv() {
-
+		super();
 	}
 
 	/**
@@ -44,8 +43,8 @@ public class Kv extends LinkedCaseInsensitiveMap<Object> {
 		return new Kv();
 	}
 
-	public static HashMap newMap() {
-		return new HashMap(16);
+	public static <K, V> HashMap<K, V> newMap() {
+		return new HashMap<>(16);
 	}
 
 	/**
@@ -198,7 +197,9 @@ public class Kv extends LinkedCaseInsensitiveMap<Object> {
 
 	@Override
 	public Kv clone() {
-		return (Kv) super.clone();
+		Kv clone = new Kv();
+		clone.putAll(this);
+		return clone;
 	}
 
 }
