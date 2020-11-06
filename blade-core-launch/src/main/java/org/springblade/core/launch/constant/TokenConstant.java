@@ -22,7 +22,7 @@ package org.springblade.core.launch.constant;
  */
 public interface TokenConstant {
 
-	String SIGN_KEY = "Blade";
+	String SIGN_KEY = "bladexisapowerfulmicroservicearchitectureupgradedandoptimizedfromacommercialproject";
 	String AVATAR = "avatar";
 	String HEADER = "blade-auth";
 	String BEARER = "bearer";

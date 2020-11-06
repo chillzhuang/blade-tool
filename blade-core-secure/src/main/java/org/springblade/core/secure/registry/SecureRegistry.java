@@ -38,7 +38,6 @@ public class SecureRegistry {
 	public SecureRegistry() {
 		this.defaultExcludePatterns.add("/actuator/health/**");
 		this.defaultExcludePatterns.add("/v2/api-docs/**");
-		this.defaultExcludePatterns.add("/v2/api-docs-ext/**");
 		this.defaultExcludePatterns.add("/auth/**");
 		this.defaultExcludePatterns.add("/token/**");
 		this.defaultExcludePatterns.add("/log/**");

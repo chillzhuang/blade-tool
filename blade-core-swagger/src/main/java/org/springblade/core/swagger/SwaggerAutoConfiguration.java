@@ -16,25 +16,23 @@
 package org.springblade.core.swagger;
 
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
+import com.google.common.collect.Lists;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
+import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,15 +42,14 @@ import java.util.List;
  * @author Chill
  */
 @Configuration
-@EnableKnife4j
-@EnableSwagger2
-@Profile({"dev", "test"})
+@EnableSwagger
 @EnableConfigurationProperties(SwaggerProperties.class)
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerAutoConfiguration {
 
-	private static final String DEFAULT_EXCLUDE_PATH = "/error";
-	private static final String BASE_PATH = "/**";
+	private static final String DEFAULT_MAPPING_PATH = "/";
+	private static final String DEFAULT_BASE_PATH = "/**";
+	private static final List<String> DEFAULT_EXCLUDE_PATH = Arrays.asList("/error", "/actuator/**");
 
 	@Bean
 	@ConditionalOnMissingBean
@@ -64,29 +61,27 @@ public class SwaggerAutoConfiguration {
 	public Docket api(SwaggerProperties swaggerProperties) {
 		// base-path处理
 		if (swaggerProperties.getBasePath().size() == 0) {
-			swaggerProperties.getBasePath().add(BASE_PATH);
+			swaggerProperties.getBasePath().add(DEFAULT_BASE_PATH);
 		}
-		//noinspection unchecked
-		List<Predicate<String>> basePath = new ArrayList();
-		swaggerProperties.getBasePath().forEach(path -> basePath.add(PathSelectors.ant(path)));
 
 		// exclude-path处理
 		if (swaggerProperties.getExcludePath().size() == 0) {
-			swaggerProperties.getExcludePath().add(DEFAULT_EXCLUDE_PATH);
+			swaggerProperties.getExcludePath().addAll(DEFAULT_EXCLUDE_PATH);
 		}
-		List<Predicate<String>> excludePath = new ArrayList<>();
-		swaggerProperties.getExcludePath().forEach(path -> excludePath.add(PathSelectors.ant(path)));
-
-		//noinspection Guava
-		return new Docket(DocumentationType.SWAGGER_2)
+		ApiSelectorBuilder apis = new Docket(DocumentationType.SWAGGER_2)
 			.host(swaggerProperties.getHost())
 			.apiInfo(apiInfo(swaggerProperties)).select()
-			.apis(SwaggerUtil.basePackages(swaggerProperties.getBasePackages()))
-			.paths(Predicates.and(Predicates.not(Predicates.or(excludePath)), Predicates.or(basePath)))
-			.build()
+			.apis(SwaggerUtil.basePackages(swaggerProperties.getBasePackages()));
+
+		swaggerProperties.getBasePath().forEach(p -> apis.paths(PathSelectors.ant(p)));
+		swaggerProperties.getExcludePath().forEach(p -> apis.paths(PathSelectors.ant(p).negate()));
+
+		return apis.build()
 			.securitySchemes(Collections.singletonList(securitySchema()))
 			.securityContexts(Collections.singletonList(securityContext()))
-			.pathMapping("/");
+			.securityContexts(Lists.newArrayList(securityContext()))
+			.securitySchemes(Collections.singletonList(securitySchema()))
+			.pathMapping(DEFAULT_MAPPING_PATH);
 	}
 
 	/**

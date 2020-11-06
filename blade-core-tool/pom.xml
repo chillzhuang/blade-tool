@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springblade</groupId>
         <artifactId>blade-tool</artifactId>
-        <version>2.7.3</version>
+        <version>2.8.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>26.0-jre</version>
+            <version>30.0-jre</version>
         </dependency>
         <!-- okhttp -->
         <dependency>

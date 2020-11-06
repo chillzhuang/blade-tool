@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>2.7.3</version>
+    <version>2.8.0</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,22 +36,23 @@
     </scm>
 
     <properties>
-        <blade.tool.version>2.7.3</blade.tool.version>
+        <blade.tool.version>2.8.0</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.0</maven.plugin.version>
-        <swagger.version>2.9.2</swagger.version>
-        <swagger.models.version>1.5.21</swagger.models.version>
-        <knife4j.version>2.0.4</knife4j.version>
+        <swagger.version>2.10.5</swagger.version>
+        <swagger.models.version>1.6.2</swagger.models.version>
+        <knife4j.version>2.0.6</knife4j.version>
         <mybatis.plus.version>3.4.0</mybatis.plus.version>
         <protostuff.version>1.6.0</protostuff.version>
         <disruptor.version>3.4.2</disruptor.version>
         <spring.boot.admin.version>2.3.0</spring.boot.admin.version>
         <mica.auto.version>1.2.5</mica.auto.version>
-        <alibaba.cloud.version>2.2.1.RELEASE</alibaba.cloud.version>
+        <alibaba.cloud.version>2.2.3.RELEASE</alibaba.cloud.version>
         <alibaba.seata.version>1.3.0</alibaba.seata.version>
+        <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
 
-        <spring.boot.version>2.2.9.RELEASE</spring.boot.version>
+        <spring.boot.version>2.2.11.RELEASE</spring.boot.version>
         <spring.cloud.version>Hoxton.SR8</spring.cloud.version>
         <spring.platform.version>Cairo-SR8</spring.platform.version>
 
@@ -73,10 +74,21 @@
         <module>blade-core-tool</module>
         <module>blade-core-oss</module>
         <module>blade-core-transaction</module>
+        <module>blade-core-report</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.plugin</groupId>
+                <artifactId>spring-plugin-core</artifactId>
+                <version>${spring.plugin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.plugin</groupId>
+                <artifactId>spring-plugin-metadata</artifactId>
+                <version>${spring.plugin.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>

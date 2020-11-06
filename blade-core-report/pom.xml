@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-transaction</artifactId>
+    <artifactId>blade-core-report</artifactId>
     <name>${project.artifactId}</name>
     <version>${blade.tool.version}</version>
     <packaging>jar</packaging>
@@ -20,21 +20,10 @@
             <artifactId>blade-core-mybatis</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
-        <!-- Cloud-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-commons</artifactId>
-        </dependency>
-        <!-- Seata-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-            <version>${alibaba.cloud.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-spring-boot-starter</artifactId>
-            <version>${alibaba.seata.version}</version>
+            <groupId>com.bstek.ureport</groupId>
+            <artifactId>ureport2-console</artifactId>
+            <version>2.2.9</version>
         </dependency>
     </dependencies>
 

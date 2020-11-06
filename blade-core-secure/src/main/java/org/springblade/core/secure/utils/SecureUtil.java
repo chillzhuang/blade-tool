@@ -53,9 +53,9 @@ public class SecureUtil {
 	private final static String TENANT_ID = TokenConstant.TENANT_ID;
 	private final static String CLIENT_ID = TokenConstant.CLIENT_ID;
 	private final static Integer AUTH_LENGTH = TokenConstant.AUTH_LENGTH;
-	private static String BASE64_SECURITY = Base64.getEncoder().encodeToString(TokenConstant.SIGN_KEY.getBytes(Charsets.UTF_8));
+	private static final String BASE64_SECURITY = Base64.getEncoder().encodeToString(TokenConstant.SIGN_KEY.getBytes(Charsets.UTF_8));
 
-	private static IClientDetailsService clientDetailsService;
+	private static final IClientDetailsService clientDetailsService;
 
 	static {
 		clientDetailsService = SpringUtil.getBean(IClientDetailsService.class);
@@ -297,8 +297,8 @@ public class SecureUtil {
 	 */
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
-			return Jwts.parser()
-				.setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY))
+			return Jwts.parserBuilder()
+				.setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY)).build()
 				.parseClaimsJws(jsonWebToken).getBody();
 		} catch (Exception ex) {
 			return null;
@@ -339,10 +339,10 @@ public class SecureUtil {
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
 		//添加构成JWT的类
-		JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JsonWebToken")
+		JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JWT")
 			.setIssuer(issuer)
 			.setAudience(audience)
-			.signWith(signatureAlgorithm, signingKey);
+			.signWith(signingKey);
 
 		//设置JWT参数
 		user.forEach(builder::claim);
