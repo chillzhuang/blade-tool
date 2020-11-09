@@ -15,6 +15,7 @@
  */
 package org.springblade.core.tool.node;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -22,21 +23,21 @@ import java.util.List;
  *
  * @author Chill
  */
-public interface INode {
+public interface INode extends Serializable {
 
 	/**
 	 * 主键
 	 *
 	 * @return Integer
 	 */
-	Integer getId();
+	Long getId();
 
 	/**
 	 * 父主键
 	 *
 	 * @return Integer
 	 */
-	Integer getParentId();
+	Long getParentId();
 
 	/**
 	 * 子孙节点
@@ -44,5 +45,14 @@ public interface INode {
 	 * @return List
 	 */
 	List<INode> getChildren();
+
+	/**
+	 * 是否有子孙节点
+	 *
+	 * @return Boolean
+	 */
+	default Boolean getHasChildren() {
+		return false;
+	}
 
 }

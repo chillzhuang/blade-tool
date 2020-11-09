@@ -88,7 +88,7 @@ public class SqlKeyword {
 	 *
 	 * @param column  字段名
 	 * @param keyword 关键字
-	 * @return
+	 * @return String
 	 */
 	private static String getColumn(String column, String keyword) {
 		return StringUtil.humpToUnderline(StringUtil.removeSuffix(column, keyword));

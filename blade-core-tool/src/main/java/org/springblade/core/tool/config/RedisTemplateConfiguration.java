@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.boot.config;
+package org.springblade.core.tool.config;
 
-import org.springblade.core.boot.redis.RedisKeySerializer;
+import org.springblade.core.tool.redis.RedisKeySerializer;
+import org.springblade.core.tool.utils.RedisUtil;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cache.CacheManager;
@@ -76,6 +78,12 @@ public class RedisTemplateConfiguration {
 		return RedisCacheManager
 			.builder(RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory))
 			.cacheDefaults(redisCacheConfiguration).build();
+	}
+
+	@Bean(name = "redisUtil")
+	@ConditionalOnBean(RedisTemplate.class)
+	public RedisUtil redisUtils(RedisTemplate<String, Object> redisTemplate) {
+		return new RedisUtil(redisTemplate);
 	}
 
 }

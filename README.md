@@ -1,7 +1,7 @@
  <p align="center">
   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
-   <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR3-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.1.9.RELEASE-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Cloud-Hoxton.SR8-blue.svg" alt="Coverage Status">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.2.11.RELEASE-blue.svg" alt="Downloads">
  </p>  
 
 ## SpringBlade微服务开发平台
@@ -33,19 +33,24 @@ blade-tool
 ├── blade-core-secure -- 安全模块 
 ├── blade-core-swagger -- swagger拓展封装模块 
 ├── blade-core-test -- 单元测试封装模块 
-└── blade-core-tool -- 工具包模块 
-	 
+├── blade-core-tool -- 单元测试封装模块 
+└── blade-core-transaction -- 分布式事物封装模块 
 ```
 
 ## 官网
 * 官网地址：[https://bladex.vip](https://bladex.vip)
 * 问答社区：[https://sns.bladex.vip](https://sns.bladex.vip)
 * 会员计划：[SpringBlade会员计划](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade会员计划)
-* 交流群：`477853168`
+* 交流一群：`477853168`(满)
+* 交流二群：`751253339`(满)
+* 交流三群：`784729540`(满)
+* 交流四群：`1034621754`(满)
+* 交流五群：`946350912`
 
 ## 在线演示
 * Sword演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
 * Saber演示地址：[https://saber.bladex.vip](https://saber.bladex.vip)
+* 数据大屏演示地址：[https://data.avuejs.com](https://data.avuejs.com)
 
 ## 项目地址
 * 后端Gitee地址：[https://gitee.com/smallc/SpringBlade](https://gitee.com/smallc/SpringBlade)

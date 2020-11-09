@@ -25,7 +25,7 @@ public interface AppConstant {
 	/**
 	 * 应用版本
 	 */
-	String APPLICATION_VERSION = "2.5.4";
+	String APPLICATION_VERSION = "2.8.0";
 
 	/**
 	 * 基础包
@@ -76,6 +76,10 @@ public interface AppConstant {
 	 * 链路追踪模块名称
 	 */
 	String APPLICATION_ZIPKIN_NAME = APPLICATION_NAME_PREFIX + "zipkin";
+	/**
+	 * 报表系统名称
+	 */
+	String APPLICATION_REPORT_NAME = APPLICATION_NAME_PREFIX + "report";
 	/**
 	 * 测试模块名称
 	 */

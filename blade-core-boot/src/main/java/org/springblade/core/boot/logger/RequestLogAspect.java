@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Spring boot 控制器 请求日志，方便代码调试
@@ -66,6 +67,7 @@ public class RequestLogAspect {
 				continue;
 			}
 			RequestBody requestBody = methodParam.getParameterAnnotation(RequestBody.class);
+			String parameterName = methodParam.getParameterName();
 			Object value = args[i];
 			// 如果是body的json则是对象
 			if (requestBody != null && value != null) {
@@ -89,6 +91,19 @@ public class RequestLogAspect {
 			} else if (value instanceof HttpServletResponse) {
 			} else if (value instanceof InputStream) {
 			} else if (value instanceof InputStreamSource) {
+			} else if (value instanceof List) {
+				List<?> list = (List<?>) value;
+				AtomicBoolean isSkip = new AtomicBoolean(false);
+				for (Object o : list) {
+					if ("StandardMultipartFile".equalsIgnoreCase(o.getClass().getSimpleName())) {
+						isSkip.set(true);
+						break;
+					}
+				}
+				if (isSkip.get()) {
+					paraMap.put(parameterName, "此参数不能序列化为json");
+					continue;
+				}
 			} else {
 				// 参数名
 				RequestParam requestParam = methodParam.getParameterAnnotation(RequestParam.class);

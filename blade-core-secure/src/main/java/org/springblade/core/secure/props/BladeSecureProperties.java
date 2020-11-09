@@ -27,9 +27,11 @@ import java.util.List;
  * @author Chill
  */
 @Data
-@ConfigurationProperties("blade.secure.url")
+@ConfigurationProperties("blade.secure")
 public class BladeSecureProperties {
 
-	private final List<String> excludePatterns = new ArrayList<>();
+	private final List<ClientSecure> client = new ArrayList<>();
+
+	private final List<String> skipUrl = new ArrayList<>();
 
 }

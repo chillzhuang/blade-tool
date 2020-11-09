@@ -13,23 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.secure.props;
+package org.springblade.core.report.endpoint;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springblade.core.launch.constant.AppConstant;
+import org.springblade.core.report.service.IReportFileService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
- * 客户端校验配置
+ * UReport Boot版 API端点
  *
  * @author Chill
  */
-@Data
-@ConfigurationProperties("blade.secure")
-public class BladeClientProperties {
+@ApiIgnore
+@RestController
+@RequestMapping(AppConstant.APPLICATION_REPORT_NAME + "/report/rest")
+public class ReportBootEndpoint extends ReportEndpoint {
 
-	private final List<ClientSecure> client = new ArrayList<>();
+	public ReportBootEndpoint(IReportFileService service) {
+		super(service);
+	}
 
 }

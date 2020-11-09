@@ -55,7 +55,7 @@ import java.util.ArrayList;
 public class BladeFeignAutoConfiguration {
 
 	@Bean
-	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean(Targeter.class)
 	public Targeter bladeFeignTargeter() {
 		return new BladeHystrixTargeter();
 	}

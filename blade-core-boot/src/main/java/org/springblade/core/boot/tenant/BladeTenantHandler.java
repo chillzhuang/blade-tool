@@ -15,7 +15,7 @@
  */
 package org.springblade.core.boot.tenant;
 
-import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.expression.Expression;
@@ -31,7 +31,7 @@ import org.springblade.core.tool.utils.StringUtil;
  */
 @Slf4j
 @AllArgsConstructor
-public class BladeTenantHandler implements TenantHandler {
+public class BladeTenantHandler implements TenantLineHandler {
 
 	private final BladeTenantProperties properties;
 
@@ -59,10 +59,10 @@ public class BladeTenantHandler implements TenantHandler {
 	 * 过滤租户表
 	 *
 	 * @param tableName 表名
-	 * @return 是否进行过滤
+	 * @return 是否忽略, true:表示忽略，false:需要解析并拼接多租户条件
 	 */
 	@Override
-	public boolean doTableFilter(String tableName) {
+	public boolean ignoreTable(String tableName) {
 		return !(
 			(
 				(properties.getTables().size() > 0 && properties.getTables().contains(tableName))

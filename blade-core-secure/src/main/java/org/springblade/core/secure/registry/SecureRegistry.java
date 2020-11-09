@@ -29,7 +29,7 @@ import java.util.List;
 @Data
 public class SecureRegistry {
 
-	private boolean enable = false;
+	private boolean enabled = false;
 
 	private final List<String> defaultExcludePatterns = new ArrayList<>();
 
@@ -38,7 +38,6 @@ public class SecureRegistry {
 	public SecureRegistry() {
 		this.defaultExcludePatterns.add("/actuator/health/**");
 		this.defaultExcludePatterns.add("/v2/api-docs/**");
-		this.defaultExcludePatterns.add("/v2/api-docs-ext/**");
 		this.defaultExcludePatterns.add("/auth/**");
 		this.defaultExcludePatterns.add("/token/**");
 		this.defaultExcludePatterns.add("/log/**");

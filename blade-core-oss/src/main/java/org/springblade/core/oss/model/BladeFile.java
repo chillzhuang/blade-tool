@@ -32,4 +32,8 @@ public class BladeFile {
 	 * 文件名
 	 */
 	private String name;
+	/**
+	 * 原始文件名
+	 */
+	private String originalName;
 }

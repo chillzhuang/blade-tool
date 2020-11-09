@@ -16,9 +16,7 @@
 package org.springblade.core.tool.config;
 
 
-import org.springblade.core.tool.support.xss.XssProperties;
 import org.springblade.core.tool.utils.SpringUtil;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -32,7 +30,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@EnableConfigurationProperties(XssProperties.class)
 public class ToolConfiguration implements WebMvcConfigurer {
 
 	/**
@@ -41,7 +38,7 @@ public class ToolConfiguration implements WebMvcConfigurer {
 	 * @return SpringUtil
 	 */
 	@Bean
-	public SpringUtil springUtils() {
+	public SpringUtil springUtil() {
 		return new SpringUtil();
 	}
 

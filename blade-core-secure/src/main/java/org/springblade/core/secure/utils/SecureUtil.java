@@ -27,6 +27,7 @@ import org.springblade.core.secure.constant.SecureConstant;
 import org.springblade.core.secure.exception.SecureException;
 import org.springblade.core.secure.provider.IClientDetails;
 import org.springblade.core.secure.provider.IClientDetailsService;
+import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.*;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -52,9 +53,9 @@ public class SecureUtil {
 	private final static String TENANT_ID = TokenConstant.TENANT_ID;
 	private final static String CLIENT_ID = TokenConstant.CLIENT_ID;
 	private final static Integer AUTH_LENGTH = TokenConstant.AUTH_LENGTH;
-	private static String BASE64_SECURITY = Base64.getEncoder().encodeToString(TokenConstant.SIGN_KEY.getBytes(Charsets.UTF_8));
+	private static final String BASE64_SECURITY = Base64.getEncoder().encodeToString(TokenConstant.SIGN_KEY.getBytes(Charsets.UTF_8));
 
-	private static IClientDetailsService clientDetailsService;
+	private static final IClientDetailsService clientDetailsService;
 
 	static {
 		clientDetailsService = SpringUtil.getBean(IClientDetailsService.class);
@@ -94,7 +95,7 @@ public class SecureUtil {
 			return null;
 		}
 		String clientId = Func.toStr(claims.get(SecureUtil.CLIENT_ID));
-		Integer userId = Func.toInt(claims.get(SecureUtil.USER_ID));
+		Long userId = Func.toLong(claims.get(SecureUtil.USER_ID));
 		String tenantId = Func.toStr(claims.get(SecureUtil.TENANT_ID));
 		String roleId = Func.toStr(claims.get(SecureUtil.ROLE_ID));
 		String account = Func.toStr(claims.get(SecureUtil.ACCOUNT));
@@ -111,13 +112,21 @@ public class SecureUtil {
 		return bladeUser;
 	}
 
+	/**
+	 * 是否为超管
+	 *
+	 * @return boolean
+	 */
+	public static boolean isAdministrator() {
+		return StringUtil.containsAny(getUserRole(), RoleConstant.ADMIN);
+	}
 
 	/**
 	 * 获取用户id
 	 *
 	 * @return userId
 	 */
-	public static Integer getUserId() {
+	public static Long getUserId() {
 		BladeUser user = getUser();
 		return (null == user) ? -1 : user.getUserId();
 	}
@@ -128,7 +137,7 @@ public class SecureUtil {
 	 * @param request request
 	 * @return userId
 	 */
-	public static Integer getUserId(HttpServletRequest request) {
+	public static Long getUserId(HttpServletRequest request) {
 		BladeUser user = getUser(request);
 		return (null == user) ? -1 : user.getUserId();
 	}
@@ -246,11 +255,16 @@ public class SecureUtil {
 	 */
 	public static Claims getClaims(HttpServletRequest request) {
 		String auth = request.getHeader(SecureUtil.HEADER);
-		if ((auth != null) && (auth.length() > AUTH_LENGTH)) {
+		if (StringUtil.isNotBlank(auth) && auth.length() > AUTH_LENGTH) {
 			String headStr = auth.substring(0, 6).toLowerCase();
 			if (headStr.compareTo(SecureUtil.BEARER) == 0) {
 				auth = auth.substring(7);
 				return SecureUtil.parseJWT(auth);
+			}
+		} else {
+			String parameter = request.getParameter(SecureUtil.HEADER);
+			if (StringUtil.isNotBlank(parameter)) {
+				return SecureUtil.parseJWT(parameter);
 			}
 		}
 		return null;
@@ -283,8 +297,8 @@ public class SecureUtil {
 	 */
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
-			return Jwts.parser()
-				.setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY))
+			return Jwts.parserBuilder()
+				.setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY)).build()
 				.parseClaimsJws(jsonWebToken).getBody();
 		} catch (Exception ex) {
 			return null;
@@ -325,10 +339,10 @@ public class SecureUtil {
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
 		//添加构成JWT的类
-		JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JsonWebToken")
+		JwtBuilder builder = Jwts.builder().setHeaderParam("typ", "JWT")
 			.setIssuer(issuer)
 			.setAudience(audience)
-			.signWith(signatureAlgorithm, signingKey);
+			.signWith(signingKey);
 
 		//设置JWT参数
 		user.forEach(builder::claim);
