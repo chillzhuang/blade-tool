@@ -17,7 +17,7 @@
 package org.springblade.core.test;
 
 
-import org.junit.runners.model.InitializationError;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.springblade.core.launch.BladeApplication;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.launch.constant.NacosConstant;
@@ -25,7 +25,8 @@ import org.springblade.core.launch.constant.SentinelConstant;
 import org.springblade.core.launch.service.LauncherService;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.lang.NonNull;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,14 +36,16 @@ import java.util.stream.Collectors;
  *
  * @author L.cm
  */
-public class BladeSpringRunner extends SpringJUnit4ClassRunner {
+public class BladeSpringExtension extends SpringExtension {
 
-	public BladeSpringRunner(Class<?> clazz) throws InitializationError {
-		super(clazz);
-		setUpTestClass(clazz);
+	@Override
+	public void beforeAll(@NonNull ExtensionContext context) throws Exception {
+		super.beforeAll(context);
+		setUpTestClass(context);
 	}
 
-	private void setUpTestClass(Class<?> clazz) {
+	private void setUpTestClass(ExtensionContext context) {
+		Class<?> clazz = context.getRequiredTestClass();
 		BladeBootTest bladeBootTest = AnnotationUtils.getAnnotation(clazz, BladeBootTest.class);
 		if (bladeBootTest == null) {
 			throw new BladeBootTestException(String.format("%s must be @BladeBootTest .", clazz));
@@ -74,7 +77,7 @@ public class BladeSpringRunner extends SpringJUnit4ClassRunner {
 			launcherList.stream().sorted(Comparator.comparing(LauncherService::getOrder)).collect(Collectors.toList())
 				.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
 		}
-		System.err.println(String.format("---[junit.test]:[%s]---启动中，读取到的环境变量:[%s]", appName, profile));
+		System.err.printf("---[junit.test]:[%s]---启动中，读取到的环境变量:[%s]%n", appName, profile);
 	}
 
 }

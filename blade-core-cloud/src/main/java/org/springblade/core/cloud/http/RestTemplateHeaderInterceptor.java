@@ -16,9 +16,9 @@
 package org.springblade.core.cloud.http;
 
 import lombok.AllArgsConstructor;
-import org.springblade.core.cloud.hystrix.BladeHttpHeadersContextHolder;
-import org.springblade.core.cloud.hystrix.BladeHystrixAccountGetter;
-import org.springblade.core.cloud.props.BladeHystrixHeadersProperties;
+import org.springblade.core.cloud.header.BladeHttpHeadersContextHolder;
+import org.springblade.core.cloud.header.BladeFeignAccountGetter;
+import org.springblade.core.cloud.props.BladeFeignHeadersProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -36,8 +36,8 @@ import java.io.IOException;
 @AllArgsConstructor
 public class RestTemplateHeaderInterceptor implements ClientHttpRequestInterceptor {
 	@Nullable
-	private final BladeHystrixAccountGetter accountGetter;
-	private final BladeHystrixHeadersProperties properties;
+	private final BladeFeignAccountGetter accountGetter;
+	private final BladeFeignHeadersProperties properties;
 
 	@Override
 	public ClientHttpResponse intercept(

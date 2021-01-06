@@ -16,6 +16,7 @@
 
 package org.springblade.core.test;
 
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.AliasFor;
 
@@ -31,6 +32,7 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @SpringBootTest
+@ExtendWith(BladeSpringExtension.class)
 public @interface BladeBootTest {
 	/**
 	 * 服务名：appName

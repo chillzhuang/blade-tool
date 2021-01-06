@@ -18,12 +18,13 @@ package org.springblade.core.cloud.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
-import org.springblade.core.cloud.hystrix.BladeHystrixAccountGetter;
-import org.springblade.core.cloud.props.BladeHystrixHeadersProperties;
+import org.springblade.core.cloud.header.BladeFeignAccountGetter;
+import org.springblade.core.cloud.props.BladeFeignHeadersProperties;
 import org.springblade.core.tool.utils.Charsets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.commons.httpclient.OkHttpClientConnectionPoolFactory;
 import org.springframework.cloud.commons.httpclient.OkHttpClientFactory;
@@ -47,9 +48,10 @@ import java.util.concurrent.TimeUnit;
  *
  * @author L.cm
  */
-@Configuration
-@ConditionalOnClass(okhttp3.OkHttpClient.class)
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
+@ConditionalOnClass(okhttp3.OkHttpClient.class)
+@EnableConfigurationProperties(BladeFeignHeadersProperties.class)
 public class RestTemplateConfiguration {
 	private final ObjectMapper objectMapper;
 
@@ -135,8 +137,8 @@ public class RestTemplateConfiguration {
 
 	@Bean
 	public RestTemplateHeaderInterceptor requestHeaderInterceptor(
-		@Autowired(required = false) @Nullable BladeHystrixAccountGetter accountGetter,
-		BladeHystrixHeadersProperties properties) {
+		@Autowired(required = false) @Nullable BladeFeignAccountGetter accountGetter,
+		BladeFeignHeadersProperties properties) {
 		return new RestTemplateHeaderInterceptor(accountGetter,properties);
 	}
 

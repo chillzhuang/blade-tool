@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.transaction.annotation;
+package org.springblade.core.cloud.client;
 
+import org.springblade.core.launch.constant.AppConstant;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import java.lang.annotation.*;
 
 /**
- * Seata启动注解配置
+ * Cloud启动注解配置
  *
  * @author Chill
  */
@@ -34,7 +35,8 @@ import java.lang.annotation.*;
 @Inherited
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, RibbonAutoConfiguration.class})
-public @interface SeataCloudApplication {
+@EnableFeignClients(AppConstant.BASE_PACKAGES)
+@SpringBootApplication(exclude = RibbonAutoConfiguration.class)
+public @interface BladeCloudApplication {
 
 }

@@ -41,7 +41,7 @@ public class BladeFeignFallback<T> implements MethodInterceptor {
 	private final Class<T> targetType;
 	private final String targetName;
 	private final Throwable cause;
-	private final String code = "code";
+	private final static String CODE = "code";
 
 	@Nullable
 	@Override
@@ -66,7 +66,7 @@ public class BladeFeignFallback<T> implements MethodInterceptor {
 		// 转换成 jsonNode 读取，因为直接转换，可能 对方放回的并 不是 R 的格式。
 		JsonNode resultNode = JsonUtil.readTree(content);
 		// 判断是否 R 格式 返回体
-		if (resultNode.has(code)) {
+		if (resultNode.has(CODE)) {
 			return JsonUtil.getInstance().convertValue(resultNode, R.class);
 		}
 		return R.fail(resultNode.toString());

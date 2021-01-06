@@ -28,7 +28,7 @@ import org.springframework.retry.interceptor.RetryOperationsInterceptor;
  * @author Chill
  */
 @Slf4j
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class RetryConfiguration {
 
 	@Bean

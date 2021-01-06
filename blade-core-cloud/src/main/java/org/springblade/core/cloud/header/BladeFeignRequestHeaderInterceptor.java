@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.cloud.feign;
+package org.springblade.core.cloud.header;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
-import org.springblade.core.cloud.hystrix.BladeHttpHeadersContextHolder;
 import org.springframework.http.HttpHeaders;
 
 /**

@@ -41,7 +41,7 @@ import javax.servlet.Servlet;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @ConditionalOnWebApplication
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)

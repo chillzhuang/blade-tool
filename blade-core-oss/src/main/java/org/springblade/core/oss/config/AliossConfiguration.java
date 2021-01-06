@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @AutoConfigureAfter(QiniuConfiguration.class)
 @EnableConfigurationProperties(OssProperties.class)

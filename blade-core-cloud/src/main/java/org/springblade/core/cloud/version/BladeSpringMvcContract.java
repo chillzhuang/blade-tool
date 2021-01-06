@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.cloud.feign;
+package org.springblade.core.cloud.version;
 
 import feign.MethodMetadata;
 import org.springblade.core.cloud.annotation.ApiVersion;
 import org.springblade.core.cloud.annotation.UrlVersion;
-import org.springblade.core.cloud.version.BladeMediaType;
 import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.StringUtil;
 import org.springframework.cloud.openfeign.AnnotatedParameterProcessor;

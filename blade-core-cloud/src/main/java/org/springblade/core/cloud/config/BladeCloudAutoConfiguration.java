@@ -13,53 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.boot.tenant;
+package org.springblade.core.cloud.config;
 
-import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
-import lombok.AllArgsConstructor;
-import org.springblade.core.boot.config.MybatisPlusConfiguration;
+import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
+import feign.Feign;
+import org.springblade.core.cloud.feign.BladeFeignSentinel;
+import org.springblade.core.cloud.sentinel.BladeBlockExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+
 
 /**
- * 多租户配置类
+ * blade cloud 增强配置
  *
  * @author Chill
  */
 @Configuration(proxyBeanMethods = false)
-@AllArgsConstructor
-@AutoConfigureBefore(MybatisPlusConfiguration.class)
-@EnableConfigurationProperties(BladeTenantProperties.class)
-public class TenantConfiguration {
+@AutoConfigureBefore(SentinelFeignAutoConfiguration.class)
+public class BladeCloudAutoConfiguration {
 
-	/**
-	 * 多租户配置类
-	 */
-	private final BladeTenantProperties properties;
-
-	/**
-	 * 自定义租户处理器
-	 *
-	 * @return TenantHandler
-	 */
 	@Bean
-	@ConditionalOnMissingBean(TenantLineHandler.class)
-	public TenantLineHandler bladeTenantHandler() {
-		return new BladeTenantHandler(properties);
+	@Scope("prototype")
+	@ConditionalOnMissingBean
+	@ConditionalOnProperty(name = "feign.sentinel.enabled")
+	public Feign.Builder feignSentinelBuilder() {
+		return BladeFeignSentinel.builder();
 	}
 
-	/**
-	 * 自定义租户id生成器
-	 *
-	 * @return TenantId
-	 */
 	@Bean
-	@ConditionalOnMissingBean(TenantId.class)
-	public TenantId tenantId() {
-		return new BladeTenantId();
+	@ConditionalOnMissingBean
+	public BlockExceptionHandler blockExceptionHandler() {
+		return new BladeBlockExceptionHandler();
 	}
 
 }

@@ -33,7 +33,7 @@ import javax.servlet.DispatcherType;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @ConditionalOnProperty(value = "blade.xss.enabled", havingValue = "true")
 @EnableConfigurationProperties({XssProperties.class, XssUrlProperties.class})

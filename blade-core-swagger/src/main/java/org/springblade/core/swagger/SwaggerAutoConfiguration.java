@@ -41,7 +41,7 @@ import java.util.List;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableSwagger
 @EnableConfigurationProperties(SwaggerProperties.class)
 @Import(BeanValidatorPluginsConfiguration.class)

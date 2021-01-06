@@ -32,8 +32,8 @@ import java.util.List;
 @Getter
 @Setter
 @RefreshScope
-@ConfigurationProperties("blade.hystrix.headers")
-public class BladeHystrixHeadersProperties {
+@ConfigurationProperties("blade.feign.headers")
+public class BladeFeignHeadersProperties {
 
 	/**
 	 * 用于 聚合层 向调用层传递用户信息 的请求头，默认：x-blade-account

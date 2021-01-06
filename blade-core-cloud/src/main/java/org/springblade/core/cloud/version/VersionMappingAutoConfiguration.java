@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author L.cm
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnWebApplication
 public class VersionMappingAutoConfiguration {
 	@Bean

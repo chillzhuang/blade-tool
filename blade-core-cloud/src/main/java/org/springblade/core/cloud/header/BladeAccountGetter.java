@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.cloud.hystrix;
+package org.springblade.core.cloud.header;
 
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Chill
  */
-public class BladeAccountGetter implements BladeHystrixAccountGetter {
+public class BladeAccountGetter implements BladeFeignAccountGetter {
 
 	@Override
 	public String get(HttpServletRequest request) {

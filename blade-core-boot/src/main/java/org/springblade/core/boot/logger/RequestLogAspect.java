@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 @Slf4j
 @Aspect
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Profile({AppConstant.DEV_CODE, AppConstant.TEST_CODE})
 public class RequestLogAspect {
 

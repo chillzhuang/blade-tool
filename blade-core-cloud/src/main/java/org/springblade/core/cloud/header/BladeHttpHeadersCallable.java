@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.cloud.hystrix;
+package org.springblade.core.cloud.header;
 
-import org.springblade.core.cloud.props.BladeHystrixHeadersProperties;
+import org.springblade.core.cloud.props.BladeFeignHeadersProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.Nullable;
 
@@ -33,8 +33,8 @@ public class BladeHttpHeadersCallable<V> implements Callable<V> {
 	private HttpHeaders httpHeaders;
 
 	public BladeHttpHeadersCallable(Callable<V> delegate,
-									@Nullable BladeHystrixAccountGetter accountGetter,
-									BladeHystrixHeadersProperties properties) {
+									@Nullable BladeFeignAccountGetter accountGetter,
+									BladeFeignHeadersProperties properties) {
 		this.delegate = delegate;
 		this.httpHeaders = BladeHttpHeadersContextHolder.toHeaders(accountGetter, properties);
 	}

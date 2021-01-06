@@ -39,7 +39,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author Chill
  */
 @Order
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @EnableConfigurationProperties({BladeSecureProperties.class})
 public class SecureConfiguration implements WebMvcConfigurer {
