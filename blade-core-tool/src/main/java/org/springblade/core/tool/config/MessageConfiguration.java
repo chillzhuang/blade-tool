@@ -47,7 +47,9 @@ public class MessageConfiguration implements WebMvcConfigurer {
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.removeIf(x -> x instanceof StringHttpMessageConverter || x instanceof AbstractJackson2HttpMessageConverter);
-		converters.add(new StringHttpMessageConverter(Charsets.UTF_8));
+		StringHttpMessageConverter stringConverter = new StringHttpMessageConverter(Charsets.UTF_8);
+		stringConverter.setWriteAcceptCharset(false);
+		converters.add(stringConverter);
 		converters.add(new ByteArrayHttpMessageConverter());
 		converters.add(new ResourceHttpMessageConverter());
 		converters.add(new ResourceRegionHttpMessageConverter());
