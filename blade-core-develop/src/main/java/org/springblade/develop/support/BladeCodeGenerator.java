@@ -25,6 +25,7 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.converts.OracleTypeConvert;
 import com.baomidou.mybatisplus.generator.config.converts.PostgreSqlTypeConvert;
+import com.baomidou.mybatisplus.generator.config.converts.SqlServerTypeConvert;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import lombok.Data;
@@ -150,6 +151,9 @@ public class BladeCodeGenerator {
 		} else if (StringUtil.containsAny(driverName, DbType.POSTGRE_SQL.getDb())) {
 			dsc.setDbType(DbType.POSTGRE_SQL);
 			dsc.setTypeConvert(new PostgreSqlTypeConvert());
+		} else if (StringUtil.containsAny(driverName, DbType.SQL_SERVER.getDb())) {
+			dsc.setDbType(DbType.SQL_SERVER);
+			dsc.setTypeConvert(new SqlServerTypeConvert());
 		} else {
 			dsc.setDbType(DbType.ORACLE);
 			dsc.setTypeConvert(new OracleTypeConvert());
