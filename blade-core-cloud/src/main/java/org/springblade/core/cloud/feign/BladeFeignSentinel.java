@@ -24,12 +24,13 @@ import lombok.SneakyThrows;
 import org.springblade.core.cloud.sentinel.BladeSentinelInvocationHandler;
 import org.springframework.beans.BeansException;
 import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.FeignContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.util.ReflectionUtils;
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.util.StringUtils;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -46,8 +47,7 @@ public class BladeFeignSentinel {
 		return new Builder();
 	}
 
-	public static final class Builder extends Feign.Builder
-		implements ApplicationContextAware {
+	public static final class Builder extends Feign.Builder implements ApplicationContextAware {
 		private Contract contract = new Contract.Default();
 		private ApplicationContext applicationContext;
 		private FeignContext feignContext;
@@ -69,23 +69,26 @@ public class BladeFeignSentinel {
 			super.invocationHandlerFactory(new InvocationHandlerFactory() {
 				@SneakyThrows
 				@Override
-				public InvocationHandler create(Target target,
-												Map<Method, MethodHandler> dispatch) {
-					Object feignClientFactoryBean = Builder.this.applicationContext.getBean("&" + target.type().getName());
+				public InvocationHandler create(Target target, Map<Method, MethodHandler> dispatch) {
+					// 注解取值以避免循环依赖的问题
+					FeignClient feignClient = AnnotationUtils.findAnnotation(target.type(), FeignClient.class);
+					Class fallback = feignClient.fallback();
+					Class fallbackFactory = feignClient.fallbackFactory();
+					String contextId = feignClient.contextId();
 
-					Class fallback = (Class) getFieldValue(feignClientFactoryBean, "fallback");
-					Class fallbackFactory = (Class) getFieldValue(feignClientFactoryBean, "fallbackFactory");
-					String name = (String) getFieldValue(feignClientFactoryBean, "name");
+					if (!StringUtils.hasText(contextId)) {
+						contextId = feignClient.name();
+					}
 
 					Object fallbackInstance;
 					FallbackFactory fallbackFactoryInstance;
 					// 判断fallback类型
 					if (void.class != fallback) {
-						fallbackInstance = getFromContext(name, "fallback", fallback, target.type());
+						fallbackInstance = getFromContext(contextId, "fallback", fallback, target.type());
 						return new BladeSentinelInvocationHandler(target, dispatch, new FallbackFactory.Default(fallbackInstance));
 					}
 					if (void.class != fallbackFactory) {
-						fallbackFactoryInstance = (FallbackFactory) getFromContext(name, "fallbackFactory", fallbackFactory, FallbackFactory.class);
+						fallbackFactoryInstance = (FallbackFactory) getFromContext(contextId, "fallbackFactory", fallbackFactory, FallbackFactory.class);
 						return new BladeSentinelInvocationHandler(target, dispatch, fallbackFactoryInstance);
 					}
 					// 默认fallbackFactory
@@ -113,17 +116,6 @@ public class BladeFeignSentinel {
 			});
 			super.contract(new SentinelContractHolder(contract));
 			return super.build();
-		}
-
-		private Object getFieldValue(Object instance, String fieldName) {
-			Field field = ReflectionUtils.findField(instance.getClass(), fieldName);
-			field.setAccessible(true);
-			try {
-				return field.get(instance);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			}
-			return null;
 		}
 
 		@Override
