@@ -158,6 +158,8 @@ public class QiniuTemplate {
 
 	@SneakyThrows
 	public BladeFile put(String bucketName, InputStream stream, String key, boolean cover) {
+		BladeFile file = new BladeFile();
+		file.setOriginalName(key);
 		makeBucket(bucketName);
 		key = getFileName(key);
 		// 覆盖上传
@@ -172,7 +174,6 @@ public class QiniuTemplate {
 				retry++;
 			}
 		}
-		BladeFile file = new BladeFile();
 		file.setName(key);
 		file.setLink(fileLink(bucketName, key));
 		return file;
