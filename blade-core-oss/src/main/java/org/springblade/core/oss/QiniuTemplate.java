@@ -33,6 +33,8 @@ import org.springblade.core.tool.utils.StringPool;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
@@ -124,6 +126,33 @@ public class QiniuTemplate {
 	@SneakyThrows
 	public String fileLink(String bucketName, String fileName) {
 		return ossProperties.getEndpoint().concat(StringPool.SLASH).concat(fileName);
+	}
+
+
+	/**
+	 * 获取文件公开链接
+	 *
+	 * @param fileName 文件名
+	 * @return 文件公开链接
+	 * @link https://developer.qiniu.com/kodo/1239/java#public-get
+	 */
+	public String publicFileLink(String fileName) {
+		return String.format("%s/%s", ossProperties.getEndpoint(), fileName);
+	}
+
+	/**
+	 * 获取文件私有链接
+	 *
+	 * @param fileName   文件名
+	 * @param expireTime 超时时间
+	 * @return 私有文件链接
+	 * @link https://developer.qiniu.com/kodo/1239/java#private-get
+	 */
+	@SneakyThrows
+	public String privateFileLink(String fileName, Long expireTime) {
+		String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.name()).replace("+", "%20");
+		String publicUrl = String.format("%s/%s", ossProperties.getEndpoint(), encodedFileName);
+		return auth.privateDownloadUrl(publicUrl, expireTime);
 	}
 
 
