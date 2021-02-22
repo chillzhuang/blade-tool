@@ -49,7 +49,7 @@
         <disruptor.version>3.4.2</disruptor.version>
         <spring.boot.admin.version>2.3.1</spring.boot.admin.version>
         <mica.auto.version>1.2.5</mica.auto.version>
-        <alibaba.cloud.version>2.2.5.RC2</alibaba.cloud.version>
+        <alibaba.cloud.version>2.2.5.RELEASE</alibaba.cloud.version>
         <alibaba.seata.version>1.4.1</alibaba.seata.version>
         <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
 
