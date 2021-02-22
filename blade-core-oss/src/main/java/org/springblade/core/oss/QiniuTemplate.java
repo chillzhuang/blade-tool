@@ -134,7 +134,6 @@ public class QiniuTemplate {
 	 *
 	 * @param fileName 文件名
 	 * @return 文件公开链接
-	 * @link https://developer.qiniu.com/kodo/1239/java#public-get
 	 */
 	public String publicFileLink(String fileName) {
 		return String.format("%s/%s", ossProperties.getEndpoint(), fileName);
@@ -146,7 +145,6 @@ public class QiniuTemplate {
 	 * @param fileName   文件名
 	 * @param expireTime 超时时间
 	 * @return 私有文件链接
-	 * @link https://developer.qiniu.com/kodo/1239/java#private-get
 	 */
 	@SneakyThrows
 	public String privateFileLink(String fileName, Long expireTime) {

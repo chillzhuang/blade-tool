@@ -115,23 +115,10 @@ public class AliossTemplate {
 		return getOssHost(bucketName).concat(StringPool.SLASH).concat(fileName);
 	}
 
-	/**
-	 * 文件对象
-	 *
-	 * @param file 上传文件类
-	 * @return
-	 */
-
 	@SneakyThrows
 	public BladeFile putFile(MultipartFile file) {
 		return putFile(ossProperties.getBucketName(), file.getOriginalFilename(), file);
 	}
-
-	/**
-	 * @param fileName 上传文件名
-	 * @param file     上传文件类
-	 * @return
-	 */
 
 	@SneakyThrows
 	public BladeFile putFile(String fileName, MultipartFile file) {
