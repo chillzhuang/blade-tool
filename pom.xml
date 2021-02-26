@@ -53,7 +53,7 @@
         <alibaba.seata.version>1.4.1</alibaba.seata.version>
         <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
 
-        <spring.boot.version>2.4.2</spring.boot.version>
+        <spring.boot.version>2.4.3</spring.boot.version>
         <spring.cloud.version>2020.0.1</spring.cloud.version>
         <spring.platform.version>Cairo-SR8</spring.platform.version>
 
