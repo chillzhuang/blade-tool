@@ -18,7 +18,9 @@ package org.springblade.core.cloud.config;
 import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import feign.Feign;
+import feign.RequestInterceptor;
 import org.springblade.core.cloud.feign.BladeFeignSentinel;
+import org.springblade.core.cloud.header.BladeFeignRequestHeaderInterceptor;
 import org.springblade.core.cloud.sentinel.BladeBlockExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -41,14 +43,20 @@ public class BladeCloudAutoConfiguration {
 	@Scope("prototype")
 	@ConditionalOnMissingBean
 	@ConditionalOnProperty(name = "feign.sentinel.enabled")
-	public Feign.Builder feignSentinelBuilder() {
-		return BladeFeignSentinel.builder();
+	public Feign.Builder feignSentinelBuilder(RequestInterceptor requestInterceptor) {
+		return BladeFeignSentinel.builder().requestInterceptor(requestInterceptor);
 	}
 
 	@Bean
 	@ConditionalOnMissingBean
 	public BlockExceptionHandler blockExceptionHandler() {
 		return new BladeBlockExceptionHandler();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public RequestInterceptor requestInterceptor() {
+		return new BladeFeignRequestHeaderInterceptor();
 	}
 
 }
