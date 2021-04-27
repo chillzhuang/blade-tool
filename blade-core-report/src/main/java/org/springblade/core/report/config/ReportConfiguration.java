@@ -40,7 +40,7 @@ import javax.servlet.Servlet;
  * @author Chill
  */
 @Order
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(value = "report.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({ReportProperties.class, ReportDatabaseProperties.class})
 @ImportResource("classpath:ureport-console-context.xml")

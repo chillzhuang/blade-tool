@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @AutoConfigureBefore(MybatisPlusConfiguration.class)
 @EnableConfigurationProperties(BladeTenantProperties.class)

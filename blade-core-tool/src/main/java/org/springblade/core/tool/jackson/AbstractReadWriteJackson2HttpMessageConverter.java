@@ -82,7 +82,7 @@ public abstract class AbstractReadWriteJackson2HttpMessageConverter extends Abst
 			return false;
 		}
 		AtomicReference<Throwable> causeRef = new AtomicReference<>();
-		if (this.objectMapper.canSerialize(clazz, causeRef)) {
+		if (this.defaultObjectMapper.canSerialize(clazz, causeRef)) {
 			return true;
 		}
 		logWarningIfNecessary(clazz, causeRef.get());

@@ -36,7 +36,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @EnableConfigurationProperties(OssProperties.class)
 @ConditionalOnProperty(value = "oss.name", havingValue = "qiniu")
@@ -52,7 +52,7 @@ public class QiniuConfiguration {
 
 	@Bean
 	public com.qiniu.storage.Configuration qiniuConfiguration() {
-		return new com.qiniu.storage.Configuration(Zone.zone0());
+		return new com.qiniu.storage.Configuration(Zone.autoZone());
 	}
 
 	@Bean
@@ -69,7 +69,7 @@ public class QiniuConfiguration {
 	@Bean
 	@ConditionalOnBean(com.qiniu.storage.Configuration.class)
 	public BucketManager bucketManager(com.qiniu.storage.Configuration cfg) {
-		return new BucketManager(auth(), cfg);
+		return new BucketManager(Auth.create(ossProperties.getAccessKey(), ossProperties.getSecretKey()), cfg);
 	}
 
 	@Bean

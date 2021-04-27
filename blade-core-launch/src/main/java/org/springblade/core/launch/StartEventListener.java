@@ -30,7 +30,7 @@ import org.springframework.util.StringUtils;
  * @author Chill
  */
 @Slf4j
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class StartEventListener {
 
 	@Async

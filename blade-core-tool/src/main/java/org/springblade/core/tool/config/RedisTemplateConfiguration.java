@@ -41,7 +41,7 @@ import java.time.Duration;
  * @author Chill
  */
 @EnableCaching
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(RedisAutoConfiguration.class)
 public class RedisTemplateConfiguration {
 

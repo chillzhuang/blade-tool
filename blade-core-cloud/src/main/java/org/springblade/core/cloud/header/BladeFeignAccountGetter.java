@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.cloud.hystrix;
+package org.springblade.core.cloud.header;
 
 
 import org.springframework.lang.Nullable;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author L.cm
  */
-public interface BladeHystrixAccountGetter {
+public interface BladeFeignAccountGetter {
 
 	/**
 	 * 账号信息获取器

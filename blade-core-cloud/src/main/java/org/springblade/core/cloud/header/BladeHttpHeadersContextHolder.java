@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.cloud.hystrix;
+package org.springblade.core.cloud.header;
 
-import org.springblade.core.cloud.props.BladeHystrixHeadersProperties;
+import org.springblade.core.cloud.props.BladeFeignHeadersProperties;
 import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.core.NamedThreadLocal;
@@ -35,7 +35,7 @@ import java.util.List;
  * @author L.cm
  */
 public class BladeHttpHeadersContextHolder {
-	private static final ThreadLocal<HttpHeaders> HTTP_HEADERS_HOLDER = new NamedThreadLocal<>("Blade hystrix HttpHeaders");
+	private static final ThreadLocal<HttpHeaders> HTTP_HEADERS_HOLDER = new NamedThreadLocal<>("Blade Feign HttpHeaders");
 
 	/**
 	 * 请求和转发的ip
@@ -59,8 +59,8 @@ public class BladeHttpHeadersContextHolder {
 
 	@Nullable
 	public static HttpHeaders toHeaders(
-		@Nullable BladeHystrixAccountGetter accountGetter,
-		BladeHystrixHeadersProperties properties) {
+		@Nullable BladeFeignAccountGetter accountGetter,
+		BladeFeignHeadersProperties properties) {
 		HttpServletRequest request = WebUtil.getRequest();
 		if (request == null) {
 			return null;

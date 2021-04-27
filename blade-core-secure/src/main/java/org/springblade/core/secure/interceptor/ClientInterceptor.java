@@ -26,7 +26,7 @@ import org.springblade.core.tool.jackson.JsonUtil;
 import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.http.MediaType;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +40,7 @@ import java.util.Objects;
  */
 @Slf4j
 @AllArgsConstructor
-public class ClientInterceptor extends HandlerInterceptorAdapter {
+public class ClientInterceptor implements AsyncHandlerInterceptor {
 
 	private final String clientId;
 

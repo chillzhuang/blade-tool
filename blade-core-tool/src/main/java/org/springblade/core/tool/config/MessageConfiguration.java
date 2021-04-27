@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class MessageConfiguration implements WebMvcConfigurer {

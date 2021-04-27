@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, DreamLu 卢春梦 (qq596392912@gmail.com).
+ * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.springblade.core.boot.props;
 
-package org.springblade.core.test;
-
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * boot test 基类
+ * MybatisPlus配置类
  *
- * @author L.cm
+ * @author Chill
  */
-@RunWith(BladeSpringRunner.class)
-public abstract class BladeBaseTest extends AbstractJUnit4SpringContextTests {
+@Data
+@ConfigurationProperties(prefix = "blade.mybatis-plus")
+public class MybatisPlusProperties {
+
+	/**
+	 * 分页最大数
+	 */
+	private Long pageLimit = 500L;
+
+	/**
+	 * 溢出总页数后是否进行处理
+	 */
+	protected Boolean overflow = false;
 
 }

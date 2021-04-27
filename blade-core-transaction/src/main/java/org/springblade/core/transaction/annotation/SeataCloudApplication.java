@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, lengleng (wangiegie@gmail.com).
+ * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
 
 import java.lang.annotation.*;
 
@@ -33,7 +34,7 @@ import java.lang.annotation.*;
 @Inherited
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, RibbonAutoConfiguration.class})
 public @interface SeataCloudApplication {
 
 }

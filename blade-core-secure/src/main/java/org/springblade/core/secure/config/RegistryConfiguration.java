@@ -29,7 +29,7 @@ import org.springframework.core.annotation.Order;
  * @author Chill
  */
 @Order
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(SecureConfiguration.class)
 public class RegistryConfiguration {
 

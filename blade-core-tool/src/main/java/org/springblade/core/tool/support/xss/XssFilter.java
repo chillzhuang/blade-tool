@@ -16,7 +16,7 @@
 package org.springblade.core.tool.support.xss;
 
 import lombok.AllArgsConstructor;
-import org.springblade.core.tool.utils.StringPool;
+import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +30,9 @@ import java.io.IOException;
 @AllArgsConstructor
 public class XssFilter implements Filter {
 
-	private XssProperties xssProperties;
-	private XssUrlProperties xssUrlProperties;
+	private final XssProperties xssProperties;
+	private final XssUrlProperties xssUrlProperties;
+	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 	@Override
 	public void init(FilterConfig config) {
@@ -50,8 +51,8 @@ public class XssFilter implements Filter {
 	}
 
 	private boolean isSkip(String path) {
-		return (xssUrlProperties.getExcludePatterns().stream().anyMatch(path::startsWith))
-			|| (xssProperties.getSkipUrl().stream().map(url -> url.replace("/**", StringPool.EMPTY)).anyMatch(path::startsWith));
+		return (xssUrlProperties.getExcludePatterns().stream().anyMatch(pattern -> antPathMatcher.match(pattern, path)))
+			|| (xssProperties.getSkipUrl().stream().anyMatch(pattern -> antPathMatcher.match(pattern, path)));
 	}
 
 	@Override

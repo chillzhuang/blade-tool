@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Chill
  */
 @Getter
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class ServerInfo implements SmartInitializingSingleton {
 	private final ServerProperties serverProperties;
 	private String hostName;

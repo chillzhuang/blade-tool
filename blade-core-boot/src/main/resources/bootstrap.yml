@@ -1,32 +1,36 @@
 #服务器配置
 server:
   undertow:
-    # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
-    io-threads: 4
-    # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
-    worker-threads: 20
     # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
     buffer-size: 1024
     # 是否分配的直接内存
     direct-buffers: true
+    # 线程配置
+    threads:
+      # 设置IO线程数, 它主要执行非阻塞的任务,它们会负责多个连接, 默认设置每个CPU核心一个线程
+      io: 16
+      # 阻塞任务线程池, 当执行类似servlet请求阻塞操作, undertow会从这个线程池中取得线程,它的值设置取决于系统的负载
+      worker: 400
+  servlet:
+    # 编码配置
+    encoding:
+      charset: UTF-8
+      force: true
 
 #spring配置
 spring:
   cache:
     ehcache:
       config: classpath:config/ehcache.xml
-  http:
-    encoding:
-      charset: UTF-8
-      force: true
   servlet:
     multipart:
       max-file-size: 256MB
       max-request-size: 1024MB
+  web:
+    resources:
+      add-mappings: false
   mvc:
     throw-exception-if-no-handler-found: true
-  resources:
-    add-mappings: false
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
@@ -97,7 +101,7 @@ mybatis-plus:
 swagger:
   title: SpringBlade 接口文档系统
   description: SpringBlade 接口文档系统
-  version: 2.8.0
+  version: 3.0.2
   license: Powered By SpringBlade
   licenseUrl: https://bladex.vip
   terms-of-service-url: https://bladex.vip

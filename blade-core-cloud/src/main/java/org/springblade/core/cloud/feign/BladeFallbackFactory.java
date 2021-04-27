@@ -16,9 +16,9 @@
 package org.springblade.core.cloud.feign;
 
 import feign.Target;
-import feign.hystrix.FallbackFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cloud.openfeign.FallbackFactory;
 
 /**
  * 默认 Fallback，避免写过多fallback类

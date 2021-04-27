@@ -27,7 +27,7 @@ import org.springframework.core.annotation.Order;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @EnableConfigurationProperties({

@@ -30,7 +30,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * @author Chill
  */
 @Slf4j
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties({
 	BladeProperties.class
 })

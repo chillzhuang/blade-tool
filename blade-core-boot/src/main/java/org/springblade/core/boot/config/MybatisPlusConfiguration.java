@@ -22,9 +22,11 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import lombok.AllArgsConstructor;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springblade.core.boot.props.MybatisPlusProperties;
 import org.springblade.core.mp.plugins.SqlLogInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,9 +35,10 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
 @MapperScan("org.springblade.**.mapper.**")
+@EnableConfigurationProperties(MybatisPlusProperties.class)
 public class MybatisPlusConfiguration {
 
 	private final TenantLineHandler tenantLineHandler;
@@ -45,12 +48,15 @@ public class MybatisPlusConfiguration {
 	 */
 	@Bean
 	@ConditionalOnMissingBean(MybatisPlusInterceptor.class)
-	public MybatisPlusInterceptor mybatisPlusInterceptor() {
+	public MybatisPlusInterceptor mybatisPlusInterceptor(MybatisPlusProperties mybatisPlusProperties) {
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 		// 配置租户拦截器
 		interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(tenantLineHandler));
 		// 配置分页拦截器
-		interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+		PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor();
+		paginationInnerInterceptor.setMaxLimit(mybatisPlusProperties.getPageLimit());
+		paginationInnerInterceptor.setOverflow(mybatisPlusProperties.getOverflow());
+		interceptor.addInnerInterceptor(paginationInnerInterceptor);
 		return interceptor;
 	}
 

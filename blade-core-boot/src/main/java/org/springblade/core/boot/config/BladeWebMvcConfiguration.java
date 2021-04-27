@@ -31,7 +31,7 @@ import java.util.List;
  * @author Chill
  */
 @Slf4j
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableCaching
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class BladeWebMvcConfiguration implements WebMvcConfigurer {

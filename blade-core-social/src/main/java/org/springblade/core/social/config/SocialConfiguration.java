@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Chill
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(SocialProperties.class)
 public class SocialConfiguration {
 
