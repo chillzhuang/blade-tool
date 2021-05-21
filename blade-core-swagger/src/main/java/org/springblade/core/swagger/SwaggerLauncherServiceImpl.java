@@ -34,6 +34,7 @@ public class SwaggerLauncherServiceImpl implements LauncherService {
 		if (profile.equals(AppConstant.PROD_CODE)) {
 			props.setProperty("knife4j.production", "true");
 		}
+		props.setProperty("knife4j.enable", "true");
 	}
 
 	@Override
