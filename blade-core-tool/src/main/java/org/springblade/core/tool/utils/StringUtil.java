@@ -17,6 +17,7 @@ package org.springblade.core.tool.utils;
 
 import org.springblade.core.tool.support.StrFormatter;
 import org.springblade.core.tool.support.StrSpliter;
+import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.web.util.HtmlUtils;
 
@@ -297,6 +298,27 @@ public class StringUtil extends org.springframework.util.StringUtils {
 			template2 = template2.replace("{" + entry.getKey() + "}", Func.toStr(entry.getValue()));
 		}
 		return template2;
+	}
+
+	/**
+	 * 获取标识符，用于参数清理
+	 *
+	 * @param param 参数
+	 * @return 清理后的标识符
+	 */
+	@Nullable
+	public static String cleanIdentifier(@Nullable String param) {
+		if (param == null) {
+			return null;
+		}
+		StringBuilder paramBuilder = new StringBuilder();
+		for (int i = 0; i < param.length(); i++) {
+			char c = param.charAt(i);
+			if (Character.isJavaIdentifierPart(c)) {
+				paramBuilder.append(c);
+			}
+		}
+		return paramBuilder.toString();
 	}
 
 	/**

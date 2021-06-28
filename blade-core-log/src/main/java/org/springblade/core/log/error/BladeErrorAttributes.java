@@ -20,6 +20,7 @@ import org.springblade.core.log.publisher.ErrorLogPublisher;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.api.ResultCode;
 import org.springblade.core.tool.utils.BeanUtil;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.lang.Nullable;
 import org.springframework.web.context.request.RequestAttributes;
@@ -36,7 +37,7 @@ import java.util.Map;
 public class BladeErrorAttributes extends DefaultErrorAttributes {
 
 	@Override
-	public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
+	public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
 		String requestUri = this.getAttr(webRequest, "javax.servlet.error.request_uri");
 		Integer status = this.getAttr(webRequest, "javax.servlet.error.status_code");
 		Throwable error = getError(webRequest);

@@ -39,7 +39,7 @@ public class LogAbstract implements Serializable {
 	/**
 	 * 主键id
 	 */
-	@TableId(value = "id", type = IdType.ID_WORKER)
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	protected Long id;
 
 	/**

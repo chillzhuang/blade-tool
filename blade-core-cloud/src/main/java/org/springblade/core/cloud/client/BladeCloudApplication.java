@@ -17,9 +17,7 @@ package org.springblade.core.cloud.client;
 
 import org.springblade.core.launch.constant.AppConstant;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import java.lang.annotation.*;
@@ -34,9 +32,8 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @EnableDiscoveryClient
-@EnableCircuitBreaker
 @EnableFeignClients(AppConstant.BASE_PACKAGES)
-@SpringBootApplication(exclude = RibbonAutoConfiguration.class)
+@SpringBootApplication
 public @interface BladeCloudApplication {
 
 }

@@ -17,9 +17,7 @@ package org.springblade.core.transaction.annotation;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
 
 import java.lang.annotation.*;
 
@@ -33,8 +31,7 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 @EnableDiscoveryClient
-@EnableCircuitBreaker
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, RibbonAutoConfiguration.class})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public @interface SeataCloudApplication {
 
 }

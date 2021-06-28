@@ -19,7 +19,6 @@ package org.springblade.core.cloud.feign;
 
 import org.springblade.core.launch.constant.AppConstant;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.cloud.netflix.ribbon.RibbonAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import java.lang.annotation.*;
@@ -33,7 +32,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @EnableFeignClients(AppConstant.BASE_PACKAGES)
-@EnableAutoConfiguration(exclude = RibbonAutoConfiguration.class)
+@EnableAutoConfiguration
 public @interface EnableBladeFeign {
 	/**
 	 * Alias for the {@link #basePackages()} attribute. Allows for more concise annotation

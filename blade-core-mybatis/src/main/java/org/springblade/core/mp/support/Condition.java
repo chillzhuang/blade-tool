@@ -17,11 +17,13 @@ package org.springblade.core.mp.support;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springblade.core.launch.constant.TokenConstant;
 import org.springblade.core.tool.support.Kv;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.StringUtil;
 
 import java.util.Map;
 
@@ -40,8 +42,14 @@ public class Condition {
 	 */
 	public static <T> IPage<T> getPage(Query query) {
 		Page<T> page = new Page<>(Func.toInt(query.getCurrent(), 1), Func.toInt(query.getSize(), 10));
-		page.setAsc(Func.toStrArray(SqlKeyword.filter(query.getAscs())));
-		page.setDesc(Func.toStrArray(SqlKeyword.filter(query.getDescs())));
+		String[] ascArr = Func.toStrArray(query.getAscs());
+		for (String asc : ascArr) {
+			page.addOrder(OrderItem.asc(StringUtil.cleanIdentifier(asc)));
+		}
+		String[] descArr = Func.toStrArray(query.getDescs());
+		for (String desc : descArr) {
+			page.addOrder(OrderItem.desc(StringUtil.cleanIdentifier(desc)));
+		}
 		return page;
 	}
 
