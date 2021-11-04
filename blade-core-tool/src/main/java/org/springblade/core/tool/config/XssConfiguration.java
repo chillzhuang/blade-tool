@@ -44,6 +44,8 @@ public class XssConfiguration {
 
 	/**
 	 * 防XSS注入
+	 *
+	 * @return FilterRegistrationBean
 	 */
 	@Bean
 	public FilterRegistrationBean<XssFilter> xssFilterRegistration() {

@@ -405,6 +405,7 @@ public class DateUtil {
 	 *
 	 * @param dateStr 时间字符串
 	 * @param pattern 表达式
+	 * @param query   移动查询
 	 * @return 时间
 	 */
 	public static <T> T parse(String dateStr, String pattern, TemporalQuery<T> query) {
@@ -453,6 +454,9 @@ public class DateUtil {
 
 	/**
 	 * Converts local date time to Calendar.
+	 *
+	 * @param localDateTime LocalDateTime
+	 * @return Calendar
 	 */
 	public static Calendar toCalendar(final LocalDateTime localDateTime) {
 		return GregorianCalendar.from(ZonedDateTime.of(localDateTime, ZoneId.systemDefault()));

@@ -16,13 +16,15 @@
 package org.springblade.core.boot.tenant;
 
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import lombok.AllArgsConstructor;
-import org.springblade.core.boot.config.MybatisPlusConfiguration;
+import org.springblade.core.mp.config.MybatisPlusConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /**
  * 多租户配置类
@@ -36,19 +38,29 @@ import org.springframework.context.annotation.Configuration;
 public class TenantConfiguration {
 
 	/**
-	 * 多租户配置类
-	 */
-	private final BladeTenantProperties properties;
-
-	/**
-	 * 自定义租户处理器
+	 * 自定义多租户处理器
 	 *
+	 * @param tenantProperties 多租户配置类
 	 * @return TenantHandler
 	 */
 	@Bean
-	@ConditionalOnMissingBean(TenantLineHandler.class)
-	public TenantLineHandler bladeTenantHandler() {
-		return new BladeTenantHandler(properties);
+	@Primary
+	public TenantLineHandler bladeTenantHandler(BladeTenantProperties tenantProperties) {
+		return new BladeTenantHandler(tenantProperties);
+	}
+
+	/**
+	 * 自定义租户拦截器
+	 *
+	 * @param tenantHandler 多租户处理器
+	 * @return BladeTenantInterceptor
+	 */
+	@Bean
+	@Primary
+	public TenantLineInnerInterceptor tenantLineInnerInterceptor(TenantLineHandler tenantHandler) {
+		BladeTenantInterceptor tenantInterceptor = new BladeTenantInterceptor();
+		tenantInterceptor.setTenantLineHandler(tenantHandler);
+		return tenantInterceptor;
 	}
 
 	/**

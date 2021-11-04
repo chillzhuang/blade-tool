@@ -13,28 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.boot.props;
+package org.springblade.core.datascope.props;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
- * MybatisPlus配置类
+ * 数据权限参数配置类
  *
  * @author Chill
  */
 @Data
-@ConfigurationProperties(prefix = "blade.mybatis-plus")
-public class MybatisPlusProperties {
+@ConfigurationProperties(prefix = "blade.data-scope")
+public class DataScopeProperties {
 
 	/**
-	 * 分页最大数
+	 * 开启数据权限
 	 */
-	private Long pageLimit = 500L;
+	private Boolean enabled = true;
+	/**
+	 * mapper方法匹配关键字
+	 */
+	private List<String> mapperKey = Arrays.asList("page", "Page", "list", "List");
 
 	/**
-	 * 溢出总页数后是否进行处理
+	 * mapper过滤
 	 */
-	protected Boolean overflow = false;
+	private List<String> mapperExclude = Collections.singletonList("FlowMapper");
 
 }

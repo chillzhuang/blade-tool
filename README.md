@@ -1,7 +1,7 @@
  <p align="center">
   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2020-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.5.2-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.5.6-blue.svg" alt="Downloads">
  </p>  
 
 ## SpringBlade微服务开发平台
@@ -45,7 +45,8 @@ blade-tool
 * 交流二群：`751253339`(满)
 * 交流三群：`784729540`(满)
 * 交流四群：`1034621754`(满)
-* 交流五群：`946350912`
+* 交流五群：`946350912`(满)
+* 交流六群: `511624269`
 
 ## 在线演示
 * Sword演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
@@ -166,10 +167,4 @@ LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求�
 ## 鸣谢
 * mica（[Mica](https://github.com/lets-mica/mica)）
 * 如梦技术（[DreamLu](https://www.dreamlu.net/)）
-* pigx（[Pig Microservice](https://www.pig4cloud.com/zh-cn/)）
-* avue（[avue](https://avue.top/)）
-* gitee.ltd（[gitee.ltd](https://gitee.ltd/)）
-* 鲸宵（<a href="https://raw.githubusercontent.com/chillzhuang/blade-tool/master/pic/jx.png" target="_blank">鲸宵</a>）
-
-## 关注我们
-![](https://images.gitee.com/uploads/images/2019/0330/065148_f0ada806_410595.jpeg)
+* avue（[avue](https://avuejs.com/)）

@@ -48,6 +48,7 @@ public class SecureUtil {
 	private final static String ACCOUNT = TokenConstant.ACCOUNT;
 	private final static String USER_ID = TokenConstant.USER_ID;
 	private final static String ROLE_ID = TokenConstant.ROLE_ID;
+	private final static String DEPT_ID = TokenConstant.DEPT_ID;
 	private final static String USER_NAME = TokenConstant.USER_NAME;
 	private final static String ROLE_NAME = TokenConstant.ROLE_NAME;
 	private final static String TENANT_ID = TokenConstant.TENANT_ID;
@@ -98,6 +99,7 @@ public class SecureUtil {
 		Long userId = Func.toLong(claims.get(SecureUtil.USER_ID));
 		String tenantId = Func.toStr(claims.get(SecureUtil.TENANT_ID));
 		String roleId = Func.toStr(claims.get(SecureUtil.ROLE_ID));
+		String deptId = Func.toStr(claims.get(SecureUtil.DEPT_ID));
 		String account = Func.toStr(claims.get(SecureUtil.ACCOUNT));
 		String roleName = Func.toStr(claims.get(SecureUtil.ROLE_NAME));
 		String userName = Func.toStr(claims.get(SecureUtil.USER_NAME));
@@ -107,6 +109,7 @@ public class SecureUtil {
 		bladeUser.setTenantId(tenantId);
 		bladeUser.setAccount(account);
 		bladeUser.setRoleId(roleId);
+		bladeUser.setDeptId(deptId);
 		bladeUser.setRoleName(roleName);
 		bladeUser.setUserName(userName);
 		return bladeUser;
