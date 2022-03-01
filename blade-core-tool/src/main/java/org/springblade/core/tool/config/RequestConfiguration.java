@@ -16,10 +16,9 @@
 package org.springblade.core.tool.config;
 
 import lombok.AllArgsConstructor;
-import org.springblade.core.tool.support.xss.XssFilter;
-import org.springblade.core.tool.support.xss.XssProperties;
-import org.springblade.core.tool.support.xss.XssUrlProperties;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springblade.core.tool.request.BladeRequestFilter;
+import org.springblade.core.tool.request.RequestProperties;
+import org.springblade.core.tool.request.XssProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -29,31 +28,28 @@ import org.springframework.core.Ordered;
 import javax.servlet.DispatcherType;
 
 /**
- * Xss配置类
+ * 过滤器配置类
  *
  * @author Chill
  */
 @Configuration(proxyBeanMethods = false)
 @AllArgsConstructor
-@ConditionalOnProperty(value = "blade.xss.enabled", havingValue = "true")
-@EnableConfigurationProperties({XssProperties.class, XssUrlProperties.class})
-public class XssConfiguration {
+@EnableConfigurationProperties({RequestProperties.class, XssProperties.class})
+public class RequestConfiguration {
 
+	private final RequestProperties requestProperties;
 	private final XssProperties xssProperties;
-	private final XssUrlProperties xssUrlProperties;
 
 	/**
-	 * 防XSS注入
-	 *
-	 * @return FilterRegistrationBean
+	 * 全局过滤器
 	 */
 	@Bean
-	public FilterRegistrationBean<XssFilter> xssFilterRegistration() {
-		FilterRegistrationBean<XssFilter> registration = new FilterRegistrationBean<>();
+	public FilterRegistrationBean<BladeRequestFilter> bladeFilterRegistration() {
+		FilterRegistrationBean<BladeRequestFilter> registration = new FilterRegistrationBean<>();
 		registration.setDispatcherTypes(DispatcherType.REQUEST);
-		registration.setFilter(new XssFilter(xssProperties, xssUrlProperties));
+		registration.setFilter(new BladeRequestFilter(requestProperties, xssProperties));
 		registration.addUrlPatterns("/*");
-		registration.setName("xssFilter");
+		registration.setName("bladeRequestFilter");
 		registration.setOrder(Ordered.LOWEST_PRECEDENCE);
 		return registration;
 	}

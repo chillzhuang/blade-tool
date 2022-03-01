@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tool.support.xss;
+package org.springblade.core.tool.request;
 
 import org.springblade.core.tool.utils.StringUtil;
+import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -27,12 +28,11 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * XSS过滤处理
+ * XSS过滤
  *
  * @author Chill
  */
@@ -41,12 +41,15 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	/**
 	 * 没被包装过的HttpServletRequest（特殊场景,需要自己过滤）
 	 */
-	HttpServletRequest orgRequest;
-
+	private final HttpServletRequest orgRequest;
+	/**
+	 * 缓存报文,支持多次读取流
+	 */
+	private byte[] body;
 	/**
 	 * html过滤
 	 */
-	private final static HtmlFilter HTML_FILTER = new HtmlFilter();
+	private final static XssHtmlFilter HTML_FILTER = new XssHtmlFilter();
 
 	public XssHttpServletRequestWrapper(HttpServletRequest request) {
 		super(request);
@@ -60,7 +63,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
 	@Override
 	public ServletInputStream getInputStream() throws IOException {
-		if (null == super.getHeader(HttpHeaders.CONTENT_TYPE)) {
+		if (super.getHeader(HttpHeaders.CONTENT_TYPE) == null) {
 			return super.getInputStream();
 		}
 
@@ -68,7 +71,11 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 			return super.getInputStream();
 		}
 
-		final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(inputHandlers(super.getInputStream()).getBytes());
+		if (body == null) {
+			body = xssEncode(WebUtil.getRequestBody(super.getInputStream())).getBytes();
+		}
+
+		final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body);
 
 		return new ServletInputStream() {
 
@@ -93,36 +100,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		};
 	}
 
-	private String inputHandlers(ServletInputStream servletInputStream) {
-		StringBuilder sb = new StringBuilder();
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(servletInputStream, StandardCharsets.UTF_8));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				sb.append(line);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (servletInputStream != null) {
-				try {
-					servletInputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return xssEncode(sb.toString());
-	}
-
 	@Override
 	public String getParameter(String name) {
 		String value = super.getParameter(xssEncode(name));
@@ -138,6 +115,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 		if (parameters == null || parameters.length == 0) {
 			return null;
 		}
+
 		for (int i = 0; i < parameters.length; i++) {
 			parameters[i] = xssEncode(parameters[i]);
 		}
@@ -172,7 +150,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * 获取最原始的request
+	 * 获取初始request
 	 *
 	 * @return HttpServletRequest
 	 */
@@ -181,7 +159,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * 获取最原始的request
+	 * 获取初始request
 	 *
 	 * @param request request
 	 * @return HttpServletRequest

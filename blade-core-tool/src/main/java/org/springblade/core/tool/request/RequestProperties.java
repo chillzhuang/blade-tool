@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tool.support.xss;
+package org.springblade.core.tool.request;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -22,14 +22,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Xss配置类
+ * Request配置类
  *
  * @author Chill
  */
 @Data
-@ConfigurationProperties("blade.xss.url")
-public class XssUrlProperties {
+@ConfigurationProperties("blade.request")
+public class RequestProperties {
 
-	private final List<String> excludePatterns = new ArrayList<>();
+	/**
+	 * 开启自定义request
+	 */
+	private Boolean enabled = true;
+
+	/**
+	 * 放行url
+	 */
+	private List<String> skipUrl = new ArrayList<>();
 
 }

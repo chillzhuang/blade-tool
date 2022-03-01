@@ -1,4 +1,4 @@
-package org.springblade.core.tool.support.xss;
+package org.springblade.core.tool.request;
 
 import org.springblade.core.tool.utils.StringPool;
 
@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
  * @author Cal Hendersen
  * @author Michael Semb Wever
  */
-public final class HtmlFilter {
+public final class XssHtmlFilter {
 
 	/**
 	 * regex flag union representing /si modifiers in php
@@ -128,7 +128,7 @@ public final class HtmlFilter {
 	/**
 	 * Default constructor.
 	 */
-	public HtmlFilter() {
+	public XssHtmlFilter() {
 		vAllowed = new HashMap<>();
 
 		final ArrayList<String> aAtts = new ArrayList<String>();
@@ -158,7 +158,7 @@ public final class HtmlFilter {
 		vAllowedEntities = new String[]{"amp", "gt", "lt", "quot"};
 		stripComment = true;
 		encodeQuotes = true;
-		alwaysMakeTags = true;
+		alwaysMakeTags = false;
 	}
 
 	/**
@@ -166,7 +166,7 @@ public final class HtmlFilter {
 	 *
 	 * @param debug turn debug on with a true argument
 	 */
-	public HtmlFilter(final boolean debug) {
+	public XssHtmlFilter(final boolean debug) {
 		this();
 		vDebug = debug;
 
@@ -177,7 +177,7 @@ public final class HtmlFilter {
 	 *
 	 * @param conf map containing configuration. keys match field names.
 	 */
-	public HtmlFilter(final Map<String, Object> conf) {
+	public XssHtmlFilter(final Map<String, Object> conf) {
 
 		assert conf.containsKey("vAllowed") : "configuration requires vAllowed";
 		assert conf.containsKey("vSelfClosingTags") : "configuration requires vSelfClosingTags";
@@ -243,8 +243,8 @@ public final class HtmlFilter {
 		s = escapeComments(s);
 		debug("     escapeComments: " + s);
 
-		s = balanceHTML(s);
-		debug("        balanceHTML: " + s);
+		s = balanceHtml(s);
+		debug("        balanceHtml: " + s);
 
 		s = checkTags(s);
 		debug("          checkTags: " + s);
@@ -279,7 +279,7 @@ public final class HtmlFilter {
 		return buf.toString();
 	}
 
-	private String balanceHTML(String s) {
+	private String balanceHtml(String s) {
 		if (alwaysMakeTags) {
 			//
 			// try and form html

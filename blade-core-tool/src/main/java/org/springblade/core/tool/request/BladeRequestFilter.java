@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tool.support.xss;
+package org.springblade.core.tool.request;
 
 import lombok.AllArgsConstructor;
 import org.springframework.util.AntPathMatcher;
@@ -23,15 +23,15 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * XSS过滤
+ * Request全局过滤
  *
  * @author Chill
  */
 @AllArgsConstructor
-public class XssFilter implements Filter {
+public class BladeRequestFilter implements Filter {
 
+	private final RequestProperties requestProperties;
 	private final XssProperties xssProperties;
-	private final XssUrlProperties xssUrlProperties;
 	private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 	@Override
@@ -42,17 +42,28 @@ public class XssFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		String path = ((HttpServletRequest) request).getServletPath();
-		if (isSkip(path)) {
+		// 跳过 Request 包装
+		if (!requestProperties.getEnabled() || isRequestSkip(path)) {
 			chain.doFilter(request, response);
-		} else {
+		}
+		// 默认 Request 包装
+		else if (!xssProperties.getEnabled() || isXssSkip(path)) {
+			BladeHttpServletRequestWrapper bladeRequest = new BladeHttpServletRequestWrapper((HttpServletRequest) request);
+			chain.doFilter(bladeRequest, response);
+		}
+		// Xss Request 包装
+		else {
 			XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request);
 			chain.doFilter(xssRequest, response);
 		}
 	}
 
-	private boolean isSkip(String path) {
-		return (xssUrlProperties.getExcludePatterns().stream().anyMatch(pattern -> antPathMatcher.match(pattern, path)))
-			|| (xssProperties.getSkipUrl().stream().anyMatch(pattern -> antPathMatcher.match(pattern, path)));
+	private boolean isRequestSkip(String path) {
+		return requestProperties.getSkipUrl().stream().anyMatch(pattern -> antPathMatcher.match(pattern, path));
+	}
+
+	private boolean isXssSkip(String path) {
+		return xssProperties.getSkipUrl().stream().anyMatch(pattern -> antPathMatcher.match(pattern, path));
 	}
 
 	@Override
