@@ -50,7 +50,7 @@
         <guava.version>20.0</guava.version>
         <spring.boot.admin.version>2.6.2</spring.boot.admin.version>
         <mica.auto.version>1.2.5</mica.auto.version>
-        <alibaba.cloud.version>2021.1</alibaba.cloud.version>
+        <alibaba.cloud.version>2021.0.1.0</alibaba.cloud.version>
         <alibaba.nacos.version>2.0.4</alibaba.nacos.version>
         <alibaba.seata.version>1.4.2</alibaba.seata.version>
         <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
