@@ -35,6 +35,7 @@ public class SwaggerLauncherServiceImpl implements LauncherService {
 			props.setProperty("knife4j.production", "true");
 		}
 		props.setProperty("knife4j.enable", "true");
+		props.setProperty("spring.mvc.pathmatch.matching-strategy", "ANT_PATH_MATCHER");
 	}
 
 	@Override
