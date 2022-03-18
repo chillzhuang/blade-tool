@@ -53,7 +53,7 @@ import $!{superControllerClassPackage};
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("#if($!{package.ModuleName})/$!{package.ModuleName}#end/$!{cfg.entityKey}")
+@RequestMapping("#if($!{package.ModuleName})$!{package.ModuleName}#end/$!{entityKey}")
 @Api(value = "$!{table.comment}", tags = "$!{table.comment}接口")
 #if($!{superControllerClass})
 public class $!{table.controllerName} extends $!{superControllerClass} {

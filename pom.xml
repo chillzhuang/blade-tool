@@ -43,8 +43,8 @@
         <swagger.version>2.10.5</swagger.version>
         <swagger.models.version>1.6.2</swagger.models.version>
         <knife4j.version>2.0.9</knife4j.version>
-        <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
-        <mybatis.plus.generator.version>3.4.1</mybatis.plus.generator.version>
+        <mybatis.plus.version>3.5.1</mybatis.plus.version>
+        <mybatis.plus.generator.version>3.5.1</mybatis.plus.generator.version>
         <protostuff.version>1.6.0</protostuff.version>
         <disruptor.version>3.4.2</disruptor.version>
         <guava.version>20.0</guava.version>

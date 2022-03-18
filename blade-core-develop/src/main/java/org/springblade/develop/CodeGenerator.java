@@ -36,7 +36,7 @@ public class CodeGenerator {
 	/**
 	 * 代码生成的包名
 	 */
-	public static String PACKAGE_NAME = "org.springblade.system";
+	public static String PACKAGE_NAME = "org.springblade.test";
 	/**
 	 * 前端代码生成所属系统
 	 */
@@ -44,7 +44,7 @@ public class CodeGenerator {
 	/**
 	 * 前端代码生成地址
 	 */
-	public static String PACKAGE_WEB_DIR = "/Users/chill/Workspaces/product/Saber";
+	public static String PACKAGE_WEB_DIR = "/Users/chill/Workspaces/test/Saber";
 	/**
 	 * 需要去掉的表前缀
 	 */
@@ -65,7 +65,10 @@ public class CodeGenerator {
 	 * 基础业务字段
 	 */
 	public static String[] SUPER_ENTITY_COLUMNS = {"create_time", "create_user", "update_time", "update_user", "status", "is_deleted"};
-
+	/**
+	 * 是否包含包装器
+	 */
+	public static Boolean HAS_WRAPPER = Boolean.TRUE;
 
 	/**
 	 * RUN THIS
@@ -82,6 +85,7 @@ public class CodeGenerator {
 		generator.setExcludeTables(EXCLUDE_TABLES);
 		generator.setHasSuperEntity(HAS_SUPER_ENTITY);
 		generator.setSuperEntityColumns(SUPER_ENTITY_COLUMNS);
+		generator.setHasWrapper(HAS_WRAPPER);
 		generator.run();
 	}
 
