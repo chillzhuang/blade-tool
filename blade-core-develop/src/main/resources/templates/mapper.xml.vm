@@ -19,7 +19,7 @@
         <result column="$!{field.name}" property="$!{field.propertyName}"/>
 #end
 #foreach($field in $!{table.fields})
-#if(!$!{field.keyFlag} && $!{field.name} != $!{cfg.tenantColumn})##生成普通字段
+#if(!$!{field.keyFlag} && $!{field.name} != $!{tenantColumn})##生成普通字段
         <result column="$!{field.name}" property="$!{field.propertyName}"/>
 #end
 #end

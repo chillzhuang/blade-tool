@@ -35,7 +35,7 @@ import $!{package.Entity}.$!{entity};
 #set($voPackage=$package.Entity.replace("entity","vo"))
 import $!{voPackage}.$!{entity}VO;
 #set($wrapperPackage=$package.Entity.replace("entity","wrapper"))
-#if($!{cfg.hasWrapper})
+#if($!{hasWrapper})
 import $!{wrapperPackage}.$!{entity}Wrapper;
 #end
 import $!{package.Service}.$!{table.serviceName};
@@ -63,7 +63,7 @@ public class $!{table.controllerName} {
 
 	private $!{table.serviceName} $!{table.entityPath}Service;
 
-#if($!{cfg.hasWrapper})
+#if($!{hasWrapper})
 	/**
 	 * 详情
 	 */

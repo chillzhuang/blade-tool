@@ -58,7 +58,7 @@ public class $!{entity} implements Serializable {
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in $!{table.fields})
-#if($!{field.name}!=$!{cfg.tenantColumn})
+#if($!{field.name}!=$!{tenantColumn})
 #if($!{field.keyFlag})
 #set($keyPropertyName=$!{field.propertyName})
 #end

@@ -57,7 +57,7 @@ class $!{entity} extends PureComponent {
 
     const columns = [
 #foreach($field in $!{table.fields})
-#if($!{field.name}!=$!{cfg.tenantColumn})
+#if($!{field.name}!=$!{tenantColumn})
       {
         title: '$!{field.comment}',
         dataIndex: '$!{field.propertyName}',

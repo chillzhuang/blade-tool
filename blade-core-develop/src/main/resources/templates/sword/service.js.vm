@@ -4,22 +4,22 @@ import func from '../utils/Func';
 import request from '../utils/request';
 
 export async function list(params) {
-  return request(`/api/$!{cfg.serviceName}/$!{cfg.entityKey}/list?$!{params}`);
+  return request(`/api/$!{serviceName}/$!{entityKey}/list?$!{params}`);
 }
 
 export async function submit(params) {
-  return request('/api/$!{cfg.serviceName}/$!{cfg.entityKey}/submit', {
+  return request('/api/$!{serviceName}/$!{entityKey}/submit', {
     method: 'POST',
     body: params,
   });
 }
 
 export async function detail(params) {
-  return request(`/api/$!{cfg.serviceName}/$!{cfg.entityKey}/detail?$!{params}`);
+  return request(`/api/$!{serviceName}/$!{entityKey}/detail?$!{params}`);
 }
 
 export async function remove(params) {
-  return request('/api/$!{cfg.serviceName}/$!{cfg.entityKey}/remove', {
+  return request('/api/$!{serviceName}/$!{entityKey}/remove', {
     method: 'POST',
     body: func.toFormData(params),
   });

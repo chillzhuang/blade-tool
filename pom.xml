@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>3.3.0</version>
+    <version>3.3.1</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,7 +36,7 @@
     </scm>
 
     <properties>
-        <blade.tool.version>3.3.0</blade.tool.version>
+        <blade.tool.version>3.3.1</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
@@ -44,7 +44,7 @@
         <swagger.models.version>1.6.2</swagger.models.version>
         <knife4j.version>2.0.9</knife4j.version>
         <mybatis.plus.version>3.5.1</mybatis.plus.version>
-        <mybatis.plus.generator.version>3.5.1</mybatis.plus.generator.version>
+        <mybatis.plus.generator.version>3.5.2</mybatis.plus.generator.version>
         <protostuff.version>1.6.0</protostuff.version>
         <disruptor.version>3.4.2</disruptor.version>
         <guava.version>20.0</guava.version>
@@ -55,7 +55,7 @@
         <alibaba.seata.version>1.4.2</alibaba.seata.version>
         <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
 
-        <spring.boot.version>2.6.3</spring.boot.version>
+        <spring.boot.version>2.6.6</spring.boot.version>
         <spring.cloud.version>2021.0.1</spring.cloud.version>
         <spring.platform.version>Cairo-SR8</spring.platform.version>
 

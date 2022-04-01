@@ -22,7 +22,7 @@
                    size="small"
                    icon="el-icon-delete"
                    plain
-                   v-if="permission.$!{cfg.entityKey}_delete"
+                   v-if="permission.$!{entityKey}_delete"
                    @click="handleDelete">删 除
         </el-button>
       </template>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import {getList, getDetail, add, update, remove} from "@/api/$!{cfg.servicePackage}/$!{cfg.entityKey}";
+  import {getList, getDetail, add, update, remove} from "@/api/$!{servicePackage}/$!{entityKey}";
   import {mapGetters} from "vuex";
 
   export default {
@@ -58,7 +58,7 @@
           selection: true,
           column: [
 #foreach($field in $!{table.fields})
-#if($!{field.name}!=$!{cfg.tenantColumn})
+#if($!{field.name}!=$!{tenantColumn})
             {
               label: "$!{field.comment}",
               prop: "$!{field.propertyName}",
@@ -79,10 +79,10 @@
       ...mapGetters(["permission"]),
       permissionList() {
         return {
-          addBtn: this.vaildData(this.permission.$!{cfg.entityKey}_add, false),
-          viewBtn: this.vaildData(this.permission.$!{cfg.entityKey}_view, false),
-          delBtn: this.vaildData(this.permission.$!{cfg.entityKey}_delete, false),
-          editBtn: this.vaildData(this.permission.$!{cfg.entityKey}_edit, false)
+          addBtn: this.vaildData(this.permission.$!{entityKey}_add, false),
+          viewBtn: this.vaildData(this.permission.$!{entityKey}_view, false),
+          delBtn: this.vaildData(this.permission.$!{entityKey}_delete, false),
+          editBtn: this.vaildData(this.permission.$!{entityKey}_edit, false)
         };
       },
       ids() {

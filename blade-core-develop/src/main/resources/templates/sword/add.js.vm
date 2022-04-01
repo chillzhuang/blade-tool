@@ -48,11 +48,11 @@ class $!{entity}Add extends PureComponent {
     );
 
     return (
-      <Panel title="新增" back="/$!{cfg.servicePackage}/$!{table.entityPath}" action={action}>
+      <Panel title="新增" back="/$!{servicePackage}/$!{table.entityPath}" action={action}>
         <Form hideRequiredMark style={{ marginTop: 8 }}>
           <Card className={styles.card} bordered={false}>
 #foreach($field in $!{table.fields})
-#if($!{field.name}!=$!{cfg.tenantColumn})
+#if($!{field.name}!=$!{tenantColumn})
             <FormItem {...formItemLayout} label="$!{field.comment}">
               {getFieldDecorator('$!{field.propertyName}', {
                 rules: [

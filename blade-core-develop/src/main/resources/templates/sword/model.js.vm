@@ -51,7 +51,7 @@ export default {
       const response = yield call(submit, payload);
       if (response.success) {
         message.success('提交成功');
-        router.push('/$!{cfg.servicePackage}/$!{table.entityPath}');
+        router.push('/$!{servicePackage}/$!{table.entityPath}');
       }
     },
     *remove({ payload }, { call }) {

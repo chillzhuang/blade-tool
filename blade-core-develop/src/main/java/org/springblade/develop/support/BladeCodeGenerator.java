@@ -160,7 +160,7 @@ public class BladeCodeGenerator {
 			.packageConfig(builder -> builder.parent(packageName).controller("controller").entity("entity").service("service").serviceImpl("service.impl").mapper("mapper").xml("mapper"))
 			.strategyConfig(builder -> builder.addTablePrefix(tablePrefix).addInclude(includeTables).addExclude(excludeTables)
 				.entityBuilder().naming(NamingStrategy.underline_to_camel).columnNaming(NamingStrategy.underline_to_camel).enableLombok().superClass("org.springblade.core.mp.base.BaseEntity").addSuperEntityColumns(superEntityColumns)
-				.serviceBuilder().superServiceClass("org.springblade.core.mp.base.BaseService").superServiceImplClass("org.springblade.core.mp.base.BaseService").formatServiceFileName("I%sService").formatServiceImplFileName("%sServiceImpl")
+				.serviceBuilder().superServiceClass("org.springblade.core.mp.base.BaseService").superServiceImplClass("org.springblade.core.mp.base.BaseServiceImpl").formatServiceFileName("I%sService").formatServiceImplFileName("%sServiceImpl")
 				.mapperBuilder().enableMapperAnnotation().enableBaseResultMap().enableBaseColumnList().formatMapperFileName("%sMapper").formatXmlFileName("%sMapper")
 				.controllerBuilder().superClass("org.springblade.core.boot.ctrl.BladeController").formatFileName("%sController").enableRestStyle().enableHyphenStyle()
 			)
@@ -169,7 +169,7 @@ public class BladeCodeGenerator {
 				.service("/templates/service.java.vm")
 				.serviceImpl("/templates/serviceImpl.java.vm")
 				.mapper("/templates/mapper.java.vm")
-				.mapperXml("/templates/mapper.xml.vm")
+				.xml("/templates/mapper.xml.vm")
 				.controller("/templates/controller.java.vm"))
 			.injectionConfig(builder -> builder.beforeOutputFile(
 					(tableInfo, objectMap) -> System.out.println("tableInfo: " + tableInfo.getEntityName() + " objectMap: " + objectMap.size())
@@ -239,7 +239,7 @@ public class BladeCodeGenerator {
 						if (StringUtil.equals(key, "crud.vue")) {
 							outputPath = getOutputWebDir() + StringPool.SLASH + "views" + StringPool.SLASH + servicePackage.toLowerCase() + StringPool.SLASH + entityNameLower + ".vue";
 						}
-						outputFile(new File(String.valueOf(outputPath)), objectMap, value);
+						outputFile(new File(String.valueOf(outputPath)), objectMap, value, Boolean.TRUE);
 					});
 				}
 			})
