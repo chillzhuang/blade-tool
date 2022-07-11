@@ -15,14 +15,14 @@
  */
 package org.springblade.core.transaction.config;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 
 /**
  * 分布式事务数据源配置
  *
  * @author Chill
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 public class DataSourceConfiguration {
 
 }

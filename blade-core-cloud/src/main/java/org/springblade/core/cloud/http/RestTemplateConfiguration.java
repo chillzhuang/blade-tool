@@ -22,6 +22,7 @@ import org.springblade.core.cloud.header.BladeFeignAccountGetter;
 import org.springblade.core.cloud.props.BladeFeignHeadersProperties;
 import org.springblade.core.tool.utils.Charsets;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,7 +31,6 @@ import org.springframework.cloud.commons.httpclient.OkHttpClientConnectionPoolFa
 import org.springframework.cloud.commons.httpclient.OkHttpClientFactory;
 import org.springframework.cloud.openfeign.support.FeignHttpClientProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -48,7 +48,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author L.cm
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @AllArgsConstructor
 @ConditionalOnClass(okhttp3.OkHttpClient.class)
 @EnableConfigurationProperties(BladeFeignHeadersProperties.class)

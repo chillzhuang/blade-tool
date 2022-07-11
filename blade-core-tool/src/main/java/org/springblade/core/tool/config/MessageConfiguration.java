@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springblade.core.tool.jackson.MappingApiJackson2HttpMessageConverter;
 import org.springblade.core.tool.utils.Charsets;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.*;
@@ -34,7 +34,7 @@ import java.util.List;
  *
  * @author Chill
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @AllArgsConstructor
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class MessageConfiguration implements WebMvcConfigurer {

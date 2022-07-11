@@ -23,12 +23,12 @@ import org.springblade.core.report.props.ReportProperties;
 import org.springblade.core.report.provider.DatabaseProvider;
 import org.springblade.core.report.provider.ReportPlaceholderProvider;
 import org.springblade.core.report.service.IReportFileService;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.annotation.Order;
 
@@ -40,7 +40,7 @@ import javax.servlet.Servlet;
  * @author Chill
  */
 @Order
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @ConditionalOnProperty(value = "report.enabled", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties({ReportProperties.class, ReportDatabaseProperties.class})
 @ImportResource("classpath:ureport-console-context.xml")

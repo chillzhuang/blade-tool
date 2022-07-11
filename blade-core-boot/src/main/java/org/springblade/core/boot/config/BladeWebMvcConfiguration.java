@@ -17,8 +17,8 @@ package org.springblade.core.boot.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.boot.resolver.TokenArgumentResolver;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -31,7 +31,7 @@ import java.util.List;
  * @author Chill
  */
 @Slf4j
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @EnableCaching
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class BladeWebMvcConfiguration implements WebMvcConfigurer {

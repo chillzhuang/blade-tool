@@ -22,11 +22,11 @@ import org.springblade.core.datascope.handler.DataScopeHandler;
 import org.springblade.core.datascope.handler.ScopeModelHandler;
 import org.springblade.core.datascope.interceptor.DataScopeInterceptor;
 import org.springblade.core.datascope.props.DataScopeProperties;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -34,7 +34,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
  *
  * @author Chill
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @AllArgsConstructor
 @EnableConfigurationProperties(DataScopeProperties.class)
 public class DataScopeConfiguration {

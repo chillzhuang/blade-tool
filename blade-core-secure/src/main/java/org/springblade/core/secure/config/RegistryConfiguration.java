@@ -17,10 +17,10 @@ package org.springblade.core.secure.config;
 
 
 import org.springblade.core.secure.registry.SecureRegistry;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
 /**
@@ -29,7 +29,7 @@ import org.springframework.core.annotation.Order;
  * @author Chill
  */
 @Order
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @AutoConfigureBefore(SecureConfiguration.class)
 public class RegistryConfiguration {
 

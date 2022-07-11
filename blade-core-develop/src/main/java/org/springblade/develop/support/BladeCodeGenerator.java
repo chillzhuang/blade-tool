@@ -20,12 +20,14 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
+import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Mapper;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.develop.constant.DevelopConstant;
@@ -36,6 +38,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -91,6 +94,10 @@ public class BladeCodeGenerator {
 	 * 是否包含包装器
 	 */
 	private Boolean hasWrapper = Boolean.TRUE;
+	/**
+	 * 是否包含服务名
+	 */
+	private Boolean hasServiceName = Boolean.FALSE;
 	/**
 	 * 基础业务字段
 	 */
@@ -159,10 +166,10 @@ public class BladeCodeGenerator {
 			.globalConfig(builder -> builder.author(props.getProperty("author")).dateType(DateType.TIME_PACK).enableSwagger().outputDir(getOutputDir()).disableOpenDir())
 			.packageConfig(builder -> builder.parent(packageName).controller("controller").entity("entity").service("service").serviceImpl("service.impl").mapper("mapper").xml("mapper"))
 			.strategyConfig(builder -> builder.addTablePrefix(tablePrefix).addInclude(includeTables).addExclude(excludeTables)
-				.entityBuilder().naming(NamingStrategy.underline_to_camel).columnNaming(NamingStrategy.underline_to_camel).enableLombok().superClass("org.springblade.core.mp.base.BaseEntity").addSuperEntityColumns(superEntityColumns)
-				.serviceBuilder().superServiceClass("org.springblade.core.mp.base.BaseService").superServiceImplClass("org.springblade.core.mp.base.BaseServiceImpl").formatServiceFileName("I%sService").formatServiceImplFileName("%sServiceImpl")
-				.mapperBuilder().enableMapperAnnotation().enableBaseResultMap().enableBaseColumnList().formatMapperFileName("%sMapper").formatXmlFileName("%sMapper")
-				.controllerBuilder().superClass("org.springblade.core.boot.ctrl.BladeController").formatFileName("%sController").enableRestStyle().enableHyphenStyle()
+				.entityBuilder().naming(NamingStrategy.underline_to_camel).columnNaming(NamingStrategy.underline_to_camel).enableLombok().superClass("org.springblade.core.mp.base.BaseEntity").addSuperEntityColumns(superEntityColumns).enableFileOverride()
+				.serviceBuilder().superServiceClass("org.springblade.core.mp.base.BaseService").superServiceImplClass("org.springblade.core.mp.base.BaseServiceImpl").formatServiceFileName("I%sService").formatServiceImplFileName("%sServiceImpl").enableFileOverride()
+				.mapperBuilder().mapperAnnotation(Mapper.class).enableBaseResultMap().enableBaseColumnList().formatMapperFileName("%sMapper").formatXmlFileName("%sMapper").enableFileOverride()
+				.controllerBuilder().superClass("org.springblade.core.boot.ctrl.BladeController").formatFileName("%sController").enableRestStyle().enableHyphenStyle().enableFileOverride()
 			)
 			.templateConfig(builder -> builder.disable(TemplateType.ENTITY)
 				.entity("/templates/entity.java.vm")
@@ -177,14 +184,16 @@ public class BladeCodeGenerator {
 			)
 			.templateEngine(new VelocityTemplateEngine() {
 				@Override
-				protected void outputCustomFile(Map<String, String> customFile, TableInfo tableInfo, Map<String, Object> objectMap) {
+				protected void outputCustomFile(List<CustomFile> customFiles, TableInfo tableInfo, Map<String, Object> objectMap) {
 					String entityName = tableInfo.getEntityName();
 					String entityNameLower = tableInfo.getEntityName().toLowerCase();
 
-					customFile.forEach((key, value) -> {
-						String outputPath = getPathInfo(OutputFile.other);
+					customFiles.forEach(customFile -> {
+						String key = customFile.getFileName();
+						String value = customFile.getTemplatePath();
+						String outputPath = getPathInfo(OutputFile.parent);
+						objectMap.put("entityKey", entityNameLower);
 						if (StringUtil.equals(key, "menu.sql")) {
-							objectMap.put("entityKey", entityNameLower);
 							objectMap.put("menuId", IdWorker.getId());
 							objectMap.put("addMenuId", IdWorker.getId());
 							objectMap.put("editMenuId", IdWorker.getId());

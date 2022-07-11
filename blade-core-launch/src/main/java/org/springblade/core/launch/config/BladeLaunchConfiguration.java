@@ -17,8 +17,8 @@ package org.springblade.core.launch.config;
 
 import lombok.AllArgsConstructor;
 import org.springblade.core.launch.props.BladeProperties;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
@@ -27,7 +27,7 @@ import org.springframework.core.annotation.Order;
  *
  * @author Chill
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @AllArgsConstructor
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @EnableConfigurationProperties({

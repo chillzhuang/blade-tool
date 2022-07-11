@@ -22,11 +22,11 @@ import feign.RequestInterceptor;
 import org.springblade.core.cloud.feign.BladeFeignSentinel;
 import org.springblade.core.cloud.header.BladeFeignRequestHeaderInterceptor;
 import org.springblade.core.cloud.sentinel.BladeBlockExceptionHandler;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 
@@ -36,7 +36,7 @@ import org.springframework.context.annotation.Scope;
  *
  * @author Chill
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @Import(BladeSentinelFilterConfiguration.class)
 @AutoConfigureBefore(SentinelFeignAutoConfiguration.class)
 public class BladeCloudAutoConfiguration {

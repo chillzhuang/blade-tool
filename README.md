@@ -1,7 +1,7 @@
  <p align="center">
   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2021-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.6.3-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.7.1-blue.svg" alt="Downloads">
  </p>  
 
 ## SpringBlade微服务开发平台
@@ -25,19 +25,23 @@
 blade-tool
 ├── blade-core-boot -- 业务包综合模块
 ├── blade-core-cloud -- cloud封装模块
+├── blade-core-datascope -- 数据权限封装模块
 ├── blade-core-develop -- 代码生成封装模块
 ├── blade-core-launch -- 基础启动模块
+├── blade-core-loadbalancer -- 灰度服务封装模块
 ├── blade-core-log -- 日志封装模块 
 ├── blade-core-mybatis -- mybatis拓展封装模块 
 ├── blade-core-oss -- 对象存储封装模块 
-├── blade-core-secure -- 安全模块 
+├── blade-core-report -- 报表封装模块 
+├── blade-core-secure -- 安全封装模块 
+├── blade-core-social -- 第三方登录封装模块 
 ├── blade-core-swagger -- swagger拓展封装模块 
 ├── blade-core-test -- 单元测试封装模块 
 ├── blade-core-tool -- 单元测试封装模块 
 └── blade-core-transaction -- 分布式事物封装模块 
 ```
 
-## 官网
+## 官方信息
 * 官网地址：[https://bladex.vip](https://bladex.vip)
 * 问答社区：[https://sns.bladex.vip](https://sns.bladex.vip)
 * 会员计划：[SpringBlade会员计划](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade会员计划)
@@ -46,23 +50,28 @@ blade-tool
 * 交流三群：`784729540`(满)
 * 交流四群：`1034621754`(满)
 * 交流五群：`946350912`(满)
-* 交流六群: `511624269`
+* 交流六群：`511624269`(满)
+* 交流七群：`298061704`
 
 ## 在线演示
-* Sword演示地址：[https://sword.bladex.vip](https://sword.bladex.vip)
-* Saber演示地址：[https://saber.bladex.vip](https://saber.bladex.vip)
-* 数据大屏演示地址：[https://data.avuejs.com](https://data.avuejs.com)
+* Saber-基于Vue：[https://saber.bladex.vip](https://saber.bladex.vip)
+* Sword-基于React：[https://sword.bladex.vip](https://sword.bladex.vip)
+
+## 数据大屏
+* Caster-数据大屏展示系统：[https://caster.bladex.vip](https://caster.bladex.vip)
+
+## 技术文档
+* [SpringBlade开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
+* [SpringBlade常见问题集锦](https://sns.bladex.vip/article-14966.html)
+* [SpringBlade基于Kuboard部署K8S](https://kuboard.cn/learning/k8s-practice/spring-blade/)
 
 ## 项目地址
+* 核心框架项目地址：[https://gitee.com/smallc/blade-tool](https://gitee.com/smallc/blade-tool)
 * 后端Gitee地址：[https://gitee.com/smallc/SpringBlade](https://gitee.com/smallc/SpringBlade)
 * 后端Github地址：[https://github.com/chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade)
 * 后端SpringBoot版：[https://gitee.com/smallc/SpringBlade/tree/boot/](https://gitee.com/smallc/SpringBlade/tree/boot/)
 * 前端框架Sword(基于React)：[https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)
 * 前端框架Saber(基于Vue)：[https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)
-* 核心框架项目地址：[https://github.com/chillzhuang/blade-tool](https://github.com/chillzhuang/blade-tool)
-
-## 技术文档
-* [SpringBlade开发手册](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
 
 ## 开源协议
 LGPL（[GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html)）

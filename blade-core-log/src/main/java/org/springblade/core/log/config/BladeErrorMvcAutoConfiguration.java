@@ -19,6 +19,7 @@ package org.springblade.core.log.config;
 import lombok.AllArgsConstructor;
 import org.springblade.core.log.error.BladeErrorAttributes;
 import org.springblade.core.log.error.BladeErrorController;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -31,7 +32,6 @@ import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.Servlet;
@@ -41,7 +41,7 @@ import javax.servlet.Servlet;
  *
  * @author Chill
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @AllArgsConstructor
 @ConditionalOnWebApplication
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)

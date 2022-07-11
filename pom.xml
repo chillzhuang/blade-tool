@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>3.3.1</version>
+    <version>3.4.0</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,27 +36,27 @@
     </scm>
 
     <properties>
-        <blade.tool.version>3.3.1</blade.tool.version>
+        <blade.tool.version>3.4.0</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
         <swagger.version>2.10.5</swagger.version>
         <swagger.models.version>1.6.2</swagger.models.version>
         <knife4j.version>2.0.9</knife4j.version>
-        <mybatis.plus.version>3.5.1</mybatis.plus.version>
-        <mybatis.plus.generator.version>3.5.2</mybatis.plus.generator.version>
+        <mybatis.plus.version>3.5.2</mybatis.plus.version>
+        <mybatis.plus.generator.version>3.5.3</mybatis.plus.generator.version>
         <protostuff.version>1.6.0</protostuff.version>
         <disruptor.version>3.4.2</disruptor.version>
         <guava.version>20.0</guava.version>
-        <spring.boot.admin.version>2.6.2</spring.boot.admin.version>
+        <spring.boot.admin.version>2.7.1</spring.boot.admin.version>
         <mica.auto.version>1.2.5</mica.auto.version>
         <alibaba.cloud.version>2021.0.1.0</alibaba.cloud.version>
-        <alibaba.nacos.version>2.0.4</alibaba.nacos.version>
-        <alibaba.seata.version>1.4.2</alibaba.seata.version>
+        <alibaba.nacos.version>2.1.0</alibaba.nacos.version>
+        <alibaba.seata.version>1.5.1.1</alibaba.seata.version>
         <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
 
-        <spring.boot.version>2.6.6</spring.boot.version>
-        <spring.cloud.version>2021.0.1</spring.cloud.version>
+        <spring.boot.version>2.7.1</spring.boot.version>
+        <spring.cloud.version>2021.0.3</spring.cloud.version>
         <spring.platform.version>Cairo-SR8</spring.platform.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -68,6 +68,7 @@
         <module>blade-core-cloud</module>
         <module>blade-core-develop</module>
         <module>blade-core-launch</module>
+        <module>blade-core-loadbalancer</module>
         <module>blade-core-log</module>
         <module>blade-core-mybatis</module>
         <module>blade-core-secure</module>

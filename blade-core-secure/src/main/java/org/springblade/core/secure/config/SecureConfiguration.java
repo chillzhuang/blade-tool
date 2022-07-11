@@ -24,10 +24,10 @@ import org.springblade.core.secure.props.BladeSecureProperties;
 import org.springblade.core.secure.provider.ClientDetailsServiceImpl;
 import org.springblade.core.secure.provider.IClientDetailsService;
 import org.springblade.core.secure.registry.SecureRegistry;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -39,7 +39,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author Chill
  */
 @Order
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @AllArgsConstructor
 @EnableConfigurationProperties({BladeSecureProperties.class})
 public class SecureConfiguration implements WebMvcConfigurer {

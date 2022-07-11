@@ -17,24 +17,24 @@
 package org.springblade.core.log.config;
 
 import lombok.AllArgsConstructor;
-import org.springblade.core.log.aspect.ApiLogAspect;
-import org.springblade.core.log.event.ApiLogListener;
-import org.springblade.core.log.event.UsualLogListener;
-import org.springblade.core.log.event.ErrorLogListener;
-import org.springblade.core.log.logger.BladeLogger;
 import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.launch.server.ServerInfo;
+import org.springblade.core.log.aspect.ApiLogAspect;
+import org.springblade.core.log.event.ApiLogListener;
+import org.springblade.core.log.event.ErrorLogListener;
+import org.springblade.core.log.event.UsualLogListener;
 import org.springblade.core.log.feign.ILogClient;
+import org.springblade.core.log.logger.BladeLogger;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 日志工具自动配置
  *
  * @author Chill
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @AllArgsConstructor
 @ConditionalOnWebApplication
 public class BladeLogToolAutoConfiguration {

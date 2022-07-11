@@ -104,6 +104,7 @@ public final class HttpLoggingInterceptor implements Interceptor {
 	public interface Logger {
 		/**
 		 * log
+		 *
 		 * @param message message
 		 */
 		void log(String message);
@@ -111,7 +112,7 @@ public final class HttpLoggingInterceptor implements Interceptor {
 		/**
 		 * A {@link Logger} defaults output appropriate for the current platform.
 		 */
-		Logger DEFAULT = message -> Platform.get().log(INFO, message, null);
+		Logger DEFAULT = message -> Platform.get().log(message, INFO, null);
 	}
 
 	public HttpLoggingInterceptor() {
@@ -128,6 +129,7 @@ public final class HttpLoggingInterceptor implements Interceptor {
 
 	/**
 	 * Change the level at which this interceptor logs.
+	 *
 	 * @param level log Level
 	 * @return HttpLoggingInterceptor
 	 */
@@ -300,6 +302,7 @@ public final class HttpLoggingInterceptor implements Interceptor {
 	 * of code points to detect unicode control characters commonly used in binary file signatures.
 	 */
 	private static int plainCnt = 16;
+
 	private static boolean isPlaintext(Buffer buffer) {
 		try {
 			Buffer prefix = new Buffer();

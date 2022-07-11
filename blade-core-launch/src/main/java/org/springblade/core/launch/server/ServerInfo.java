@@ -19,8 +19,8 @@ import lombok.Getter;
 import org.springblade.core.launch.utils.INetUtil;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 服务器信息
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Chill
  */
 @Getter
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 public class ServerInfo implements SmartInitializingSingleton {
 	private final ServerProperties serverProperties;
 	private String hostName;

@@ -19,9 +19,9 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.tool.constant.SystemConstant;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
@@ -30,7 +30,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * @author Chill
  */
 @Slf4j
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @EnableConfigurationProperties({
 	BladeProperties.class
 })

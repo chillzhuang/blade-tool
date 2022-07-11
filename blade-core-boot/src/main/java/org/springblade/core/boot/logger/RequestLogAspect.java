@@ -11,7 +11,7 @@ import org.springblade.core.tool.utils.BeanUtil;
 import org.springblade.core.tool.utils.ClassUtil;
 import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.core.tool.utils.WebUtil;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.io.InputStreamSource;
@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 @Slf4j
 @Aspect
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @Profile({AppConstant.DEV_CODE, AppConstant.TEST_CODE})
 public class RequestLogAspect {
 

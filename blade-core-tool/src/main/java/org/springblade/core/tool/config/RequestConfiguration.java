@@ -19,10 +19,10 @@ import lombok.AllArgsConstructor;
 import org.springblade.core.tool.request.BladeRequestFilter;
 import org.springblade.core.tool.request.RequestProperties;
 import org.springblade.core.tool.request.XssProperties;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 
 import javax.servlet.DispatcherType;
@@ -32,7 +32,7 @@ import javax.servlet.DispatcherType;
  *
  * @author Chill
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @AllArgsConstructor
 @EnableConfigurationProperties({RequestProperties.class, XssProperties.class})
 public class RequestConfiguration {
