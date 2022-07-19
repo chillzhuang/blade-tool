@@ -21,7 +21,7 @@ import $!{package.Entity}.$!{entity};
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 #end
-#if($!{swagger2})
+#if($!{swagger})
 import io.swagger.annotations.ApiModel;
 #end
 
@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiModel;
 @Data
 @EqualsAndHashCode(callSuper = true)
 #end
-#if($!{swagger2})
+#if($!{swagger})
 @ApiModel(value = "$!{entity}VO对象", description = #if ("$!{table.comment}"=="")"$!{entity}VO对象"#else"$!{table.comment}"#end)
 #end
 public class $!{entity}VO extends $!{entity} {

@@ -22,7 +22,7 @@ import $!{pkg};
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 #end
-#if($!{swagger2})
+#if($!{swagger})
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
@@ -42,7 +42,7 @@ import io.swagger.annotations.ApiModelProperty;
 #if($!{superEntityClass})
 @EqualsAndHashCode(callSuper = true)
 #end
-#if($!{swagger2})
+#if($!{swagger})
 @ApiModel(value = "$!{entity}对象", description = #if ("$!{table.comment}"=="")"$!{entity}对象"#else"$!{table.comment}"#end)
 #end
 #if($!{superEntityClass})
@@ -66,7 +66,7 @@ public class $!{entity} implements Serializable {
     /**
      * $!{field.comment}
      */
-  #if($!{swagger2})
+  #if($!{swagger})
   @ApiModelProperty(value = "$!{field.comment}")
   #end
 #end

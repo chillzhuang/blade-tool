@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, lengleng (wangiegie@gmail.com).
+ * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@ package org.springblade.core.swagger;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import org.springblade.core.launch.constant.TokenConstant;
 import springfox.documentation.RequestHandler;
+import springfox.documentation.service.ApiKey;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -53,6 +55,19 @@ public class SwaggerUtil {
 
 	private static Optional<? extends Class<?>> declaringClass(RequestHandler input) {
 		return Optional.fromNullable(input.declaringClass());
+	}
+
+
+	public static ApiKey clientInfo() {
+		return new ApiKey("ClientInfo", "Authorization", "header");
+	}
+
+	public static ApiKey bladeAuth() {
+		return new ApiKey("BladeAuth", TokenConstant.HEADER, "header");
+	}
+
+	public static ApiKey bladeTenant() {
+		return new ApiKey("TenantId", "Tenant-Id", "header");
 	}
 
 }

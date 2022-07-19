@@ -55,7 +55,7 @@ public class SwaggerProperties {
 	/**
 	 * 版本
 	 **/
-	private String version = "3.4.0";
+	private String version = "3.4.1";
 	/**
 	 * 许可证
 	 **/
@@ -120,6 +120,14 @@ public class SwaggerProperties {
 		 */
 		private List<AuthorizationScope> authorizationScopeList = new ArrayList<>();
 
+		/**
+		 * 鉴权请求头参数列表
+		 */
+		private List<AuthorizationApiKey> authorizationApiKeyList = new ArrayList<>();
+
+		/**
+		 * 接口匹配地址
+		 */
 		private List<String> tokenUrlList = new ArrayList<>();
 	}
 
@@ -127,6 +135,10 @@ public class SwaggerProperties {
 	@NoArgsConstructor
 	public static class AuthorizationScope {
 
+		/**
+		 * 鉴权策略名, 需要和ApiKey的name保持一致
+		 */
+		private String name = "";
 		/**
 		 * 作用域名称
 		 */
@@ -136,6 +148,27 @@ public class SwaggerProperties {
 		 * 作用域描述
 		 */
 		private String description = "";
+
+	}
+
+	@Data
+	@NoArgsConstructor
+	public static class AuthorizationApiKey {
+
+		/**
+		 * 参数名
+		 */
+		private String name = "";
+
+		/**
+		 * 参数值
+		 */
+		private String keyName = "";
+
+		/**
+		 * 参数作用域
+		 */
+		private String passAs = "";
 
 	}
 }

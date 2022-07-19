@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2018-2028, lengleng (wangiegie@gmail.com).
+ * Copyright (c) 2018-2028, Chill Zhuang 庄骞 (smallchill@163.com).
  * <p>
  * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE 3.0;
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 import org.springblade.core.launch.props.BladeProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
@@ -44,11 +43,10 @@ import java.util.List;
  *
  * @author Chill
  */
-@AutoConfiguration
 @EnableSwagger
-@EnableConfigurationProperties(SwaggerProperties.class)
-@Import(BeanValidatorPluginsConfiguration.class)
+@AutoConfiguration
 @AllArgsConstructor
+@Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerAutoConfiguration {
 
 	private static final String DEFAULT_BASE_PATH = "/**";
@@ -71,13 +69,11 @@ public class SwaggerAutoConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnMissingBean
 	public Docket api(SwaggerProperties swaggerProperties) {
-		// base-path处理
 		if (swaggerProperties.getBasePath().size() == 0) {
 			swaggerProperties.getBasePath().add(DEFAULT_BASE_PATH);
 		}
-
-		// exclude-path处理
 		if (swaggerProperties.getExcludePath().size() == 0) {
 			swaggerProperties.getExcludePath().addAll(DEFAULT_EXCLUDE_PATH);
 		}
@@ -85,54 +81,60 @@ public class SwaggerAutoConfiguration {
 			.host(swaggerProperties.getHost())
 			.apiInfo(apiInfo(swaggerProperties)).select()
 			.apis(SwaggerUtil.basePackages(swaggerProperties.getBasePackages()));
-
 		swaggerProperties.getBasePath().forEach(p -> apis.paths(PathSelectors.ant(p)));
 		swaggerProperties.getExcludePath().forEach(p -> apis.paths(PathSelectors.ant(p).negate()));
-
-		return apis.build()
-			.securitySchemes(Collections.singletonList(securitySchema(swaggerProperties)))
-			.securityContexts(Collections.singletonList(securityContext(swaggerProperties)))
-			.securityContexts(Lists.newArrayList(securityContext(swaggerProperties)))
-			.securitySchemes(Collections.singletonList(securitySchema(swaggerProperties)))
+		return apis.build().securityContexts(securityContexts(swaggerProperties)).securitySchemes(securitySchemas(swaggerProperties))
 			.extensions(openApiExtensionResolver.buildExtensions(bladeProperties.getName()));
 	}
 
 	/**
 	 * 配置默认的全局鉴权策略的开关，通过正则表达式进行匹配；默认匹配所有URL
-	 *
-	 * @return
 	 */
-	private SecurityContext securityContext(SwaggerProperties swaggerProperties) {
-		return SecurityContext.builder()
+	private List<SecurityContext> securityContexts(SwaggerProperties swaggerProperties) {
+		return Collections.singletonList(SecurityContext.builder()
 			.securityReferences(defaultAuth(swaggerProperties))
 			.forPaths(PathSelectors.regex(swaggerProperties.getAuthorization().getAuthRegex()))
-			.build();
+			.build());
 	}
 
 	/**
 	 * 默认的全局鉴权策略
-	 *
-	 * @return
 	 */
 	private List<SecurityReference> defaultAuth(SwaggerProperties swaggerProperties) {
-		ArrayList<AuthorizationScope> authorizationScopeList = new ArrayList<>();
-		swaggerProperties.getAuthorization().getAuthorizationScopeList().forEach(authorizationScope -> authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(), authorizationScope.getDescription())));
-		AuthorizationScope[] authorizationScopes = new AuthorizationScope[authorizationScopeList.size()];
-		return Collections.singletonList(SecurityReference.builder()
-			.reference(swaggerProperties.getAuthorization().getName())
-			.scopes(authorizationScopeList.toArray(authorizationScopes))
-			.build());
+		List<AuthorizationScope> authorizationScopeList = new ArrayList<>();
+		List<SecurityReference> securityReferenceList = new ArrayList<>();
+		List<SwaggerProperties.AuthorizationScope> swaggerScopeList = swaggerProperties.getAuthorization().getAuthorizationScopeList();
+		swaggerScopeList.forEach(authorizationScope -> authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(), authorizationScope.getDescription())));
+		if (authorizationScopeList.size() == 0) {
+			authorizationScopeList.add(new AuthorizationScope("global", "accessEverywhere"));
+		}
+		AuthorizationScope[] authorizationScopes = authorizationScopeList.toArray(new AuthorizationScope[0]);
+		swaggerScopeList.forEach(authorizationScope -> securityReferenceList.add(new SecurityReference(authorizationScope.getName(), authorizationScopes)));
+		if (securityReferenceList.size() == 0) {
+			securityReferenceList.add(new SecurityReference(SwaggerUtil.clientInfo().getName(), authorizationScopes));
+			securityReferenceList.add(new SecurityReference(SwaggerUtil.bladeAuth().getName(), authorizationScopes));
+			securityReferenceList.add(new SecurityReference(SwaggerUtil.bladeTenant().getName(), authorizationScopes));
+		}
+		return securityReferenceList;
 	}
 
-
-	private OAuth securitySchema(SwaggerProperties swaggerProperties) {
-		ArrayList<AuthorizationScope> authorizationScopeList = new ArrayList<>();
-		swaggerProperties.getAuthorization().getAuthorizationScopeList().forEach(authorizationScope -> authorizationScopeList.add(new AuthorizationScope(authorizationScope.getScope(), authorizationScope.getDescription())));
-		ArrayList<GrantType> grantTypes = new ArrayList<>();
-		swaggerProperties.getAuthorization().getTokenUrlList().forEach(tokenUrl -> grantTypes.add(new ResourceOwnerPasswordCredentialsGrant(tokenUrl)));
-		return new OAuth(swaggerProperties.getAuthorization().getName(), authorizationScopeList, grantTypes);
+	/**
+	 * 配置安全策略
+	 */
+	private List<SecurityScheme> securitySchemas(SwaggerProperties swaggerProperties) {
+		List<SwaggerProperties.AuthorizationApiKey> swaggerApiKeyList = swaggerProperties.getAuthorization().getAuthorizationApiKeyList();
+		if (swaggerApiKeyList.size() == 0) {
+			return Lists.newArrayList(SwaggerUtil.clientInfo(), SwaggerUtil.bladeAuth(), SwaggerUtil.bladeTenant());
+		} else {
+			List<SecurityScheme> securitySchemeList = new ArrayList<>();
+			swaggerApiKeyList.forEach(authorizationApiKey -> securitySchemeList.add(new ApiKey(authorizationApiKey.getName(), authorizationApiKey.getKeyName(), authorizationApiKey.getPassAs())));
+			return securitySchemeList;
+		}
 	}
 
+	/**
+	 * 配置基本信息
+	 */
 	private ApiInfo apiInfo(SwaggerProperties swaggerProperties) {
 		return new ApiInfoBuilder()
 			.title(swaggerProperties.getTitle())
