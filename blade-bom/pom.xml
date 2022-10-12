@@ -31,7 +31,7 @@
         <druid.version>1.2.8</druid.version>
         <jackson.version>2.13.3</jackson.version>
         <okhttp.version>4.9.3</okhttp.version>
-        <xxl.job.version>2.1.2</xxl.job.version>
+        <xxl.job.version>2.3.0</xxl.job.version>
         <log4j2.version>2.18.0</log4j2.version>
         <logback.version>1.2.11</logback.version>
         <mica.auto.version>1.2.5</mica.auto.version>
