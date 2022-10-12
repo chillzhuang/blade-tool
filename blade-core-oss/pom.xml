@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-tool</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.4.1</version>
+        <version>3.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -21,17 +21,23 @@
             <artifactId>blade-core-tool</artifactId>
             <version>${blade.tool.version}</version>
         </dependency>
+        <!--Aliyun-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.14.0</version>
+        </dependency>
+        <!--MinIO-->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.3.7</version>
+        </dependency>
         <!--QiNiu-->
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
-            <version>7.2.18</version>
-        </dependency>
-        <!--alioss-->
-        <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <version>3.1.0</version>
+            <version>7.9.4</version>
         </dependency>
     </dependencies>
 

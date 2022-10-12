@@ -24,10 +24,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
-import org.springblade.core.tool.utils.DateUtil;
-import org.springblade.core.tool.utils.Exceptions;
-import org.springblade.core.tool.utils.StringPool;
-import org.springblade.core.tool.utils.StringUtil;
+import org.springblade.core.tool.utils.*;
+import org.springframework.lang.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -263,6 +261,127 @@ public class JsonUtil {
 	public static JsonNode readTree(byte[] content) {
 		try {
 			return getInstance().readTree(content);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+
+	/**
+	 * 将json byte 数组反序列化成对象
+	 *
+	 * @param content   json bytes
+	 * @param valueType class
+	 * @param <T>       T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable byte[] content, Class<T> valueType) {
+		if (ObjectUtil.isEmpty(content)) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(content, valueType);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
+	 * 将json反序列化成对象
+	 *
+	 * @param jsonString jsonString
+	 * @param valueType  class
+	 * @param <T>        T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable String jsonString, Class<T> valueType) {
+		if (StringUtil.isBlank(jsonString)) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(jsonString, valueType);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
+	 * 将json反序列化成对象
+	 *
+	 * @param in        InputStream
+	 * @param valueType class
+	 * @param <T>       T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable InputStream in, Class<T> valueType) {
+		if (in == null) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(in, valueType);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
+	 * 将json反序列化成对象
+	 *
+	 * @param content       bytes
+	 * @param typeReference 泛型类型
+	 * @param <T>           T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable byte[] content, TypeReference<T> typeReference) {
+		if (ObjectUtil.isEmpty(content)) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(content, typeReference);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
+	 * 将json反序列化成对象
+	 *
+	 * @param jsonString    jsonString
+	 * @param typeReference 泛型类型
+	 * @param <T>           T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable String jsonString, TypeReference<T> typeReference) {
+		if (StringUtil.isBlank(jsonString)) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(jsonString, typeReference);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
+	 * 将json反序列化成对象
+	 *
+	 * @param in            InputStream
+	 * @param typeReference 泛型类型
+	 * @param <T>           T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable InputStream in, TypeReference<T> typeReference) {
+		if (in == null) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(in, typeReference);
 		} catch (IOException e) {
 			throw Exceptions.unchecked(e);
 		}

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-tool</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.4.1</version>
+        <version>3.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -32,5 +32,4 @@
             <artifactId>httpclient</artifactId>
         </dependency>
     </dependencies>
-
 </project>

@@ -61,7 +61,7 @@ public class OssProperties {
 	/**
 	 * 默认的存储桶名称
 	 */
-	private String bucketName = "bladex";
+	private String bucketName = "blade";
 
 	/**
 	 * 自定义属性

@@ -19,6 +19,7 @@ package org.springblade.core.log.config;
 import lombok.AllArgsConstructor;
 import org.springblade.core.log.error.BladeErrorAttributes;
 import org.springblade.core.log.error.BladeErrorController;
+import org.springblade.core.log.props.BladeLogProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -28,6 +29,7 @@ import org.springframework.boot.autoconfigure.condition.SearchStrategy;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -45,15 +47,18 @@ import javax.servlet.Servlet;
 @AllArgsConstructor
 @ConditionalOnWebApplication
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
+@EnableConfigurationProperties(BladeLogProperties.class)
 @ConditionalOnClass({Servlet.class, DispatcherServlet.class})
 public class BladeErrorMvcAutoConfiguration {
 
 	private final ServerProperties serverProperties;
+	private final BladeLogProperties bladeLogProperties;
+
 
 	@Bean
 	@ConditionalOnMissingBean(value = ErrorAttributes.class, search = SearchStrategy.CURRENT)
 	public DefaultErrorAttributes errorAttributes() {
-		return new BladeErrorAttributes();
+		return new BladeErrorAttributes(bladeLogProperties);
 	}
 
 	@Bean

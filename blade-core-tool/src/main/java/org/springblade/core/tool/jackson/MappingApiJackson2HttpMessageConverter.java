@@ -22,6 +22,8 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.lang.Nullable;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 针对 api 服务对 android 和 ios 和 web 处理的 分读写的 jackson 处理
@@ -39,21 +41,25 @@ public class MappingApiJackson2HttpMessageConverter extends AbstractReadWriteJac
 	private String jsonPrefix;
 
 	/**
-	 * Construct a new {@link MappingApiJackson2HttpMessageConverter} using default configuration
-	 * provided by {@link Jackson2ObjectMapperBuilder}.
-	 */
-	public MappingApiJackson2HttpMessageConverter() {
-		this(Jackson2ObjectMapperBuilder.json().build());
-	}
-
-	/**
 	 * Construct a new {@link MappingApiJackson2HttpMessageConverter} with a custom {@link ObjectMapper}.
 	 * You can use {@link Jackson2ObjectMapperBuilder} to build it easily.
+	 *
 	 * @param objectMapper ObjectMapper
 	 * @see Jackson2ObjectMapperBuilder#json()
 	 */
-	public MappingApiJackson2HttpMessageConverter(ObjectMapper objectMapper) {
-		super(objectMapper, initWriteObjectMapper(objectMapper), MediaType.APPLICATION_JSON, new MediaType("application", "*+json"));
+	public MappingApiJackson2HttpMessageConverter(ObjectMapper objectMapper, BladeJacksonProperties properties) {
+		super(objectMapper, initWriteObjectMapper(objectMapper), initMediaType(properties));
+	}
+
+	private static List<MediaType> initMediaType(BladeJacksonProperties properties) {
+		List<MediaType> supportedMediaTypes = new ArrayList<>();
+		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
+		supportedMediaTypes.add(new MediaType("application", "*+json"));
+		// 支持 text 文本，用于报文签名
+		if (Boolean.TRUE.equals(properties.getSupportTextPlain())) {
+			supportedMediaTypes.add(MediaType.TEXT_PLAIN);
+		}
+		return supportedMediaTypes;
 	}
 
 	private static ObjectMapper initWriteObjectMapper(ObjectMapper readObjectMapper) {

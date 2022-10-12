@@ -15,47 +15,45 @@
  */
 package org.springblade.core.oss.config;
 
-import com.qiniu.common.Zone;
 import com.qiniu.storage.BucketManager;
+import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import lombok.AllArgsConstructor;
 import org.springblade.core.oss.QiniuTemplate;
 import org.springblade.core.oss.props.OssProperties;
-import org.springblade.core.oss.rule.BladeOssRule;
 import org.springblade.core.oss.rule.OssRule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 /**
- * Oss配置类
+ * Qiniu配置类
  *
  * @author Chill
  */
-@AutoConfiguration
 @AllArgsConstructor
+@AutoConfiguration(after = OssConfiguration.class)
+@ConditionalOnClass({Auth.class, UploadManager.class, BucketManager.class})
 @EnableConfigurationProperties(OssProperties.class)
 @ConditionalOnProperty(value = "oss.name", havingValue = "qiniu")
 public class QiniuConfiguration {
 
-	private OssProperties ossProperties;
+	private final OssProperties ossProperties;
+	private final OssRule ossRule;
 
 	@Bean
-	@ConditionalOnMissingBean(OssRule.class)
-	public OssRule ossRule() {
-		return new BladeOssRule();
+	@ConditionalOnMissingBean(com.qiniu.storage.Configuration.class)
+	public com.qiniu.storage.Configuration qnConfiguration() {
+		return new com.qiniu.storage.Configuration(Region.autoRegion());
 	}
 
 	@Bean
-	public com.qiniu.storage.Configuration qiniuConfiguration() {
-		return new com.qiniu.storage.Configuration(Zone.autoZone());
-	}
-
-	@Bean
+	@ConditionalOnMissingBean(Auth.class)
 	public Auth auth() {
 		return Auth.create(ossProperties.getAccessKey(), ossProperties.getSecretKey());
 	}
@@ -73,11 +71,10 @@ public class QiniuConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnBean({Auth.class, UploadManager.class, BucketManager.class})
 	@ConditionalOnMissingBean(QiniuTemplate.class)
-	@ConditionalOnBean({Auth.class, UploadManager.class, BucketManager.class, OssRule.class})
-	public QiniuTemplate qiniuTemplate(Auth auth, UploadManager uploadManager, BucketManager bucketManager, OssRule ossRule) {
+	public QiniuTemplate qiniuTemplate(Auth auth, UploadManager uploadManager, BucketManager bucketManager) {
 		return new QiniuTemplate(auth, uploadManager, bucketManager, ossProperties, ossRule);
 	}
-
 
 }
