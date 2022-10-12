@@ -36,7 +36,7 @@
         <logback.version>1.2.11</logback.version>
         <mica.auto.version>1.2.5</mica.auto.version>
 
-        <mysql.connector.version>8.0.22</mysql.connector.version>
+        <mysql.connector.version>8.0.28</mysql.connector.version>
         <oracle.connector.version>21.7.0.0</oracle.connector.version>
         <postgresql.connector.version>42.2.22</postgresql.connector.version>
         <sqlserver.connector.version>8.4.1.jre8</sqlserver.connector.version>
