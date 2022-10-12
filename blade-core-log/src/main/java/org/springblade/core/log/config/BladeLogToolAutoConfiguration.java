@@ -25,8 +25,11 @@ import org.springblade.core.log.event.ErrorLogListener;
 import org.springblade.core.log.event.UsualLogListener;
 import org.springblade.core.log.feign.ILogClient;
 import org.springblade.core.log.logger.BladeLogger;
+import org.springblade.core.log.props.BladeLogProperties;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -44,28 +47,33 @@ public class BladeLogToolAutoConfiguration {
 	private final BladeProperties bladeProperties;
 
 	@Bean
+	@ConditionalOnProperty(value = BladeLogProperties.PREFIX + "api.enabled", havingValue = "true", matchIfMissing = true)
 	public ApiLogAspect apiLogAspect() {
 		return new ApiLogAspect();
 	}
 
 	@Bean
-	public BladeLogger bladeLogger() {
-		return new BladeLogger();
-	}
-
-	@Bean
+	@ConditionalOnProperty(value = BladeLogProperties.PREFIX + "api.enabled", havingValue = "true", matchIfMissing = true)
 	public ApiLogListener apiLogListener() {
 		return new ApiLogListener(logService, serverInfo, bladeProperties);
 	}
 
 	@Bean
+	@ConditionalOnProperty(value = BladeLogProperties.PREFIX + "error.enabled", havingValue = "true", matchIfMissing = true)
 	public ErrorLogListener errorEventListener() {
 		return new ErrorLogListener(logService, serverInfo, bladeProperties);
 	}
 
 	@Bean
+	@ConditionalOnProperty(value = BladeLogProperties.PREFIX + "usual.enabled", havingValue = "true", matchIfMissing = true)
 	public UsualLogListener bladeEventListener() {
 		return new UsualLogListener(logService, serverInfo, bladeProperties);
+	}
+
+	@Bean
+	@ConditionalOnProperty(value = BladeLogProperties.PREFIX + "usual.enabled", havingValue = "true", matchIfMissing = true)
+	public BladeLogger bladeLogger() {
+		return new BladeLogger();
 	}
 
 }

@@ -29,6 +29,10 @@ public class BladeFile {
 	 */
 	private String link;
 	/**
+	 * 域名地址
+	 */
+	private String domain;
+	/**
 	 * 文件名
 	 */
 	private String name;

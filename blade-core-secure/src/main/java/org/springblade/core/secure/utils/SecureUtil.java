@@ -25,6 +25,7 @@ import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.TokenInfo;
 import org.springblade.core.secure.constant.SecureConstant;
 import org.springblade.core.secure.exception.SecureException;
+import org.springblade.core.secure.props.BladeTokenProperties;
 import org.springblade.core.secure.provider.IClientDetails;
 import org.springblade.core.secure.provider.IClientDetailsService;
 import org.springblade.core.tool.constant.RoleConstant;
@@ -54,12 +55,45 @@ public class SecureUtil {
 	private final static String TENANT_ID = TokenConstant.TENANT_ID;
 	private final static String CLIENT_ID = TokenConstant.CLIENT_ID;
 	private final static Integer AUTH_LENGTH = TokenConstant.AUTH_LENGTH;
-	private static final String BASE64_SECURITY = Base64.getEncoder().encodeToString(TokenConstant.SIGN_KEY.getBytes(Charsets.UTF_8));
+	private static IClientDetailsService CLIENT_DETAILS_SERVICE;
+	private static BladeTokenProperties TOKEN_PROPERTIES;
+	private static String BASE64_SECURITY;
 
-	private static final IClientDetailsService clientDetailsService;
 
-	static {
-		clientDetailsService = SpringUtil.getBean(IClientDetailsService.class);
+	/**
+	 * 获取客户端服务类
+	 *
+	 * @return clientDetailsService
+	 */
+	private static IClientDetailsService getClientDetailsService() {
+		if (CLIENT_DETAILS_SERVICE == null) {
+			CLIENT_DETAILS_SERVICE = SpringUtil.getBean(IClientDetailsService.class);
+		}
+		return CLIENT_DETAILS_SERVICE;
+	}
+
+	/**
+	 * 获取配置类
+	 *
+	 * @return jwtProperties
+	 */
+	private static BladeTokenProperties getTokenProperties() {
+		if (TOKEN_PROPERTIES == null) {
+			TOKEN_PROPERTIES = SpringUtil.getBean(BladeTokenProperties.class);
+		}
+		return TOKEN_PROPERTIES;
+	}
+
+	/**
+	 * 获取Token签名
+	 *
+	 * @return String
+	 */
+	private static String getBase64Security() {
+		if (BASE64_SECURITY == null) {
+			BASE64_SECURITY = Base64.getEncoder().encodeToString(getTokenProperties().getSignKey().getBytes(Charsets.UTF_8));
+		}
+		return BASE64_SECURITY;
 	}
 
 	/**
@@ -301,7 +335,7 @@ public class SecureUtil {
 	public static Claims parseJWT(String jsonWebToken) {
 		try {
 			return Jwts.parserBuilder()
-				.setSigningKey(Base64.getDecoder().decode(BASE64_SECURITY)).build()
+				.setSigningKey(Base64.getDecoder().decode(getBase64Security())).build()
 				.parseClaimsJws(jsonWebToken).getBody();
 		} catch (Exception ex) {
 			return null;
@@ -338,7 +372,7 @@ public class SecureUtil {
 		Date now = new Date(nowMillis);
 
 		//生成签名密钥
-		byte[] apiKeySecretBytes = Base64.getDecoder().decode(BASE64_SECURITY);
+		byte[] apiKeySecretBytes = Base64.getDecoder().decode(getBase64Security());
 		Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
 		//添加构成JWT的类
@@ -434,7 +468,7 @@ public class SecureUtil {
 	 * @return clientDetails
 	 */
 	private static IClientDetails clientDetails(String clientId) {
-		return clientDetailsService.loadClientByClientId(clientId);
+		return getClientDetailsService().loadClientByClientId(clientId);
 	}
 
 	/**

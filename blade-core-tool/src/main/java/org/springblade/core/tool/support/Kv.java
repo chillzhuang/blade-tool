@@ -43,6 +43,15 @@ public class Kv extends LinkedCaseInsensitiveMap<Object> {
 		return new Kv();
 	}
 
+	/**
+	 * 创建Kv
+	 *
+	 * @return Kv
+	 */
+	public static Kv create() {
+		return new Kv();
+	}
+
 	public static <K, V> HashMap<K, V> newMap() {
 		return new HashMap<>(16);
 	}

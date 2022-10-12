@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-tool</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.4.1</version>
+        <version>3.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,7 +20,6 @@
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-secure</artifactId>
-            <version>${blade.tool.version}</version>
         </dependency>
         <!--Feign-->
         <dependency>
@@ -43,7 +42,6 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
-            <version>${spring.boot.admin.version}</version>
         </dependency>
         <!-- Nacos -->
         <dependency>
@@ -55,7 +53,6 @@
                     <artifactId>nacos-client</artifactId>
                 </exclusion>
             </exclusions>
-            <version>${alibaba.cloud.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -66,24 +63,26 @@
                     <artifactId>nacos-client</artifactId>
                 </exclusion>
             </exclusions>
-            <version>${alibaba.cloud.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
-            <version>${alibaba.nacos.version}</version>
         </dependency>
         <!-- Sentinel -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-            <version>${alibaba.cloud.version}</version>
         </dependency>
         <!-- Alibaba依赖 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.83_noneautotype</version>
+        </dependency>
+        <!-- Auto -->
+        <dependency>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-auto</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

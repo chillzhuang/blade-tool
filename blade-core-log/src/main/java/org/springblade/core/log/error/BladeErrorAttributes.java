@@ -15,7 +15,9 @@
  */
 package org.springblade.core.log.error;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springblade.core.log.props.BladeLogProperties;
 import org.springblade.core.log.publisher.ErrorLogPublisher;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.api.ResultCode;
@@ -34,7 +36,9 @@ import java.util.Map;
  * @author Chill
  */
 @Slf4j
+@RequiredArgsConstructor
 public class BladeErrorAttributes extends DefaultErrorAttributes {
+	private final BladeLogProperties bladeLogProperties;
 
 	@Override
 	public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
@@ -50,7 +54,9 @@ public class BladeErrorAttributes extends DefaultErrorAttributes {
 			result = R.fail(status, error.getMessage());
 		}
 		//发送服务异常事件
-		ErrorLogPublisher.publishEvent(error, requestUri);
+		if (bladeLogProperties.getError()) {
+			ErrorLogPublisher.publishEvent(error, requestUri);
+		}
 		return BeanUtil.toMap(result);
 	}
 

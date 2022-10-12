@@ -36,8 +36,8 @@ import org.springframework.util.TypeUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -64,9 +64,9 @@ public abstract class AbstractReadWriteJackson2HttpMessageConverter extends Abst
 		initSsePrettyPrinter();
 	}
 
-	public AbstractReadWriteJackson2HttpMessageConverter(ObjectMapper readObjectMapper, ObjectMapper writeObjectMapper, MediaType... supportedMediaTypes) {
+	public AbstractReadWriteJackson2HttpMessageConverter(ObjectMapper readObjectMapper, ObjectMapper writeObjectMapper, List<MediaType> supportedMediaTypes) {
 		this(readObjectMapper, writeObjectMapper);
-		setSupportedMediaTypes(Arrays.asList(supportedMediaTypes));
+		setSupportedMediaTypes(supportedMediaTypes);
 	}
 
 	private void initSsePrettyPrinter() {

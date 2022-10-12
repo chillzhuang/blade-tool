@@ -21,6 +21,7 @@ import org.springblade.core.secure.aspect.AuthAspect;
 import org.springblade.core.secure.interceptor.ClientInterceptor;
 import org.springblade.core.secure.interceptor.SecureInterceptor;
 import org.springblade.core.secure.props.BladeSecureProperties;
+import org.springblade.core.secure.props.BladeTokenProperties;
 import org.springblade.core.secure.provider.ClientDetailsServiceImpl;
 import org.springblade.core.secure.provider.IClientDetailsService;
 import org.springblade.core.secure.registry.SecureRegistry;
@@ -41,7 +42,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Order
 @AutoConfiguration
 @AllArgsConstructor
-@EnableConfigurationProperties({BladeSecureProperties.class})
+@EnableConfigurationProperties({BladeSecureProperties.class, BladeTokenProperties.class})
 public class SecureConfiguration implements WebMvcConfigurer {
 
 	private final SecureRegistry secureRegistry;

@@ -18,6 +18,7 @@ package org.springblade.core.tool.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.springblade.core.tool.jackson.BladeJacksonProperties;
 import org.springblade.core.tool.jackson.MappingApiJackson2HttpMessageConverter;
 import org.springblade.core.tool.utils.Charsets;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -40,6 +41,7 @@ import java.util.List;
 public class MessageConfiguration implements WebMvcConfigurer {
 
 	private final ObjectMapper objectMapper;
+	private final BladeJacksonProperties properties;
 
 	/**
 	 * 使用 JACKSON 作为JSON MessageConverter
@@ -51,7 +53,7 @@ public class MessageConfiguration implements WebMvcConfigurer {
 		converters.add(new ByteArrayHttpMessageConverter());
 		converters.add(new ResourceHttpMessageConverter());
 		converters.add(new ResourceRegionHttpMessageConverter());
-		converters.add(new MappingApiJackson2HttpMessageConverter(objectMapper));
+		converters.add(new MappingApiJackson2HttpMessageConverter(objectMapper, properties));
 	}
 
 }

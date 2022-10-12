@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-tool</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.4.1</version>
+        <version>3.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -19,7 +19,6 @@
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-mybatis</artifactId>
-            <version>${blade.tool.version}</version>
         </dependency>
         <!--Jdbc-->
         <dependency>
@@ -31,6 +30,12 @@
                     <groupId>org.apache.tomcat</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <!-- Auto -->
+        <dependency>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-auto</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

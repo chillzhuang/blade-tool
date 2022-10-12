@@ -33,8 +33,6 @@ import org.springblade.core.tool.utils.StringPool;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
@@ -44,57 +42,56 @@ import java.util.List;
  * @author Chill
  */
 @AllArgsConstructor
-public class QiniuTemplate {
-	private Auth auth;
-	private UploadManager uploadManager;
-	private BucketManager bucketManager;
-	private OssProperties ossProperties;
-	private OssRule ossRule;
+public class QiniuTemplate implements OssTemplate {
+	private final Auth auth;
+	private final UploadManager uploadManager;
+	private final BucketManager bucketManager;
+	private final OssProperties ossProperties;
+	private final OssRule ossRule;
 
-
+	@Override
 	@SneakyThrows
 	public void makeBucket(String bucketName) {
 		if (!CollectionUtil.contains(bucketManager.buckets(), getBucketName(bucketName))) {
-			bucketManager.createBucket(getBucketName(bucketName), Zone.zone0().getRegion());
+			bucketManager.createBucket(getBucketName(bucketName), Zone.autoZone().getRegion());
 		}
 	}
 
-
+	@Override
 	@SneakyThrows
 	public void removeBucket(String bucketName) {
-		bucketManager.deleteBucket(getBucketName(bucketName));
+
 	}
 
-
+	@Override
 	@SneakyThrows
 	public boolean bucketExists(String bucketName) {
 		return CollectionUtil.contains(bucketManager.buckets(), getBucketName(bucketName));
 	}
 
-
+	@Override
 	@SneakyThrows
 	public void copyFile(String bucketName, String fileName, String destBucketName) {
 		bucketManager.copy(getBucketName(bucketName), fileName, getBucketName(destBucketName), fileName);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public void copyFile(String bucketName, String fileName, String destBucketName, String destFileName) {
 		bucketManager.copy(getBucketName(bucketName), fileName, getBucketName(destBucketName), destFileName);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public OssFile statFile(String fileName) {
 		return statFile(ossProperties.getBucketName(), fileName);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public OssFile statFile(String bucketName, String fileName) {
 		FileInfo stat = bucketManager.stat(getBucketName(bucketName), fileName);
 		OssFile ossFile = new OssFile();
-		ossFile.setName(stat.key);
 		ossFile.setName(Func.isEmpty(stat.key) ? fileName : stat.key);
 		ossFile.setLink(fileLink(ossFile.getName()));
 		ossFile.setHash(stat.hash);
@@ -104,80 +101,55 @@ public class QiniuTemplate {
 		return ossFile;
 	}
 
-
+	@Override
 	@SneakyThrows
 	public String filePath(String fileName) {
 		return getBucketName().concat(StringPool.SLASH).concat(fileName);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public String filePath(String bucketName, String fileName) {
 		return getBucketName(bucketName).concat(StringPool.SLASH).concat(fileName);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public String fileLink(String fileName) {
 		return ossProperties.getEndpoint().concat(StringPool.SLASH).concat(fileName);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public String fileLink(String bucketName, String fileName) {
 		return ossProperties.getEndpoint().concat(StringPool.SLASH).concat(fileName);
 	}
 
-
-	/**
-	 * 获取文件公开链接
-	 *
-	 * @param fileName 文件名
-	 * @return 文件公开链接
-	 */
-	public String publicFileLink(String fileName) {
-		return String.format("%s/%s", ossProperties.getEndpoint(), fileName);
-	}
-
-	/**
-	 * 获取文件私有链接
-	 *
-	 * @param fileName   文件名
-	 * @param expireTime 超时时间
-	 * @return 私有文件链接
-	 */
-	@SneakyThrows
-	public String privateFileLink(String fileName, Long expireTime) {
-		String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.name()).replace("+", "%20");
-		String publicUrl = String.format("%s/%s", ossProperties.getEndpoint(), encodedFileName);
-		return auth.privateDownloadUrl(publicUrl, expireTime);
-	}
-
-
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(MultipartFile file) {
 		return putFile(ossProperties.getBucketName(), file.getOriginalFilename(), file);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(String fileName, MultipartFile file) {
 		return putFile(ossProperties.getBucketName(), fileName, file);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(String bucketName, String fileName, MultipartFile file) {
-		return putFile(bucketName, fileName, file);
+		return putFile(bucketName, fileName, file.getInputStream());
 	}
 
-
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(String fileName, InputStream stream) {
 		return putFile(ossProperties.getBucketName(), fileName, stream);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(String bucketName, String fileName, InputStream stream) {
 		return put(bucketName, stream, fileName, false);
@@ -185,9 +157,8 @@ public class QiniuTemplate {
 
 	@SneakyThrows
 	public BladeFile put(String bucketName, InputStream stream, String key, boolean cover) {
-		BladeFile file = new BladeFile();
-		file.setOriginalName(key);
 		makeBucket(bucketName);
+		String originalName = key;
 		key = getFileName(key);
 		// 覆盖上传
 		if (cover) {
@@ -201,30 +172,33 @@ public class QiniuTemplate {
 				retry++;
 			}
 		}
+		BladeFile file = new BladeFile();
+		file.setOriginalName(originalName);
 		file.setName(key);
+		file.setDomain(getOssHost());
 		file.setLink(fileLink(bucketName, key));
 		return file;
 	}
 
-
+	@Override
 	@SneakyThrows
 	public void removeFile(String fileName) {
 		bucketManager.delete(getBucketName(), fileName);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public void removeFile(String bucketName, String fileName) {
 		bucketManager.delete(getBucketName(bucketName), fileName);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public void removeFiles(List<String> fileNames) {
 		fileNames.forEach(this::removeFile);
 	}
 
-
+	@Override
 	@SneakyThrows
 	public void removeFiles(String bucketName, List<String> fileNames) {
 		fileNames.forEach(fileName -> removeFile(getBucketName(bucketName), fileName));
@@ -261,6 +235,9 @@ public class QiniuTemplate {
 
 	/**
 	 * 获取上传凭证，普通上传
+	 *
+	 * @param bucketName 存储桶名称
+	 * @return string
 	 */
 	public String getUploadToken(String bucketName) {
 		return auth.uploadToken(getBucketName(bucketName));
@@ -268,9 +245,22 @@ public class QiniuTemplate {
 
 	/**
 	 * 获取上传凭证，覆盖上传
+	 *
+	 * @param bucketName 存储桶名称
+	 * @param key        key
+	 * @return string
 	 */
 	private String getUploadToken(String bucketName, String key) {
 		return auth.uploadToken(getBucketName(bucketName), key);
+	}
+
+	/**
+	 * 获取域名
+	 *
+	 * @return String
+	 */
+	public String getOssHost() {
+		return ossProperties.getEndpoint();
 	}
 
 }

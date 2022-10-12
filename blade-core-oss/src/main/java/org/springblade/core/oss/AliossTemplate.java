@@ -45,11 +45,12 @@ import java.util.Map;
  * @author Chill
  */
 @AllArgsConstructor
-public class AliossTemplate {
-	private OSSClient ossClient;
-	private OssProperties ossProperties;
-	private OssRule ossRule;
+public class AliossTemplate implements OssTemplate {
+	private final OSSClient ossClient;
+	private final OssProperties ossProperties;
+	private final OssRule ossRule;
 
+	@Override
 	@SneakyThrows
 	public void makeBucket(String bucketName) {
 		if (!bucketExists(bucketName)) {
@@ -57,31 +58,37 @@ public class AliossTemplate {
 		}
 	}
 
+	@Override
 	@SneakyThrows
 	public void removeBucket(String bucketName) {
 		ossClient.deleteBucket(getBucketName(bucketName));
 	}
 
+	@Override
 	@SneakyThrows
 	public boolean bucketExists(String bucketName) {
 		return ossClient.doesBucketExist(getBucketName(bucketName));
 	}
 
+	@Override
 	@SneakyThrows
 	public void copyFile(String bucketName, String fileName, String destBucketName) {
 		ossClient.copyObject(getBucketName(bucketName), fileName, getBucketName(destBucketName), fileName);
 	}
 
+	@Override
 	@SneakyThrows
 	public void copyFile(String bucketName, String fileName, String destBucketName, String destFileName) {
 		ossClient.copyObject(getBucketName(bucketName), fileName, getBucketName(destBucketName), destFileName);
 	}
 
+	@Override
 	@SneakyThrows
 	public OssFile statFile(String fileName) {
 		return statFile(ossProperties.getBucketName(), fileName);
 	}
 
+	@Override
 	@SneakyThrows
 	public OssFile statFile(String bucketName, String fileName) {
 		ObjectMetadata stat = ossClient.getObjectMetadata(getBucketName(bucketName), fileName);
@@ -95,46 +102,55 @@ public class AliossTemplate {
 		return ossFile;
 	}
 
+	@Override
 	@SneakyThrows
 	public String filePath(String fileName) {
 		return getOssHost().concat(StringPool.SLASH).concat(fileName);
 	}
 
+	@Override
 	@SneakyThrows
 	public String filePath(String bucketName, String fileName) {
 		return getOssHost(bucketName).concat(StringPool.SLASH).concat(fileName);
 	}
 
+	@Override
 	@SneakyThrows
 	public String fileLink(String fileName) {
 		return getOssHost().concat(StringPool.SLASH).concat(fileName);
 	}
 
+	@Override
 	@SneakyThrows
 	public String fileLink(String bucketName, String fileName) {
 		return getOssHost(bucketName).concat(StringPool.SLASH).concat(fileName);
 	}
 
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(MultipartFile file) {
 		return putFile(ossProperties.getBucketName(), file.getOriginalFilename(), file);
 	}
 
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(String fileName, MultipartFile file) {
 		return putFile(ossProperties.getBucketName(), fileName, file);
 	}
 
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(String bucketName, String fileName, MultipartFile file) {
 		return putFile(bucketName, fileName, file.getInputStream());
 	}
 
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(String fileName, InputStream stream) {
 		return putFile(ossProperties.getBucketName(), fileName, stream);
 	}
 
+	@Override
 	@SneakyThrows
 	public BladeFile putFile(String bucketName, String fileName, InputStream stream) {
 		return put(bucketName, stream, fileName, false);
@@ -160,25 +176,30 @@ public class AliossTemplate {
 		BladeFile file = new BladeFile();
 		file.setOriginalName(originalName);
 		file.setName(key);
+		file.setDomain(getOssHost(bucketName));
 		file.setLink(fileLink(bucketName, key));
 		return file;
 	}
 
+	@Override
 	@SneakyThrows
 	public void removeFile(String fileName) {
 		ossClient.deleteObject(getBucketName(), fileName);
 	}
 
+	@Override
 	@SneakyThrows
 	public void removeFile(String bucketName, String fileName) {
 		ossClient.deleteObject(getBucketName(bucketName), fileName);
 	}
 
+	@Override
 	@SneakyThrows
 	public void removeFiles(List<String> fileNames) {
 		fileNames.forEach(this::removeFile);
 	}
 
+	@Override
 	@SneakyThrows
 	public void removeFiles(String bucketName, List<String> fileNames) {
 		fileNames.forEach(fileName -> removeFile(getBucketName(bucketName), fileName));
@@ -227,11 +248,6 @@ public class AliossTemplate {
 		return getUploadToken(bucketName, ossProperties.getArgs().get("expireTime", 3600L));
 	}
 
-	/**
-	 * TODO 上传大小限制、基础路径
-	 * <p>
-	 * 获取上传凭证，普通上传
-	 */
 	public String getUploadToken(String bucketName, long expireTime) {
 		String baseDir = "upload";
 
@@ -258,11 +274,22 @@ public class AliossTemplate {
 		return JsonUtil.toJson(respMap);
 	}
 
+	/**
+	 * 获取域名
+	 *
+	 * @param bucketName 存储桶名称
+	 * @return String
+	 */
 	public String getOssHost(String bucketName) {
 		String prefix = ossProperties.getEndpoint().contains("https://") ? "https://" : "http://";
 		return prefix + getBucketName(bucketName) + StringPool.DOT + ossProperties.getEndpoint().replaceFirst(prefix, StringPool.EMPTY);
 	}
 
+	/**
+	 * 获取域名
+	 *
+	 * @return String
+	 */
 	public String getOssHost() {
 		return getOssHost(ossProperties.getBucketName());
 	}

@@ -22,11 +22,10 @@ import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import lombok.AllArgsConstructor;
 import org.springblade.core.oss.AliossTemplate;
 import org.springblade.core.oss.props.OssProperties;
-import org.springblade.core.oss.rule.BladeOssRule;
 import org.springblade.core.oss.rule.OssRule;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -37,20 +36,15 @@ import org.springframework.context.annotation.Bean;
  *
  * @author Chill
  */
-@AutoConfiguration
 @AllArgsConstructor
-@AutoConfigureAfter(QiniuConfiguration.class)
+@AutoConfiguration(after = OssConfiguration.class)
 @EnableConfigurationProperties(OssProperties.class)
+@ConditionalOnClass({OSSClient.class})
 @ConditionalOnProperty(value = "oss.name", havingValue = "alioss")
 public class AliossConfiguration {
 
-	private OssProperties ossProperties;
-
-	@Bean
-	@ConditionalOnMissingBean(OssRule.class)
-	public OssRule ossRule() {
-		return new BladeOssRule();
-	}
+	private final OssProperties ossProperties;
+	private final OssRule ossRule;
 
 	@Bean
 	@ConditionalOnMissingBean(OSSClient.class)
@@ -74,9 +68,9 @@ public class AliossConfiguration {
 	}
 
 	@Bean
+	@ConditionalOnBean({OSSClient.class})
 	@ConditionalOnMissingBean(AliossTemplate.class)
-	@ConditionalOnBean({OSSClient.class, OssRule.class})
-	public AliossTemplate aliossTemplate(OSSClient ossClient, OssRule ossRule) {
+	public AliossTemplate aliossTemplate(OSSClient ossClient) {
 		return new AliossTemplate(ossClient, ossProperties, ossRule);
 	}
 
