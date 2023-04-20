@@ -1,7 +1,7 @@
  <p align="center">
   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
    <img src="https://img.shields.io/badge/Spring%20Cloud-2021-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.7.1-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.7.10-blue.svg" alt="Downloads">
  </p>  
 
 ## SpringBlade微服务开发平台
@@ -58,7 +58,7 @@ blade-tool
 * Sword-基于React：[https://sword.bladex.vip](https://sword.bladex.vip)
 
 ## 数据大屏
-* Caster-数据大屏展示系统：[https://caster.bladex.vip](https://caster.bladex.vip)
+* 数据大屏展示系统：[https://data.bladex.vip](https://data.bladex.vip)
 
 ## 技术文档
 * [SpringBlade开发手册一览](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册)
@@ -71,7 +71,8 @@ blade-tool
 * 后端Github地址：[https://github.com/chillzhuang/SpringBlade](https://github.com/chillzhuang/SpringBlade)
 * 后端SpringBoot版：[https://gitee.com/smallc/SpringBlade/tree/boot/](https://gitee.com/smallc/SpringBlade/tree/boot/)
 * 前端框架Sword(基于React)：[https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)
-* 前端框架Saber(基于Vue)：[https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)
+* 前端框架Saber(基于Vue2)：[https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)
+* 前端框架Saber3(基于Vue3)：[https://gitee.com/smallc/Saber3](https://gitee.com/smallc/Saber/tree/3.x/)
 
 ## 开源协议
 LGPL（[GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl.html)）

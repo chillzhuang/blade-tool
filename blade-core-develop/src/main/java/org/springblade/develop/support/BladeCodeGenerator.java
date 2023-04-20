@@ -159,6 +159,9 @@ public class BladeCodeGenerator {
 			} else if (Func.equals(systemName, DevelopConstant.SABER_NAME)) {
 				customFile.put("api.js", "/templates/saber/api.js.vm");
 				customFile.put("crud.vue", "/templates/saber/crud.vue.vm");
+			} else if (Func.equals(systemName, DevelopConstant.SABER3_NAME)) {
+				customFile.put("api.js", "/templates/saber3/api.js.vm");
+				customFile.put("crud.vue", "/templates/saber3/crud.vue.vm");
 			}
 		}
 

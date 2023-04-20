@@ -27,10 +27,10 @@ import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.text.SimpleDateFormat;
@@ -50,8 +50,8 @@ import java.util.TimeZone;
 @EnableConfigurationProperties(BladeJacksonProperties.class)
 public class JacksonConfiguration {
 
-	@Primary
 	@Bean
+	@ConditionalOnMissingBean
 	public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
 		builder.simpleDateFormat(DateUtil.PATTERN_DATETIME);
 		//创建ObjectMapper

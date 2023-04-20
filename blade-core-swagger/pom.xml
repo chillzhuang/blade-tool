@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blade-tool</artifactId>
         <groupId>org.springblade</groupId>
-        <version>3.5.0</version>
+        <version>3.6.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -25,8 +25,7 @@
         <!--Swagger-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-micro-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
+            <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>

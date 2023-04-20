@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springblade</groupId>
         <artifactId>blade-tool</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -88,13 +88,13 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.11</version>
+            <version>1.2.16</version>
         </dependency>
         <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.22</version>
+            <version>8.0.32</version>
         </dependency>
         <!-- PostgreSql -->
         <!--<dependency>

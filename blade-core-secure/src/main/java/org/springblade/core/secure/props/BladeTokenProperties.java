@@ -15,6 +15,7 @@
  */
 package org.springblade.core.secure.props;
 
+import io.jsonwebtoken.JwtException;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.launch.constant.TokenConstant;
@@ -41,8 +42,7 @@ public class BladeTokenProperties {
 	 */
 	public String getSignKey() {
 		if (this.signKey.length() < TokenConstant.SIGN_KEY_LENGTH) {
-			log.warn("Token已启用默认签名,请前往blade.token.sign-key设置32位的key");
-			return TokenConstant.SIGN_KEY;
+			throw new JwtException("请配置 blade.token.sign-key 的值, 长度32位以上");
 		}
 		return this.signKey;
 	}

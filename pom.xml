@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>3.5.0</version>
+    <version>3.6.0</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,28 +36,26 @@
     </scm>
 
     <properties>
-        <blade.tool.version>3.5.0</blade.tool.version>
+        <blade.tool.version>3.6.0</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
-        <swagger.version>2.10.5</swagger.version>
-        <swagger.models.version>1.6.2</swagger.models.version>
-        <knife4j.version>2.0.9</knife4j.version>
-        <mybatis.plus.version>3.5.2</mybatis.plus.version>
-        <mybatis.plus.generator.version>3.5.3</mybatis.plus.generator.version>
+
+        <knife4j.version>4.1.0</knife4j.version>
+        <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
+        <mybatis.plus.generator.version>3.5.3.1</mybatis.plus.generator.version>
         <protostuff.version>1.6.0</protostuff.version>
         <disruptor.version>3.4.2</disruptor.version>
-        <guava.version>20.0</guava.version>
-        <spring.boot.admin.version>2.7.1</spring.boot.admin.version>
-        <mica.auto.version>1.2.5</mica.auto.version>
-        <alibaba.cloud.version>2021.0.1.0</alibaba.cloud.version>
-        <alibaba.nacos.version>2.1.0</alibaba.nacos.version>
-        <alibaba.seata.version>1.5.2</alibaba.seata.version>
-        <spring.plugin.version>2.0.0.RELEASE</spring.plugin.version>
+        <guava.version>31.1-jre</guava.version>
+        <mica.auto.version>2.3.2</mica.auto.version>
 
-        <spring.boot.version>2.7.1</spring.boot.version>
-        <spring.cloud.version>2021.0.3</spring.cloud.version>
-        <spring.platform.version>Cairo-SR8</spring.platform.version>
+        <alibaba.cloud.version>2021.0.5.0</alibaba.cloud.version>
+        <alibaba.nacos.version>2.1.2</alibaba.nacos.version>
+
+        <spring.version>5.3.27</spring.version>
+        <spring.boot.version>2.7.10</spring.boot.version>
+        <spring.boot.admin.version>2.7.10</spring.boot.admin.version>
+        <spring.cloud.version>2021.0.6</spring.cloud.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
@@ -86,14 +84,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.plugin</groupId>
-                <artifactId>spring-plugin-core</artifactId>
-                <version>${spring.plugin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.plugin</groupId>
-                <artifactId>spring-plugin-metadata</artifactId>
-                <version>${spring.plugin.version}</version>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>${spring.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -110,9 +105,16 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>io.spring.platform</groupId>
-                <artifactId>platform-bom</artifactId>
-                <version>${spring.platform.version}</version>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${alibaba.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-dependencies</artifactId>
+                <version>${knife4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

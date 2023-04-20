@@ -30,4 +30,9 @@ public interface DevelopConstant {
 	 * saber 系统名
 	 */
 	String SABER_NAME = "saber";
+
+	/**
+	 * saber3 系统名
+	 */
+	String SABER3_NAME = "saber3";
 }
