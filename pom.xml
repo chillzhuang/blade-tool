@@ -42,6 +42,7 @@
         <maven.plugin.version>3.8.1</maven.plugin.version>
 
         <knife4j.version>4.1.0</knife4j.version>
+        <mybatis.version>3.5.13</mybatis.version>
         <mybatis.plus.version>3.5.3.2</mybatis.plus.version>
         <mybatis.plus.generator.version>3.5.3.2</mybatis.plus.generator.version>
         <protostuff.version>1.6.0</protostuff.version>
