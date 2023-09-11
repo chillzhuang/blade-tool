@@ -25,6 +25,7 @@ public interface TokenConstant {
 	String AVATAR = "avatar";
 	String HEADER = "blade-auth";
 	String BEARER = "bearer";
+	String CRYPTO = "crypto";
 	String ACCESS_TOKEN = "access_token";
 	String REFRESH_TOKEN = "refresh_token";
 	String TOKEN_TYPE = "token_type";

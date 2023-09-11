@@ -364,7 +364,7 @@ public final class ImageUtil {
 	 *
 	 * @param src    源图像地址
 	 * @param output 目标图像地址
-	 * @param type      类型
+	 * @param type   类型
 	 */
 	public final static void gray(BufferedImage src, OutputStream output, String type) {
 		try {
@@ -385,7 +385,7 @@ public final class ImageUtil {
 	 *
 	 * @param src      源图像
 	 * @param output   输出流
-	 * @param type      类型
+	 * @param type     类型
 	 * @param text     水印文字
 	 * @param font     水印的字体
 	 * @param color    水印的字体颜色
@@ -424,7 +424,7 @@ public final class ImageUtil {
 	 *
 	 * @param src      源图像
 	 * @param output   输出流
-	 * @param type      类型
+	 * @param type     类型
 	 * @param stamp    水印图片
 	 * @param position 水印位置 {@link ImagePosition}
 	 * @param x        修正值
@@ -477,9 +477,10 @@ public final class ImageUtil {
 
 	/**
 	 * 默认字符串
-	 * @param str 字符串
+	 *
+	 * @param str        字符串
 	 * @param defaultStr 默认值
-	 * @return
+	 * @return 字符串
 	 */
 	public static String defaultString(String str, String defaultStr) {
 		return ((str == null) ? defaultStr : str);

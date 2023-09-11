@@ -45,6 +45,7 @@ public class MappingApiJackson2HttpMessageConverter extends AbstractReadWriteJac
 	 * You can use {@link Jackson2ObjectMapperBuilder} to build it easily.
 	 *
 	 * @param objectMapper ObjectMapper
+	 * @param properties   properties
 	 * @see Jackson2ObjectMapperBuilder#json()
 	 */
 	public MappingApiJackson2HttpMessageConverter(ObjectMapper objectMapper, BladeJacksonProperties properties) {

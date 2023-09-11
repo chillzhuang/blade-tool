@@ -38,6 +38,11 @@ public class BladeTokenProperties {
 	private String signKey = StringPool.EMPTY;
 
 	/**
+	 * token签名
+	 */
+	private String aesKey = StringPool.EMPTY;
+
+	/**
 	 * 获取签名规则
 	 */
 	public String getSignKey() {

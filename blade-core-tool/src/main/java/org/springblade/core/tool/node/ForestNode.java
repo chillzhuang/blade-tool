@@ -22,11 +22,11 @@ import lombok.EqualsAndHashCode;
 /**
  * 森林节点类
  *
- * @author Chill
+ * @author smallchill
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ForestNode extends BaseNode {
+public class ForestNode extends BaseNode<ForestNode> {
 
 	private static final long serialVersionUID = 1L;
 

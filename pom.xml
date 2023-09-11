@@ -5,7 +5,7 @@
 
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>3.6.0</version>
+    <version>3.7.0</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,14 +36,14 @@
     </scm>
 
     <properties>
-        <blade.tool.version>3.6.0</blade.tool.version>
+        <blade.tool.version>3.7.0</blade.tool.version>
 
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
 
         <knife4j.version>4.1.0</knife4j.version>
-        <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
-        <mybatis.plus.generator.version>3.5.3.1</mybatis.plus.generator.version>
+        <mybatis.plus.version>3.5.3.2</mybatis.plus.version>
+        <mybatis.plus.generator.version>3.5.3.2</mybatis.plus.generator.version>
         <protostuff.version>1.6.0</protostuff.version>
         <disruptor.version>3.4.2</disruptor.version>
         <guava.version>31.1-jre</guava.version>
@@ -52,10 +52,10 @@
         <alibaba.cloud.version>2021.0.5.0</alibaba.cloud.version>
         <alibaba.nacos.version>2.1.2</alibaba.nacos.version>
 
-        <spring.version>5.3.27</spring.version>
-        <spring.boot.version>2.7.10</spring.boot.version>
+        <spring.version>5.3.29</spring.version>
+        <spring.boot.version>2.7.15</spring.boot.version>
         <spring.boot.admin.version>2.7.10</spring.boot.admin.version>
-        <spring.cloud.version>2021.0.6</spring.cloud.version>
+        <spring.cloud.version>2021.0.8</spring.cloud.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>

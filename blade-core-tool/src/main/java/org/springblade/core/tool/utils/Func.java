@@ -399,6 +399,20 @@ public class Func {
 	}
 
 	/**
+	 * 强转string(包含空字符串),并去掉多余空格
+	 *
+	 * @param str          字符串
+	 * @param defaultValue 默认值
+	 * @return {String}
+	 */
+	public static String toStrWithEmpty(Object str, String defaultValue) {
+		if (null == str || str.equals(StringPool.NULL) || str.equals(StringPool.EMPTY)) {
+			return defaultValue;
+		}
+		return String.valueOf(str);
+	}
+
+	/**
 	 * 判断一个字符串是否是数字
 	 *
 	 * @param cs the CharSequence to check, may be null

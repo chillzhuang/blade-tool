@@ -18,10 +18,14 @@ package org.springblade.core.launch.props;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.EnvironmentCapable;
 import org.springframework.lang.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 配置文件
@@ -29,7 +33,9 @@ import java.util.Map;
  * @author Chill
  */
 @ConfigurationProperties("blade")
-public class BladeProperties {
+public class BladeProperties implements EnvironmentAware, EnvironmentCapable {
+	@Nullable
+	private Environment environment;
 
 	/**
 	 * 开发环境
@@ -204,4 +210,14 @@ public class BladeProperties {
 		return prop.containsKey(key);
 	}
 
+	@Override
+	public void setEnvironment(Environment environment) {
+		this.environment = environment;
+	}
+
+	@Override
+	public Environment getEnvironment() {
+		Objects.requireNonNull(environment, "Spring boot 环境下 Environment 不可能为null");
+		return this.environment;
+	}
 }

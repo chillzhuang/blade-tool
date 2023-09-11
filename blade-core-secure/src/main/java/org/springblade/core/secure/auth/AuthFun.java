@@ -15,11 +15,16 @@
  */
 package org.springblade.core.secure.auth;
 
+import org.springblade.core.launch.constant.TokenConstant;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.CollectionUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringUtil;
+import org.springblade.core.tool.utils.WebUtil;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * 权限判断
@@ -74,6 +79,19 @@ public class AuthFun {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * 判断请求是否为加密token
+	 *
+	 * @return {boolean}
+	 */
+	public boolean hasCrypto() {
+		HttpServletRequest request = WebUtil.getRequest();
+		String auth = Objects.requireNonNull(request).getHeader(TokenConstant.HEADER);
+		return SecureUtil.isCrypto(
+			StringUtil.isNotBlank(auth) ? auth : request.getParameter(TokenConstant.HEADER)
+		);
 	}
 
 }

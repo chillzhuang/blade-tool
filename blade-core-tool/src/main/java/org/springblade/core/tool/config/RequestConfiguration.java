@@ -42,6 +42,8 @@ public class RequestConfiguration {
 
 	/**
 	 * 全局过滤器
+	 *
+	 * @return 自定义过滤器
 	 */
 	@Bean
 	public FilterRegistrationBean<BladeRequestFilter> bladeFilterRegistration() {

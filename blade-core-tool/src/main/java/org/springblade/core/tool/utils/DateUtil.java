@@ -406,6 +406,7 @@ public class DateUtil {
 	 * @param dateStr 时间字符串
 	 * @param pattern 表达式
 	 * @param query   移动查询
+	 * @param <T>     泛型
 	 * @return 时间
 	 */
 	public static <T> T parse(String dateStr, String pattern, TemporalQuery<T> query) {

@@ -21,21 +21,21 @@ import java.util.List;
 /**
  * Created by Blade.
  *
- * @author Chill
+ * @author smallchill
  */
-public interface INode extends Serializable {
+public interface INode<T> extends Serializable {
 
 	/**
 	 * 主键
 	 *
-	 * @return Integer
+	 * @return Long
 	 */
 	Long getId();
 
 	/**
 	 * 父主键
 	 *
-	 * @return Integer
+	 * @return Long
 	 */
 	Long getParentId();
 
@@ -44,7 +44,7 @@ public interface INode extends Serializable {
 	 *
 	 * @return List
 	 */
-	List<INode> getChildren();
+	List<T> getChildren();
 
 	/**
 	 * 是否有子孙节点

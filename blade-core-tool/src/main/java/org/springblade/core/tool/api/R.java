@@ -215,6 +215,7 @@ public class R<T> implements Serializable {
 	 * 返回R
 	 *
 	 * @param flag 成功状态
+	 * @param <T>  泛型
 	 * @return R
 	 */
 	public static <T> R<T> status(boolean flag) {

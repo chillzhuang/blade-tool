@@ -26,10 +26,10 @@ import java.util.List;
 /**
  * 节点基类
  *
- * @author Chill
+ * @author smallchill
  */
 @Data
-public class BaseNode implements INode {
+public class BaseNode<T> implements INode<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,7 +49,7 @@ public class BaseNode implements INode {
 	 * 子孙节点
 	 */
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	protected List<INode> children = new ArrayList<>();
+	protected List<T> children = new ArrayList<T>();
 
 	/**
 	 * 是否有子孙节点
@@ -59,6 +59,8 @@ public class BaseNode implements INode {
 
 	/**
 	 * 是否有子孙节点
+	 *
+	 * @return Boolean
 	 */
 	@Override
 	public Boolean getHasChildren() {

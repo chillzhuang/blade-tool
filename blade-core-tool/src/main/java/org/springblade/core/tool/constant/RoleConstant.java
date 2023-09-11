@@ -34,4 +34,6 @@ public class RoleConstant {
 
 	public static final String HAS_ROLE_TEST = "hasRole('" + TEST + "')";
 
+	public static final String HAS_CRYPTO = "hasCrypto()";
+
 }

@@ -46,6 +46,7 @@ public class SecureUtil {
 
 	private final static String HEADER = TokenConstant.HEADER;
 	private final static String BEARER = TokenConstant.BEARER;
+	private final static String CRYPTO = TokenConstant.CRYPTO;
 	private final static String ACCOUNT = TokenConstant.ACCOUNT;
 	private final static String USER_ID = TokenConstant.USER_ID;
 	private final static String ROLE_ID = TokenConstant.ROLE_ID;
@@ -292,19 +293,54 @@ public class SecureUtil {
 	 */
 	public static Claims getClaims(HttpServletRequest request) {
 		String auth = request.getHeader(SecureUtil.HEADER);
-		if (StringUtil.isNotBlank(auth) && auth.length() > AUTH_LENGTH) {
-			String headStr = auth.substring(0, 6).toLowerCase();
-			if (headStr.compareTo(SecureUtil.BEARER) == 0) {
-				auth = auth.substring(7);
-				return SecureUtil.parseJWT(auth);
-			}
-		} else {
-			String parameter = request.getParameter(SecureUtil.HEADER);
-			if (StringUtil.isNotBlank(parameter)) {
-				return SecureUtil.parseJWT(parameter);
-			}
+		String token = getToken(
+			StringUtil.isNotBlank(auth) ? auth : request.getParameter(SecureUtil.HEADER)
+		);
+		return SecureUtil.parseJWT(token);
+	}
+
+	/**
+	 * 获取请求传递的token串
+	 *
+	 * @param auth token
+	 * @return String
+	 */
+	public static String getToken(String auth) {
+		if (isBearer(auth)) {
+			return auth.substring(AUTH_LENGTH);
+		}
+		if (isCrypto(auth)) {
+			return AesUtil.decryptFormBase64ToString(auth.substring(AUTH_LENGTH), getTokenProperties().getAesKey());
 		}
 		return null;
+	}
+
+	/**
+	 * 判断token类型为bearer
+	 *
+	 * @param auth token
+	 * @return String
+	 */
+	public static Boolean isBearer(String auth) {
+		if ((auth != null) && (auth.length() > AUTH_LENGTH)) {
+			String headStr = auth.substring(0, 6).toLowerCase();
+			return headStr.compareTo(BEARER) == 0;
+		}
+		return false;
+	}
+
+	/**
+	 * 判断token类型为crypto
+	 *
+	 * @param auth token
+	 * @return String
+	 */
+	public static Boolean isCrypto(String auth) {
+		if ((auth != null) && (auth.length() > AUTH_LENGTH)) {
+			String headStr = auth.substring(0, 6).toLowerCase();
+			return headStr.compareTo(CRYPTO) == 0;
+		}
+		return false;
 	}
 
 	/**
