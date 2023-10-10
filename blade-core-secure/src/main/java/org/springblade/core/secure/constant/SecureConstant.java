@@ -55,6 +55,6 @@ public interface SecureConstant {
 	/**
 	 * 查询client_id
 	 */
-	String DEFAULT_SELECT_STATEMENT = BASE_STATEMENT + " where client_id = ?";
+	String DEFAULT_SELECT_STATEMENT = BASE_STATEMENT + " where client_id = ? and is_deleted = 0";
 
 }
