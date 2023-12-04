@@ -16,12 +16,15 @@
 package org.springblade.core.mp.support;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.SneakyThrows;
 import org.springblade.core.tool.utils.DateUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.StringUtil;
 
+import java.sql.SQLException;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * 定义常用的 sql关键字
@@ -29,7 +32,19 @@ import java.util.Map;
  * @author Chill
  */
 public class SqlKeyword {
-	private final static String SQL_REGEX = "'|%|--|insert|delete|select|sleep|count|group|union|drop|truncate|alter|grant|execute|exec|xp_cmdshell|call|declare|sql";
+	/**
+	 * 常规sql字符匹配关键词
+	 */
+	private final static String SQL_REGEX = "(?i)(?<![a-z])('|%|--|insert|delete|select|sleep|count|updatexml|group|union|drop|truncate|alter|grant|execute|exec|xp_cmdshell|call|declare|sql)(?![a-z])";
+
+	/**
+	 * 二次匹配防止双写等注入手段
+	 */
+	private final static Pattern PATTERN = Pattern.compile("(?:--|[\"';%]|\\binsert\\b|\\bdelete\\b|\\bselect\\b|\\bcount\\b|\\bupdatexml\\b|\\bsleep\\b|group\\s+by|\\bunion\\b|\\bdrop\\b|\\btruncate\\b|\\balter\\b|\\bgrant\\b|\\bexecute\\b|\\bxp_cmdshell\\b|\\bcall\\b|\\bdeclare\\b|\\bsql\\b)");
+	/**
+	 * sql注入警告语
+	 */
+	private final static String SQL_INJECTION_MESSAGE = "SQL keyword injection prevention processing!";
 
 	private static final String EQUAL = "_equal";
 	private static final String NOT_EQUAL = "_notequal";
@@ -121,10 +136,28 @@ public class SqlKeyword {
 	 * @param param 关键字
 	 * @return string
 	 */
+	@SneakyThrows(SQLException.class)
 	public static String filter(String param) {
 		if (param == null) {
 			return null;
 		}
-		return param.replaceAll("(?i)" + SQL_REGEX, StringPool.EMPTY);
+		// 将校验到的sql关键词替换为空字符串
+		String sql = param.replaceAll(SQL_REGEX, StringPool.EMPTY);
+		// 二次校验，避免双写绕过等情况出现
+		if (match(sql)) {
+			throw new SQLException(SQL_INJECTION_MESSAGE);
+		}
+		return sql;
 	}
+
+	/**
+	 * 判断字符是否包含SQL关键字
+	 *
+	 * @param param 关键字
+	 * @return boolean
+	 */
+	public static Boolean match(String param) {
+		return Func.isNotEmpty(param) && PATTERN.matcher(param).find();
+	}
+
 }
