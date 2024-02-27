@@ -17,6 +17,7 @@ package org.springblade.core.mp.base;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.SneakyThrows;
 import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.constant.BladeConstant;
@@ -24,6 +25,7 @@ import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +41,35 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 
 	@Override
 	public boolean save(T entity) {
+		this.resolveSave(entity);
+		return super.save(entity);
+	}
+
+	@Override
+	public boolean saveBatch(Collection<T> entityList, int batchSize) {
+		entityList.forEach(this::resolveSave);
+		return super.saveBatch(entityList, batchSize);
+	}
+
+	@Override
+	public boolean updateById(T entity) {
+		this.resolveUpdate(entity);
+		return super.updateById(entity);
+	}
+
+	@Override
+	public boolean updateBatchById(Collection<T> entityList, int batchSize) {
+		entityList.forEach(this::resolveUpdate);
+		return super.updateBatchById(entityList, batchSize);
+	}
+
+	@Override
+	public boolean deleteLogic(@NotEmpty List<Long> ids) {
+		return super.removeByIds(ids);
+	}
+
+	@SneakyThrows
+	private void resolveSave(T entity) {
 		BladeUser user = SecureUtil.getUser();
 		if (user != null) {
 			entity.setCreateUser(user.getUserId());
@@ -51,22 +82,15 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 			entity.setStatus(BladeConstant.DB_STATUS_NORMAL);
 		}
 		entity.setIsDeleted(BladeConstant.DB_NOT_DELETED);
-		return super.save(entity);
 	}
 
-	@Override
-	public boolean updateById(T entity) {
+	@SneakyThrows
+	private void resolveUpdate(T entity) {
 		BladeUser user = SecureUtil.getUser();
 		if (user != null) {
 			entity.setUpdateUser(user.getUserId());
 		}
 		entity.setUpdateTime(DateUtil.now());
-		return super.updateById(entity);
-	}
-
-	@Override
-	public boolean deleteLogic(@NotEmpty List<Long> ids) {
-		return super.removeByIds(ids);
 	}
 
 }
