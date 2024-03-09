@@ -2,10 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.springblade</groupId>
     <artifactId>blade-tool</artifactId>
-    <version>3.7.2</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
     <name>blade-tool</name>
     <description>
@@ -36,11 +35,12 @@
     </scm>
 
     <properties>
-        <blade.tool.version>3.7.2</blade.tool.version>
-
+        <!-- Blade-Tool Version -->
+        <revision>3.7.1</revision>
+        <!-- jdk Version -->
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
-
+        <maven-flatten.version>1.3.0</maven-flatten.version>
         <knife4j.version>4.3.0</knife4j.version>
         <mybatis.version>3.5.13</mybatis.version>
         <mybatis.spring.version>2.1.1</mybatis.spring.version>
@@ -64,6 +64,7 @@
     </properties>
 
     <modules>
+        <module>blade-core-bom</module>
         <module>blade-core-boot</module>
         <module>blade-core-cloud</module>
         <module>blade-core-develop</module>
@@ -120,6 +121,98 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>net.dreamlu</groupId>
+                <artifactId>mica-auto</artifactId>
+                <version>${mica.auto.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- blade tool -->
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-launch</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-boot</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-cloud</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-tool</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-develop</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-secure</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-social</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-log</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-test</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-swagger</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-oss</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-transaction</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-loadbalancer</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-report</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-datascope</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-core-crypto</artifactId>
+                <version>${revision}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -159,7 +252,6 @@
         <dependency>
             <groupId>net.dreamlu</groupId>
             <artifactId>mica-auto</artifactId>
-            <version>${mica.auto.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -190,6 +282,31 @@
                         <arg>-parameters</arg>
                     </compilerArgs>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${maven-flatten.version}</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>oss</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
