@@ -15,7 +15,10 @@
  */
 package org.springblade.core.mp.base;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.SneakyThrows;
 import org.springblade.core.secure.BladeUser;
@@ -66,6 +69,16 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 	@Override
 	public boolean deleteLogic(@NotEmpty List<Long> ids) {
 		return super.removeByIds(ids);
+	}
+
+	@Override
+	public boolean isFieldDuplicate(SFunction<T, ?> field, Object value, Long excludedId) {
+		LambdaQueryWrapper<T> queryWrapper = Wrappers.lambdaQuery();
+		queryWrapper.eq(field, value);
+		if (excludedId != null) {
+			queryWrapper.ne(T::getId, excludedId);
+		}
+		return baseMapper.selectCount(queryWrapper) > 0;
 	}
 
 	@SneakyThrows

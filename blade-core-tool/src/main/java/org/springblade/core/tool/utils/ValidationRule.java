@@ -13,38 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.mp.base;
+package org.springblade.core.tool.utils;
 
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.extension.service.IService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-import javax.validation.constraints.NotEmpty;
-import java.util.List;
+import java.io.Serializable;
 
 /**
- * 基础业务接口
+ * 校验规则类
  *
- * @param <T>
  * @author Chill
  */
-public interface BaseService<T> extends IService<T> {
-
+@Data
+@AllArgsConstructor
+public class ValidationRule implements Serializable {
+	private static final long serialVersionUID = 1L;
 	/**
-	 * 逻辑删除
-	 *
-	 * @param ids id集合(逗号分隔)
-	 * @return boolean
+	 * 校验值
 	 */
-	boolean deleteLogic(@NotEmpty List<Long> ids);
-
+	private String value;
 	/**
-	 * 判断字段是否重复
-	 *
-	 * @param field      字段
-	 * @param value      字段值
-	 * @param excludedId 排除的id
-	 * @return boolean
+	 * 校验正则
 	 */
-	boolean isFieldDuplicate(SFunction<T, ?> field, Object value, Long excludedId);
-
+	private String regex;
+	/**
+	 * 校验信息提示
+	 */
+	private String message;
 }

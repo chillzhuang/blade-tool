@@ -16,6 +16,8 @@
 package org.springblade.core.mp.base;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -37,11 +39,26 @@ import java.util.Date;
 public class BaseEntity implements Serializable {
 
 	/**
+	 * 主键
+	 */
+	@ApiModelProperty(value = "主键")
+	@TableId(value = "id", type = IdType.ASSIGN_ID)
+	@JsonSerialize(using = ToStringSerializer.class)
+	private Long id;
+
+	/**
 	 * 创建人
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
 	@ApiModelProperty(value = "创建人")
 	private Long createUser;
+
+	/**
+	 * 创建部门
+	 */
+	@JsonSerialize(using = ToStringSerializer.class)
+	@ApiModelProperty(value = "创建部门")
+	private Long createDept;
 
 	/**
 	 * 创建时间
