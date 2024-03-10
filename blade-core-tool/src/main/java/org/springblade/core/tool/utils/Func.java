@@ -727,6 +727,32 @@ public class Func {
 	}
 
 	/**
+	 * 获取第一位Long数值
+	 *
+	 * @param str 被转换的值
+	 * @return 结果
+	 */
+	public static Long firstLong(String str) {
+		return firstLong(",", str);
+	}
+
+	/**
+	 * 获取第一位Long数值
+	 *
+	 * @param split 分隔符
+	 * @param str   被转换的值
+	 * @return 结果
+	 */
+	public static Long firstLong(String split, String str) {
+		List<Long> longs = toLongList(split, str);
+		if (isEmpty(longs)) {
+			return null;
+		} else {
+			return longs.get(0);
+		}
+	}
+
+	/**
 	 * 转换为String数组<br>
 	 *
 	 * @param str 被转换的值

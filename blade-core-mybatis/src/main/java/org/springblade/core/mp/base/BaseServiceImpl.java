@@ -25,6 +25,7 @@ import org.springblade.core.secure.BladeUser;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.utils.DateUtil;
+import org.springblade.core.tool.utils.Func;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
@@ -86,6 +87,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 		BladeUser user = SecureUtil.getUser();
 		if (user != null) {
 			entity.setCreateUser(user.getUserId());
+			entity.setCreateDept(Func.firstLong(user.getDeptId()));
 			entity.setUpdateUser(user.getUserId());
 		}
 		Date now = DateUtil.now();
