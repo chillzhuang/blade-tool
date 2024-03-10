@@ -53,4 +53,25 @@ public class TemplateUtil {
 		return sb.toString();
 	}
 
+	/**
+	 * 解析模版
+	 *
+	 * @param template 模版
+	 * @param params   参数
+	 * @return 解析后的字符串
+	 */
+	public static String safeProcess(String template, Kv params) {
+		Matcher matcher = pattern.matcher(template);
+		StringBuffer sb = new StringBuffer();
+		while (matcher.find()) {
+			String key = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
+			String replacement = params.getStr(key);
+			if (replacement != null) {
+				matcher.appendReplacement(sb, replacement);
+			}
+		}
+		matcher.appendTail(sb);
+		return sb.toString();
+	}
+
 }
