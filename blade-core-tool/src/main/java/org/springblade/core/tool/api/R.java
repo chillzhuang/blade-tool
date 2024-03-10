@@ -131,6 +131,16 @@ public class R<T> implements Serializable {
 	}
 
 	/**
+	 * 返回成功
+	 *
+	 * @param <T> 泛型标记
+	 * @return Result
+	 */
+	public static <T> R<T> success() {
+		return new R<>(ResultCode.SUCCESS);
+	}
+
+	/**
 	 * 返回R
 	 *
 	 * @param msg 消息
@@ -220,6 +230,18 @@ public class R<T> implements Serializable {
 	 */
 	public static <T> R<T> status(boolean flag) {
 		return flag ? success(BladeConstant.DEFAULT_SUCCESS_MESSAGE) : fail(BladeConstant.DEFAULT_FAILURE_MESSAGE);
+	}
+
+	/**
+	 * 根据状态返回成功或者失败
+	 *
+	 * @param status 状态
+	 * @param msg    异常msg
+	 * @param <T>    泛型标记
+	 * @return Result
+	 */
+	public static <T> R<T> status(boolean status, String msg) {
+		return status ? R.success() : R.fail(msg);
 	}
 
 }
