@@ -122,11 +122,30 @@ public class SecureUtil {
 	/**
 	 * 获取用户信息
 	 *
+	 * @param auth auth
+	 * @return BladeUser
+	 */
+	public static BladeUser getUser(String auth) {
+		return getUser(getClaims(auth));
+	}
+
+	/**
+	 * 获取用户信息
+	 *
 	 * @param request request
 	 * @return BladeUser
 	 */
 	public static BladeUser getUser(HttpServletRequest request) {
-		Claims claims = getClaims(request);
+		return getUser(getClaims(request));
+	}
+
+	/**
+	 * 获取用户信息
+	 *
+	 * @param claims Claims
+	 * @return BladeUser
+	 */
+	public static BladeUser getUser(Claims claims) {
 		if (claims == null) {
 			return null;
 		}
@@ -293,10 +312,20 @@ public class SecureUtil {
 	 */
 	public static Claims getClaims(HttpServletRequest request) {
 		String auth = request.getHeader(SecureUtil.HEADER);
-		String token = getToken(
-			StringUtil.isNotBlank(auth) ? auth : request.getParameter(SecureUtil.HEADER)
-		);
-		return SecureUtil.parseJWT(token);
+		if (StringUtil.isBlank(auth)) {
+			auth = request.getParameter(SecureUtil.HEADER);
+		}
+		return getClaims(auth);
+	}
+
+	/**
+	 * 获取Claims
+	 *
+	 * @param auth auth
+	 * @return Claims
+	 */
+	public static Claims getClaims(String auth) {
+		return SecureUtil.parseJWT(getToken(auth));
 	}
 
 	/**
