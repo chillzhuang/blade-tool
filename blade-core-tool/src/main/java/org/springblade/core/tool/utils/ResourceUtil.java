@@ -15,11 +15,7 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.core.io.*;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
@@ -42,7 +38,6 @@ public class ResourceUtil extends org.springframework.util.ResourceUtils {
 	 * 2. file:
 	 * 3. ftp:
 	 * 4. http: and https:
-	 * 5. classpath*:
 	 * 6. C:/dir1/ and /Users/lcm
 	 * </p>
 	 *
@@ -53,7 +48,8 @@ public class ResourceUtil extends org.springframework.util.ResourceUtils {
 	public static Resource getResource(String resourceLocation) throws IOException {
 		Assert.notNull(resourceLocation, "Resource location must not be null");
 		if (resourceLocation.startsWith(CLASSPATH_URL_PREFIX)) {
-			return new ClassPathResource(resourceLocation);
+			String path = resourceLocation.substring(CLASSPATH_URL_PREFIX.length());
+			return new ClassPathResource(path);
 		}
 		if (resourceLocation.startsWith(FTP_URL_PREFIX)) {
 			return new UrlResource(resourceLocation);
@@ -61,10 +57,25 @@ public class ResourceUtil extends org.springframework.util.ResourceUtils {
 		if (resourceLocation.matches(HTTP_REGEX)) {
 			return new UrlResource(resourceLocation);
 		}
-		if (resourceLocation.startsWith(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX)) {
-			return SpringUtil.getContext().getResource(resourceLocation);
+		if (resourceLocation.startsWith(FILE_URL_PREFIX)) {
+			return new FileUrlResource(resourceLocation);
 		}
 		return new FileSystemResource(resourceLocation);
+	}
+
+	/**
+	 * 读取资源文件为字符串
+	 *
+	 * @param resourceLocation 资源文件地址
+	 * @return 字符串
+	 */
+	public static String getAsString(String resourceLocation) {
+		try {
+			Resource resource = getResource(resourceLocation);
+			return IoUtil.toString(resource.getInputStream());
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
 	}
 
 }
