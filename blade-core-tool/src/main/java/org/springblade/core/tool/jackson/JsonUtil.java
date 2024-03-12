@@ -404,6 +404,86 @@ public class JsonUtil {
 	}
 
 	/**
+	 * 将json反序列化成对象
+	 *
+	 * @param content  bytes
+	 * @param javaType JavaType
+	 * @param <T>      T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable byte[] content, JavaType javaType) {
+		if (content == null || content.length == 0) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(content, javaType);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
+	 * 将json反序列化成对象
+	 *
+	 * @param jsonString jsonString
+	 * @param javaType   JavaType
+	 * @param <T>        T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable String jsonString, JavaType javaType) {
+		if (StringUtil.isBlank(jsonString)) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(jsonString, javaType);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
+	 * 将json反序列化成对象
+	 *
+	 * @param in       InputStream
+	 * @param javaType JavaType
+	 * @param <T>      T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable InputStream in, JavaType javaType) {
+		if (in == null) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(in, javaType);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
+	 * 将java.io.Reader反序列化成对象
+	 *
+	 * @param reader   java.io.Reader
+	 * @param javaType JavaType
+	 * @param <T>      T 泛型标记
+	 * @return Bean
+	 */
+	@Nullable
+	public static <T> T readValue(@Nullable Reader reader, JavaType javaType) {
+		if (reader == null) {
+			return null;
+		}
+		try {
+			return getInstance().readValue(reader, javaType);
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
 	 * clazz 获取 JavaType
 	 *
 	 * @param clazz Class
