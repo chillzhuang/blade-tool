@@ -50,6 +50,20 @@ public class BladeApplication {
 	}
 
 	public static SpringApplicationBuilder createSpringApplicationBuilder(String appName, Class source, String... args) {
+		return createSpringApplicationBuilder(null,appName, source, args);
+	}
+
+	/**
+	 * 兼容tomcat等外部容器启动，使用此方法时请按照1进行工程改造
+	 * <pre>1-https://sns.bladex.cn/q-6813.html</pre>
+	 * <pre>2-解决https://sns.bladex.cn/q-66.html问题</pre>
+	 * @param builder builder
+	 * @param appName appName
+	 * @param source source
+	 * @param args args
+	 * @return
+	 */
+	public static SpringApplicationBuilder createSpringApplicationBuilder(SpringApplicationBuilder builder,String appName, Class source, String... args){
 		Assert.hasText(appName, "[appName]服务名不能为空");
 		// 读取环境变量，使用spring boot的规则
 		ConfigurableEnvironment environment = new StandardEnvironment();
@@ -68,7 +82,10 @@ public class BladeApplication {
 		// 当前使用
 		List<String> activeProfileList = new ArrayList<>(profiles);
 		Function<Object[], String> joinFun = StringUtils::arrayToCommaDelimitedString;
-		SpringApplicationBuilder builder = new SpringApplicationBuilder(source);
+		if(builder==null){
+			// 如果builder为空 创建 此操作将启动内嵌web容器 以jar模式启动
+			builder = new SpringApplicationBuilder(source);
+		}
 		String profile;
 		if (activeProfileList.isEmpty()) {
 			// 默认dev开发
@@ -102,9 +119,10 @@ public class BladeApplication {
 		// 加载自定义组件
 		List<LauncherService> launcherList = new ArrayList<>();
 		ServiceLoader.load(LauncherService.class).forEach(launcherList::add);
+		SpringApplicationBuilder finalBuilder = builder;
 		launcherList.stream().sorted(Comparator.comparing(LauncherService::getOrder)).collect(Collectors.toList())
-			.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
-		return builder;
+			.forEach(launcherService -> launcherService.launcher(finalBuilder, appName, profile));
+		return finalBuilder;
 	}
 
 	/**
