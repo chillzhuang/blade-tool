@@ -1,7 +1,8 @@
  <p align="center">
-  <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
-   <img src="https://img.shields.io/badge/Spring%20Cloud-2021-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.7.10-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
+   <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
+   <img src="https://img.shields.io/badge/Spring%20Cloud-2023-blue.svg" alt="Coverage Status">
+   <img src="https://img.shields.io/badge/Spring%20Boot-3.2-blue.svg" alt="Downloads">
  </p>  
 
 ## SpringBlade微服务开发平台

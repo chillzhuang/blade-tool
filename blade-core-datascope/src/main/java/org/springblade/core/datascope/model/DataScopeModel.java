@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 import org.springblade.core.datascope.constant.DataScopeConstant;
 import org.springblade.core.datascope.enums.DataScopeEnum;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -31,6 +32,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class DataScopeModel implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	/**

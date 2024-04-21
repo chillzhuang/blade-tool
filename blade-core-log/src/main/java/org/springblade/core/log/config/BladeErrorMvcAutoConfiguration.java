@@ -36,7 +36,7 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.servlet.Servlet;
+import jakarta.servlet.Servlet;
 
 /**
  * 统一异常处理

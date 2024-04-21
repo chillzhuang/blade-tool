@@ -25,7 +25,7 @@ import org.springblade.core.cloud.sentinel.BladeSentinelInvocationHandler;
 import org.springframework.beans.BeansException;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.cloud.openfeign.FeignContext;
+import org.springframework.cloud.openfeign.FeignClientFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -50,11 +50,10 @@ public class BladeFeignSentinel {
 	public static final class Builder extends Feign.Builder implements ApplicationContextAware {
 		private Contract contract = new Contract.Default();
 		private ApplicationContext applicationContext;
-		private FeignContext feignContext;
+		private FeignClientFactory feignContext;
 
 		@Override
-		public Feign.Builder invocationHandlerFactory(
-			InvocationHandlerFactory invocationHandlerFactory) {
+		public Feign.Builder invocationHandlerFactory(InvocationHandlerFactory invocationHandlerFactory) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -65,7 +64,7 @@ public class BladeFeignSentinel {
 		}
 
 		@Override
-		public Feign build() {
+		public Feign internalBuild() {
 			super.invocationHandlerFactory(new InvocationHandlerFactory() {
 				@SneakyThrows
 				@Override
@@ -115,13 +114,13 @@ public class BladeFeignSentinel {
 				}
 			});
 			super.contract(new SentinelContractHolder(contract));
-			return super.build();
+			return super.internalBuild();
 		}
 
 		@Override
 		public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 			this.applicationContext = applicationContext;
-			feignContext = this.applicationContext.getBean(FeignContext.class);
+			feignContext = this.applicationContext.getBean(FeignClientFactory.class);
 		}
 	}
 

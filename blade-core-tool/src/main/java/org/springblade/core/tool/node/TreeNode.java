@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.springblade.core.tool.utils.Func;
 
+import java.io.Serial;
 import java.util.Objects;
 
 /**
@@ -30,6 +31,7 @@ import java.util.Objects;
 @Data
 public class TreeNode extends BaseNode<TreeNode> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	private String title;

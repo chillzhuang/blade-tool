@@ -42,8 +42,8 @@ public class BladeErrorAttributes extends DefaultErrorAttributes {
 
 	@Override
 	public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
-		String requestUri = this.getAttr(webRequest, "javax.servlet.error.request_uri");
-		Integer status = this.getAttr(webRequest, "javax.servlet.error.status_code");
+		String requestUri = this.getAttr(webRequest, "jakarta.servlet.error.request_uri");
+		Integer status = this.getAttr(webRequest, "jakarta.servlet.error.status_code");
 		Throwable error = getError(webRequest);
 		R result;
 		if (error == null) {

@@ -17,6 +17,7 @@ package org.springblade.core.launch.props;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springblade.core.launch.constant.AppConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
@@ -198,6 +199,33 @@ public class BladeProperties implements EnvironmentAware, EnvironmentCapable {
 			return Double.parseDouble(value.trim());
 		}
 		return defaultValue;
+	}
+
+	/**
+	 * 是否是开发环境
+	 *
+	 * @return boolean
+	 */
+	public boolean isDev() {
+		return AppConstant.DEV_CODE.equals(getEnv());
+	}
+
+	/**
+	 * 是否是生产环境
+	 *
+	 * @return boolean
+	 */
+	public boolean isProd() {
+		return AppConstant.PROD_CODE.equals(getEnv());
+	}
+
+	/**
+	 * 是否是测试环境
+	 *
+	 * @return boolean
+	 */
+	public boolean isTest() {
+		return AppConstant.TEST_CODE.equals(getEnv());
 	}
 
 	/**

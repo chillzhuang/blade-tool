@@ -16,7 +16,7 @@
 package org.springblade.core.mp.base;
 
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -32,7 +32,7 @@ public class TenantEntity extends BaseEntity {
 	/**
 	 * 租户ID
 	 */
-	@ApiModelProperty(value = "租户ID")
+	@Schema(description = "租户ID")
 	private String tenantId;
 
 }

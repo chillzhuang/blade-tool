@@ -18,6 +18,7 @@ package org.springblade.core.tool.utils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -28,6 +29,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 public class ValidationRule implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 校验值

@@ -22,7 +22,6 @@ import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.launch.server.ServerInfo;
 import org.springblade.core.log.constant.EventConstant;
 import org.springblade.core.log.feign.ILogClient;
-import org.springblade.core.log.model.LogAbstract;
 import org.springblade.core.log.model.LogError;
 import org.springblade.core.log.utils.LogAbstractUtil;
 import org.springframework.context.event.EventListener;
@@ -48,10 +47,14 @@ public class ErrorLogListener {
 	@Order
 	@EventListener(ErrorLogEvent.class)
 	public void saveErrorLog(ErrorLogEvent event) {
-		Map<String, Object> source = (Map<String, Object>) event.getSource();
-		LogError logError = (LogError) source.get(EventConstant.EVENT_LOG);
-		LogAbstractUtil.addOtherInfoToLog(logError, bladeProperties, serverInfo);
-		logService.saveErrorLog(logError);
+		try {
+			Map<String, Object> source = (Map<String, Object>) event.getSource();
+			LogError logError = (LogError) source.get(EventConstant.EVENT_LOG);
+			LogAbstractUtil.addOtherInfoToLog(logError, bladeProperties, serverInfo);
+			logService.saveErrorLog(logError);
+		} catch (Exception e) {
+			log.error("保存错误日志失败", e);
+		}
 	}
 
 }

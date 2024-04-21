@@ -32,7 +32,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.core.annotation.Order;
 
-import javax.servlet.Servlet;
+import jakarta.servlet.Servlet;
 
 /**
  * UReport配置类

@@ -24,7 +24,7 @@ import org.springblade.core.log.utils.LogAbstractUtil;
 import org.springblade.core.tool.utils.SpringUtil;
 import org.springblade.core.tool.utils.WebUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 

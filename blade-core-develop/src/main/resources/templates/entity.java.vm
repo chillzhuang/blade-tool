@@ -23,9 +23,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 #end
 #if($!{swagger})
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 #end
+import java.io.Serial;
 
 /**
  * $!{table.comment}实体类
@@ -43,7 +43,7 @@ import io.swagger.annotations.ApiModelProperty;
 @EqualsAndHashCode(callSuper = true)
 #end
 #if($!{swagger})
-@ApiModel(value = "$!{entity}对象", description = #if ("$!{table.comment}"=="")"$!{entity}对象"#else"$!{table.comment}"#end)
+@Schema(description = #if ("$!{table.comment}"=="")"$!{entity}对象"#else"$!{table.comment}"#end)
 #end
 #if($!{superEntityClass})
 public class $!{entity} extends $!{superEntityClass}#if($!{activeRecord})<$!{entity}>#end {
@@ -54,7 +54,8 @@ public class $!{entity} extends Model<$!{entity}> {
 public class $!{entity} implements Serializable {
 #end
 
-    private static final long serialVersionUID = 1L;
+    @Serial
+	private static final long serialVersionUID = 1L;
 
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in $!{table.fields})
@@ -67,7 +68,7 @@ public class $!{entity} implements Serializable {
      * $!{field.comment}
      */
   #if($!{swagger})
-  @ApiModelProperty(value = "$!{field.comment}")
+  @Schema(description = "$!{field.comment}")
   #end
 #end
 #if($!{field.keyFlag})

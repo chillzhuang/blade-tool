@@ -19,14 +19,14 @@ import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.report.service.IReportFileService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
+import io.swagger.v3.oas.annotations.Hidden;
 
 /**
  * UReport Boot版 API端点
  *
  * @author Chill
  */
-@ApiIgnore
+@Hidden
 @RestController
 @RequestMapping(AppConstant.APPLICATION_REPORT_NAME + "/report/rest")
 public class ReportBootEndpoint extends ReportEndpoint {

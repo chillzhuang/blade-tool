@@ -37,10 +37,10 @@ public class SecureRegistry {
 
 	public SecureRegistry() {
 		this.defaultExcludePatterns.add("/actuator/health/**");
-		this.defaultExcludePatterns.add("/v2/api-docs/**");
+		this.defaultExcludePatterns.add("/v3/api-docs/**");
+		this.defaultExcludePatterns.add("/swagger-ui/**");
 		this.defaultExcludePatterns.add("/auth/**");
 		this.defaultExcludePatterns.add("/token/**");
-		this.defaultExcludePatterns.add("/log/**");
 		this.defaultExcludePatterns.add("/user/user-info");
 		this.defaultExcludePatterns.add("/user/user-info-by-id");
 		this.defaultExcludePatterns.add("/menu/auth-routes");

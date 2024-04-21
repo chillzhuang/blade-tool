@@ -21,6 +21,7 @@ import $!{package.Entity}.$!{entity};
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 #end
+import java.io.Serial;
 
 /**
  * $!{table.comment}数据传输对象实体类
@@ -33,6 +34,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 #end
 public class $!{entity}DTO extends $!{entity} {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 }

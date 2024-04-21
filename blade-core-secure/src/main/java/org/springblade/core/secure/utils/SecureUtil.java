@@ -32,7 +32,7 @@ import org.springblade.core.tool.constant.RoleConstant;
 import org.springblade.core.tool.utils.*;
 
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.*;
 

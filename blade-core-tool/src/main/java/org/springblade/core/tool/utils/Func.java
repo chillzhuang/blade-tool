@@ -1517,7 +1517,7 @@ public class Func {
 	 * @return T
 	 */
 	public static <T> T copy(Object source, Class<T> clazz) {
-		return BeanUtil.copy(source, clazz);
+		return BeanUtil.copyProperties(source, clazz);
 	}
 
 	/**
@@ -1529,7 +1529,7 @@ public class Func {
 	 * @param targetBean 需要赋值的对象
 	 */
 	public static void copy(Object source, Object targetBean) {
-		BeanUtil.copy(source, targetBean);
+		BeanUtil.copyProperties(source, targetBean);
 	}
 
 	/**

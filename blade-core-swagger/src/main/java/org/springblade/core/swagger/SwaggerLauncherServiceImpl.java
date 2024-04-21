@@ -15,6 +15,7 @@
  */
 package org.springblade.core.swagger;
 
+import net.dreamlu.mica.auto.annotation.AutoService;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.launch.service.LauncherService;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -27,12 +28,14 @@ import java.util.Properties;
  *
  * @author Chill
  */
+@AutoService(LauncherService.class)
 public class SwaggerLauncherServiceImpl implements LauncherService {
 	@Override
 	public void launcher(SpringApplicationBuilder builder, String appName, String profile) {
 		Properties props = System.getProperties();
 		if (profile.equals(AppConstant.PROD_CODE)) {
 			props.setProperty("knife4j.production", "true");
+			props.setProperty("swagger.enabled", "false");
 		}
 		props.setProperty("knife4j.enable", "true");
 		props.setProperty("spring.mvc.pathmatch.matching-strategy", "ANT_PATH_MATCHER");

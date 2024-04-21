@@ -22,8 +22,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 #end
 #if($!{swagger})
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 #end
+import java.io.Serial;
 
 /**
  * $!{table.comment}视图实体类
@@ -36,9 +37,10 @@ import io.swagger.annotations.ApiModel;
 @EqualsAndHashCode(callSuper = true)
 #end
 #if($!{swagger})
-@ApiModel(value = "$!{entity}VO对象", description = #if ("$!{table.comment}"=="")"$!{entity}VO对象"#else"$!{table.comment}"#end)
+@Schema(description = #if ("$!{table.comment}"=="")"$!{entity}VO对象"#else"$!{table.comment}"#end)
 #end
 public class $!{entity}VO extends $!{entity} {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 }

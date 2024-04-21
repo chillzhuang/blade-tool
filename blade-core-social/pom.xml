@@ -23,7 +23,6 @@
         <dependency>
             <groupId>me.zhyd.oauth</groupId>
             <artifactId>JustAuth</artifactId>
-            <version>1.15.8</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

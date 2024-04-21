@@ -18,6 +18,7 @@ package org.springblade.core.log.error;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.engine.path.PathImpl;
+import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.log.props.BladeLogProperties;
 import org.springblade.core.log.publisher.ErrorLogPublisher;
@@ -46,9 +47,9 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.servlet.Servlet;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+import jakarta.servlet.Servlet;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import java.util.Set;
 
 /**
@@ -64,6 +65,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class BladeRestExceptionTranslator {
 
+	private final BladeProperties bladeProperties;
 	private final BladeLogProperties bladeLogProperties;
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
@@ -162,6 +164,10 @@ public class BladeRestExceptionTranslator {
 		//发送服务异常事件
 		if (bladeLogProperties.getError()) {
 			ErrorLogPublisher.publishEvent(e, UrlUtil.getPath(WebUtil.getRequest().getRequestURI()));
+		}
+		// 生产环境屏蔽具体异常信息返回
+		if (bladeProperties.isProd()) {
+			return R.fail(ResultCode.INTERNAL_SERVER_ERROR);
 		}
 		return R.fail(ResultCode.INTERNAL_SERVER_ERROR, (Func.isEmpty(e.getMessage()) ? ResultCode.INTERNAL_SERVER_ERROR.getMessage() : e.getMessage()));
 	}

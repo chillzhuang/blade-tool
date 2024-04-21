@@ -24,7 +24,7 @@ import org.springblade.core.report.service.IReportFileService;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.Func;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
+import io.swagger.v3.oas.annotations.Hidden;
 
 import java.util.Map;
 
@@ -33,7 +33,7 @@ import java.util.Map;
  *
  * @author Chill
  */
-@ApiIgnore
+@Hidden
 @RestController
 @AllArgsConstructor
 @RequestMapping("/report/rest")

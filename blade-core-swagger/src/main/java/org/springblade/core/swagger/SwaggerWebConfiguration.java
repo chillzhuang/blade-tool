@@ -16,6 +16,7 @@
 package org.springblade.core.swagger;
 
 
+import org.springblade.core.launch.props.BladePropertySource;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(SwaggerProperties.class)
+@BladePropertySource(value = "classpath:/blade-swagger.yml")
 public class SwaggerWebConfiguration implements WebMvcConfigurer {
 
 	@Override

@@ -17,10 +17,10 @@ package org.springblade.core.cloud.http;
 
 import okhttp3.*;
 import okhttp3.internal.http.HttpHeaders;
-import okhttp3.internal.platform.Platform;
 import okio.Buffer;
 import okio.BufferedSource;
 import okio.GzipSource;
+import org.springblade.core.launch.log.BladeLogLevel;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -28,8 +28,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-
-import static okhttp3.internal.platform.Platform.INFO;
 
 /**
  * An OkHttp interceptor which logs request and response information. Can be applied as an
@@ -42,121 +40,46 @@ import static okhttp3.internal.platform.Platform.INFO;
  */
 public final class HttpLoggingInterceptor implements Interceptor {
 	private static final Charset UTF8 = StandardCharsets.UTF_8;
-
-	public enum Level {
-		/**
-		 * No logs.
-		 */
-		NONE,
-		/**
-		 * Logs request and response lines.
-		 *
-		 * <p>Example:
-		 * <pre>{@code
-		 * --> POST /greeting http/1.1 (3-byte body)
-		 *
-		 * <-- 200 OK (22ms, 6-byte body)
-		 * }</pre>
-		 */
-		BASIC,
-		/**
-		 * Logs request and response lines and their respective headers.
-		 *
-		 * <p>Example:
-		 * <pre>{@code
-		 * --> POST /greeting http/1.1
-		 * Host: example.com
-		 * Content-Type: plain/text
-		 * Content-Length: 3
-		 * --> END POST
-		 *
-		 * <-- 200 OK (22ms)
-		 * Content-Type: plain/text
-		 * Content-Length: 6
-		 * <-- END HTTP
-		 * }</pre>
-		 */
-		HEADERS,
-		/**
-		 * Logs request and response lines and their respective headers and bodies (if present).
-		 *
-		 * <p>Example:
-		 * <pre>{@code
-		 * --> POST /greeting http/1.1
-		 * Host: example.com
-		 * Content-Type: plain/text
-		 * Content-Length: 3
-		 *
-		 * Hi?
-		 * --> END POST
-		 *
-		 * <-- 200 OK (22ms)
-		 * Content-Type: plain/text
-		 * Content-Length: 6
-		 *
-		 * Hello!
-		 * <-- END HTTP
-		 * }</pre>
-		 */
-		BODY
-	}
+	private final Logger logger;
+	private volatile BladeLogLevel level = BladeLogLevel.NONE;
 
 	public interface Logger {
 		/**
 		 * log
-		 *
 		 * @param message message
 		 */
 		void log(String message);
-
-		/**
-		 * A {@link Logger} defaults output appropriate for the current platform.
-		 */
-		Logger DEFAULT = message -> Platform.get().log(message, INFO, null);
-	}
-
-	public HttpLoggingInterceptor() {
-		this(Logger.DEFAULT);
 	}
 
 	public HttpLoggingInterceptor(Logger logger) {
 		this.logger = logger;
 	}
 
-	private final Logger logger;
-
-	private volatile Level level = Level.NONE;
-
 	/**
 	 * Change the level at which this interceptor logs.
-	 *
 	 * @param level log Level
 	 * @return HttpLoggingInterceptor
 	 */
-	public HttpLoggingInterceptor setLevel(Level level) {
-		Objects.requireNonNull(level, "level == null. Use Level.NONE instead.");
-		this.level = level;
+	public HttpLoggingInterceptor setLevel(BladeLogLevel level) {
+		this.level = Objects.requireNonNull(level, "level == null. Use Level.NONE instead.");
 		return this;
 	}
 
-	public Level getLevel() {
+	public BladeLogLevel getLevel() {
 		return level;
 	}
 
-	private String gzip = "gzip";
-	private String contentEncoding = "Content-Encoding";
-
 	@Override
 	public Response intercept(Chain chain) throws IOException {
-		Level level = this.level;
+		BladeLogLevel level = this.level;
 
 		Request request = chain.request();
-		if (level == Level.NONE) {
+		if (level == BladeLogLevel.NONE) {
 			return chain.proceed(request);
 		}
 
-		boolean logBody = level == Level.BODY;
-		boolean logHeaders = logBody || level == Level.HEADERS;
+		boolean logBody = level == BladeLogLevel.BODY;
+		boolean logHeaders = logBody || level == BladeLogLevel.HEADERS;
 
 		RequestBody requestBody = request.body();
 		boolean hasRequestBody = requestBody != null;
@@ -239,7 +162,8 @@ public final class HttpLoggingInterceptor implements Interceptor {
 
 		if (logHeaders) {
 			Headers headers = response.headers();
-			for (int i = 0, count = headers.size(); i < count; i++) {
+			int count = headers.size();
+			for (int i = 0; i < count; i++) {
 				logger.log(headers.name(i) + ": " + headers.value(i));
 			}
 
@@ -251,10 +175,10 @@ public final class HttpLoggingInterceptor implements Interceptor {
 				BufferedSource source = responseBody.source();
 				// Buffer the entire body.
 				source.request(Long.MAX_VALUE);
-				Buffer buffer = source.buffer();
+				Buffer buffer = source.getBuffer();
 
 				Long gzippedLength = null;
-				if (gzip.equalsIgnoreCase(headers.get(contentEncoding))) {
+				if ("gzip".equalsIgnoreCase(headers.get("Content-Encoding"))) {
 					gzippedLength = buffer.size();
 					GzipSource gzippedResponseBody = null;
 					try {
@@ -301,14 +225,12 @@ public final class HttpLoggingInterceptor implements Interceptor {
 	 * Returns true if the body in question probably contains human readable text. Uses a small sample
 	 * of code points to detect unicode control characters commonly used in binary file signatures.
 	 */
-	private static int plainCnt = 16;
-
 	private static boolean isPlaintext(Buffer buffer) {
 		try {
 			Buffer prefix = new Buffer();
 			long byteCount = buffer.size() < 64 ? buffer.size() : 64;
 			buffer.copyTo(prefix, 0, byteCount);
-			for (int i = 0; i < plainCnt; i++) {
+			for (int i = 0; i < 16; i++) {
 				if (prefix.exhausted()) {
 					break;
 				}

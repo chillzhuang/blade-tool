@@ -20,7 +20,7 @@ import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.utils.Charsets;
 import org.springblade.core.tool.utils.UrlUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 用户信息获取器

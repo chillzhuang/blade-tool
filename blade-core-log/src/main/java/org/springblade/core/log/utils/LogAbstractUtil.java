@@ -22,7 +22,7 @@ import org.springblade.core.log.model.LogAbstract;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.utils.*;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Log 相关工具

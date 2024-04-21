@@ -1,0 +1,34 @@
+#springdoc-openapi项目配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: order
+    operations-sorter: order
+    persist-authorization: true
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+
+#knife4j配置
+knife4j:
+  #启用
+  enable: true
+  #基础认证
+  basic:
+    enable: false
+    username: blade
+    password: blade
+  #增强配置
+  setting:
+    enable-swagger-models: true
+    enable-document-manage: true
+    enable-host: false
+    enable-host-text: http://localhost
+    enable-request-cache: true
+    enable-filter-multipart-apis: false
+    enable-filter-multipart-api-method-type: POST
+    enable-footer: false
+    enable-footer-custom: true
+    language: zh_cn
+    footer-custom-content: Copyright © 2024 SpringBlade All Rights Reserved
+

@@ -18,6 +18,8 @@ package org.springblade.core.log.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
+
 /**
  * LogApi视图实体类
  *
@@ -26,6 +28,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class LogApiVo extends LogApi {
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	private String strId;

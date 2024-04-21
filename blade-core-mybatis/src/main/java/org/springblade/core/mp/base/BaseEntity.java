@@ -22,7 +22,7 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,7 +41,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 主键
 	 */
-	@ApiModelProperty(value = "主键")
+	@Schema(description = "主键")
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	@JsonSerialize(using = ToStringSerializer.class)
 	private Long id;
@@ -50,14 +50,14 @@ public class BaseEntity implements Serializable {
 	 * 创建人
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@ApiModelProperty(value = "创建人")
+	@Schema(description = "创建人")
 	private Long createUser;
 
 	/**
 	 * 创建部门
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@ApiModelProperty(value = "创建部门")
+	@Schema(description = "创建部门")
 	private Long createDept;
 
 	/**
@@ -65,14 +65,14 @@ public class BaseEntity implements Serializable {
 	 */
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
-	@ApiModelProperty(value = "创建时间")
+	@Schema(description = "创建时间")
 	private Date createTime;
 
 	/**
 	 * 更新人
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@ApiModelProperty(value = "更新人")
+	@Schema(description = "更新人")
 	private Long updateUser;
 
 	/**
@@ -80,19 +80,19 @@ public class BaseEntity implements Serializable {
 	 */
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
-	@ApiModelProperty(value = "更新时间")
+	@Schema(description = "更新时间")
 	private Date updateTime;
 
 	/**
 	 * 状态[1:正常]
 	 */
-	@ApiModelProperty(value = "业务状态")
+	@Schema(description = "业务状态")
 	private Integer status;
 
 	/**
 	 * 状态[0:未删除,1:删除]
 	 */
 	@TableLogic
-	@ApiModelProperty(value = "是否已删除")
+	@Schema(description = "是否已删除")
 	private Integer isDeleted;
 }
