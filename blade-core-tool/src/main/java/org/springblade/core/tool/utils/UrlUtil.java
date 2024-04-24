@@ -15,6 +15,8 @@
  */
 package org.springblade.core.tool.utils;
 
+import org.springframework.util.StringUtils;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
@@ -45,7 +47,7 @@ public class UrlUtil extends org.springframework.web.util.UriUtils {
 	 * @return 解码url
 	 */
 	public static String decodeURL(String source, Charset charset) {
-		return UrlUtil.decode(source, charset.name());
+		return StringUtils.uriDecode(source, charset);
 	}
 
 	/**

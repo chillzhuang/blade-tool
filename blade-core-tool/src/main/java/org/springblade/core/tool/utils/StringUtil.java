@@ -24,6 +24,7 @@ import org.springframework.web.util.HtmlUtils;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -181,8 +182,59 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	 * @return UUID
 	 */
 	public static String randomUUID() {
-		ThreadLocalRandom random = ThreadLocalRandom.current();
-		return new UUID(random.nextLong(), random.nextLong()).toString().replace(StringPool.DASH, StringPool.EMPTY);
+		return getId(ThreadLocalRandom.current(), 32, 16);
+	}
+
+	/**
+	 * 获取一个快速生成的随机 id，包含数字，大小写，同长度比 uuid 冲突概率更小得多
+	 *
+	 * @param len 为了减少冲突，len 需要大于7，实际尽量设置在10~16或以上。
+	 * @return id 字符串
+	 */
+	public static String getFastId(int len) {
+		return getId(ThreadLocalRandom.current(), len, 62);
+	}
+
+	/**
+	 * 获取一个安全的随机 id，包含数字，大小写，同长度比 uuid 冲突概率更小得多
+	 *
+	 * @param len 为了减少冲突，len 需要大于7，实际尽量设置在10~16或以上。
+	 * @return id 字符串
+	 */
+	public static String getSafeId(int len) {
+		return getId(Holder.SECURE_RANDOM, len, 62);
+	}
+
+	/**
+	 * 获取一个生成的随机 id，同长度比 uuid 冲突概率更小得多
+	 *
+	 * @param random Random
+	 * @param len    为了减少冲突，len 需要大于7，实际尽量设置在10~16或以上。
+	 * @return id 字符串
+	 */
+	public static String getId(Random random, int len) {
+		return getId(random, len, 62);
+	}
+
+	/**
+	 * 获取一个生成的随机 id，同长度比 uuid 冲突概率更小得多
+	 *
+	 * @param random Random
+	 * @param len    为了减少冲突，len 需要大于7，实际尽量设置在10~16或以上。
+	 * @param radix  radix，36 包含字母和数字，62 包含大写字母
+	 * @return id 字符串
+	 */
+	public static String getId(Random random, int len, int radix) {
+		if (len < 8) {
+			throw new IllegalArgumentException("为了减少冲突，len 需要大于7，实际尽量设置在10~16或以上。");
+		}
+		byte[] randomBytes = new byte[len];
+		random.nextBytes(randomBytes);
+		int mask = radix - 1;
+		for (int i = 0; i < len; i++) {
+			randomBytes[i] = NumberUtil.DIGITS[(randomBytes[i] & 0xff) & mask];
+		}
+		return new String(randomBytes, StandardCharsets.ISO_8859_1);
 	}
 
 	/**
@@ -1442,7 +1494,6 @@ public class StringUtil extends org.springframework.util.StringUtils {
 		}
 		return sb.toString().toLowerCase();
 	}
-
 
 
 	/**
