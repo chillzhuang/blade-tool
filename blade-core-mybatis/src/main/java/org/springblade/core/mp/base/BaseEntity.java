@@ -50,14 +50,14 @@ public class BaseEntity implements Serializable {
 	 * 创建人
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@Schema(description = "创建人")
+	@Schema(description = "创建人", hidden = true)
 	private Long createUser;
 
 	/**
 	 * 创建部门
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@Schema(description = "创建部门")
+	@Schema(description = "创建部门", hidden = true)
 	private Long createDept;
 
 	/**
@@ -65,14 +65,14 @@ public class BaseEntity implements Serializable {
 	 */
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
-	@Schema(description = "创建时间")
+	@Schema(description = "创建时间", hidden = true)
 	private Date createTime;
 
 	/**
 	 * 更新人
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
-	@Schema(description = "更新人")
+	@Schema(description = "更新人", hidden = true)
 	private Long updateUser;
 
 	/**
@@ -80,19 +80,19 @@ public class BaseEntity implements Serializable {
 	 */
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
-	@Schema(description = "更新时间")
+	@Schema(description = "更新时间", hidden = true)
 	private Date updateTime;
 
 	/**
 	 * 状态[1:正常]
 	 */
-	@Schema(description = "业务状态")
+	@Schema(description = "业务状态", hidden = true)
 	private Integer status;
 
 	/**
 	 * 状态[0:未删除,1:删除]
 	 */
 	@TableLogic
-	@Schema(description = "是否已删除")
+	@Schema(description = "是否已删除", hidden = true)
 	private Integer isDeleted;
 }

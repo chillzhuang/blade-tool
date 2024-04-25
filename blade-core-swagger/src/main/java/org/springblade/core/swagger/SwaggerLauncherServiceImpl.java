@@ -34,11 +34,15 @@ public class SwaggerLauncherServiceImpl implements LauncherService {
 	public void launcher(SpringApplicationBuilder builder, String appName, String profile) {
 		Properties props = System.getProperties();
 		if (profile.equals(AppConstant.PROD_CODE)) {
-			props.setProperty("knife4j.production", "true");
 			props.setProperty("swagger.enabled", "false");
+			props.setProperty("knife4j.enable", "false");
+			props.setProperty("knife4j.production", "true");
+		} else {
+			props.setProperty("swagger.enabled", "true");
+			props.setProperty("knife4j.enable", "true");
+			props.setProperty("knife4j.production", "false");
+			props.setProperty("spring.mvc.pathmatch.matching-strategy", "ANT_PATH_MATCHER");
 		}
-		props.setProperty("knife4j.enable", "true");
-		props.setProperty("spring.mvc.pathmatch.matching-strategy", "ANT_PATH_MATCHER");
 	}
 
 	@Override
