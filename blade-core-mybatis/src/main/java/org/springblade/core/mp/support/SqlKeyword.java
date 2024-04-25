@@ -138,11 +138,13 @@ public class SqlKeyword {
 	 */
 	@SneakyThrows(SQLException.class)
 	public static String filter(String param) {
-		if (param == null) {
+		// 清除特殊字符
+		String cleaned = StringUtil.cleanIdentifier(param);
+		if (cleaned == null) {
 			return null;
 		}
 		// 将校验到的sql关键词替换为空字符串
-		String sql = param.replaceAll(SQL_REGEX, StringPool.EMPTY);
+		String sql = cleaned.replaceAll(SQL_REGEX, StringPool.EMPTY);
 		// 二次校验，避免双写绕过等情况出现
 		if (match(sql)) {
 			throw new SQLException(SQL_INJECTION_MESSAGE);
