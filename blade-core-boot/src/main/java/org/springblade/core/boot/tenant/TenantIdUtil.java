@@ -61,4 +61,20 @@ public class TenantIdUtil {
 		}
 	}
 
+	/**
+	 * 使用租户 id 执行函数
+	 *
+	 * @param tenantId tenantId
+	 * @param runnable Runnable
+	 */
+	public static void use(String tenantId, Runnable runnable) {
+		Assert.hasText(tenantId, "参数 tenantId 为空");
+		tl.set(tenantId);
+		try {
+			runnable.run();
+		} finally {
+			tl.remove();
+		}
+	}
+
 }
