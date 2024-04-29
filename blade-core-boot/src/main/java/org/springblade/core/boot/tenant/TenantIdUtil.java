@@ -15,6 +15,7 @@
  */
 package org.springblade.core.boot.tenant;
 
+import lombok.experimental.UtilityClass;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springframework.util.Assert;
 
@@ -25,6 +26,7 @@ import java.util.function.Supplier;
  *
  * @author L.cm
  */
+@UtilityClass
 public class TenantIdUtil {
 	private static final ThreadLocal<String> tl = new ThreadLocal<>();
 

@@ -158,7 +158,7 @@ public class SqlKeyword {
 	 * @param param 关键字
 	 * @return boolean
 	 */
-	public static Boolean match(String param) {
+	public static boolean match(String param) {
 		return Func.isNotEmpty(param) && PATTERN.matcher(param).find();
 	}
 
