@@ -15,7 +15,6 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springblade.core.tool.support.StrFormatter;
 import org.springblade.core.tool.support.StrSpliter;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
@@ -25,7 +24,6 @@ import org.springframework.web.util.HtmlUtils;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
@@ -299,62 +297,86 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	}
 
 	/**
-	 * 格式化文本, {} 表示占位符<br>
-	 * 此方法只是简单将占位符 {} 按照顺序替换为参数<br>
-	 * 如果想输出 {} 使用 \\转义 { 即可，如果想输出 {} 之前的 \ 使用双转义符 \\\\ 即可<br>
-	 * 例：<br>
-	 * 通常使用：format("this is {} for {}", "a", "b") =》 this is a for b<br>
-	 * 转义{}： format("this is \\{} for {}", "a", "b") =》 this is \{} for a<br>
-	 * 转义\： format("this is \\\\{} for {}", "a", "b") =》 this is \a for b<br>
+	 * 将字符串中特定模式的字符转换成map中对应的值
+	 * <p>
+	 * use: format("my name is ${name}, and i like ${like}!", {"name":"L.cm", "like": "Java"})
 	 *
-	 * @param template 文本模板，被替换的部分用 {} 表示
-	 * @param params   参数值
-	 * @return 格式化后的文本
+	 * @param message 需要转换的字符串
+	 * @param params  转换所需的键值对集合
+	 * @return 转换后的字符串
 	 */
-	public static String format(CharSequence template, Object... params) {
-		if (null == template) {
-			return null;
+	public static String format(@Nullable String message, @Nullable Map<String, ?> params) {
+		// message 为 null 返回空字符串
+		if (message == null) {
+			return StringPool.EMPTY;
 		}
-		if (Func.isEmpty(params) || isBlank(template)) {
-			return template.toString();
+		// 参数为 null 或者为空
+		if (params == null || params.isEmpty()) {
+			return message;
 		}
-		return StrFormatter.format(template.toString(), params);
+		// 替换变量
+		StringBuilder sb = new StringBuilder((int) (message.length() * 1.5));
+		int cursor = 0;
+		for (int start, end; (start = message.indexOf(StringPool.DOLLAR_LEFT_BRACE, cursor)) != -1 && (end = message.indexOf(StringPool.RIGHT_BRACE, start)) != -1; ) {
+			sb.append(message, cursor, start);
+			String key = message.substring(start + 2, end);
+			Object value = params.get(key.strip());
+			sb.append(value == null ? StringPool.EMPTY : value);
+			cursor = end + 1;
+		}
+		sb.append(message.substring(cursor));
+		return sb.toString();
 	}
 
 	/**
-	 * 有序的格式化文本，使用{number}做为占位符<br>
-	 * 例：<br>
-	 * 通常使用：format("this is {0} for {1}", "a", "b") =》 this is a for b<br>
+	 * 同 log 格式的 format 规则
+	 * <p>
+	 * use: format("my name is {}, and i like {}!", "L.cm", "Java")
 	 *
-	 * @param pattern   文本格式
-	 * @param arguments 参数
-	 * @return 格式化后的文本
+	 * @param message   需要转换的字符串
+	 * @param arguments 需要替换的变量
+	 * @return 转换后的字符串
 	 */
-	public static String indexedFormat(CharSequence pattern, Object... arguments) {
-		return MessageFormat.format(pattern.toString(), arguments);
+	public static String format(@Nullable String message, @Nullable Object... arguments) {
+		// message 为 null 返回空字符串
+		if (message == null) {
+			return StringPool.EMPTY;
+		}
+		// 参数为 null 或者为空
+		if (arguments == null || arguments.length == 0) {
+			return message;
+		}
+		StringBuilder sb = new StringBuilder((int) (message.length() * 1.5));
+		int cursor = 0;
+		int index = 0;
+		int argsLength = arguments.length;
+		for (int start, end; (start = message.indexOf(StringPool.LEFT_BRACE, cursor)) != -1 && (end = message.indexOf(StringPool.RIGHT_BRACE, start)) != -1 && index < argsLength; ) {
+			sb.append(message, cursor, start);
+			sb.append(arguments[index]);
+			cursor = end + 1;
+			index++;
+		}
+		sb.append(message.substring(cursor));
+		return sb.toString();
 	}
 
 	/**
-	 * 格式化文本，使用 {varName} 占位<br>
-	 * map = {a: "aValue", b: "bValue"} format("{a} and {b}", map) ---=》 aValue and bValue
+	 * 格式化执行时间，单位为 ms 和 s，保留三位小数
 	 *
-	 * @param template 文本模板，被替换的部分用 {key} 表示
-	 * @param map      参数值对
-	 * @return 格式化后的文本
+	 * @param nanos 纳秒
+	 * @return 格式化后的时间
 	 */
-	public static String format(CharSequence template, Map<?, ?> map) {
-		if (null == template) {
-			return null;
+	public static String format(long nanos) {
+		if (nanos < 1) {
+			return "0ms";
 		}
-		if (null == map || map.isEmpty()) {
-			return template.toString();
+		double millis = (double) nanos / (1000 * 1000);
+		// 不够 1 ms，最小单位为 ms
+		if (millis > 1000) {
+			return String.format("%.3fs", millis / 1000);
+		} else {
+			return String.format("%.3fms", millis);
 		}
-
-		String template2 = template.toString();
-		for (Map.Entry<?, ?> entry : map.entrySet()) {
-			template2 = template2.replace("{" + entry.getKey() + "}", Func.toStr(entry.getValue()));
-		}
-		return template2;
 	}
 
 	/**
