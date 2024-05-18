@@ -47,8 +47,8 @@ public class ValidationUtil {
 	 * @param setter        字段的setter方法
 	 * @param valueSupplier 默认值提供方法
 	 */
-	public static void setValueIfBlank(Supplier<String> getter, Consumer<String> setter, Supplier<String> valueSupplier) {
-		if (StringUtil.isBlank(getter.get())) {
+	public static <T> void setValueIfBlank(Supplier<T> getter, Consumer<T> setter, Supplier<T> valueSupplier) {
+		if (ObjectUtil.isEmpty(getter.get())) {
 			setter.accept(valueSupplier.get());
 		}
 	}
