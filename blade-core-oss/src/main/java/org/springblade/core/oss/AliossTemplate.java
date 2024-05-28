@@ -29,6 +29,7 @@ import org.springblade.core.oss.props.OssProperties;
 import org.springblade.core.oss.rule.OssRule;
 import org.springblade.core.tool.jackson.JsonUtil;
 import org.springblade.core.tool.utils.StringPool;
+import org.springblade.core.tool.utils.StringUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -281,8 +282,8 @@ public class AliossTemplate implements OssTemplate {
 	 * @return String
 	 */
 	public String getOssHost(String bucketName) {
-		String prefix = ossProperties.getEndpoint().contains("https://") ? "https://" : "http://";
-		return prefix + getBucketName(bucketName) + StringPool.DOT + ossProperties.getEndpoint().replaceFirst(prefix, StringPool.EMPTY);
+		String prefix = getEndpoint().contains("https://") ? "https://" : "http://";
+		return prefix + getBucketName(bucketName) + StringPool.DOT + getEndpoint().replaceFirst(prefix, StringPool.EMPTY);
 	}
 
 	/**
@@ -293,5 +294,18 @@ public class AliossTemplate implements OssTemplate {
 	public String getOssHost() {
 		return getOssHost(ossProperties.getBucketName());
 	}
+
+	/**
+	 * 获取服务地址
+	 *
+	 * @return String
+	 */
+	public String getEndpoint() {
+		if (StringUtil.isBlank(ossProperties.getTransformEndpoint())) {
+			return ossProperties.getEndpoint();
+		}
+		return ossProperties.getTransformEndpoint();
+	}
+
 
 }

@@ -30,6 +30,7 @@ import org.springblade.core.oss.rule.OssRule;
 import org.springblade.core.tool.utils.CollectionUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringPool;
+import org.springblade.core.tool.utils.StringUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -116,13 +117,13 @@ public class QiniuTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public String fileLink(String fileName) {
-		return ossProperties.getEndpoint().concat(StringPool.SLASH).concat(fileName);
+		return getEndpoint().concat(StringPool.SLASH).concat(fileName);
 	}
 
 	@Override
 	@SneakyThrows
 	public String fileLink(String bucketName, String fileName) {
-		return ossProperties.getEndpoint().concat(StringPool.SLASH).concat(fileName);
+		return getEndpoint().concat(StringPool.SLASH).concat(fileName);
 	}
 
 	@Override
@@ -260,7 +261,20 @@ public class QiniuTemplate implements OssTemplate {
 	 * @return String
 	 */
 	public String getOssHost() {
-		return ossProperties.getEndpoint();
+		return getEndpoint();
 	}
+
+	/**
+	 * 获取服务地址
+	 *
+	 * @return String
+	 */
+	public String getEndpoint() {
+		if (StringUtil.isBlank(ossProperties.getTransformEndpoint())) {
+			return ossProperties.getEndpoint();
+		}
+		return ossProperties.getTransformEndpoint();
+	}
+
 
 }

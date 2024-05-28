@@ -49,6 +49,11 @@ public class OssProperties {
 	private String endpoint;
 
 	/**
+	 * 转换外网地址的URL
+	 */
+	private String transformEndpoint;
+
+	/**
 	 * Access key就像用户ID，可以唯一标识你的账户
 	 */
 	private String accessKey;

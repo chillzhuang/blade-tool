@@ -29,6 +29,7 @@ import org.springblade.core.oss.rule.OssRule;
 import org.springblade.core.tool.utils.DateUtil;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringPool;
+import org.springblade.core.tool.utils.StringUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -162,13 +163,13 @@ public class MinioTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public String fileLink(String fileName) {
-		return ossProperties.getEndpoint().concat(StringPool.SLASH).concat(getBucketName()).concat(StringPool.SLASH).concat(fileName);
+		return getEndpoint().concat(StringPool.SLASH).concat(getBucketName()).concat(StringPool.SLASH).concat(fileName);
 	}
 
 	@Override
 	@SneakyThrows
 	public String fileLink(String bucketName, String fileName) {
-		return ossProperties.getEndpoint().concat(StringPool.SLASH).concat(getBucketName(bucketName)).concat(StringPool.SLASH).concat(fileName);
+		return getEndpoint().concat(StringPool.SLASH).concat(getBucketName(bucketName)).concat(StringPool.SLASH).concat(fileName);
 	}
 
 	@Override
@@ -402,7 +403,7 @@ public class MinioTemplate implements OssTemplate {
 	 * @return String
 	 */
 	public String getOssHost(String bucketName) {
-		return ossProperties.getEndpoint() + StringPool.SLASH + getBucketName(bucketName);
+		return getEndpoint() + StringPool.SLASH + getBucketName(bucketName);
 	}
 
 	/**
@@ -413,5 +414,18 @@ public class MinioTemplate implements OssTemplate {
 	public String getOssHost() {
 		return getOssHost(ossProperties.getBucketName());
 	}
+
+	/**
+	 * 获取服务地址
+	 *
+	 * @return String
+	 */
+	public String getEndpoint() {
+		if (StringUtil.isBlank(ossProperties.getTransformEndpoint())) {
+			return ossProperties.getEndpoint();
+		}
+		return ossProperties.getTransformEndpoint();
+	}
+
 
 }

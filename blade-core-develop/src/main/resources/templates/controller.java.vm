@@ -54,7 +54,7 @@ import $!{superControllerClassPackage};
 @RestController
 @AllArgsConstructor
 @RequestMapping("#if($!{hasServiceName})/$!{serviceName}#end/$!{entityKey}")
-@Tag(name = "$!{table.comment}", tags = "$!{table.comment}接口")
+@Tag(name = "$!{table.comment}", description = "$!{table.comment}接口")
 #if($!{superControllerClass})
 public class $!{table.controllerName} extends $!{superControllerClass} {
 #else
