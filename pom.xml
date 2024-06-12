@@ -588,17 +588,6 @@
                     </plugin>-->
                 </plugins>
             </build>
-            <distributionManagement>
-                <!-- 这里的id oss需要和setting.xml里面server节点配置的id一致-->
-                <snapshotRepository>
-                    <id>oss</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-                </snapshotRepository>
-                <repository>
-                    <id>oss</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
         </profile>
     </profiles>
 
