@@ -14,4 +14,4 @@ jobs:
           cache: 'maven'
           java-version: 17
       - name: Build with Maven
-        run: mvn package
+        run: mvn package -P !develop
