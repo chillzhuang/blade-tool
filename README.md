@@ -4,6 +4,12 @@
   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/Spring%20Cloud-2023-blue.svg" alt="Coverage Status">
   <img src="https://img.shields.io/badge/Spring%20Boot-3.2-blue.svg" alt="Downloads">
+  <a href="https://central.sonatype.com/artifact/org.springblade/blade-core-bom/versions">
+    <img src="https://img.shields.io/nexus/r/https/oss.sonatype.org/org.springblade/blade-core-bom.svg?style=flat-square" alt="Downloads">
+  </a>
+  <a href="https://oss.sonatype.org/content/repositories/snapshots/org/springblade/blade-core-bom/">
+    <img src="https://img.shields.io/nexus/s/https/oss.sonatype.org/org.springblade/blade-core-bom.svg?style=flat-square" alt="Downloads">
+  </a>
 <a target="_blank" href="https://bladex.cn">
   <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
 </a>
