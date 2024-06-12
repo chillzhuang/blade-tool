@@ -36,7 +36,7 @@
 
     <properties>
         <!-- Blade-Tool Version -->
-        <revision>4.0.0</revision>
+        <revision>4.0.1-SNAPSHOT</revision>
         <!-- jdk Version -->
         <java.version>17</java.version>
         <maven.plugin.version>3.11.0</maven.plugin.version>
