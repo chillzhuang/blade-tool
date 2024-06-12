@@ -1,0 +1,32 @@
+name: Publish Snapshot
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          cache: 'maven'
+          java-version: 17
+          server-id: oss
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-passphrase: MAVEN_GPG_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+      - name: Publish to the Maven Central Repository
+        run: |
+          chmod +x ./deploy.sh
+          ./deploy.sh
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSWORD: ${{ secrets.MAVEN_GPG_PASSWORD }}
