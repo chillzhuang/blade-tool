@@ -68,6 +68,15 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T extends BaseEntity> exte
 	}
 
 	@Override
+	public boolean saveOrUpdate(T entity) {
+		if (entity.getId() == null) {
+			return this.save(entity);
+		} else {
+			return this.updateById(entity);
+		}
+	}
+
+	@Override
 	public boolean deleteLogic(@NotEmpty List<Long> ids) {
 		return super.removeByIds(ids);
 	}
