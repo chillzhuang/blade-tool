@@ -7,26 +7,36 @@
         <groupId>org.springblade</groupId>
         <version>${revision}</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-social</artifactId>
+    <artifactId>blade-starter-mybatis</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>
+        <!--Mybatis-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-typehandlers-jsr310</artifactId>
+        </dependency>
         <!--Blade-->
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-tool</artifactId>
-        </dependency>
-        <!-- 第三方登陆 -->
-        <dependency>
-            <groupId>me.zhyd.oauth</groupId>
-            <artifactId>JustAuth</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
+            <artifactId>blade-core-secure</artifactId>
         </dependency>
     </dependencies>
+
 </project>

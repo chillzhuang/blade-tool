@@ -9,33 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-oss</artifactId>
+    <artifactId>blade-starter-api-crypto</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>
-        <!--Blade-->
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-tool</artifactId>
         </dependency>
-        <!--Aliyun-->
         <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <version>3.14.0</version>
-        </dependency>
-        <!--MinIO-->
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.3.7</version>
-        </dependency>
-        <!--QiNiu-->
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-            <version>7.9.4</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-context</artifactId>
         </dependency>
     </dependencies>
 

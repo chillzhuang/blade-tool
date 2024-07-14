@@ -9,14 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-report</artifactId>
+    <artifactId>blade-starter-report</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-mybatis</artifactId>
+            <artifactId>blade-starter-mybatis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.bstek.ureport</groupId>

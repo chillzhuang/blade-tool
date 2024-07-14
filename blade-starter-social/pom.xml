@@ -9,34 +9,24 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-transaction</artifactId>
+    <artifactId>blade-starter-social</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>
-        <!-- Blade-->
+        <!--Blade-->
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-mybatis</artifactId>
+            <artifactId>blade-core-tool</artifactId>
+        </dependency>
+        <!-- 第三方登陆 -->
+        <dependency>
+            <groupId>me.zhyd.oauth</groupId>
+            <artifactId>JustAuth</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springblade</groupId>
-            <artifactId>blade-core-cloud</artifactId>
-        </dependency>
-        <!-- Cloud-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-commons</artifactId>
-        </dependency>
-        <!-- Seata-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.seata</groupId>
-            <artifactId>seata-spring-boot-starter</artifactId>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
         </dependency>
     </dependencies>
-
 </project>

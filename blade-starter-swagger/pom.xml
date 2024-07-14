@@ -10,32 +10,20 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-mybatis</artifactId>
+    <artifactId>blade-starter-swagger</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
     <dependencies>
-        <!--Mybatis-->
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-typehandlers-jsr310</artifactId>
-        </dependency>
         <!--Blade-->
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-secure</artifactId>
+            <artifactId>blade-core-tool</artifactId>
+        </dependency>
+        <!--Swagger-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

@@ -7,10 +7,9 @@
         <groupId>org.springblade</groupId>
         <version>${revision}</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blade-core-swagger</artifactId>
+    <artifactId>blade-starter-develop</artifactId>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
@@ -20,10 +19,20 @@
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-tool</artifactId>
         </dependency>
-        <!--Swagger-->
+        <!--Mybatis-Plus-->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+        </dependency>
+        <!--Velocity-->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
         </dependency>
     </dependencies>
 

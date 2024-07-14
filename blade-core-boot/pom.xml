@@ -49,16 +49,16 @@
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-log</artifactId>
+            <artifactId>blade-starter-log</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-swagger</artifactId>
+            <artifactId>blade-starter-swagger</artifactId>
         </dependency>
         <!--MyBatis-->
         <dependency>
             <groupId>org.springblade</groupId>
-            <artifactId>blade-core-mybatis</artifactId>
+            <artifactId>blade-starter-mybatis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
