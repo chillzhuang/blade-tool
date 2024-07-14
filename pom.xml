@@ -36,7 +36,7 @@
 
     <properties>
         <!-- Blade-Tool Version -->
-        <revision>4.0.1-SNAPSHOT</revision>
+        <revision>4.1.0</revision>
         <!-- jdk Version -->
         <java.version>17</java.version>
         <maven.plugin.version>3.11.0</maven.plugin.version>
@@ -58,13 +58,13 @@
         <mica.auto.version>3.1.4</mica.auto.version>
         <druid.version>1.2.23</druid.version>
 
-        <spring.version>6.1.5</spring.version>
-        <spring.boot.version>3.2.4</spring.boot.version>
+        <spring.version>6.1.10</spring.version>
+        <spring.boot.version>3.2.7</spring.boot.version>
         <spring.boot.admin.version>3.2.3</spring.boot.admin.version>
-        <spring.cloud.version>2023.0.1</spring.cloud.version>
+        <spring.cloud.version>2023.0.2</spring.cloud.version>
 
-        <alibaba.cloud.version>2022.0.0.0</alibaba.cloud.version>
-        <alibaba.nacos.version>2.3.1</alibaba.nacos.version>
+        <alibaba.cloud.version>2023.0.1.0</alibaba.cloud.version>
+        <alibaba.nacos.version>2.3.2</alibaba.nacos.version>
 
     </properties>
 
@@ -378,6 +378,42 @@
                 <groupId>javax.activation</groupId>
                 <artifactId>activation</artifactId>
                 <version>1.1.1</version>
+            </dependency>
+            <!-- easyexcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>3.3.4</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>ooxml-schemas</artifactId>
+                <version>1.4</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>4.1.2</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>4.1.2</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>4.1.2</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-scratchpad</artifactId>
+                <version>4.1.2</version>
+                <scope>compile</scope>
             </dependency>
             <!-- sm2 -->
             <dependency>
