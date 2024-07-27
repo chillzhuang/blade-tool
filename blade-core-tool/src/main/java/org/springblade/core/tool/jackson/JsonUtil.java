@@ -804,6 +804,24 @@ public class JsonUtil {
 	}
 
 	/**
+	 * 读取集合
+	 *
+	 * @param content bytes
+	 * @return 集合
+	 */
+	public static List<Map<String, Object>> readListMap(@Nullable String content) {
+		if (ObjectUtil.isEmpty(content)) {
+			return Collections.emptyList();
+		}
+		try {
+			return getInstance().readValue(content, new TypeReference<List<Map<String, Object>>>() {
+			});
+		} catch (IOException e) {
+			throw Exceptions.unchecked(e);
+		}
+	}
+
+	/**
 	 * jackson 的类型转换
 	 *
 	 * @param fromValue   来源对象
