@@ -58,14 +58,13 @@
         <mica.auto.version>3.1.4</mica.auto.version>
         <druid.version>1.2.23</druid.version>
 
-        <spring.version>6.1.11</spring.version>
-        <spring.boot.version>3.2.8</spring.boot.version>
+        <spring.version>6.1.12</spring.version>
+        <spring.boot.version>3.2.9</spring.boot.version>
         <spring.boot.admin.version>3.2.3</spring.boot.admin.version>
         <spring.cloud.version>2023.0.3</spring.cloud.version>
 
         <alibaba.cloud.version>2023.0.1.0</alibaba.cloud.version>
         <alibaba.nacos.version>2.3.2</alibaba.nacos.version>
-
     </properties>
 
     <modules>
