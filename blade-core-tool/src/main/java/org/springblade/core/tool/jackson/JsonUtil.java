@@ -814,8 +814,7 @@ public class JsonUtil {
 			return Collections.emptyList();
 		}
 		try {
-			return getInstance().readValue(content, new TypeReference<List<Map<String, Object>>>() {
-			});
+			return getInstance().readValue(content, getListType(Map.class));
 		} catch (IOException e) {
 			throw Exceptions.unchecked(e);
 		}

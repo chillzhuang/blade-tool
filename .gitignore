@@ -17,6 +17,7 @@ Thumbs.db
 *.class
 
 # idea #
+!.idea/icon.png
 .idea
 *.iml
 
