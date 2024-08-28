@@ -13,6 +13,10 @@
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
+    <properties>
+        <module.name>org.springblade.blade.starter.api.crypto</module.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springblade</groupId>

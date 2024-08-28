@@ -13,6 +13,9 @@
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
+    <properties>
+        <module.name>org.springblade.blade.core.cloud</module.name>
+    </properties>
 
     <dependencies>
         <!--Blade-->

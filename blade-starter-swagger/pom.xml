@@ -14,6 +14,10 @@
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
+    <properties>
+        <module.name>org.springblade.blade.starter.swagger</module.name>
+    </properties>
+
     <dependencies>
         <!--Blade-->
         <dependency>

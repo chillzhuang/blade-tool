@@ -37,6 +37,7 @@
     <properties>
         <!-- Blade-Tool Version -->
         <revision>4.2.1-SNAPSHOT</revision>
+        <module.name>org.springblade.blade.tool</module.name>
         <!-- jdk Version -->
         <java.version>17</java.version>
         <maven.plugin.version>3.11.0</maven.plugin.version>
@@ -525,6 +526,10 @@
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
+                        <!-- 自动模块名，方便模块化导入 -->
+                        <manifestEntries>
+                            <Automatic-Module-Name>${module.name}</Automatic-Module-Name>
+                        </manifestEntries>
                         <!-- 生成的jar中，不要包含pom.xml和pom.properties这两个文件 -->
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>

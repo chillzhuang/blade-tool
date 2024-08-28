@@ -13,6 +13,10 @@
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
+    <properties>
+        <module.name>org.springblade.blade.starter.transaction</module.name>
+    </properties>
+
     <dependencies>
         <!-- Blade-->
         <dependency>

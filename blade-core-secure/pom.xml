@@ -14,6 +14,10 @@
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
+    <properties>
+        <module.name>org.springblade.blade.core.secure</module.name>
+    </properties>
+
     <dependencies>
         <!-- JWT -->
         <dependency>

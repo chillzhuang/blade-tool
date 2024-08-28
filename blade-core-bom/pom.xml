@@ -14,6 +14,10 @@
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
 
+    <properties>
+        <module.name>org.springblade.blade.core.bom</module.name>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
