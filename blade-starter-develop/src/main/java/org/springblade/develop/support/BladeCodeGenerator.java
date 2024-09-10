@@ -135,6 +135,7 @@ public class BladeCodeGenerator {
 
 		Map<String, Object> customMap = new HashMap<>(11);
 		customMap.put("codeName", codeName);
+		customMap.put("hasServiceName", hasServiceName);
 		customMap.put("serviceName", serviceName);
 		customMap.put("servicePackage", servicePackage);
 		customMap.put("servicePackageLowerCase", servicePackage.toLowerCase());
