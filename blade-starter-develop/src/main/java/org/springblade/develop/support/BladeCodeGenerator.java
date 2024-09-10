@@ -135,12 +135,12 @@ public class BladeCodeGenerator {
 
 		Map<String, Object> customMap = new HashMap<>(11);
 		customMap.put("codeName", codeName);
-		customMap.put("hasServiceName", hasServiceName);
 		customMap.put("serviceName", serviceName);
 		customMap.put("servicePackage", servicePackage);
 		customMap.put("servicePackageLowerCase", servicePackage.toLowerCase());
 		customMap.put("tenantColumn", tenantColumn);
 		customMap.put("hasWrapper", hasWrapper);
+		customMap.put("hasServiceName", hasServiceName);
 		Map<String, String> customFile = new HashMap<>(15);
 		customFile.put("menu.sql", "/templates/sql/menu.sql.vm");
 		customFile.put("entityVO.java", "/templates/entityVO.java.vm");
