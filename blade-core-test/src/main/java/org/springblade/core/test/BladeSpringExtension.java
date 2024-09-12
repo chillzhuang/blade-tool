@@ -29,7 +29,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 设置启动参数
@@ -74,7 +73,7 @@ public class BladeSpringExtension extends SpringExtension {
 			List<LauncherService> launcherList = new ArrayList<>();
 			SpringApplicationBuilder builder = new SpringApplicationBuilder(clazz);
 			ServiceLoader.load(LauncherService.class).forEach(launcherList::add);
-			launcherList.stream().sorted(Comparator.comparing(LauncherService::getOrder)).collect(Collectors.toList())
+			launcherList.stream().sorted(Comparator.comparing(LauncherService::getOrder)).toList()
 				.forEach(launcherService -> launcherService.launcher(builder, appName, profile));
 		}
 		System.err.printf("---[junit.test]:[%s]---启动中，读取到的环境变量:[%s]%n", appName, profile);
