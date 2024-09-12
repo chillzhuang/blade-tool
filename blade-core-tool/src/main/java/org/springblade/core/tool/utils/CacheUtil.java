@@ -68,10 +68,7 @@ public class CacheUtil {
 			return null;
 		}
 		Cache.ValueWrapper wrapper = getCache(cacheName).get(keyPrefix.concat(String.valueOf(key)));
-		if (wrapper == null) {
-			return null;
-		}
-		return wrapper.get();
+		return wrapper == null ? null : wrapper.get();
 	}
 
 	/**
