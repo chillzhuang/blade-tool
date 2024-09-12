@@ -60,7 +60,7 @@ public class BladeScopeModelHandler implements ScopeModelHandler {
 		// 后续若有新增配置则会清空缓存重新加载
 		DataScopeModel dataScope = CacheUtil.get(SYS_CACHE, SCOPE_CACHE_CLASS, mapperId + StringPool.COLON + roleId, DataScopeModel.class);
 		if (dataScope == null || !dataScope.getSearched()) {
-			List<DataScopeModel> list = jdbcTemplate.query(DataScopeConstant.dataByMapper(roleIds.size()), args.toArray(), new BeanPropertyRowMapper<>(DataScopeModel.class));
+			List<DataScopeModel> list = jdbcTemplate.query(DataScopeConstant.dataByMapper(roleIds.size()), new BeanPropertyRowMapper<>(DataScopeModel.class), args.toArray());
 			if (CollectionUtil.isNotEmpty(list)) {
 				dataScope = list.iterator().next();
 				dataScope.setSearched(Boolean.TRUE);
@@ -84,7 +84,7 @@ public class BladeScopeModelHandler implements ScopeModelHandler {
 		// 增加searched字段防止未配置的参数重复读库导致缓存击穿
 		// 后续若有新增配置则会清空缓存重新加载
 		if (dataScope == null || !dataScope.getSearched()) {
-			List<DataScopeModel> list = jdbcTemplate.query(DataScopeConstant.DATA_BY_CODE, new Object[]{code}, new BeanPropertyRowMapper<>(DataScopeModel.class));
+			List<DataScopeModel> list = jdbcTemplate.query(DataScopeConstant.DATA_BY_CODE, new BeanPropertyRowMapper<>(DataScopeModel.class), code);
 			if (CollectionUtil.isNotEmpty(list)) {
 				dataScope = list.iterator().next();
 				dataScope.setSearched(Boolean.TRUE);
@@ -104,11 +104,8 @@ public class BladeScopeModelHandler implements ScopeModelHandler {
 	 */
 	@Override
 	public List<Long> getDeptAncestors(Long deptId) {
-		List ancestors = CacheUtil.get(SYS_CACHE, DEPT_CACHE_ANCESTORS, deptId, List.class);
-		if (CollectionUtil.isEmpty(ancestors)) {
-			ancestors = jdbcTemplate.queryForList(DataScopeConstant.DATA_BY_DEPT, new Object[]{deptId}, Long.class);
-			CacheUtil.put(SYS_CACHE, DEPT_CACHE_ANCESTORS, deptId, ancestors);
-		}
-		return ancestors;
+		return CacheUtil.get(SYS_CACHE, DEPT_CACHE_ANCESTORS, deptId, () ->
+			jdbcTemplate.queryForList(DataScopeConstant.DATA_BY_DEPT, Long.class, deptId)
+		);
 	}
 }

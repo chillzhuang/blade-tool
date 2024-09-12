@@ -67,7 +67,11 @@ public class CacheUtil {
 		if (Func.hasEmpty(cacheName, keyPrefix, key)) {
 			return null;
 		}
-		return getCache(cacheName).get(keyPrefix.concat(String.valueOf(key))).get();
+		Cache.ValueWrapper wrapper = getCache(cacheName).get(keyPrefix.concat(String.valueOf(key)));
+		if (wrapper == null) {
+			return null;
+		}
+		return wrapper.get();
 	}
 
 	/**
@@ -103,23 +107,8 @@ public class CacheUtil {
 		if (Func.hasEmpty(cacheName, keyPrefix, key)) {
 			return null;
 		}
-		try {
-			Cache.ValueWrapper valueWrapper = getCache(cacheName).get(keyPrefix.concat(String.valueOf(key)));
-			Object value = null;
-			if (valueWrapper == null) {
-				T call = valueLoader.call();
-				if (Func.isNotEmpty(call)) {
-					getCache(cacheName).put(keyPrefix.concat(String.valueOf(key)), call);
-					value = call;
-				}
-			} else {
-				value = valueWrapper.get();
-			}
-			return (T) value;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			return null;
-		}
+		String cacheKey = keyPrefix.concat(String.valueOf(key));
+		return getCache(cacheName).get(cacheKey, valueLoader);
 	}
 
 	/**
