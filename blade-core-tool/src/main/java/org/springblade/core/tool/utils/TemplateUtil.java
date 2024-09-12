@@ -40,7 +40,7 @@ public class TemplateUtil {
 	 */
 	public static String process(String template, Kv params) {
 		Matcher matcher = pattern.matcher(template);
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		while (matcher.find()) {
 			String key = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
 			String replacement = params.getStr(key);
@@ -62,7 +62,7 @@ public class TemplateUtil {
 	 */
 	public static String safeProcess(String template, Kv params) {
 		Matcher matcher = pattern.matcher(template);
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		while (matcher.find()) {
 			String key = matcher.group(1) != null ? matcher.group(1) : matcher.group(2);
 			String replacement = params.getStr(key);
