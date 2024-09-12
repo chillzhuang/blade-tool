@@ -15,7 +15,7 @@
  */
 package org.springblade.core.datascope.constant;
 
-import org.springblade.core.tool.utils.StringUtil;
+import java.util.StringJoiner;
 
 /**
  * 数据权限常量
@@ -53,12 +53,11 @@ public interface DataScopeConstant {
 	 * @return String
 	 */
 	static String buildHolder(int size) {
-		StringBuilder builder = StringUtil.builder();
+		StringJoiner joiner = new StringJoiner(",");
 		for (int i = 0; i < size; i++) {
-			builder.append("?,");
+			joiner.add("?");
 		}
-		return StringUtil.removeSuffix(builder.toString(), ",");
+		return joiner.toString();
 	}
-
 
 }
