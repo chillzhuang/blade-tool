@@ -39,7 +39,6 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 自定义资源文件读取，优先级最低
@@ -92,13 +91,13 @@ public class BladePropertySourcePostProcessor implements BeanFactoryPostProcesso
 		List<PropertyFile> sortedPropertyList = propertyFileList.stream()
 			.distinct()
 			.sorted()
-			.collect(Collectors.toList());
+			.toList();
 		ConfigurableEnvironment environment = beanFactory.getBean(ConfigurableEnvironment.class);
 		MutablePropertySources propertySources = environment.getPropertySources();
 
 		// 只支持 activeProfiles，没有必要支持 spring.profiles.include。
 		String[] activeProfiles = environment.getActiveProfiles();
-		ArrayList<PropertySource> propertySourceList = new ArrayList<>();
+		List<PropertySource> propertySourceList = new ArrayList<>();
 		for (String profile : activeProfiles) {
 			for (PropertyFile propertyFile : sortedPropertyList) {
 				// 不加载 ActiveProfile 的配置文件
@@ -112,7 +111,7 @@ public class BladePropertySourcePostProcessor implements BeanFactoryPostProcesso
 				}
 				String location = propertyFile.getLocation();
 				String filePath = StringUtils.stripFilenameExtension(location);
-				String profiledLocation = filePath + "-" + profile + "." + extension;
+				String profiledLocation = filePath + '-' + profile + '.' + extension;
 				Resource resource = resourceLoader.getResource(profiledLocation);
 				loadPropertySource(profiledLocation, resource, loader, propertySourceList);
 			}
@@ -135,7 +134,7 @@ public class BladePropertySourcePostProcessor implements BeanFactoryPostProcesso
 										   PropertySourceLoader loader,
 										   List<PropertySource> sourceList) {
 		if (resource.exists()) {
-			String name = "bladePropertySource: [" + location + "]";
+			String name = "bladePropertySource: [" + location + ']';
 			try {
 				sourceList.addAll(loader.load(name, resource));
 			} catch (IOException e) {
