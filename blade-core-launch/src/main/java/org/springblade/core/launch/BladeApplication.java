@@ -44,16 +44,16 @@ public class BladeApplication {
 	 * @param source  The sources
 	 * @return an application context created from the current state
 	 */
-	public static ConfigurableApplicationContext run(String appName, Class source, String... args) {
+	public static ConfigurableApplicationContext run(String appName, Class<?> source, String... args) {
 		SpringApplicationBuilder builder = createSpringApplicationBuilder(appName, source, args);
 		return builder.run(args);
 	}
 
-	public static SpringApplicationBuilder createSpringApplicationBuilder(String appName, Class source, String... args) {
-		return createSpringApplicationBuilder(null, appName, source, args);
+	public static SpringApplicationBuilder createSpringApplicationBuilder(String appName, Class<?> source, String... args) {
+		return createSpringApplicationBuilder(appName, source, null, args);
 	}
 
-	public static SpringApplicationBuilder createSpringApplicationBuilder(SpringApplicationBuilder builder, String appName, Class source, String... args) {
+	public static SpringApplicationBuilder createSpringApplicationBuilder(String appName, Class<?> source, SpringApplicationBuilder builder, String... args) {
 		Assert.hasText(appName, "[appName]服务名不能为空");
 		// 读取环境变量，使用spring boot的规则
 		ConfigurableEnvironment environment = new StandardEnvironment();
