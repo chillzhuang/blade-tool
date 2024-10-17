@@ -53,7 +53,7 @@ public class BladeCodeGenerator {
 	/**
 	 * 代码所在系统
 	 */
-	private String systemName = DevelopConstant.SABER_NAME;
+	private String systemName = DevelopConstant.SABER3_NAME;
 	/**
 	 * 代码模块名称
 	 */
