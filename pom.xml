@@ -47,6 +47,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <knife4j.version>4.5.0</knife4j.version>
+        <aliyun.sms.version>4.5.30</aliyun.sms.version>
+        <tencent.sms.version>1.0.6</tencent.sms.version>
 
         <mybatis.version>3.5.16</mybatis.version>
         <mybatis.spring.version>3.0.4</mybatis.spring.version>
@@ -394,6 +396,12 @@
                 <artifactId>activation</artifactId>
                 <version>1.1.1</version>
             </dependency>
+            <!-- captcha -->
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>1.6.2</version>
+            </dependency>
             <!-- easyexcel -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -435,6 +443,18 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk18on</artifactId>
                 <version>1.78.1</version>
+            </dependency>
+            <!--AliSms-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>${aliyun.sms.version}</version>
+            </dependency>
+            <!--腾讯SMS-->
+            <dependency>
+                <groupId>com.github.qcloudsms</groupId>
+                <artifactId>qcloudsms</artifactId>
+                <version>${tencent.sms.version}</version>
             </dependency>
             <!-- lombok -->
             <dependency>
