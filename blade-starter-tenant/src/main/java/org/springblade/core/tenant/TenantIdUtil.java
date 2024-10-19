@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.boot.tenant;
+package org.springblade.core.tenant;
 
 import lombok.experimental.UtilityClass;
 import org.springblade.core.secure.utils.SecureUtil;

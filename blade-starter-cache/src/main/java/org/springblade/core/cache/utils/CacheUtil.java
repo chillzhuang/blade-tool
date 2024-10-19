@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.tool.utils;
+package org.springblade.core.cache.utils;
 
+import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.SpringUtil;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.lang.Nullable;
@@ -26,7 +28,6 @@ import java.util.concurrent.Callable;
  *
  * @author Chill
  */
-@Deprecated
 public class CacheUtil {
 
 	public static final String SYS_CACHE = "blade:sys";

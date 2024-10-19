@@ -13,19 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.boot.tenant;
-
-import org.springblade.core.tool.utils.RandomType;
-import org.springblade.core.tool.utils.StringUtil;
+package org.springblade.core.tenant;
 
 /**
- * blade租户id生成器
+ * 租户常量.
  *
- * @author Chill
+ * @author zhuangqian
  */
-public class BladeTenantId implements TenantId {
-	@Override
-	public String generate() {
-		return StringUtil.random(6, RandomType.INT);
-	}
+public interface TenantConstant {
+
+	/**
+	 * 默认租户ID
+	 */
+	String DEFAULT_TENANT_ID = "000000";
+
 }

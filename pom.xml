@@ -89,6 +89,8 @@
         <module>blade-starter-social</module>
         <module>blade-starter-swagger</module>
         <module>blade-starter-transaction</module>
+        <module>blade-starter-cache</module>
+        <module>blade-starter-tenant</module>
     </modules>
 
     <dependencyManagement>
@@ -197,6 +199,11 @@
             </dependency>
             <dependency>
                 <groupId>org.springblade</groupId>
+                <artifactId>blade-starter-tenant</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
                 <artifactId>blade-starter-transaction</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -208,6 +215,11 @@
             <dependency>
                 <groupId>org.springblade</groupId>
                 <artifactId>blade-starter-report</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springblade</groupId>
+                <artifactId>blade-starter-cache</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

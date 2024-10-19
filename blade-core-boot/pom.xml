@@ -53,11 +53,19 @@
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
+            <artifactId>blade-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
             <artifactId>blade-starter-log</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springblade</groupId>
             <artifactId>blade-starter-swagger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-starter-tenant</artifactId>
         </dependency>
         <!--MyBatis-->
         <dependency>
