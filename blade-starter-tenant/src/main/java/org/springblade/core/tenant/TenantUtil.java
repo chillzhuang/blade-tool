@@ -27,7 +27,7 @@ import java.util.function.Supplier;
  * @author L.cm
  */
 @UtilityClass
-public class TenantIdUtil {
+public class TenantUtil {
 	private static final ThreadLocal<String> tl = new ThreadLocal<>();
 
 	/**
@@ -35,7 +35,7 @@ public class TenantIdUtil {
 	 *
 	 * @return 租户id
 	 */
-	public static String get() {
+	public static String getTenantId() {
 		String tenantId = tl.get();
 		if (tenantId != null) {
 			return tenantId;

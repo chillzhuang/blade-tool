@@ -41,7 +41,7 @@ public class BladeTenantHandler implements TenantLineHandler {
 	 */
 	@Override
 	public Expression getTenantId() {
-		return new StringValue(Func.toStr(TenantIdUtil.get(), properties.getDefaultTenantId()));
+		return new StringValue(Func.toStr(TenantUtil.getTenantId(), properties.getDefaultTenantId()));
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class BladeTenantHandler implements TenantLineHandler {
 				(!properties.getTables().isEmpty() && properties.getTables().contains(tableName))
 					|| properties.getBladeTables().contains(tableName)
 			)
-				&& StringUtil.isNotBlank(TenantIdUtil.get())
+				&& StringUtil.isNotBlank(TenantUtil.getTenantId())
 		);
 	}
 }
