@@ -16,12 +16,12 @@
 package org.springblade.core.cloud.config;
 
 import com.alibaba.cloud.sentinel.SentinelProperties;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.SentinelWebInterceptor;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.DefaultBlockExceptionHandler;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.RequestOriginParser;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.UrlCleaner;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.config.SentinelWebMvcConfig;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.SentinelWebInterceptor;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.BlockExceptionHandler;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.DefaultBlockExceptionHandler;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.RequestOriginParser;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.config.SentinelWebMvcConfig;
+import com.alibaba.csp.sentinel.adapter.web.common.UrlCleaner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +56,7 @@ public class BladeSentinelFilterConfiguration {
 		} else {
 			if (StringUtils.hasText(properties.getBlockPage())) {
 				sentinelWebMvcConfig.setBlockExceptionHandler(
-					((request, response, e) -> response.sendRedirect(properties.getBlockPage())));
+					((request, response, s, e) -> response.sendRedirect(properties.getBlockPage())));
 			} else {
 				sentinelWebMvcConfig.setBlockExceptionHandler(new DefaultBlockExceptionHandler());
 			}

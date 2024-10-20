@@ -16,7 +16,7 @@
 package org.springblade.core.cloud.config;
 
 import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
-import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
+import com.alibaba.csp.sentinel.adapter.spring.webmvc_v6x.callback.BlockExceptionHandler;
 import feign.Feign;
 import feign.RequestInterceptor;
 import org.springblade.core.cloud.feign.BladeFeignSentinel;
