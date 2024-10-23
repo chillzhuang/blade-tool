@@ -105,8 +105,26 @@ public class CacheUtil {
 		if (Func.hasEmpty(cacheName, keyPrefix, key)) {
 			return null;
 		}
-		String cacheKey = keyPrefix.concat(String.valueOf(key));
-		return getCache(cacheName).get(cacheKey, valueLoader);
+
+		final String fullKey = keyPrefix.concat(String.valueOf(key));
+		Cache cache = getCache(cacheName);
+		Cache.ValueWrapper valueWrapper = cache.get(fullKey);
+
+		if (valueWrapper != null) {
+			return (T) valueWrapper.get();
+		}
+
+		try {
+			T value = valueLoader.call();
+			if (value == null) {
+				return null;
+			}
+			cache.put(fullKey, value);
+			return value;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
