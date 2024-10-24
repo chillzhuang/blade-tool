@@ -16,7 +16,8 @@
 package org.springblade.core.tenant;
 
 import lombok.experimental.UtilityClass;
-import org.springblade.core.secure.utils.SecureUtil;
+import org.springblade.core.secure.utils.AuthUtil;
+import org.springframework.core.NamedThreadLocal;
 import org.springframework.util.Assert;
 
 import java.util.function.Supplier;
@@ -24,11 +25,29 @@ import java.util.function.Supplier;
 /**
  * TenantId 工具
  *
- * @author L.cm
+ * @author L.cm，BladeX
  */
 @UtilityClass
 public class TenantUtil {
-	private static final ThreadLocal<String> tl = new ThreadLocal<>();
+	/**
+	 * 租户ID线程
+	 */
+	private static final ThreadLocal<String> TENANT_ID_HOLDER = new NamedThreadLocal<>("blade-tenant-id") {
+		@Override
+		protected String initialValue() {
+			return null;
+		}
+	};
+
+	/**
+	 * 租户状态线程
+	 */
+	private static final ThreadLocal<Boolean> TENANT_IGNORE_HOLDER = new NamedThreadLocal<>("blade-tenant-ignore") {
+		@Override
+		protected Boolean initialValue() {
+			return Boolean.FALSE;
+		}
+	};
 
 	/**
 	 * 获取租户id
@@ -36,11 +55,11 @@ public class TenantUtil {
 	 * @return 租户id
 	 */
 	public static String getTenantId() {
-		String tenantId = tl.get();
+		String tenantId = TENANT_ID_HOLDER.get();
 		if (tenantId != null) {
 			return tenantId;
 		}
-		return SecureUtil.getTenantId();
+		return AuthUtil.getTenantId();
 	}
 
 	/**
@@ -53,11 +72,11 @@ public class TenantUtil {
 	 */
 	public static <R> R use(String tenantId, Supplier<R> supplier) {
 		Assert.hasText(tenantId, "参数 tenantId 为空");
-		tl.set(tenantId);
 		try {
+			TENANT_ID_HOLDER.set(tenantId);
 			return supplier.get();
 		} finally {
-			tl.remove();
+			TENANT_ID_HOLDER.remove();
 		}
 	}
 
@@ -69,11 +88,48 @@ public class TenantUtil {
 	 */
 	public static void use(String tenantId, Runnable runnable) {
 		Assert.hasText(tenantId, "参数 tenantId 为空");
-		tl.set(tenantId);
 		try {
+			TENANT_ID_HOLDER.set(tenantId);
 			runnable.run();
 		} finally {
-			tl.remove();
+			TENANT_ID_HOLDER.remove();
+		}
+	}
+
+	/**
+	 * 是否忽略租户
+	 */
+	public static Boolean isIgnore() {
+		return TENANT_IGNORE_HOLDER.get();
+	}
+
+	/**
+	 * 忽略租户 执行函数
+	 *
+	 * @param supplier supplier
+	 * @param <R>      泛型
+	 * @return R 函数返回
+	 */
+	public static <R> R ignore(Supplier<R> supplier) {
+		try {
+			TENANT_IGNORE_HOLDER.set(Boolean.TRUE);
+			return supplier.get();
+		} finally {
+			TENANT_IGNORE_HOLDER.remove();
+		}
+	}
+
+	/**
+	 * 忽略租户 执行函数
+	 *
+	 * @param runnable Runnable
+	 */
+	public static void ignore(Runnable runnable) {
+		try {
+			TENANT_IGNORE_HOLDER.set(Boolean.TRUE);
+			runnable.run();
+		} finally {
+			TENANT_IGNORE_HOLDER.remove();
 		}
 	}
 
