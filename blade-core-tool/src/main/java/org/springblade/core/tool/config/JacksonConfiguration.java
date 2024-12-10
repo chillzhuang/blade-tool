@@ -77,6 +77,8 @@ public class JacksonConfiguration {
 		objectMapper.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		//日期格式化
 		objectMapper.registerModule(new BladeJavaTimeModule());
+		//允许空字符串序列化为null对象
+		objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
 		objectMapper.findAndRegisterModules();
 		return objectMapper;
 	}
