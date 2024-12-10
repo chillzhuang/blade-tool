@@ -13,7 +13,9 @@ import java.util.concurrent.TimeUnit;
  * Redis工具类
  *
  * @author Chill
+ * @deprecated in favor of {org.springblade.core.redis.cache.BladeRedis}.
  */
+@Deprecated
 @AllArgsConstructor
 public class RedisUtil {
 

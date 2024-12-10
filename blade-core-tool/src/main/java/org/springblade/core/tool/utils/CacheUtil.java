@@ -25,6 +25,7 @@ import java.util.concurrent.Callable;
  * 缓存工具类
  *
  * @author Chill
+ * @deprecated in favor of {org.springblade.core.cache.utils.CacheUtil}.
  */
 @Deprecated
 public class CacheUtil {

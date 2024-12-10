@@ -67,6 +67,10 @@
             <groupId>org.springblade</groupId>
             <artifactId>blade-starter-tenant</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springblade</groupId>
+            <artifactId>blade-starter-redis</artifactId>
+        </dependency>
         <!--MyBatis-->
         <dependency>
             <groupId>org.springblade</groupId>
