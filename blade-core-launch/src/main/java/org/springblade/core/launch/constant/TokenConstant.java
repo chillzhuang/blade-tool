@@ -40,8 +40,8 @@ public interface TokenConstant {
 	String OAUTH_ID = "oauth_id";
 	String CLIENT_ID = "client_id";
 	String LICENSE = "license";
-	String LICENSE_NAME = "powered by blade";
-	String DEFAULT_AVATAR = "https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png";
+	String LICENSE_NAME = "powered by bladex";
+	String DEFAULT_AVATAR = "https://bladex.cn/images/logo-small.png";
 	Integer AUTH_LENGTH = 7;
 
 	/**
