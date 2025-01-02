@@ -62,6 +62,9 @@ public class BladeTenantHandler implements TenantLineHandler {
 	 */
 	@Override
 	public boolean ignoreTable(String tableName) {
+		if (BladeTenantHolder.isIgnore()) {
+			return true;
+		}
 		if (TenantUtil.isIgnore()) {
 			return true;
 		}
