@@ -15,12 +15,16 @@
  */
 package org.springblade.core.mp.config;
 
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusPropertiesCustomizer;
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties.CoreConfiguration;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import lombok.AllArgsConstructor;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.StringValue;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.nologging.NoLoggingImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springblade.core.mp.intercept.QueryInterceptor;
 import org.springblade.core.mp.logger.SqlLogFilter;
@@ -32,6 +36,7 @@ import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.ObjectUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -48,7 +53,6 @@ import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 @MapperScan("org.springblade.**.mapper.**")
 @EnableConfigurationProperties(MybatisPlusProperties.class)
 public class MybatisPlusConfiguration {
-
 
 	/**
 	 * 租户拦截器
@@ -103,6 +107,21 @@ public class MybatisPlusConfiguration {
 	@ConditionalOnProperty(value = "blade.mybatis-plus.sql-log", matchIfMissing = true)
 	public SqlLogFilter sqlLogFilter(MybatisPlusProperties properties) {
 		return new SqlLogFilter(properties);
+	}
+
+	/**
+	 * 关闭 mybatis 默认日志
+	 */
+	@Bean
+	@ConditionalOnClass(MybatisPlusPropertiesCustomizer.class)
+	public MybatisPlusPropertiesCustomizer mybatisPlusPropertiesCustomizer() {
+		return properties -> {
+			CoreConfiguration configuration = properties.getConfiguration();
+			Class<? extends Log> logImpl = configuration.getLogImpl();
+			if (logImpl == null) {
+				configuration.setLogImpl(NoLoggingImpl.class);
+			}
+		};
 	}
 
 }
