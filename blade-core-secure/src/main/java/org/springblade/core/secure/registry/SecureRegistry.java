@@ -40,7 +40,9 @@ public class SecureRegistry {
 		this.defaultExcludePatterns.add("/v3/api-docs/**");
 		this.defaultExcludePatterns.add("/swagger-ui/**");
 		this.defaultExcludePatterns.add("/auth/**");
+		this.defaultExcludePatterns.add("/oauth/**");
 		this.defaultExcludePatterns.add("/token/**");
+		this.defaultExcludePatterns.add("/feign/client/**");
 		this.defaultExcludePatterns.add("/user/user-info");
 		this.defaultExcludePatterns.add("/user/user-info-by-id");
 		this.defaultExcludePatterns.add("/menu/auth-routes");
