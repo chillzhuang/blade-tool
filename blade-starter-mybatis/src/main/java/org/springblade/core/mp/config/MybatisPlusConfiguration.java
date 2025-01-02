@@ -23,8 +23,8 @@ import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.StringValue;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springblade.core.mp.intercept.QueryInterceptor;
+import org.springblade.core.mp.logger.SqlLogFilter;
 import org.springblade.core.mp.plugins.BladePaginationInterceptor;
-import org.springblade.core.mp.plugins.SqlLogInterceptor;
 import org.springblade.core.mp.props.MybatisPlusProperties;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.constant.BladeConstant;
@@ -46,7 +46,10 @@ import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 @AutoConfiguration
 @AllArgsConstructor
 @MapperScan("org.springblade.**.mapper.**")
-@EnableConfigurationProperties(MybatisPlusProperties.class)
+@EnableConfigurationProperties({
+	MybatisPlusProperties.class,
+	BladeMybatisPlusProperties.class
+})
 public class MybatisPlusConfiguration {
 
 
@@ -101,8 +104,8 @@ public class MybatisPlusConfiguration {
 	 */
 	@Bean
 	@ConditionalOnProperty(value = "blade.mybatis-plus.sql-log", matchIfMissing = true)
-	public SqlLogInterceptor sqlLogInterceptor() {
-		return new SqlLogInterceptor();
+	public SqlLogFilter sqlLogFilter(BladeMybatisPlusProperties properties) {
+		return new SqlLogFilter(properties);
 	}
 
 }
