@@ -24,6 +24,7 @@ import com.alibaba.druid.proxy.jdbc.ResultSetProxy;
 import com.alibaba.druid.proxy.jdbc.StatementProxy;
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.util.StringUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.mp.config.BladeMybatisPlusProperties;
 import org.springblade.core.tool.utils.StringUtil;
@@ -32,7 +33,6 @@ import java.sql.SQLException;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * 打印可执行的 sql 日志
@@ -44,15 +44,10 @@ import java.util.regex.Pattern;
  * @author L.cm
  */
 @Slf4j
+@RequiredArgsConstructor
 public class SqlLogFilter extends FilterEventAdapter {
 	private static final SQLUtils.FormatOption FORMAT_OPTION = new SQLUtils.FormatOption(false, false);
 	private final BladeMybatisPlusProperties properties;
-	private final List<Pattern> sqlLogPatternList;
-
-	public SqlLogFilter(BladeMybatisPlusProperties properties) {
-		this.properties = properties;
-		this.sqlLogPatternList = properties.getSqlLogPatterns().stream().map(Pattern::compile).toList();
-	}
 
 	@Override
 	protected void statementExecuteBefore(StatementProxy statement, String sql) {
@@ -110,12 +105,6 @@ public class SqlLogFilter extends FilterEventAdapter {
 		String sql = statement.getBatchSql();
 		// sql 为空直接返回
 		if (StringUtils.isEmpty(sql)) {
-			return;
-		}
-		boolean isSqlMatch = sqlLogPatternList.stream()
-			.anyMatch(pattern -> pattern.matcher(sql).matches());
-		if (!isSqlMatch) {
-			log.debug("sql:{} not match in SqlPatternList:{}", sql, properties.getSqlLogPatterns());
 			return;
 		}
 		int parametersSize = statement.getParametersSize();

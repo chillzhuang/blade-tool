@@ -38,9 +38,4 @@ public class BladeMybatisPlusProperties {
 	 */
 	private boolean sqlLog = true;
 
-	/**
-	 * sql 打印正则过滤
-	 */
-	private List<String> sqlLogPatterns = new ArrayList<>();
-
 }
