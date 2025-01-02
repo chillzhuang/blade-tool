@@ -46,10 +46,7 @@ import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 @AutoConfiguration
 @AllArgsConstructor
 @MapperScan("org.springblade.**.mapper.**")
-@EnableConfigurationProperties({
-	MybatisPlusProperties.class,
-	BladeMybatisPlusProperties.class
-})
+@EnableConfigurationProperties(MybatisPlusProperties.class)
 public class MybatisPlusConfiguration {
 
 
@@ -104,7 +101,7 @@ public class MybatisPlusConfiguration {
 	 */
 	@Bean
 	@ConditionalOnProperty(value = "blade.mybatis-plus.sql-log", matchIfMissing = true)
-	public SqlLogFilter sqlLogFilter(BladeMybatisPlusProperties properties) {
+	public SqlLogFilter sqlLogFilter(MybatisPlusProperties properties) {
 		return new SqlLogFilter(properties);
 	}
 

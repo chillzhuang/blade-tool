@@ -37,4 +37,9 @@ public class MybatisPlusProperties {
 	 */
 	protected Boolean overflow = false;
 
+	/**
+	 * 是否打印 sql
+	 */
+	private boolean sqlLog = true;
+
 }

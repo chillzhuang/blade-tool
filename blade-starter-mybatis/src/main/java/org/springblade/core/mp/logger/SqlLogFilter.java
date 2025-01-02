@@ -26,7 +26,7 @@ import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springblade.core.mp.config.BladeMybatisPlusProperties;
+import org.springblade.core.mp.props.MybatisPlusProperties;
 import org.springblade.core.tool.utils.StringUtil;
 
 import java.sql.SQLException;
@@ -47,7 +47,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SqlLogFilter extends FilterEventAdapter {
 	private static final SQLUtils.FormatOption FORMAT_OPTION = new SQLUtils.FormatOption(false, false);
-	private final BladeMybatisPlusProperties properties;
+	private final MybatisPlusProperties properties;
 
 	@Override
 	protected void statementExecuteBefore(StatementProxy statement, String sql) {
