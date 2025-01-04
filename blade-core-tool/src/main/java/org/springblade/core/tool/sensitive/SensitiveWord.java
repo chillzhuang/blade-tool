@@ -40,7 +40,7 @@ public enum SensitiveWord {
 		// 安全相关
 		"security", "certificate", "credentials",
 		// 数据库相关
-		"connection_string", "jdbc", "database_url"
+		"connection_string", "jdbc", "sql", "database_url"
 	)),
 
 	// 身份验证相关敏感词
