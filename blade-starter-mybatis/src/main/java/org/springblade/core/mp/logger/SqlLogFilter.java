@@ -132,9 +132,9 @@ public class SqlLogFilter extends FilterEventAdapter {
 
 	private static void printSql(String sql, StatementProxy statement) {
 		// 打印 sql
-		String sqlLogger = "\n\n======= Sql Logger ======================" +
+		String sqlLogger = "\n\n=================== Sql Logger ===================" +
 			"\n{}" +
-			"\n======= Sql Execute Time: {} =======\n";
+			"\n============ Sql Execute Time: {} ===========\n";
 		log.info(sqlLogger, sql.trim(), StringUtil.format(statement.getLastExecuteTimeNano()));
 	}
 

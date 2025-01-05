@@ -166,7 +166,7 @@ public class RequestLogAspect {
 			afterReqArgs.add(requestMethod);
 			afterReqArgs.add(requestURI);
 			afterReqArgs.add(tookMs);
-			afterReqLog.append("================  Response End   ================\n");
+			afterReqLog.append("=================  Response End   ================\n");
 			log.info(afterReqLog.toString(), afterReqArgs.toArray());
 		}
 	}
