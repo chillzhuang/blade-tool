@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.springblade.core.mp.logger;
+package org.springblade.core.mp.plugins;
 
 import com.alibaba.druid.DbType;
 import com.alibaba.druid.filter.FilterChain;
@@ -45,7 +45,7 @@ import java.util.List;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class SqlLogFilter extends FilterEventAdapter {
+public class SqlLogInterceptor extends FilterEventAdapter {
 	private static final SQLUtils.FormatOption FORMAT_OPTION = new SQLUtils.FormatOption(false, false);
 	private final MybatisPlusProperties properties;
 

@@ -27,7 +27,7 @@ import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.nologging.NoLoggingImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springblade.core.mp.intercept.QueryInterceptor;
-import org.springblade.core.mp.logger.SqlLogFilter;
+import org.springblade.core.mp.plugins.SqlLogInterceptor;
 import org.springblade.core.mp.plugins.BladePaginationInterceptor;
 import org.springblade.core.mp.props.MybatisPlusProperties;
 import org.springblade.core.secure.utils.SecureUtil;
@@ -105,8 +105,8 @@ public class MybatisPlusConfiguration {
 	 */
 	@Bean
 	@ConditionalOnProperty(value = "blade.mybatis-plus.sql-log", matchIfMissing = true)
-	public SqlLogFilter sqlLogFilter(MybatisPlusProperties properties) {
-		return new SqlLogFilter(properties);
+	public SqlLogInterceptor sqlLogInterceptor(MybatisPlusProperties properties) {
+		return new SqlLogInterceptor(properties);
 	}
 
 	/**
@@ -117,9 +117,11 @@ public class MybatisPlusConfiguration {
 	public MybatisPlusPropertiesCustomizer mybatisPlusPropertiesCustomizer() {
 		return properties -> {
 			CoreConfiguration configuration = properties.getConfiguration();
-			Class<? extends Log> logImpl = configuration.getLogImpl();
-			if (logImpl == null) {
-				configuration.setLogImpl(NoLoggingImpl.class);
+			if (configuration != null) {
+				Class<? extends Log> logImpl = configuration.getLogImpl();
+				if (logImpl == null) {
+					configuration.setLogImpl(NoLoggingImpl.class);
+				}
 			}
 		};
 	}
