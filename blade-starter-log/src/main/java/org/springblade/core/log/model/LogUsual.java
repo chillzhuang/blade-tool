@@ -18,6 +18,7 @@ package org.springblade.core.log.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -29,6 +30,7 @@ import java.io.Serializable;
  * @since 2018-10-12
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("blade_log_usual")
 public class LogUsual extends LogAbstract implements Serializable {
 

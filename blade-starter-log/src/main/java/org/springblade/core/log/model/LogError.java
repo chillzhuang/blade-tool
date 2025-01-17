@@ -18,6 +18,7 @@ package org.springblade.core.log.model;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -28,6 +29,7 @@ import java.io.Serializable;
  * @author Chill
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("blade_log_error")
 public class LogError extends LogAbstract implements Serializable {
 

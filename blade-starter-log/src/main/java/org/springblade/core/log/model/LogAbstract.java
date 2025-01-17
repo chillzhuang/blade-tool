@@ -19,10 +19,13 @@ package org.springblade.core.log.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -34,11 +37,13 @@ import java.util.Date;
 @Data
 public class LogAbstract implements Serializable {
 
-	protected static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 主键id
 	 */
+	@JsonSerialize(using = ToStringSerializer.class)
 	@TableId(value = "id", type = IdType.ASSIGN_ID)
 	protected Long id;
 
