@@ -15,8 +15,8 @@
  */
 package org.springblade.core.mp.config;
 
-import com.baomidou.mybatisplus.autoconfigure.MybatisPlusPropertiesCustomizer;
 import com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties.CoreConfiguration;
+import com.baomidou.mybatisplus.autoconfigure.MybatisPlusPropertiesCustomizer;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
@@ -27,8 +27,8 @@ import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.nologging.NoLoggingImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springblade.core.mp.intercept.QueryInterceptor;
-import org.springblade.core.mp.plugins.SqlLogInterceptor;
 import org.springblade.core.mp.plugins.BladePaginationInterceptor;
+import org.springblade.core.mp.plugins.SqlLogInterceptor;
 import org.springblade.core.mp.props.MybatisPlusProperties;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.constant.BladeConstant;
@@ -36,12 +36,10 @@ import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.ObjectUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 
 /**
@@ -111,30 +109,19 @@ public class MybatisPlusConfiguration {
 	}
 
 	/**
-	 * 内部类配置，避免 NoClassDefFoundError
-	 *
-	 * @author L.cm
+	 * 关闭 mybatis 默认日志
 	 */
-	@Configuration
-	@ConditionalOnClass(MybatisPlusPropertiesCustomizer.class)
-	public static class MybatisPlusPropertiesCustomizerConfiguration {
-
-		/**
-		 * 关闭 mybatis 默认日志
-		 */
-		@Bean
-		public MybatisPlusPropertiesCustomizer mybatisPlusPropertiesCustomizer() {
-			return properties -> {
-				CoreConfiguration configuration = properties.getConfiguration();
-				if (configuration != null) {
-					Class<? extends Log> logImpl = configuration.getLogImpl();
-					if (logImpl == null) {
-						configuration.setLogImpl(NoLoggingImpl.class);
-					}
+	@Bean
+	public MybatisPlusPropertiesCustomizer mybatisPlusPropertiesCustomizer() {
+		return properties -> {
+			CoreConfiguration configuration = properties.getConfiguration();
+			if (configuration != null) {
+				Class<? extends Log> logImpl = configuration.getLogImpl();
+				if (logImpl == null) {
+					configuration.setLogImpl(NoLoggingImpl.class);
 				}
-			};
-		}
-
+			}
+		};
 	}
 
 }
