@@ -58,4 +58,9 @@ public class RedisPubSubConfiguration {
 		return new RPubSubListenerDetector(redisMessageListenerContainer, redisSerializer);
 	}
 
+	@Bean
+	public RPubSubListenerLazyFilter rPubSubListenerLazyFilter() {
+		return new RPubSubListenerLazyFilter();
+	}
+
 }
