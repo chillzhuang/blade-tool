@@ -41,10 +41,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 
 /**
- * mybatisplus 配置
+ * mybatis plus 配置
  *
  * @author Chill
  */
@@ -110,20 +111,30 @@ public class MybatisPlusConfiguration {
 	}
 
 	/**
-	 * 关闭 mybatis 默认日志
+	 * 内部类配置，避免 NoClassDefFoundError
+	 *
+	 * @author L.cm
 	 */
-	@Bean
+	@Configuration
 	@ConditionalOnClass(MybatisPlusPropertiesCustomizer.class)
-	public MybatisPlusPropertiesCustomizer mybatisPlusPropertiesCustomizer() {
-		return properties -> {
-			CoreConfiguration configuration = properties.getConfiguration();
-			if (configuration != null) {
-				Class<? extends Log> logImpl = configuration.getLogImpl();
-				if (logImpl == null) {
-					configuration.setLogImpl(NoLoggingImpl.class);
+	public static class MybatisPlusPropertiesCustomizerConfiguration {
+
+		/**
+		 * 关闭 mybatis 默认日志
+		 */
+		@Bean
+		public MybatisPlusPropertiesCustomizer mybatisPlusPropertiesCustomizer() {
+			return properties -> {
+				CoreConfiguration configuration = properties.getConfiguration();
+				if (configuration != null) {
+					Class<? extends Log> logImpl = configuration.getLogImpl();
+					if (logImpl == null) {
+						configuration.setLogImpl(NoLoggingImpl.class);
+					}
 				}
-			}
-		};
+			};
+		}
+
 	}
 
 }
