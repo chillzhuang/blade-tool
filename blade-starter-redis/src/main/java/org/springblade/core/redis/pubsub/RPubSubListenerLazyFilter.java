@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package org.springblade.core.redis.config;
+package org.springblade.core.redis.pubsub;
 
-import org.springblade.core.redis.pubsub.RPubSubListener;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.LazyInitializationExcludeFilter;
 import org.springframework.core.annotation.AnnotationUtils;

@@ -19,6 +19,7 @@ package org.springblade.core.redis.config;
 
 import org.springblade.core.redis.cache.BladeRedis;
 import org.springblade.core.redis.pubsub.RPubSubListenerDetector;
+import org.springblade.core.redis.pubsub.RPubSubListenerLazyFilter;
 import org.springblade.core.redis.pubsub.RPubSubPublisher;
 import org.springblade.core.redis.pubsub.RedisPubSubPublisher;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
