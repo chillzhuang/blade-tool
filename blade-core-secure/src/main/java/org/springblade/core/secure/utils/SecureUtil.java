@@ -468,7 +468,7 @@ public class SecureUtil {
 		// 组装Token信息
 		TokenInfo tokenInfo = new TokenInfo();
 		tokenInfo.setToken(builder.compact());
-		tokenInfo.setExpire((int) expireMillis / 1000);
+		tokenInfo.setExpire((int) (expireMillis / 1000));
 
 		return tokenInfo;
 	}
