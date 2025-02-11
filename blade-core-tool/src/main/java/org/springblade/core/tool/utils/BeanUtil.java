@@ -16,6 +16,7 @@
 package org.springblade.core.tool.utils;
 
 
+import org.springblade.core.tool.jackson.JsonUtil;
 import org.springblade.core.tool.support.BeanProperty;
 import org.springblade.core.tool.support.BaseBeanCopier;
 import org.springframework.beans.BeansException;
@@ -154,9 +155,8 @@ public class BeanUtil extends org.springframework.beans.BeanUtils {
 	 * @param bean 源对象
 	 * @return {Map}
 	 */
-	@SuppressWarnings("unchecked")
 	public static Map<String, Object> toMap(Object bean) {
-		return BeanMap.create(bean);
+		return JsonUtil.convertValue(bean, JsonUtil.getMapType(Object.class));
 	}
 
 	/**
@@ -167,9 +167,7 @@ public class BeanUtil extends org.springframework.beans.BeanUtils {
 	 * @return {T}
 	 */
 	public static <T> T toBean(Map<String, Object> beanMap, Class<T> valueType) {
-		T bean = BeanUtil.newInstance(valueType);
-		BeanMap.create(bean).putAll(beanMap);
-		return bean;
+		return JsonUtil.convertValue(beanMap, valueType);
 	}
 
 	/**
