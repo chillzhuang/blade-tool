@@ -19,6 +19,7 @@ package org.springblade.core.redis.cache;
 import lombok.Getter;
 import org.springblade.core.tool.utils.CollectionUtil;
 import org.springblade.core.tool.utils.NumberUtil;
+import org.springframework.data.redis.connection.RedisKeyCommands;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.lang.Nullable;
@@ -27,6 +28,7 @@ import org.springframework.util.Assert;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -91,6 +93,17 @@ public class BladeRedis {
 	}
 
 	/**
+	 * 存放 key value 对到 redis，用于自定义序列化的方式
+	 *
+	 * @param key    redis key
+	 * @param mapper 序列化转换
+	 * @param <T>    泛型
+	 */
+	public <T> void set(String key, T value, Function<T, byte[]> mapper) {
+		redisTemplate.execute((RedisCallback<Object>) redis -> redis.stringCommands().set(keySerialize(key), mapper.apply(value)));
+	}
+
+	/**
 	 * 存放 key-value 对到 Redis，并设置过期时间
 	 *
 	 * @param key     键
@@ -134,6 +147,25 @@ public class BladeRedis {
 	@Nullable
 	public <T> T get(String key) {
 		return (T) valueOps.get(key);
+	}
+
+	/**
+	 * 返回 key 所关联的 value 值
+	 *
+	 * @param key    redis key
+	 * @param mapper 函数式
+	 * @param <T>    泛型
+	 * @return T
+	 */
+	@Nullable
+	public <T> T get(String key, Function<byte[], T> mapper) {
+		return redisTemplate.execute((RedisCallback<T>) redis -> {
+			byte[] value = redis.stringCommands().get(keySerialize(key));
+			if (value == null) {
+				return null;
+			}
+			return mapper.apply(value);
+		});
 	}
 
 	/**
@@ -241,6 +273,73 @@ public class BladeRedis {
 	 */
 	public Set<String> keys(String pattern) {
 		return redisTemplate.keys(pattern);
+	}
+
+
+	/**
+	 * redis scan，count 默认 100
+	 *
+	 * @param pattern 匹配表达式
+	 * @return 扫描结果
+	 */
+	public Set<String> scan(String pattern) {
+		return scan(pattern, 100L);
+	}
+
+	/**
+	 * redis scan
+	 *
+	 * @param pattern 匹配表达式
+	 * @param count   一次扫描的数量, redis 默认为 10
+	 * @return 扫描结果
+	 */
+	public Set<String> scan(String pattern, @Nullable Long count) {
+		final Set<String> keySet = new HashSet<>();
+		scan(pattern, count, keySet::add);
+		return keySet;
+	}
+
+	/**
+	 * redis scan, count 默认 100
+	 *
+	 * @param pattern  匹配表达式
+	 * @param consumer 消费者
+	 */
+	public void scan(String pattern, Consumer<String> consumer) {
+		scan(pattern, 100L, consumer);
+	}
+
+	/**
+	 * redis scan
+	 *
+	 * @param pattern  匹配表达式
+	 * @param count    一次扫描的数量
+	 * @param consumer 消费者
+	 */
+	public void scan(String pattern, @Nullable Long count, Consumer<String> consumer) {
+		scanBytes(pattern, count, (bytes) -> consumer.accept(keyDeserialize(bytes)));
+	}
+
+	/**
+	 * redis scan
+	 *
+	 * @param pattern  匹配表达式
+	 * @param count    一次扫描的数量
+	 * @param consumer 消费者
+	 */
+	public void scanBytes(String pattern, @Nullable Long count, Consumer<byte[]> consumer) {
+		redisTemplate.execute((RedisCallback<Object>) redis -> {
+			ScanOptions.ScanOptionsBuilder builder = ScanOptions.scanOptions()
+				.match(pattern);
+			if (count != null) {
+				builder.count(count);
+			}
+			RedisKeyCommands commands = redis.keyCommands();
+			try (Cursor<byte[]> cursor = commands.scan(builder.build())) {
+				cursor.forEachRemaining(consumer);
+			}
+			return null;
+		});
 	}
 
 	/**
@@ -1066,4 +1165,27 @@ public class BladeRedis {
 		RedisSerializer<String> keySerializer = (RedisSerializer<String>) this.redisTemplate.getKeySerializer();
 		return Objects.requireNonNull(keySerializer.serialize(redisKey), "Redis key is null.");
 	}
+
+	/**
+	 * redisKey 序列化
+	 *
+	 * @param redisKey redisKey
+	 * @return byte array
+	 */
+	public byte[] hashKeySerializer(Object redisKey) {
+		RedisSerializer<Object> hashKeySerializer = (RedisSerializer<Object>) this.redisTemplate.getHashKeySerializer();
+		return Objects.requireNonNull(hashKeySerializer.serialize(redisKey), "Redis key is null.");
+	}
+
+	/**
+	 * redisKey 序列化
+	 *
+	 * @param redisKey redisKey
+	 * @return byte array
+	 */
+	public String keyDeserialize(byte[] redisKey) {
+		RedisSerializer<String> keySerializer = (RedisSerializer<String>) this.redisTemplate.getKeySerializer();
+		return Objects.requireNonNull(keySerializer.deserialize(redisKey), "Redis key is null.");
+	}
+
 }
