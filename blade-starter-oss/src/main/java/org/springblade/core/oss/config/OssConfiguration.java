@@ -15,7 +15,6 @@
  */
 package org.springblade.core.oss.config;
 
-import lombok.AllArgsConstructor;
 import org.springblade.core.oss.props.OssProperties;
 import org.springblade.core.oss.rule.BladeOssRule;
 import org.springblade.core.oss.rule.OssRule;
@@ -30,7 +29,6 @@ import org.springframework.context.annotation.Bean;
  * @author Chill
  */
 @AutoConfiguration
-@AllArgsConstructor
 @EnableConfigurationProperties(OssProperties.class)
 public class OssConfiguration {
 
