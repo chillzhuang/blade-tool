@@ -32,11 +32,6 @@
             <groupId>org.springblade</groupId>
             <artifactId>blade-core-cloud</artifactId>
         </dependency>
-        <!-- validator -->
-        <dependency>
-            <artifactId>hibernate-validator</artifactId>
-            <groupId>org.hibernate.validator</groupId>
-        </dependency>
         <!--Mybatis-->
         <dependency>
             <groupId>com.baomidou</groupId>
