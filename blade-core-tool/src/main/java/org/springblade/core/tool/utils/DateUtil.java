@@ -35,9 +35,9 @@ public class DateUtil {
 	/**
 	 * java 8 时间格式化
 	 */
-	public static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern(DateUtil.PATTERN_DATETIME);
-	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DateUtil.PATTERN_DATE);
-	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(DateUtil.PATTERN_TIME);
+	public static final DateTimeFormatter DATETIME_FORMATTER = DateTimeFormatter.ofPattern(PATTERN_DATETIME);
+	public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(PATTERN_DATE);
+	public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(PATTERN_TIME);
 
 	/**
 	 * 获取当前日期
@@ -594,7 +594,7 @@ public class DateUtil {
 	 * @return 时间
 	 */
 	public static String today() {
-		return format(new Date(), "yyyyMMdd");
+		return format(LocalDate.now(), "yyyyMMdd");
 	}
 
 }

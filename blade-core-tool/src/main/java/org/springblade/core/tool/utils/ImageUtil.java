@@ -15,8 +15,8 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.tool.support.IMultiOutputStream;
 import org.springblade.core.tool.support.ImagePosition;
 
@@ -33,21 +33,13 @@ import java.net.URL;
  *
  * @author Chill
  */
-public final class ImageUtil {
-
-	/**
-	 * Logger for this class
-	 */
-	private static Logger LOGGER = LoggerFactory.getLogger(ImageUtil.class);
-
+@Slf4j
+@UtilityClass
+public class ImageUtil {
 	/**
 	 * 默认输出图片类型
 	 */
 	public static final String DEFAULT_IMG_TYPE = "JPEG";
-
-	private ImageUtil() {
-
-	}
 
 	/**
 	 * 转换输入流到byte
@@ -73,7 +65,7 @@ public final class ImageUtil {
 		try {
 			return ImageIO.read(new File(srcImageFile));
 		} catch (IOException e) {
-			LOGGER.error("Error readImage", e);
+			log.error("Error readImage", e);
 		}
 		return null;
 	}
@@ -88,7 +80,7 @@ public final class ImageUtil {
 		try {
 			return ImageIO.read(srcImageFile);
 		} catch (IOException e) {
-			LOGGER.error("Error readImage", e);
+			log.error("Error readImage", e);
 		}
 		return null;
 	}
@@ -103,7 +95,7 @@ public final class ImageUtil {
 		try {
 			return ImageIO.read(srcInputStream);
 		} catch (IOException e) {
-			LOGGER.error("Error readImage", e);
+			log.error("Error readImage", e);
 		}
 		return null;
 	}
@@ -118,7 +110,7 @@ public final class ImageUtil {
 		try {
 			return ImageIO.read(url);
 		} catch (IOException e) {
-			LOGGER.error("Error readImage", e);
+			log.error("Error readImage", e);
 		}
 		return null;
 	}
@@ -133,7 +125,7 @@ public final class ImageUtil {
 	 * @param scale  缩放比例
 	 * @param flag   缩放选择:true 放大; false 缩小;
 	 */
-	public final static void zoomScale(BufferedImage src, OutputStream output, String type, double scale, boolean flag) {
+	public static void zoomScale(BufferedImage src, OutputStream output, String type, double scale, boolean flag) {
 		try {
 			// 得到源图宽
 			int width = src.getWidth();
@@ -159,7 +151,7 @@ public final class ImageUtil {
 
 			output.close();
 		} catch (IOException e) {
-			LOGGER.error("Error in zoom image", e);
+			log.error("Error in zoom image", e);
 		}
 	}
 
@@ -174,7 +166,7 @@ public final class ImageUtil {
 	 * @param bb        比例不对时是否需要补白：true为补白; false为不补白;
 	 * @param fillColor 填充色，null时为Color.WHITE
 	 */
-	public final static void zoomFixed(BufferedImage src, OutputStream output, String type, int height, int width, boolean bb, Color fillColor) {
+	public static void zoomFixed(BufferedImage src, OutputStream output, String type, int height, int width, boolean bb, Color fillColor) {
 		try {
 			double ratio = 0.0;
 			Image itemp = src.getScaledInstance(width, height, BufferedImage.SCALE_SMOOTH);
@@ -207,7 +199,7 @@ public final class ImageUtil {
 			// 关闭流
 			output.close();
 		} catch (IOException e) {
-			LOGGER.error("Error in zoom image", e);
+			log.error("Error in zoom image", e);
 		}
 	}
 
@@ -222,7 +214,7 @@ public final class ImageUtil {
 	 * @param width  目标切片宽度
 	 * @param height 目标切片高度
 	 */
-	public final static void crop(BufferedImage src, OutputStream output, String type, int x, int y, int width, int height) {
+	public static void crop(BufferedImage src, OutputStream output, String type, int x, int y, int width, int height) {
 		try {
 			// 源图宽度
 			int srcWidth = src.getHeight();
@@ -243,7 +235,7 @@ public final class ImageUtil {
 				output.close();
 			}
 		} catch (Exception e) {
-			LOGGER.error("Error in cut image", e);
+			log.error("Error in cut image", e);
 		}
 	}
 
@@ -256,7 +248,7 @@ public final class ImageUtil {
 	 * @param prows 目标切片行数。默认2，必须是范围 [1, 20] 之内
 	 * @param pcols 目标切片列数。默认2，必须是范围 [1, 20] 之内
 	 */
-	public final static void sliceWithNumber(BufferedImage src, IMultiOutputStream mos, String type, int prows, int pcols) {
+	public static void sliceWithNumber(BufferedImage src, IMultiOutputStream mos, String type, int prows, int pcols) {
 		try {
 			int rows = prows <= 0 || prows > 20 ? 2 : prows;
 			int cols = pcols <= 0 || pcols > 20 ? 2 : pcols;
@@ -290,7 +282,7 @@ public final class ImageUtil {
 				}
 			}
 		} catch (Exception e) {
-			LOGGER.error("Error in slice image", e);
+			log.error("Error in slice image", e);
 		}
 	}
 
@@ -303,7 +295,7 @@ public final class ImageUtil {
 	 * @param pdestWidth  目标切片宽度。默认200
 	 * @param pdestHeight 目标切片高度。默认150
 	 */
-	public final static void sliceWithSize(BufferedImage src, IMultiOutputStream mos, String type, int pdestWidth, int pdestHeight) {
+	public static void sliceWithSize(BufferedImage src, IMultiOutputStream mos, String type, int pdestWidth, int pdestHeight) {
 		try {
 			int destWidth = pdestWidth <= 0 ? 200 : pdestWidth;
 			int destHeight = pdestHeight <= 0 ? 150 : pdestHeight;
@@ -337,7 +329,7 @@ public final class ImageUtil {
 				}
 			}
 		} catch (Exception e) {
-			LOGGER.error("Error in slice image", e);
+			log.error("Error in slice image", e);
 		}
 	}
 
@@ -348,14 +340,14 @@ public final class ImageUtil {
 	 * @param formatName 包含格式非正式名称的 String：如JPG、JPEG、GIF等
 	 * @param output     目标图像地址
 	 */
-	public final static void convert(BufferedImage src, OutputStream output, String formatName) {
+	public static void convert(BufferedImage src, OutputStream output, String formatName) {
 		try {
 			// 输出为文件
 			ImageIO.write(src, formatName, output);
 			// 关闭流
 			output.close();
 		} catch (Exception e) {
-			LOGGER.error("Error in convert image", e);
+			log.error("Error in convert image", e);
 		}
 	}
 
@@ -366,7 +358,7 @@ public final class ImageUtil {
 	 * @param output 目标图像地址
 	 * @param type   类型
 	 */
-	public final static void gray(BufferedImage src, OutputStream output, String type) {
+	public static void gray(BufferedImage src, OutputStream output, String type) {
 		try {
 			ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);
 			ColorConvertOp op = new ColorConvertOp(cs, null);
@@ -376,7 +368,7 @@ public final class ImageUtil {
 			// 关闭流
 			output.close();
 		} catch (IOException e) {
-			LOGGER.error("Error in gray image", e);
+			log.error("Error in gray image", e);
 		}
 	}
 
@@ -394,8 +386,10 @@ public final class ImageUtil {
 	 * @param y        修正值
 	 * @param alpha    透明度：alpha 必须是范围 [0.0, 1.0] 之内（包含边界值）的一个浮点数字
 	 */
-	public final static void textStamp(BufferedImage src, OutputStream output, String type, String text, Font font, Color color
-		, int position, int x, int y, float alpha) {
+	public static void textStamp(BufferedImage src, OutputStream output,
+								 String type, String text, Font font,
+								 Color color, int position,
+								 int x, int y, float alpha) {
 		try {
 			int width = src.getWidth(null);
 			int height = src.getHeight(null);
@@ -411,11 +405,11 @@ public final class ImageUtil {
 			g.drawString(text, boxPos.getX(x), boxPos.getY(y));
 			g.dispose();
 			// 输出为文件
-			ImageIO.write((BufferedImage) image, defaultString(type, DEFAULT_IMG_TYPE), output);
+			ImageIO.write(image, defaultString(type, DEFAULT_IMG_TYPE), output);
 			// 关闭流
 			output.close();
 		} catch (Exception e) {
-			LOGGER.error("Error in textStamp image", e);
+			log.error("Error in textStamp image", e);
 		}
 	}
 
@@ -431,8 +425,9 @@ public final class ImageUtil {
 	 * @param y        修正值
 	 * @param alpha    透明度：alpha 必须是范围 [0.0, 1.0] 之内（包含边界值）的一个浮点数字
 	 */
-	public final static void imageStamp(BufferedImage src, OutputStream output, String type, BufferedImage stamp
-		, int position, int x, int y, float alpha) {
+	public static void imageStamp(BufferedImage src, OutputStream output,
+								  String type, BufferedImage stamp,
+								  int position, int x, int y, float alpha) {
 		try {
 			int width = src.getWidth();
 			int height = src.getHeight();
@@ -449,11 +444,11 @@ public final class ImageUtil {
 			// 水印文件结束
 			g.dispose();
 			// 输出为文件
-			ImageIO.write((BufferedImage) image, defaultString(type, DEFAULT_IMG_TYPE), output);
+			ImageIO.write(image, defaultString(type, DEFAULT_IMG_TYPE), output);
 			// 关闭流
 			output.close();
 		} catch (Exception e) {
-			LOGGER.error("Error imageStamp", e);
+			log.error("Error imageStamp", e);
 		}
 	}
 
@@ -463,10 +458,10 @@ public final class ImageUtil {
 	 * @param text text
 	 * @return int
 	 */
-	public final static int calcTextWidth(String text) {
+	public static int calcTextWidth(String text) {
 		int length = 0;
 		for (int i = 0; i < text.length(); i++) {
-			if (new String(text.charAt(i) + "").getBytes().length > 1) {
+			if ((text.charAt(i) + "").getBytes().length > 1) {
 				length += 2;
 			} else {
 				length += 1;
