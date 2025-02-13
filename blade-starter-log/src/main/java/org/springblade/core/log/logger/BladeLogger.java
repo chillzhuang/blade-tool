@@ -49,7 +49,7 @@ public class BladeLogger implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		log.info(serviceId + ": BladeLogger init success!");
+		log.info("{}: BladeLogger init success!", serviceId);
 	}
 
 }
