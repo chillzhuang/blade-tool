@@ -264,8 +264,8 @@ public class XmlUtil {
 	 * 内部类单例
 	 */
 	private static class XmlHelperHolder {
-		private static DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-		private static XPathFactory xPathFactory = XPathFactory.newInstance();
+		private static final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+		private static final XPathFactory xPathFactory = XPathFactory.newInstance();
 	}
 
 }
