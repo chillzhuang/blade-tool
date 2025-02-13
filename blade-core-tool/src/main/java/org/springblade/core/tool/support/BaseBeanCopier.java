@@ -127,7 +127,7 @@ public abstract class BaseBeanCopier {
 			ClassEmitter ce = new ClassEmitter(v);
 			ce.begin_class(Constants.V1_2,
 				Constants.ACC_PUBLIC,
-				getGenerateClassName(),
+				this.className,
 				BEAN_COPIER,
 				null,
 				Constants.SOURCE_FILE);
@@ -214,10 +214,6 @@ public abstract class BaseBeanCopier {
 		private String generateClassName(Predicate nameTestPredicate) {
 			this.className = DefaultNamingPolicy.INSTANCE.getClassName(BEAN_NAME_PREFIX, BEAN_NAME_PREFIX, key, nameTestPredicate);
 			return this.className;
-		}
-
-		private String getGenerateClassName() {
-			return className;
 		}
 
 	}
