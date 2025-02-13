@@ -16,7 +16,6 @@
 package org.springblade.core.oss.config;
 
 import io.minio.MinioClient;
-import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springblade.core.oss.MinioTemplate;
 import org.springblade.core.oss.props.OssProperties;
@@ -34,21 +33,16 @@ import org.springframework.context.annotation.Bean;
  *
  * @author Chill
  */
-@AllArgsConstructor
 @AutoConfiguration(after = OssConfiguration.class)
 @ConditionalOnClass({MinioClient.class})
 @EnableConfigurationProperties(OssProperties.class)
 @ConditionalOnProperty(value = "oss.name", havingValue = "minio")
 public class MinioConfiguration {
 
-	private final OssProperties ossProperties;
-	private final OssRule ossRule;
-
-
 	@Bean
 	@SneakyThrows
 	@ConditionalOnMissingBean(MinioClient.class)
-	public MinioClient minioClient() {
+	public MinioClient minioClient(OssProperties ossProperties) {
 		return MinioClient.builder()
 			.endpoint(ossProperties.getEndpoint())
 			.credentials(ossProperties.getAccessKey(), ossProperties.getSecretKey())
@@ -58,7 +52,9 @@ public class MinioConfiguration {
 	@Bean
 	@ConditionalOnBean({MinioClient.class})
 	@ConditionalOnMissingBean(MinioTemplate.class)
-	public MinioTemplate minioTemplate(MinioClient minioClient) {
+	public MinioTemplate minioTemplate(OssRule ossRule,
+									   OssProperties ossProperties,
+									   MinioClient minioClient) {
 		return new MinioTemplate(minioClient, ossRule, ossProperties);
 	}
 

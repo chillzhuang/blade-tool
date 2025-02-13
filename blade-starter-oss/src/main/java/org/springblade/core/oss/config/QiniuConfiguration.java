@@ -19,7 +19,6 @@ import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
-import lombok.AllArgsConstructor;
 import org.springblade.core.oss.QiniuTemplate;
 import org.springblade.core.oss.props.OssProperties;
 import org.springblade.core.oss.rule.OssRule;
@@ -36,15 +35,11 @@ import org.springframework.context.annotation.Bean;
  *
  * @author Chill
  */
-@AllArgsConstructor
 @AutoConfiguration(after = OssConfiguration.class)
 @ConditionalOnClass({Auth.class, UploadManager.class, BucketManager.class})
 @EnableConfigurationProperties(OssProperties.class)
 @ConditionalOnProperty(value = "oss.name", havingValue = "qiniu")
 public class QiniuConfiguration {
-
-	private final OssProperties ossProperties;
-	private final OssRule ossRule;
 
 	@Bean
 	@ConditionalOnMissingBean(com.qiniu.storage.Configuration.class)
@@ -54,7 +49,7 @@ public class QiniuConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean(Auth.class)
-	public Auth auth() {
+	public Auth auth(OssProperties ossProperties) {
 		return Auth.create(ossProperties.getAccessKey(), ossProperties.getSecretKey());
 	}
 
@@ -66,14 +61,19 @@ public class QiniuConfiguration {
 
 	@Bean
 	@ConditionalOnBean(com.qiniu.storage.Configuration.class)
-	public BucketManager bucketManager(com.qiniu.storage.Configuration cfg) {
+	public BucketManager bucketManager(OssProperties ossProperties,
+									   com.qiniu.storage.Configuration cfg) {
 		return new BucketManager(Auth.create(ossProperties.getAccessKey(), ossProperties.getSecretKey()), cfg);
 	}
 
 	@Bean
 	@ConditionalOnBean({Auth.class, UploadManager.class, BucketManager.class})
 	@ConditionalOnMissingBean(QiniuTemplate.class)
-	public QiniuTemplate qiniuTemplate(Auth auth, UploadManager uploadManager, BucketManager bucketManager) {
+	public QiniuTemplate qiniuTemplate(OssRule ossRule,
+									   OssProperties ossProperties,
+									   Auth auth,
+									   UploadManager uploadManager,
+									   BucketManager bucketManager) {
 		return new QiniuTemplate(auth, uploadManager, bucketManager, ossProperties, ossRule);
 	}
 

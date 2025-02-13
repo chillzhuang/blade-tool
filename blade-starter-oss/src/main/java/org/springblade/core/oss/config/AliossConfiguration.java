@@ -19,7 +19,6 @@ import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.CredentialsProvider;
 import com.aliyun.oss.common.auth.DefaultCredentialProvider;
-import lombok.AllArgsConstructor;
 import org.springblade.core.oss.AliossTemplate;
 import org.springblade.core.oss.props.OssProperties;
 import org.springblade.core.oss.rule.OssRule;
@@ -36,19 +35,15 @@ import org.springframework.context.annotation.Bean;
  *
  * @author Chill
  */
-@AllArgsConstructor
 @AutoConfiguration(after = OssConfiguration.class)
 @EnableConfigurationProperties(OssProperties.class)
 @ConditionalOnClass({OSSClient.class})
 @ConditionalOnProperty(value = "oss.name", havingValue = "alioss")
 public class AliossConfiguration {
 
-	private final OssProperties ossProperties;
-	private final OssRule ossRule;
-
 	@Bean
 	@ConditionalOnMissingBean(OSSClient.class)
-	public OSSClient ossClient() {
+	public OSSClient ossClient(OssProperties ossProperties) {
 		// 创建ClientConfiguration。ClientConfiguration是OSSClient的配置类，可配置代理、连接超时、最大连接数等参数。
 		ClientConfiguration conf = new ClientConfiguration();
 		// 设置OSSClient允许打开的最大HTTP连接数，默认为1024个。
@@ -70,7 +65,9 @@ public class AliossConfiguration {
 	@Bean
 	@ConditionalOnBean({OSSClient.class})
 	@ConditionalOnMissingBean(AliossTemplate.class)
-	public AliossTemplate aliossTemplate(OSSClient ossClient) {
+	public AliossTemplate aliossTemplate(OssRule ossRule,
+										 OssProperties ossProperties,
+										 OSSClient ossClient) {
 		return new AliossTemplate(ossClient, ossProperties, ossRule);
 	}
 
