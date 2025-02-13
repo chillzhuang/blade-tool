@@ -57,20 +57,12 @@ public abstract class BaseBeanCopier {
 	}
 
 	public static BaseBeanCopier create(Class source, Class target, boolean useConverter) {
-		return BaseBeanCopier.create(source, target, null, useConverter);
-	}
-
-	public static BaseBeanCopier create(Class source, Class target, ClassLoader classLoader, boolean useConverter) {
 		Object key = KEY_FACTORY.newInstance(source.getName(), target.getName(), useConverter);
-		Generator gen;
-		if (classLoader == null) {
-			gen = new Generator(key);
-		} else {
-			gen = new Generator(key, classLoader);
-		}
+		Generator gen = new Generator(key);
 		gen.setSource(source);
 		gen.setTarget(target);
 		gen.setUseConverter(useConverter);
+		gen.setUseCache(true);
 		return gen.create();
 	}
 
@@ -85,7 +77,6 @@ public abstract class BaseBeanCopier {
 	public static class Generator extends AbstractClassGenerator {
 		private static final Source SOURCE = new Source(BEAN_NAME_PREFIX);
 		private final Object key;
-		private final ClassLoader classLoader;
 		private Class source;
 		private Class target;
 		private boolean useConverter;
@@ -94,13 +85,6 @@ public abstract class BaseBeanCopier {
 		Generator(Object key) {
 			super(SOURCE);
 			this.key = key;
-			this.classLoader = null;
-		}
-
-		Generator(Object key, ClassLoader classLoader) {
-			super(SOURCE);
-			this.key = key;
-			this.classLoader = classLoader;
 		}
 
 		public void setSource(Class source) {
@@ -123,6 +107,7 @@ public abstract class BaseBeanCopier {
 
 		@Override
 		protected ClassLoader getDefaultClassLoader() {
+			// L.cm 保证 和 返回使用同一个 ClassLoader
 			return target.getClassLoader();
 		}
 
