@@ -69,6 +69,16 @@ public class OssProperties {
 	private String bucketName = "blade";
 
 	/**
+	 * 应用ID TencentCOS需要
+	 */
+	private String appId;
+
+	/**
+	 * 区域简称 TencentCOS/Amazon S3 需要
+	 */
+	private String region;
+
+	/**
 	 * 自定义属性
 	 */
 	private Kv args;
