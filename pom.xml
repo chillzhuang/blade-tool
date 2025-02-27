@@ -59,6 +59,7 @@
         <disruptor.version>3.4.2</disruptor.version>
         <guava.version>33.1.0-jre</guava.version>
         <mica.auto.version>3.1.4</mica.auto.version>
+        <lombok.version>1.18.36</lombok.version>
         <druid.version>1.2.23</druid.version>
 
         <spring.version>6.1.15</spring.version>
@@ -483,7 +484,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.18.34</version>
+                <version>${lombok.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
