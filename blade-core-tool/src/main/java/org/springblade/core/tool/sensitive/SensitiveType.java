@@ -17,6 +17,8 @@ package org.springblade.core.tool.sensitive;
 
 import lombok.Getter;
 
+import java.util.regex.Pattern;
+
 /**
  * 脱敏类型枚举.
  *
@@ -36,10 +38,12 @@ public enum SensitiveType {
 	private final String desc;
 	private final String regex;
 	private final String replacement;
+	private final Pattern pattern;
 
 	SensitiveType(String desc, String regex, String replacement) {
 		this.desc = desc;
 		this.regex = regex;
 		this.replacement = replacement;
+		this.pattern = Pattern.compile(regex);
 	}
 }

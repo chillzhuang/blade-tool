@@ -39,9 +39,6 @@ public class SensitiveUtil {
 	private static final String DEFAULT_REPLACEMENT = "******";
 	private static final String LINE_SEPARATOR = System.lineSeparator();
 
-	// 预编译的正则表达式
-	private static final Map<SensitiveType, Pattern> PATTERN_CACHE = new EnumMap<>(SensitiveType.class);
-
 	// 预编译的默认配置
 	private static final SensitiveConfig DEFAULT_CONFIG = SensitiveConfig.builder()
 		.sensitiveTypes(EnumSet.of(
@@ -57,13 +54,6 @@ public class SensitiveUtil {
 		.processLineByLine(true)
 		.replacement(DEFAULT_REPLACEMENT)
 		.build();
-
-	static {
-		// 预编译所有内置的正则表达式
-		for (SensitiveType type : SensitiveType.values()) {
-			PATTERN_CACHE.put(type, Pattern.compile(type.getRegex()));
-		}
-	}
 
 	/**
 	 * 使用默认配置处理敏感信息
@@ -206,8 +196,7 @@ public class SensitiveUtil {
 	private static String processRegexPatterns(String content, Set<SensitiveType> types) {
 		String result = content;
 		for (SensitiveType type : types) {
-			Pattern pattern = PATTERN_CACHE.get(type);
-			result = pattern.matcher(result).replaceAll(type.getReplacement());
+			result = type.getPattern().matcher(result).replaceAll(type.getReplacement());
 		}
 		return result;
 	}
