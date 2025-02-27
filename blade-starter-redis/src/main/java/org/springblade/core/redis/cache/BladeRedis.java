@@ -52,8 +52,8 @@ public class BladeRedis {
 	/**
 	 * 构造函数，初始化 Redis 操作模板和相关操作接口
 	 *
-	 * @param redisTemplate        Redis 操作模板
-	 * @param stringRedisTemplate  字符串专用的 Redis 操作模板
+	 * @param redisTemplate       Redis 操作模板
+	 * @param stringRedisTemplate 字符串专用的 Redis 操作模板
 	 */
 	public BladeRedis(RedisTemplate<String, Object> redisTemplate, StringRedisTemplate stringRedisTemplate) {
 		this.redisTemplate = redisTemplate;
@@ -223,6 +223,20 @@ public class BladeRedis {
 		}
 		this.set(cacheKey, value); // 设置缓存
 		return value;
+	}
+
+	/**
+	 * 获取 key 对应的值，并删除 key
+	 *
+	 * @param key 键
+	 * @param <T> 返回值类型
+	 * @return 值
+	 */
+	@Nullable
+	public <T> T getAndDel(String key) {
+		T o = this.get(key);
+		this.del(key);
+		return o;
 	}
 
 	/**
@@ -530,7 +544,7 @@ public class BladeRedis {
 	/**
 	 * 为 key 设置过期时间（以毫秒为单位）
 	 *
-	 * @param key         键
+	 * @param key          键
 	 * @param milliseconds 过期时间（毫秒）
 	 * @return 是否设置成功
 	 */
@@ -1012,7 +1026,7 @@ public class BladeRedis {
 	/**
 	 * 将一个或多个成员及其分数添加到有序集合中
 	 *
-	 * @param key           键
+	 * @param key          键
 	 * @param scoreMembers 成员-分数映射
 	 * @return 添加的成员数量
 	 */
