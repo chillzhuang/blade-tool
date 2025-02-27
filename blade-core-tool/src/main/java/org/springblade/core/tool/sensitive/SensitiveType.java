@@ -15,8 +15,6 @@
  */
 package org.springblade.core.tool.sensitive;
 
-import lombok.Getter;
-
 import java.util.regex.Pattern;
 
 /**
@@ -24,7 +22,6 @@ import java.util.regex.Pattern;
  *
  * @author BladeX
  */
-@Getter
 public enum SensitiveType {
 	GLOBAL("全局", "(.{2}).*(.{2})", "$1****$2"),
 	MOBILE("手机号", "(\\d{3})\\d{4}(\\d{4})", "$1****$2"),
@@ -35,15 +32,20 @@ public enum SensitiveType {
 	MAC_ADDRESS("MAC地址", "([0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}):[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}", "$1:****"),
 	;
 
-	private final String desc;
-	private final String regex;
 	private final String replacement;
 	private final Pattern pattern;
 
-	SensitiveType(String desc, String regex, String replacement) {
-		this.desc = desc;
-		this.regex = regex;
+	SensitiveType(String ignore, String regex, String replacement) {
 		this.replacement = replacement;
 		this.pattern = Pattern.compile(regex);
+	}
+
+	/**
+	 * 替换文本
+	 * @param content content
+	 * @return 替换后的内容
+	 */
+	public String replaceAll(String content) {
+		return this.pattern.matcher(content).replaceAll(this.replacement);
 	}
 }

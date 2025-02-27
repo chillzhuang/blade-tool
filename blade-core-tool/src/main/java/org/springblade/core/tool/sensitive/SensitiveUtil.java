@@ -196,7 +196,7 @@ public class SensitiveUtil {
 	private static String processRegexPatterns(String content, Set<SensitiveType> types) {
 		String result = content;
 		for (SensitiveType type : types) {
-			result = type.getPattern().matcher(result).replaceAll(type.getReplacement());
+			result = type.replaceAll(result);
 		}
 		return result;
 	}
