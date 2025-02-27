@@ -24,7 +24,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 
 /**
- * Oss配置类
+ * OSS对象存储配置类
+ * 用于配置通用的OSS规则和属性
  *
  * @author Chill
  */
@@ -32,6 +33,12 @@ import org.springframework.context.annotation.Bean;
 @EnableConfigurationProperties(OssProperties.class)
 public class OssConfiguration {
 
+	/**
+	 * 配置默认的OSS规则实现
+	 * 当容器中不存在 OssRule 类型的Bean时生效
+	 *
+	 * @return OssRule OSS规则实现类
+	 */
 	@Bean
 	@ConditionalOnMissingBean(OssRule.class)
 	public OssRule ossRule() {

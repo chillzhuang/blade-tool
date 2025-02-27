@@ -39,12 +39,22 @@ import java.util.List;
  * </p>
  *
  * @author yangkai.shen
- * @date Created in 2020/1/7 17:24
  */
 @AllArgsConstructor
 public class TencentCosTemplate implements OssTemplate {
+	/**
+	 * 腾讯云 COS 客户端
+	 */
 	private final COSClient cosClient;
+
+	/**
+	 * OSS配置属性
+	 */
 	private final OssProperties ossProperties;
+
+	/**
+	 * OSS规则对象
+	 */
 	private final OssRule ossRule;
 
 	@Override
@@ -166,6 +176,15 @@ public class TencentCosTemplate implements OssTemplate {
 		return put(bucketName, stream, fileName, false);
 	}
 
+	/**
+	 * 上传文件到腾讯云COS
+	 *
+	 * @param bucketName 存储桶名称
+	 * @param stream     输入流
+	 * @param key       文件名
+	 * @param cover     是否覆盖上传
+	 * @return BladeFile 上传文件信息
+	 */
 	@SneakyThrows
 	public BladeFile put(String bucketName, InputStream stream, String key, boolean cover) {
 		makeBucket(bucketName);
@@ -217,39 +236,39 @@ public class TencentCosTemplate implements OssTemplate {
 	}
 
 	/**
-	 * 根据规则生成存储桶名称规则
+	 * 获取默认存储桶名称
 	 *
-	 * @return String
+	 * @return String 存储桶名称
 	 */
 	private String getBucketName() {
 		return getBucketName(ossProperties.getBucketName());
 	}
 
 	/**
-	 * 根据规则生成存储桶名称规则
+	 * 根据规则生成存储桶名称
 	 *
 	 * @param bucketName 存储桶名称
-	 * @return String
+	 * @return String 处理后的存储桶名称
 	 */
 	private String getBucketName(String bucketName) {
 		return ossRule.bucketName(bucketName).concat(StringPool.DASH).concat(ossProperties.getAppId());
 	}
 
 	/**
-	 * 根据规则生成文件名称规则
+	 * 根据规则生成文件名称
 	 *
 	 * @param originalFilename 原始文件名
-	 * @return string
+	 * @return String 处理后的文件名
 	 */
 	private String getFileName(String originalFilename) {
 		return ossRule.fileName(originalFilename);
 	}
 
 	/**
-	 * 获取域名
+	 * 获取指定存储桶的访问域名
 	 *
 	 * @param bucketName 存储桶名称
-	 * @return String
+	 * @return String 访问域名
 	 */
 	public String getOssHost(String bucketName) {
 		String prefix = getEndpoint().contains("https://") ? "https://" : "http://";
@@ -257,18 +276,18 @@ public class TencentCosTemplate implements OssTemplate {
 	}
 
 	/**
-	 * 获取域名
+	 * 获取默认存储桶的访问域名
 	 *
-	 * @return String
+	 * @return String 访问域名
 	 */
 	public String getOssHost() {
 		return getOssHost(ossProperties.getBucketName());
 	}
 
 	/**
-	 * 获取服务地址
+	 * 获取腾讯云COS服务的Endpoint
 	 *
-	 * @return String
+	 * @return String 腾讯云COS Endpoint
 	 */
 	public String getEndpoint() {
 		if (StringUtil.isBlank(ossProperties.getTransformEndpoint())) {

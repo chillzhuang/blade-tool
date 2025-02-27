@@ -15,14 +15,13 @@
  */
 package org.springblade.core.oss;
 
-import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.common.utils.BinaryUtil;
-import com.aliyun.oss.model.MatchMode;
-import com.aliyun.oss.model.ObjectMetadata;
-import com.aliyun.oss.model.PolicyConditions;
-import com.aliyun.oss.model.PutObjectResult;
-import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springblade.core.oss.model.BladeFile;
 import org.springblade.core.oss.model.OssFile;
 import org.springblade.core.oss.props.OssProperties;
@@ -33,12 +32,15 @@ import org.springblade.core.tool.utils.StringUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.common.utils.BinaryUtil;
+import com.aliyun.oss.model.MatchMode;
+import com.aliyun.oss.model.ObjectMetadata;
+import com.aliyun.oss.model.PolicyConditions;
+import com.aliyun.oss.model.PutObjectResult;
+
+import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 
 /**
  * AliossTemplate
@@ -157,6 +159,15 @@ public class AliossTemplate implements OssTemplate {
 		return put(bucketName, stream, fileName, false);
 	}
 
+	/**
+	 * 上传文件到OSS
+	 *
+	 * @param bucketName 存储桶名称
+	 * @param stream     输入流
+	 * @param key       文件名
+	 * @param cover     是否覆盖上传
+	 * @return BladeFile 上传文件信息
+	 */
 	@SneakyThrows
 	public BladeFile put(String bucketName, InputStream stream, String key, boolean cover) {
 		makeBucket(bucketName);
@@ -207,48 +218,61 @@ public class AliossTemplate implements OssTemplate {
 	}
 
 	/**
-	 * 根据规则生成存储桶名称规则
+	 * 获取默认存储桶名称
 	 *
-	 * @return String
+	 * @return String 存储桶名称
 	 */
 	private String getBucketName() {
 		return getBucketName(ossProperties.getBucketName());
 	}
 
 	/**
-	 * 根据规则生成存储桶名称规则
+	 * 根据规则生成存储桶名称
 	 *
 	 * @param bucketName 存储桶名称
-	 * @return String
+	 * @return String 处理后的存储桶名称
 	 */
 	private String getBucketName(String bucketName) {
 		return ossRule.bucketName(bucketName);
 	}
 
 	/**
-	 * 根据规则生成文件名称规则
+	 * 根据规则生成文件名称
 	 *
 	 * @param originalFilename 原始文件名
-	 * @return string
+	 * @return String 处理后的文件名
 	 */
 	private String getFileName(String originalFilename) {
 		return ossRule.fileName(originalFilename);
 	}
 
+	/**
+	 * 获取默认存储桶的上传凭证
+	 *
+	 * @return String 上传凭证
+	 */
 	public String getUploadToken() {
 		return getUploadToken(ossProperties.getBucketName());
 	}
 
 	/**
-	 * TODO 过期时间
-	 * <p>
-	 * 获取上传凭证，普通上传
+	 * 获取指定存储桶的上传凭证
+	 *
+	 * @param bucketName 存储桶名称
+	 * @return String 上传凭证
 	 */
 	public String getUploadToken(String bucketName) {
 		// 默认过期时间2小时
 		return getUploadToken(bucketName, ossProperties.getArgs().get("expireTime", 3600L));
 	}
 
+	/**
+	 * 获取带过期时间的上传凭证
+	 *
+	 * @param bucketName 存储桶名称
+	 * @param expireTime 过期时间（秒）
+	 * @return String 上传凭证
+	 */
 	public String getUploadToken(String bucketName, long expireTime) {
 		String baseDir = "upload";
 
@@ -276,10 +300,10 @@ public class AliossTemplate implements OssTemplate {
 	}
 
 	/**
-	 * 获取域名
+	 * 获取指定存储桶的OSS访问域名
 	 *
 	 * @param bucketName 存储桶名称
-	 * @return String
+	 * @return String OSS访问域名
 	 */
 	public String getOssHost(String bucketName) {
 		String prefix = getEndpoint().contains("https://") ? "https://" : "http://";
@@ -287,18 +311,18 @@ public class AliossTemplate implements OssTemplate {
 	}
 
 	/**
-	 * 获取域名
+	 * 获取默认存储桶的OSS访问域名
 	 *
-	 * @return String
+	 * @return String OSS访问域名
 	 */
 	public String getOssHost() {
 		return getOssHost(ossProperties.getBucketName());
 	}
 
 	/**
-	 * 获取服务地址
+	 * 获取OSS服务的Endpoint
 	 *
-	 * @return String
+	 * @return String OSS Endpoint
 	 */
 	public String getEndpoint() {
 		if (StringUtil.isBlank(ossProperties.getTransformEndpoint())) {
@@ -306,6 +330,5 @@ public class AliossTemplate implements OssTemplate {
 		}
 		return ossProperties.getTransformEndpoint();
 	}
-
 
 }

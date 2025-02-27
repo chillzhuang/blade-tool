@@ -15,8 +15,6 @@
  */
 package org.springblade.core.oss.config;
 
-import io.minio.MinioClient;
-import lombok.SneakyThrows;
 import org.springblade.core.oss.MinioTemplate;
 import org.springblade.core.oss.props.OssProperties;
 import org.springblade.core.oss.rule.OssRule;
@@ -28,8 +26,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import io.minio.MinioClient;
+import lombok.SneakyThrows;
+
 /**
- * Minio配置类
+ * MinIO对象存储配置类
+ * 用于配置MinIO客户端及其模板类
+ * 仅在配置文件中指定 oss.name=minio 时生效
  *
  * @author Chill
  */
@@ -39,6 +42,13 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(value = "oss.name", havingValue = "minio")
 public class MinioConfiguration {
 
+	/**
+	 * 配置MinIO客户端
+	 * 当容器中不存在 MinioClient 类型的Bean时生效
+	 *
+	 * @param ossProperties OSS配置属性
+	 * @return MinioClient MinIO客户端实例
+	 */
 	@Bean
 	@SneakyThrows
 	@ConditionalOnMissingBean(MinioClient.class)
@@ -49,6 +59,15 @@ public class MinioConfiguration {
 			.build();
 	}
 
+	/**
+	 * 配置MinIO操作模板
+	 * 需要容器中存在 MinioClient 的Bean，且不存在 MinioTemplate 的Bean时生效
+	 *
+	 * @param ossRule      OSS规则配置
+	 * @param ossProperties OSS配置属性
+	 * @param minioClient  MinIO客户端
+	 * @return MinioTemplate MinIO操作模板
+	 */
 	@Bean
 	@ConditionalOnBean({MinioClient.class})
 	@ConditionalOnMissingBean(MinioTemplate.class)

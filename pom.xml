@@ -690,9 +690,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                        </configuration>
                     </plugin>
                     <!-- GPG -->
                     <plugin>

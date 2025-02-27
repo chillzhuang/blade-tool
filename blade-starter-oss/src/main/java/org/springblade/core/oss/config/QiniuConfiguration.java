@@ -15,10 +15,6 @@
  */
 package org.springblade.core.oss.config;
 
-import com.qiniu.storage.BucketManager;
-import com.qiniu.storage.Region;
-import com.qiniu.storage.UploadManager;
-import com.qiniu.util.Auth;
 import org.springblade.core.oss.QiniuTemplate;
 import org.springblade.core.oss.props.OssProperties;
 import org.springblade.core.oss.rule.OssRule;
@@ -30,8 +26,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import com.qiniu.storage.BucketManager;
+import com.qiniu.storage.Region;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.util.Auth;
+
 /**
- * Qiniu配置类
+ * 七牛云对象存储配置类
+ * 用于配置七牛云存储的客户端组件及其模板类
+ * 仅在配置文件中指定 oss.name=qiniu 时生效
  *
  * @author Chill
  */
@@ -41,24 +44,53 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(value = "oss.name", havingValue = "qiniu")
 public class QiniuConfiguration {
 
+	/**
+	 * 配置七牛云存储配置对象
+	 * 当容器中不存在 Configuration 类型的Bean时生效
+	 * 使用自动区域配置
+	 *
+	 * @return Configuration 七牛云存储配置对象
+	 */
 	@Bean
 	@ConditionalOnMissingBean(com.qiniu.storage.Configuration.class)
 	public com.qiniu.storage.Configuration qnConfiguration() {
 		return new com.qiniu.storage.Configuration(Region.autoRegion());
 	}
 
+	/**
+	 * 配置七牛云认证对象
+	 * 当容器中不存在 Auth 类型的Bean时生效
+	 *
+	 * @param ossProperties OSS配置属性
+	 * @return Auth 七牛云认证对象
+	 */
 	@Bean
 	@ConditionalOnMissingBean(Auth.class)
 	public Auth auth(OssProperties ossProperties) {
 		return Auth.create(ossProperties.getAccessKey(), ossProperties.getSecretKey());
 	}
 
+	/**
+	 * 配置七牛云上传管理器
+	 * 需要容器中存在 Configuration 类型的Bean时生效
+	 *
+	 * @param cfg 七牛云存储配置对象
+	 * @return UploadManager 七牛云上传管理器
+	 */
 	@Bean
 	@ConditionalOnBean(com.qiniu.storage.Configuration.class)
 	public UploadManager uploadManager(com.qiniu.storage.Configuration cfg) {
 		return new UploadManager(cfg);
 	}
 
+	/**
+	 * 配置七牛云存储空间管理器
+	 * 需要容器中存在 Configuration 类型的Bean时生效
+	 *
+	 * @param ossProperties OSS配置属性
+	 * @param cfg          七牛云存储配置对象
+	 * @return BucketManager 七牛云存储空间管理器
+	 */
 	@Bean
 	@ConditionalOnBean(com.qiniu.storage.Configuration.class)
 	public BucketManager bucketManager(OssProperties ossProperties,
@@ -66,6 +98,17 @@ public class QiniuConfiguration {
 		return new BucketManager(Auth.create(ossProperties.getAccessKey(), ossProperties.getSecretKey()), cfg);
 	}
 
+	/**
+	 * 配置七牛云存储操作模板
+	 * 需要容器中存在 Auth、UploadManager、BucketManager 的Bean，且不存在 QiniuTemplate 的Bean时生效
+	 *
+	 * @param ossRule       OSS规则配置
+	 * @param ossProperties OSS配置属性
+	 * @param auth         七牛云认证对象
+	 * @param uploadManager 七牛云上传管理器
+	 * @param bucketManager 七牛云存储空间管理器
+	 * @return QiniuTemplate 七牛云存储操作模板
+	 */
 	@Bean
 	@ConditionalOnBean({Auth.class, UploadManager.class, BucketManager.class})
 	@ConditionalOnMissingBean(QiniuTemplate.class)

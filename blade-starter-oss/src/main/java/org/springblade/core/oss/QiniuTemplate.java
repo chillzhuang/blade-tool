@@ -44,10 +44,29 @@ import java.util.List;
  */
 @AllArgsConstructor
 public class QiniuTemplate implements OssTemplate {
+	/**
+	 * 七牛云认证对象
+	 */
 	private final Auth auth;
+
+	/**
+	 * 七牛云上传管理对象
+	 */
 	private final UploadManager uploadManager;
+
+	/**
+	 * 七牛云存储空间管理对象
+	 */
 	private final BucketManager bucketManager;
+
+	/**
+	 * OSS配置属性
+	 */
 	private final OssProperties ossProperties;
+
+	/**
+	 * OSS规则对象
+	 */
 	private final OssRule ossRule;
 
 	@Override
@@ -156,6 +175,15 @@ public class QiniuTemplate implements OssTemplate {
 		return put(bucketName, stream, fileName, false);
 	}
 
+	/**
+	 * 上传文件到七牛云
+	 *
+	 * @param bucketName 存储空间名称
+	 * @param stream     输入流
+	 * @param key       文件名
+	 * @param cover     是否覆盖上传
+	 * @return BladeFile 上传文件信息
+	 */
 	@SneakyThrows
 	public BladeFile put(String bucketName, InputStream stream, String key, boolean cover) {
 		makeBucket(bucketName);
@@ -206,68 +234,68 @@ public class QiniuTemplate implements OssTemplate {
 	}
 
 	/**
-	 * 根据规则生成存储桶名称规则
+	 * 获取默认存储空间名称
 	 *
-	 * @return String
+	 * @return String 存储空间名称
 	 */
 	private String getBucketName() {
 		return getBucketName(ossProperties.getBucketName());
 	}
 
 	/**
-	 * 根据规则生成存储桶名称规则
+	 * 根据规则生成存储空间名称
 	 *
-	 * @param bucketName 存储桶名称
-	 * @return String
+	 * @param bucketName 存储空间名称
+	 * @return String 处理后的存储空间名称
 	 */
 	private String getBucketName(String bucketName) {
 		return ossRule.bucketName(bucketName);
 	}
 
 	/**
-	 * 根据规则生成文件名称规则
+	 * 根据规则生成文件名称
 	 *
 	 * @param originalFilename 原始文件名
-	 * @return string
+	 * @return String 处理后的文件名
 	 */
 	private String getFileName(String originalFilename) {
 		return ossRule.fileName(originalFilename);
 	}
 
 	/**
-	 * 获取上传凭证，普通上传
+	 * 获取普通上传凭证
 	 *
-	 * @param bucketName 存储桶名称
-	 * @return string
+	 * @param bucketName 存储空间名称
+	 * @return String 上传凭证
 	 */
 	public String getUploadToken(String bucketName) {
 		return auth.uploadToken(getBucketName(bucketName));
 	}
 
 	/**
-	 * 获取上传凭证，覆盖上传
+	 * 获取覆盖上传凭证
 	 *
-	 * @param bucketName 存储桶名称
-	 * @param key        key
-	 * @return string
+	 * @param bucketName 存储空间名称
+	 * @param key       文件名
+	 * @return String 上传凭证
 	 */
 	private String getUploadToken(String bucketName, String key) {
 		return auth.uploadToken(getBucketName(bucketName), key);
 	}
 
 	/**
-	 * 获取域名
+	 * 获取七牛云访问域名
 	 *
-	 * @return String
+	 * @return String 访问域名
 	 */
 	public String getOssHost() {
 		return getEndpoint();
 	}
 
 	/**
-	 * 获取服务地址
+	 * 获取七牛云服务的Endpoint
 	 *
-	 * @return String
+	 * @return String 七牛云Endpoint
 	 */
 	public String getEndpoint() {
 		if (StringUtil.isBlank(ossProperties.getTransformEndpoint())) {
@@ -275,6 +303,5 @@ public class QiniuTemplate implements OssTemplate {
 		}
 		return ossProperties.getTransformEndpoint();
 	}
-
 
 }

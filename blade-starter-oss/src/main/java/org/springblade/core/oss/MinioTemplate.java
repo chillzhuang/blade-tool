@@ -78,17 +78,33 @@ public class MinioTemplate implements OssTemplate {
 		}
 	}
 
+	/**
+	 * 获取默认存储桶
+	 *
+	 * @return Bucket MinIO存储桶
+	 */
 	@SneakyThrows
 	public Bucket getBucket() {
 		return getBucket(getBucketName());
 	}
 
+	/**
+	 * 获取指定名称的存储桶
+	 *
+	 * @param bucketName 存储桶名称
+	 * @return Bucket MinIO存储桶
+	 */
 	@SneakyThrows
 	public Bucket getBucket(String bucketName) {
 		Optional<Bucket> bucketOptional = client.listBuckets().stream().filter(bucket -> bucket.name().equals(getBucketName(bucketName))).findFirst();
 		return bucketOptional.orElse(null);
 	}
 
+	/**
+	 * 获取所有存储桶列表
+	 *
+	 * @return 存储桶列表
+	 */
 	@SneakyThrows
 	public List<Bucket> listBuckets() {
 		return client.listBuckets();
@@ -202,6 +218,15 @@ public class MinioTemplate implements OssTemplate {
 		return putFile(bucketName, fileName, stream, "application/octet-stream");
 	}
 
+	/**
+	 * 上传文件到MinIO
+	 *
+	 * @param bucketName  存储桶名称
+	 * @param fileName    文件名
+	 * @param stream      输入流
+	 * @param contentType 文件类型
+	 * @return BladeFile 上传文件信息
+	 */
 	@SneakyThrows
 	public BladeFile putFile(String bucketName, String fileName, InputStream stream, String contentType) {
 		makeBucket(bucketName);
@@ -251,41 +276,41 @@ public class MinioTemplate implements OssTemplate {
 	}
 
 	/**
-	 * 根据规则生成存储桶名称规则
+	 * 获取默认存储桶名称
 	 *
-	 * @return String
+	 * @return String 存储桶名称
 	 */
 	private String getBucketName() {
 		return getBucketName(ossProperties.getBucketName());
 	}
 
 	/**
-	 * 根据规则生成存储桶名称规则
+	 * 根据规则生成存储桶名称
 	 *
 	 * @param bucketName 存储桶名称
-	 * @return String
+	 * @return String 处理后的存储桶名称
 	 */
 	private String getBucketName(String bucketName) {
 		return ossRule.bucketName(bucketName);
 	}
 
 	/**
-	 * 根据规则生成文件名称规则
+	 * 根据规则生成文件名称
 	 *
 	 * @param originalFilename 原始文件名
-	 * @return string
+	 * @return String 处理后的文件名
 	 */
 	private String getFileName(String originalFilename) {
 		return ossRule.fileName(originalFilename);
 	}
 
 	/**
-	 * 获取文件外链
+	 * 获取预签名对象URL
 	 *
-	 * @param bucketName bucket名称
-	 * @param fileName   文件名称
-	 * @param expires    过期时间
-	 * @return url
+	 * @param bucketName 存储桶名称
+	 * @param fileName   文件名
+	 * @param expires    过期时间（秒）
+	 * @return String 预签名URL
 	 */
 	@SneakyThrows
 	public String getPresignedObjectUrl(String bucketName, String fileName, Integer expires) {
@@ -300,21 +325,21 @@ public class MinioTemplate implements OssTemplate {
 	}
 
 	/**
-	 * 获取存储桶策略
+	 * 获取存储桶策略配置
 	 *
-	 * @param policyType 策略枚举
-	 * @return String
+	 * @param policyType 策略类型
+	 * @return String 存储桶策略
 	 */
 	public String getPolicyType(PolicyType policyType) {
 		return getPolicyType(getBucketName(), policyType);
 	}
 
 	/**
-	 * 获取存储桶策略
+	 * 获取存储桶策略配置
 	 *
 	 * @param bucketName 存储桶名称
-	 * @param policyType 策略枚举
-	 * @return String
+	 * @param policyType 策略类型
+	 * @return String 存储桶策略
 	 */
 	public static String getPolicyType(String bucketName, PolicyType policyType) {
 		StringBuilder builder = new StringBuilder();
@@ -397,28 +422,28 @@ public class MinioTemplate implements OssTemplate {
 	}
 
 	/**
-	 * 获取域名
+	 * 获取指定存储桶的访问域名
 	 *
 	 * @param bucketName 存储桶名称
-	 * @return String
+	 * @return String 访问域名
 	 */
 	public String getOssHost(String bucketName) {
 		return getEndpoint() + StringPool.SLASH + getBucketName(bucketName);
 	}
 
 	/**
-	 * 获取域名
+	 * 获取默认存储桶的访问域名
 	 *
-	 * @return String
+	 * @return String 访问域名
 	 */
 	public String getOssHost() {
 		return getOssHost(ossProperties.getBucketName());
 	}
 
 	/**
-	 * 获取服务地址
+	 * 获取MinIO服务的Endpoint
 	 *
-	 * @return String
+	 * @return String MinIO Endpoint
 	 */
 	public String getEndpoint() {
 		if (StringUtil.isBlank(ossProperties.getTransformEndpoint())) {

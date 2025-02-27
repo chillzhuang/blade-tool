@@ -15,10 +15,6 @@
  */
 package org.springblade.core.oss.config;
 
-import com.aliyun.oss.ClientConfiguration;
-import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.common.auth.CredentialsProvider;
-import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import org.springblade.core.oss.AliossTemplate;
 import org.springblade.core.oss.props.OssProperties;
 import org.springblade.core.oss.rule.OssRule;
@@ -30,8 +26,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import com.aliyun.oss.ClientConfiguration;
+import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.common.auth.CredentialsProvider;
+import com.aliyun.oss.common.auth.DefaultCredentialProvider;
+
 /**
- * Alioss配置类
+ * 阿里云OSS对象存储配置类
+ * 用于配置阿里云OSS客户端及其模板类
+ * 仅在配置文件中指定 oss.name=alioss 时生效
  *
  * @author Chill
  */
@@ -41,6 +44,20 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(value = "oss.name", havingValue = "alioss")
 public class AliossConfiguration {
 
+	/**
+	 * 配置阿里云OSS客户端
+	 * 当容器中不存在 OSSClient 类型的Bean时生效
+	 * 配置包括：
+	 * - 最大HTTP连接数
+	 * - Socket传输超时时间
+	 * - 建立连接超时时间
+	 * - 连接池获取连接超时时间
+	 * - 连接空闲超时时间
+	 * - 请求失败重试次数
+	 *
+	 * @param ossProperties OSS配置属性
+	 * @return OSSClient 阿里云OSS客户端实例
+	 */
 	@Bean
 	@ConditionalOnMissingBean(OSSClient.class)
 	public OSSClient ossClient(OssProperties ossProperties) {
@@ -62,6 +79,15 @@ public class AliossConfiguration {
 		return new OSSClient(ossProperties.getEndpoint(), credentialsProvider, conf);
 	}
 
+	/**
+	 * 配置阿里云OSS操作模板
+	 * 需要容器中存在 OSSClient 的Bean，且不存在 AliossTemplate 的Bean时生效
+	 *
+	 * @param ossRule      OSS规则配置
+	 * @param ossProperties OSS配置属性
+	 * @param ossClient    阿里云OSS客户端
+	 * @return AliossTemplate 阿里云OSS操作模板
+	 */
 	@Bean
 	@ConditionalOnBean({OSSClient.class})
 	@ConditionalOnMissingBean(AliossTemplate.class)

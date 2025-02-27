@@ -15,12 +15,6 @@
  */
 package org.springblade.core.oss.config;
 
-import com.qcloud.cos.COSClient;
-import com.qcloud.cos.ClientConfig;
-import com.qcloud.cos.auth.BasicCOSCredentials;
-import com.qcloud.cos.auth.COSCredentials;
-import com.qcloud.cos.region.Region;
-import lombok.AllArgsConstructor;
 import org.springblade.core.oss.TencentCosTemplate;
 import org.springblade.core.oss.props.OssProperties;
 import org.springblade.core.oss.rule.OssRule;
@@ -32,13 +26,20 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
+import com.qcloud.cos.COSClient;
+import com.qcloud.cos.ClientConfig;
+import com.qcloud.cos.auth.BasicCOSCredentials;
+import com.qcloud.cos.auth.COSCredentials;
+import com.qcloud.cos.region.Region;
+
+import lombok.AllArgsConstructor;
+
 /**
  * <p>
  * 腾讯云 COS 自动装配
  * </p>
  *
  * @author yangkai.shen
- * @date Created in 2020/1/7 17:24
  */
 @AllArgsConstructor
 @AutoConfiguration(after = OssConfiguration.class)
@@ -47,10 +48,29 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(value = "oss.name", havingValue = "tencentcos")
 public class TencentCosConfiguration {
 
+	/**
+	 * OSS配置属性
+	 */
 	private final OssProperties ossProperties;
+
+	/**
+	 * OSS规则对象
+	 */
 	private final OssRule ossRule;
 
-
+	/**
+	 * 配置腾讯云COS客户端
+	 * 当容器中不存在 COSClient 类型的Bean时生效
+	 * 配置包括：
+	 * - 用户身份信息（secretId, secretKey）
+	 * - 存储桶区域设置
+	 * - 最大HTTP连接数
+	 * - Socket传输超时时间
+	 * - 建立连接超时时间
+	 * - 连接池获取连接超时时间
+	 *
+	 * @return COSClient 腾讯云COS客户端实例
+	 */
 	@Bean
 	@ConditionalOnMissingBean(COSClient.class)
 	public COSClient ossClient() {
@@ -71,6 +91,13 @@ public class TencentCosConfiguration {
 		return new COSClient(credentials, clientConfig);
 	}
 
+	/**
+	 * 配置腾讯云COS操作模板
+	 * 需要容器中存在 COSClient 的Bean，且不存在 TencentCosTemplate 的Bean时生效
+	 *
+	 * @param cosClient 腾讯云COS客户端
+	 * @return TencentCosTemplate 腾讯云COS操作模板
+	 */
 	@Bean
 	@ConditionalOnBean({COSClient.class})
 	@ConditionalOnMissingBean(TencentCosTemplate.class)
