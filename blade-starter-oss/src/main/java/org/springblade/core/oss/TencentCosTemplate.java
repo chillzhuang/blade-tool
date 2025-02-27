@@ -129,7 +129,7 @@ public class TencentCosTemplate implements OssTemplate {
 	 * 文件对象
 	 *
 	 * @param file 上传文件类
-	 * @return
+	 * @return BladeFile
 	 */
 	@Override
 	@SneakyThrows
@@ -140,7 +140,7 @@ public class TencentCosTemplate implements OssTemplate {
 	/**
 	 * @param fileName 上传文件名
 	 * @param file     上传文件类
-	 * @return
+	 * @return BladeFile
 	 */
 	@Override
 	@SneakyThrows
