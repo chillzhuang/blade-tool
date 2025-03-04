@@ -50,7 +50,7 @@
         <aliyun.sms.version>4.5.30</aliyun.sms.version>
         <tencent.sms.version>1.0.6</tencent.sms.version>
 
-        <mybatis.version>3.5.16</mybatis.version>
+        <mybatis.version>3.5.19</mybatis.version>
         <mybatis.spring.version>3.0.4</mybatis.spring.version>
         <mybatis.plus.version>3.5.8</mybatis.plus.version>
 
