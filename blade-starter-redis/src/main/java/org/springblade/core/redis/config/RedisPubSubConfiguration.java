@@ -54,7 +54,7 @@ public class RedisPubSubConfiguration {
 
 	@Bean
 	@ConditionalOnBean(RedisSerializer.class)
-	public RPubSubListenerDetector topicListenerDetector(RedisMessageListenerContainer redisMessageListenerContainer,
+	public static RPubSubListenerDetector topicListenerDetector(RedisMessageListenerContainer redisMessageListenerContainer,
 														 RedisSerializer<Object> redisSerializer) {
 		return new RPubSubListenerDetector(redisMessageListenerContainer, redisSerializer);
 	}
