@@ -1,0 +1,17 @@
+name: "问题咨询|反馈"
+description: "请尽可能详细的描述问题，提供足够的上下文"
+labels: ["question"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: blade-tool 版本
+    validations:
+      required: true
+  - type: textarea
+    id: desired-solution
+    attributes:
+      label: 问题描述（具体模块、使用场景和异常，注意：描述不清一句话问题直接关闭）
+      description: 详细问题，具体模块、使用场景和异常，提供相应截图和日志
+    validations:
+      required: true
