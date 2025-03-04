@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Release-V4.4.2-green.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/Release-V4.5.0-green.svg" alt="Downloads">
   <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
-  <img src="https://img.shields.io/badge/Spring%20Cloud-2023-blue.svg" alt="Coverage Status">
-  <img src="https://img.shields.io/badge/Spring%20Boot-3.2-blue.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/Spring%20Cloud-2024-blue.svg" alt="Coverage Status">
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.4-blue.svg" alt="Downloads">
   <a href="https://central.sonatype.com/artifact/org.springblade/blade-core-bom/versions">
     <img src="https://img.shields.io/nexus/r/https/oss.sonatype.org/org.springblade/blade-core-bom.svg?style=flat-square" alt="Downloads">
   </a>
