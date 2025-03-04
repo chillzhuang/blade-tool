@@ -426,40 +426,34 @@
                 <artifactId>easy-captcha</artifactId>
                 <version>1.6.2</version>
             </dependency>
-            <!-- easyexcel -->
+            <!-- easyexcel 切换到 fastexcel -->
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>easyexcel</artifactId>
-                <version>3.3.4</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>ooxml-schemas</artifactId>
-                <version>1.4</version>
-                <scope>compile</scope>
+                <groupId>cn.idev.excel</groupId>
+                <artifactId>fastexcel</artifactId>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
-                <version>4.1.2</version>
+                <version>5.4.0</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
-                <version>4.1.2</version>
+                <version>5.4.0</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
-                <artifactId>poi-ooxml-schemas</artifactId>
-                <version>4.1.2</version>
+                <artifactId>poi-ooxml-full</artifactId>
+                <version>5.4.0</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-scratchpad</artifactId>
-                <version>5.2.1</version>
+                <version>5.4.0</version>
                 <scope>compile</scope>
             </dependency>
             <!-- sm2 -->
