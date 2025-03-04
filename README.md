@@ -9,12 +9,13 @@
   <a href="https://oss.sonatype.org/content/repositories/snapshots/org/springblade/blade-core-bom/">
     <img src="https://img.shields.io/nexus/s/https/oss.sonatype.org/org.springblade/blade-core-bom.svg?style=flat-square" alt="Downloads">
   </a>
-<a target="_blank" href="https://bladex.cn">
-  <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
-</a>
-<a target="_blank" href="https://bladex.cn">
-  <img src="https://img.shields.io/badge/Copyright%20-@BladeX-%23ff3f59.svg" alt="Downloads">
-</a>
+  <br/>
+  <a target="_blank" href="https://bladex.cn">
+    <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
+  </a>
+  <a target="_blank" href="https://bladex.cn">
+    <img src="https://img.shields.io/badge/Copyright%20-@BladeX-%23ff3f59.svg" alt="Downloads">
+  </a>
 </p>  
 
 ## SpringBlade微服务开发平台
