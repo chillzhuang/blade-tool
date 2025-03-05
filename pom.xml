@@ -47,7 +47,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <knife4j.version>4.5.0</knife4j.version>
-        <aliyun.sms.version>4.5.30</aliyun.sms.version>
+        <aliyun.sms.version>4.7.3</aliyun.sms.version>
         <tencent.sms.version>1.0.6</tencent.sms.version>
 
         <mybatis.version>3.5.19</mybatis.version>
