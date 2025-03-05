@@ -55,7 +55,7 @@
         <mybatis.plus.version>3.5.8</mybatis.plus.version>
 
         <okhttp.version>4.12.0</okhttp.version>
-        <protostuff.version>1.6.0</protostuff.version>
+        <protostuff.version>1.8.0</protostuff.version>
         <disruptor.version>3.4.2</disruptor.version>
         <guava.version>33.1.0-jre</guava.version>
         <mica.auto.version>3.1.4</mica.auto.version>
