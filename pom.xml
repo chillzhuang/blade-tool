@@ -42,7 +42,7 @@
         <java.version>17</java.version>
         <maven.plugin.version>3.14.0</maven.plugin.version>
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
-        <maven.flatten.version>1.3.0</maven.flatten.version>
+        <maven.flatten.version>1.7.0</maven.flatten.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
