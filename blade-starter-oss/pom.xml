@@ -33,7 +33,7 @@
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
-            <version>8.3.7</version>
+            <version>8.5.17</version>
         </dependency>
         <!--QiNiu-->
         <dependency>
