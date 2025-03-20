@@ -62,7 +62,7 @@
         <lombok.version>1.18.36</lombok.version>
         <druid.version>1.2.24</druid.version>
 
-        <spring.version>6.2.3</spring.version>
+        <spring.version>6.2.5</spring.version>
         <spring.boot.version>3.4.3</spring.boot.version>
         <spring.boot.admin.version>3.4.5</spring.boot.admin.version>
         <spring.cloud.version>2024.0.0</spring.cloud.version>
