@@ -48,7 +48,7 @@
 
         <knife4j.version>4.5.0</knife4j.version>
         <aliyun.sms.version>4.7.3</aliyun.sms.version>
-        <tencent.sms.version>1.0.6</tencent.sms.version>
+        <tencent.sms.version>3.1.1179</tencent.sms.version>
 
         <mybatis.version>3.5.19</mybatis.version>
         <mybatis.spring.version>3.0.4</mybatis.spring.version>
@@ -481,8 +481,8 @@
             </dependency>
             <!--腾讯SMS-->
             <dependency>
-                <groupId>com.github.qcloudsms</groupId>
-                <artifactId>qcloudsms</artifactId>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java-sms</artifactId>
                 <version>${tencent.sms.version}</version>
             </dependency>
             <!-- lombok -->
