@@ -68,7 +68,7 @@
         <spring.cloud.version>2024.0.0</spring.cloud.version>
 
         <alibaba.cloud.version>2023.0.3.2</alibaba.cloud.version>
-        <alibaba.nacos.version>2.5.0</alibaba.nacos.version>
+        <alibaba.nacos.version>3.0.0</alibaba.nacos.version>
     </properties>
 
     <modules>
