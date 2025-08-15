@@ -336,7 +336,7 @@
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-jackson</artifactId>
-                <version>0.12.6</version>
+                <version>0.12.7</version>
             </dependency>
             <!-- 第三方登陆 -->
             <dependency>
