@@ -27,7 +27,6 @@ import java.util.Map;
  */
 @Slf4j
 public class OkHttpUtil {
-
 	public static MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 	public static MediaType XML = MediaType.parse("application/xml; charset=utf-8");
 
@@ -52,14 +51,14 @@ public class OkHttpUtil {
 	 */
 	public static String get(String url, Map<String, String> header, Map<String, String> queries) {
 		StringBuffer sb = new StringBuffer(url);
-		if (queries != null && queries.keySet().size() > 0) {
+		if (queries != null && !queries.isEmpty()) {
 			sb.append("?clientId=blade");
-			queries.forEach((k, v) -> sb.append("&").append(k).append("=").append(v));
+			queries.forEach((k, v) -> sb.append('&').append(k).append('=').append(v));
 		}
 
 		Request.Builder builder = new Request.Builder();
 
-		if (header != null && header.keySet().size() > 0) {
+		if (header != null && !header.isEmpty()) {
 			header.forEach(builder::addHeader);
 		}
 
@@ -87,15 +86,16 @@ public class OkHttpUtil {
 	 * @return String
 	 */
 	public static String post(String url, Map<String, String> header, Map<String, String> params) {
-		FormBody.Builder formBuilder = new FormBody.Builder().add("clientId", "blade");
+		FormBody.Builder formBuilder = new FormBody.Builder()
+			.add("clientId", "blade");
 		//添加参数
-		if (params != null && params.keySet().size() > 0) {
+		if (params != null && !params.isEmpty()) {
 			params.forEach(formBuilder::add);
 		}
 
 		Request.Builder builder = new Request.Builder();
 
-		if (header != null && header.keySet().size() > 0) {
+		if (header != null && !header.isEmpty()) {
 			header.forEach(builder::addHeader);
 		}
 
@@ -158,10 +158,10 @@ public class OkHttpUtil {
 	 * @return String
 	 */
 	public static String postContent(String url, Map<String, String> header, String content, MediaType mediaType) {
-		RequestBody requestBody = RequestBody.create(mediaType, content);
+		RequestBody requestBody = RequestBody.create(content, mediaType);
 		Request.Builder builder = new Request.Builder();
 
-		if (header != null && header.keySet().size() > 0) {
+		if (header != null && !header.isEmpty()) {
 			header.forEach(builder::addHeader);
 		}
 		Request request = builder.url(url).post(requestBody).build();
