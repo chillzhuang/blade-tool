@@ -48,7 +48,7 @@
 
         <knife4j.version>4.5.0</knife4j.version>
         <aliyun.sms.version>4.7.6</aliyun.sms.version>
-        <tencent.sms.version>3.1.1281</tencent.sms.version>
+        <tencent.sms.version>3.1.1357</tencent.sms.version>
 
         <mybatis.version>3.5.19</mybatis.version>
         <mybatis.spring.version>3.0.5</mybatis.spring.version>
