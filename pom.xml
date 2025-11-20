@@ -327,12 +327,6 @@
                 <artifactId>nacos-client</artifactId>
                 <version>${alibaba.nacos.version}</version>
             </dependency>
-            <!-- fastjson -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>2.0.59</version>
-            </dependency>
             <!-- JWT -->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>

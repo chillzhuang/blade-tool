@@ -79,11 +79,6 @@
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
             <version>${alibaba.cloud.version}</version>
         </dependency>
-        <!-- Alibaba依赖 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
