@@ -15,6 +15,7 @@
  */
 package org.springblade.core.swagger;
 
+import net.dreamlu.mica.auto.annotation.AutoService;
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.launch.service.LauncherService;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -27,6 +28,7 @@ import java.util.Properties;
  *
  * @author Chill
  */
+@AutoService(LauncherService.class)
 public class SwaggerLauncherServiceImpl implements LauncherService {
 	@Override
 	public void launcher(SpringApplicationBuilder builder, String appName, String profile) {
