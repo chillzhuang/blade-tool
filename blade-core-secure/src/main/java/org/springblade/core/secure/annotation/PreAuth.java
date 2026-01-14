@@ -15,10 +15,34 @@
  */
 package org.springblade.core.secure.annotation;
 
+import org.springblade.core.tool.utils.StringPool;
+
 import java.lang.annotation.*;
 
 /**
- * 权限注解 用于检查权限 规定访问权限
+ * 权限注解，用于检查权限，规定访问权限
+ * 支持以下几种使用方式：
+ * <p>
+ * 1. 单个属性模式：
+ * <pre>{@code
+ *   @PreAuth(permission = "user:add")
+ *   @PreAuth(role = "admin")
+ * }</pre>
+ *
+ * 2. 组合属性模式：
+ * <pre>{@code
+ *   @PreAuth(role = "admin", permission = "user:add")
+ * }</pre>
+ *
+ * 3. SpEL表达式模式：
+ * <pre>{@code
+ *   @PreAuth("#userVO.id<10")
+ *   @PreAuth("hasRole('admin')")
+ *   @PreAuth("hasPermission('user:add')")
+ *   @PreAuth("hasPermission(#test) and hasRole('admin')")
+ * }</pre>
+ *
+ * @author Chill
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -27,10 +51,19 @@ import java.lang.annotation.*;
 public @interface PreAuth {
 
 	/**
-	 * Spring el
-	 * 文档地址：https://docs.spring.io/spring/docs/4.3.16.RELEASE/spring-framework-reference/htmlsingle/#expressions-operators-logical
+	 * Spring el表达式
 	 */
-	String value();
+	String value() default StringPool.EMPTY;
+
+	/**
+	 * 接口权限编码
+	 */
+	String permission() default StringPool.EMPTY;
+
+	/**
+	 * 角色权限
+	 */
+	String role() default StringPool.EMPTY;
 
 }
 

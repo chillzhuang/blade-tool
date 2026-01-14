@@ -18,6 +18,9 @@ package org.springblade.core.secure.config;
 
 import lombok.AllArgsConstructor;
 import org.springblade.core.secure.aspect.AuthAspect;
+import org.springblade.core.secure.auth.AuthFun;
+import org.springblade.core.secure.handler.BladePermissionHandler;
+import org.springblade.core.secure.handler.IPermissionHandler;
 import org.springblade.core.secure.interceptor.ClientInterceptor;
 import org.springblade.core.secure.interceptor.SecureInterceptor;
 import org.springblade.core.secure.props.BladeAuthProperties;
@@ -66,7 +69,13 @@ public class SecureConfiguration implements WebMvcConfigurer {
 
 	@Bean
 	public AuthAspect authAspect() {
-		return new AuthAspect();
+		return new AuthAspect(new AuthFun());
+	}
+
+	@Bean
+	@ConditionalOnMissingBean(IPermissionHandler.class)
+	public IPermissionHandler permissionHandler() {
+		return new BladePermissionHandler(jdbcTemplate);
 	}
 
 	@Bean

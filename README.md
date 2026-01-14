@@ -1,14 +1,9 @@
 <p align="center">
+  <img src="https://img.shields.io/badge/Release-V4.8.0-blue.svg" alt="Downloads">
   <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/Spring%20Cloud-2025-blue.svg" alt="Coverage Status">
   <img src="https://img.shields.io/badge/Spring%20Boot-3.5-blue.svg" alt="Downloads">
-  <a href="https://central.sonatype.com/artifact/org.springblade/blade-core-bom/versions">
-    <img src="https://img.shields.io/nexus/r/https/oss.sonatype.org/org.springblade/blade-core-bom.svg?style=flat-square" alt="Downloads">
-  </a>
-  <a href="https://oss.sonatype.org/content/repositories/snapshots/org/springblade/blade-core-bom/">
-    <img src="https://img.shields.io/nexus/s/https/oss.sonatype.org/org.springblade/blade-core-bom.svg?style=flat-square" alt="Downloads">
-  </a>
   <br/>
   <a target="_blank" href="https://bladex.cn">
     <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
@@ -39,13 +34,12 @@
 |----------------------|------------|
 | Java                 | 17+        |
 | NodeJS               | 18+        |
-| Spring               | 6.2.11     |
-| Spring Boot          | 3.5.6      |
-| Spring Cloud         | 2025.0.0   |
-| Spring Cloud Alibaba | 2023.0.3.3 |
-| Nacos Alibaba        | 3.1.0      |
+| Spring               | 6.2.15     |
+| Spring Boot          | 3.5.9      |
+| Spring Cloud         | 2025.0.1   |
+| Spring Cloud Alibaba | 2025.0.0.0 |
+| Nacos Alibaba        | 3.1.1      |
 | Mybatis Plus         | 3.5.19     |
-
 
 
 ## 工程结构
@@ -93,20 +87,20 @@ blade-tool
 
 ## 官方产品
 
-| 简介            | 演示地址                                                 |
-|---------------|------------------------------------------------------|
-| BladeX企业级开发平台 | [https://saber3.bladex.cn](https://saber3.bladex.cn) |
-| BladeX可视化数据大屏 | [https://data.bladex.cn](https://data.bladex.cn)     |
-| BladeX物联网开发平台 | [https://iot.bladex.cn](https://iot.bladex.cn)       |
-| BladeX大模型开发平台 | [https://ai.bladex.cn](https://ai.bladex.cn)        |
+| 简介              | 演示地址                                                 |
+|-----------------|------------------------------------------------------|
+| BladeX企业级开发平台   | [https://saber3.bladex.cn](https://saber3.bladex.cn) |
+| BladeX可视化数据大屏   | [https://data.bladex.cn](https://data.bladex.cn)     |
+| BladeX物联网开发平台   | [https://iot.bladex.cn](https://iot.bladex.cn)       |
+| BladeXAI大模型平台 | [https://ai.bladex.cn/](https://ai.bladex.cn/)      |
 
 ## 前端项目
 
-| 简介                 | 地址                                                                                                 |
-|--------------------|----------------------------------------------------------------------------------------------------|
-| 前端框架Sword(基于React) | [https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)                                   |
-| 前端框架Saber(基于Vue2)  | [https://gitee.com/smallc/Saber](https://gitee.com/smallc/Saber)                                   |
-| 前端框架Saber3(基于Vue3) | [https://gitee.com/smallc/Saber3](https://gitee.com/smallc/Saber/tree/3.x/)                        |
+| 简介                 | 地址                                                                           |
+|--------------------|------------------------------------------------------------------------------|
+| 前端框架Saber3(基于Vue3) | [https://gitee.com/smallc/Saber3](https://gitee.com/smallc/Saber)            |
+| 前端框架Saber(基于Vue2)  | [https://gitee.com/smallc/Saber2](https://gitee.com/smallc/Saber/tree/vue2/) |
+| 前端框架Sword(基于React) | [https://gitee.com/smallc/Sword](https://gitee.com/smallc/Sword)             |
 
 ## 后端项目
 | 简介            | 地址                                                                                                 |

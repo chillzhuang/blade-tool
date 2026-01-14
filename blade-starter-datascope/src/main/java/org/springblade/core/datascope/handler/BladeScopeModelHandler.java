@@ -16,9 +16,13 @@
 package org.springblade.core.datascope.handler;
 
 import lombok.RequiredArgsConstructor;
+import org.springblade.core.cache.utils.CacheUtil;
 import org.springblade.core.datascope.constant.DataScopeConstant;
 import org.springblade.core.datascope.model.DataScopeModel;
-import org.springblade.core.tool.utils.*;
+import org.springblade.core.tool.utils.CollectionUtil;
+import org.springblade.core.tool.utils.Func;
+import org.springblade.core.tool.utils.StringPool;
+import org.springblade.core.tool.utils.StringUtil;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -26,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.springblade.core.tool.utils.CacheUtil.SYS_CACHE;
+import static org.springblade.core.cache.utils.CacheUtil.SYS_CACHE;
 
 
 /**

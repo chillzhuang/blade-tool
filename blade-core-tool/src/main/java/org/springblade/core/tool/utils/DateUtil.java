@@ -597,4 +597,13 @@ public class DateUtil {
 		return format(LocalDate.now(), "yyyyMMdd");
 	}
 
+	/**
+	 * 获取当前小时
+	 *
+	 * @return 当前小时 (0-23)
+	 */
+	public static Integer hour() {
+		return LocalDateTime.now().getHour();
+	}
+
 }
