@@ -37,6 +37,10 @@ public interface AppConstant {
 	 */
 	String APPLICATION_NAME_PREFIX = "blade-";
 	/**
+	 * 大模型模块名称
+	 */
+	String APPLICATION_AI_NAME = APPLICATION_NAME_PREFIX + "ai";
+	/**
 	 * 网关模块名称
 	 */
 	String APPLICATION_GATEWAY_NAME = APPLICATION_NAME_PREFIX + "gateway";
