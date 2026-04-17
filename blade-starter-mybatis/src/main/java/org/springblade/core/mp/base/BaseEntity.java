@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.springblade.core.tool.jackson.BladeView;
+import org.springblade.core.tool.jackson.Views;
 import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -49,6 +51,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建人
 	 */
+	@BladeView(Views.Admin.class)
 	@JsonSerialize(using = ToStringSerializer.class)
 	@Schema(description = "创建人", hidden = true)
 	private Long createUser;
@@ -56,6 +59,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建部门
 	 */
+	@BladeView(Views.Admin.class)
 	@JsonSerialize(using = ToStringSerializer.class)
 	@Schema(description = "创建部门", hidden = true)
 	private Long createDept;
@@ -63,6 +67,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
+	@BladeView(Views.Detail.class)
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@Schema(description = "创建时间", hidden = true)
@@ -71,6 +76,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 更新人
 	 */
+	@BladeView(Views.Admin.class)
 	@JsonSerialize(using = ToStringSerializer.class)
 	@Schema(description = "更新人", hidden = true)
 	private Long updateUser;
@@ -78,6 +84,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 更新时间
 	 */
+	@BladeView(Views.Detail.class)
 	@DateTimeFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@JsonFormat(pattern = DateUtil.PATTERN_DATETIME)
 	@Schema(description = "更新时间", hidden = true)
@@ -86,12 +93,14 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 状态[1:正常]
 	 */
+	@BladeView(Views.Detail.class)
 	@Schema(description = "业务状态", hidden = true)
 	private Integer status;
 
 	/**
 	 * 状态[0:未删除,1:删除]
 	 */
+	@BladeView(Views.Admin.class)
 	@TableLogic
 	@Schema(description = "是否已删除", hidden = true)
 	private Integer isDeleted;

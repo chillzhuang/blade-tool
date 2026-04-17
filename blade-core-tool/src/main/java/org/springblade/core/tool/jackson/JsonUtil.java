@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.type.CollectionLikeType;
@@ -32,6 +33,7 @@ import org.springframework.lang.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.io.Serial;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.*;
@@ -949,41 +951,45 @@ public class JsonUtil {
 	}
 
 	public static class JacksonObjectMapper extends ObjectMapper {
+		@Serial
 		private static final long serialVersionUID = 4288193147502386170L;
 
 		private static final Locale CHINA = Locale.CHINA;
 
+		public JacksonObjectMapper(ObjectMapper src) {
+			super(src);
+		}
+
 		public JacksonObjectMapper() {
-			super();
+			// 通过 Builder 设置 Feature
+			super(JsonMapper.builder()
+				.enable(MapperFeature.DEFAULT_VIEW_INCLUSION) //默认视图包含
+				.enable(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS) //允许未转义的控制字符
+				.enable(JsonReadFeature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER) //允许反斜杠转义任意字符
+				.enable(JsonReadFeature.ALLOW_SINGLE_QUOTES) //允许单引号
+				.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT) //允许空字符串反序列化为null对象
+				.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS) //日期不序列化为时间戳
+				.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS) //序列化空对象不报错
+				.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES) //反序列化遇到未知属性不报错
+				.build());
+
 			//设置地点为中国
 			super.setLocale(CHINA);
-			//去掉默认的时间戳格式
-			super.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 			//设置为中国上海时区
 			super.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
 			//序列化时，日期的统一格式
 			super.setDateFormat(new SimpleDateFormat(DateUtil.PATTERN_DATETIME, Locale.CHINA));
-			//序列化处理
-			super.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
-			super.configure(JsonReadFeature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER.mappedFeature(), true);
-			super.findAndRegisterModules();
-			//失败处理
-			super.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-			super.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-			//单引号处理
-			super.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-			//反序列化时，属性不存在的兼容处理s
-			super.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 			//日期格式化
 			super.registerModule(new BladeJavaTimeModule());
-			//允许空字符串序列化为null对象
-			super.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+			//视图注解内省器，让 Jackson 识别 @BladeView
+			super.setAnnotationIntrospector(new BladeViewAnnotationIntrospector());
+			//注册模块
 			super.findAndRegisterModules();
 		}
 
 		@Override
 		public ObjectMapper copy() {
-			return super.copy();
+			return new JacksonObjectMapper(this);
 		}
 	}
 

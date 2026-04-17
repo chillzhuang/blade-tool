@@ -19,6 +19,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * jackson 配置
  *
@@ -42,5 +45,29 @@ public class BladeJacksonProperties {
 	 * 支持 MediaType text/plain，用于和 blade-api-crypto 一起使用
 	 */
 	private Boolean supportTextPlain = Boolean.FALSE;
+
+	/**
+	 * 视图配置
+	 */
+	private View view = new View();
+
+	/**
+	 * Jackson Views 视图配置
+	 *
+	 * @author Chill
+	 */
+	@Getter
+	@Setter
+	public static class View {
+		/**
+		 * 动态模式的默认视图（角色获取不到时降级）
+		 * <p>可选: summary / detail / admin / administrator</p>
+		 */
+		private String defaultView = "summary";
+		/**
+		 * 角色 → 视图映射
+		 */
+		private Map<String, String> roleMapping = new LinkedHashMap<>();
+	}
 
 }
