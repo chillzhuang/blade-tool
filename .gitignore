@@ -21,6 +21,9 @@ Thumbs.db
 .idea
 *.iml
 
+# claude code #
+.claude
+
 # Package Files #
 *.jar
 *.war
