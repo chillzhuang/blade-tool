@@ -18,6 +18,9 @@ package org.springblade.core.mp.props;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * MybatisPlus配置类
  *
@@ -41,5 +44,10 @@ public class MybatisPlusProperties {
 	 * 是否打印 sql
 	 */
 	private boolean sqlLog = true;
+
+	/**
+	 * sql日志忽略打印关键字
+	 */
+	private List<String> sqlLogExclude = new ArrayList<>();
 
 }

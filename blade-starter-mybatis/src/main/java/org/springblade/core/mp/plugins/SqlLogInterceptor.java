@@ -24,7 +24,6 @@ import com.alibaba.druid.proxy.jdbc.ResultSetProxy;
 import com.alibaba.druid.proxy.jdbc.StatementProxy;
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.util.StringUtils;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.mp.props.MybatisPlusProperties;
 import org.springblade.core.tool.utils.StringUtil;
@@ -44,10 +43,19 @@ import java.util.List;
  * @author L.cm
  */
 @Slf4j
-@RequiredArgsConstructor
 public class SqlLogInterceptor extends FilterEventAdapter {
 	private static final SQLUtils.FormatOption FORMAT_OPTION = new SQLUtils.FormatOption(false, false);
+
+	private static final List<String> SQL_LOG_EXCLUDE = new ArrayList<>();
+
 	private final MybatisPlusProperties properties;
+
+	public SqlLogInterceptor(MybatisPlusProperties properties) {
+		this.properties = properties;
+		if (!properties.getSqlLogExclude().isEmpty()) {
+			SQL_LOG_EXCLUDE.addAll(properties.getSqlLogExclude());
+		}
+	}
 
 	@Override
 	protected void statementExecuteBefore(StatementProxy statement, String sql) {
@@ -93,6 +101,10 @@ public class SqlLogInterceptor extends FilterEventAdapter {
 	public void statement_close(FilterChain chain, StatementProxy statement) throws SQLException {
 		// 先调用父类关闭 statement
 		super.statement_close(chain, statement);
+		// 线程标记忽略 sql 日志
+		if (SqlLogUtil.isIgnore()) {
+			return;
+		}
 		// 支持动态关闭
 		if (!properties.isSqlLog()) {
 			return;
@@ -105,6 +117,10 @@ public class SqlLogInterceptor extends FilterEventAdapter {
 		String sql = statement.getBatchSql();
 		// sql 为空直接返回
 		if (StringUtils.isEmpty(sql)) {
+			return;
+		}
+		// sql 包含排除的关键字直接返回
+		if (excludeSql(sql)) {
 			return;
 		}
 		int parametersSize = statement.getParametersSize();
@@ -136,6 +152,16 @@ public class SqlLogInterceptor extends FilterEventAdapter {
 			"\n{}" +
 			"\n============ Sql Execute Time: {} ===========\n";
 		log.info(sqlLogger, sql.trim(), StringUtil.format(statement.getLastExecuteTimeNano()));
+	}
+
+	private static boolean excludeSql(String sql) {
+		// 判断关键字
+		for (String exclude : SQL_LOG_EXCLUDE) {
+			if (sql.contains(exclude)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

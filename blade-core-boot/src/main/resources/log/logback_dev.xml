@@ -76,6 +76,7 @@
     <!-- 业务日志 -->
     <Logger name="org.springblade" level="DEBUG" />
     <Logger name="org.springblade.core.version" level="INFO"/>
+    <Logger name="org.springblade.core.tenant.BladeTenantInterceptor" level="INFO"/>
 
     <!-- 减少nacos日志 -->
     <logger name="com.alibaba.nacos" level="ERROR"/>
