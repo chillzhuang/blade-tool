@@ -29,6 +29,7 @@ import org.springframework.http.converter.json.AbstractJackson2HttpMessageConver
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * 消息配置类
@@ -47,13 +48,23 @@ public class MessageConfiguration implements WebMvcConfigurer {
 	 * 使用 JACKSON 作为JSON MessageConverter
 	 */
 	@Override
-	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-		converters.removeIf(x -> x instanceof StringHttpMessageConverter || x instanceof AbstractJackson2HttpMessageConverter);
-		converters.add(new StringHttpMessageConverter(Charsets.UTF_8));
-		converters.add(new ByteArrayHttpMessageConverter());
-		converters.add(new ResourceHttpMessageConverter());
-		converters.add(new ResourceRegionHttpMessageConverter());
-		converters.add(new MappingApiJackson2HttpMessageConverter(objectMapper, properties));
+	@SuppressWarnings("removal")
+	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+		MappingApiJackson2HttpMessageConverter bladeJson = new MappingApiJackson2HttpMessageConverter(objectMapper, properties);
+		boolean jsonReplaced = false;
+		ListIterator<HttpMessageConverter<?>> iterator = converters.listIterator();
+		while (iterator.hasNext()) {
+			HttpMessageConverter<?> converter = iterator.next();
+			if (converter instanceof AbstractJackson2HttpMessageConverter) {
+				iterator.set(bladeJson);
+				jsonReplaced = true;
+			} else if (converter instanceof StringHttpMessageConverter) {
+				iterator.set(new StringHttpMessageConverter(Charsets.UTF_8));
+			}
+		}
+		if (!jsonReplaced) {
+			converters.add(0, bladeJson);
+		}
 	}
 
 }

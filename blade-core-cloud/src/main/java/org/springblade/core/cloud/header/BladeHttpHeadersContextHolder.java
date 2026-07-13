@@ -20,7 +20,7 @@ import org.springblade.core.tool.utils.StringUtil;
 import org.springblade.core.tool.utils.WebUtil;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.http.HttpHeaders;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.PatternMatchUtils;
 
 import jakarta.servlet.http.HttpServletRequest;

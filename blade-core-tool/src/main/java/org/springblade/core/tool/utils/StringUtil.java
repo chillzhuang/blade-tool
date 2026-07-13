@@ -16,7 +16,7 @@
 package org.springblade.core.tool.utils;
 
 import org.springblade.core.tool.support.StrSpliter;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.HtmlUtils;
@@ -337,7 +337,7 @@ public class StringUtil extends org.springframework.util.StringUtils {
 	 * @param arguments 需要替换的变量
 	 * @return 转换后的字符串
 	 */
-	public static String format(@Nullable String message, @Nullable Object... arguments) {
+	public static String format(@Nullable String message, Object @Nullable ... arguments) {
 		// message 为 null 返回空字符串
 		if (message == null) {
 			return StringPool.EMPTY;

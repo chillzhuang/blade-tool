@@ -17,7 +17,6 @@ package org.springblade.core.log.error;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springblade.core.launch.props.BladeProperties;
 import org.springblade.core.log.exception.ServiceException;
 import org.springblade.core.log.props.BladeLogProperties;
@@ -43,13 +42,17 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import jakarta.servlet.Servlet;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Path;
 import java.util.Set;
 
 /**
@@ -110,16 +113,38 @@ public class BladeRestExceptionTranslator {
 		log.warn("参数验证失败", e.getMessage());
 		Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
 		ConstraintViolation<?> violation = violations.iterator().next();
-		String path = ((PathImpl) violation.getPropertyPath()).getLeafNode().getName();
+		String path = "";
+		for (Path.Node node : violation.getPropertyPath()) {
+			path = node.getName();
+		}
 		String message = String.format("%s:%s", path, violation.getMessage());
+		return R.fail(ResultCode.PARAM_VALID_ERROR, message);
+	}
+
+	@ExceptionHandler(HandlerMethodValidationException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public R handleError(HandlerMethodValidationException e) {
+		log.warn("参数校验失败:{}", e.getMessage());
+		String message = e.getParameterValidationResults().stream()
+			.flatMap(result -> result.getResolvableErrors().stream()
+				.map(error -> String.format("%s:%s", result.getMethodParameter().getParameterName(), error.getDefaultMessage())))
+			.findFirst()
+			.orElse(ResultCode.PARAM_VALID_ERROR.getMessage());
 		return R.fail(ResultCode.PARAM_VALID_ERROR, message);
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public R handleError(NoHandlerFoundException e) {
-		log.error("404没找到请求:{}", e.getMessage());
-		return R.fail(ResultCode.NOT_FOUND, e.getMessage());
+		log.warn("404没找到请求:{}", e.getMessage());
+		return R.fail(ResultCode.NOT_FOUND);
+	}
+
+	@ExceptionHandler(NoResourceFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public R handleError(NoResourceFoundException e) {
+		log.warn("404资源不存在:{}", e.getResourcePath());
+		return R.fail(ResultCode.NOT_FOUND);
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
@@ -141,6 +166,13 @@ public class BladeRestExceptionTranslator {
 	public R handleError(HttpMediaTypeNotSupportedException e) {
 		log.error("不支持当前媒体类型:{}", e.getMessage());
 		return R.fail(ResultCode.MEDIA_TYPE_NOT_SUPPORTED, e.getMessage());
+	}
+
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	@ResponseStatus(HttpStatus.PAYLOAD_TOO_LARGE)
+	public R handleError(MaxUploadSizeExceededException e) {
+		log.warn("上传文件超过限制:{}", e.getMessage());
+		return R.fail(ResultCode.FAILURE, "上传文件大小超过系统限制");
 	}
 
 	@ExceptionHandler(ServiceException.class)

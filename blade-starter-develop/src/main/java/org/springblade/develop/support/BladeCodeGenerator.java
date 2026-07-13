@@ -19,7 +19,6 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
-import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
@@ -28,9 +27,9 @@ import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Mapper;
+import org.jspecify.annotations.NonNull;
 import org.springblade.core.tool.utils.Func;
 import org.springblade.core.tool.utils.StringUtil;
-import org.springblade.develop.constant.DevelopConstant;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
@@ -51,13 +50,13 @@ import java.util.Properties;
 @Slf4j
 public class BladeCodeGenerator {
 	/**
-	 * 代码所在系统
-	 */
-	private String systemName = DevelopConstant.SABER3_NAME;
-	/**
 	 * 代码模块名称
 	 */
 	private String codeName;
+	/**
+	 * 代码所在系统
+	 */
+	private String systemName = "Saber";
 	/**
 	 * 代码所在服务名
 	 */
@@ -141,54 +140,40 @@ public class BladeCodeGenerator {
 		customMap.put("tenantColumn", tenantColumn);
 		customMap.put("hasWrapper", hasWrapper);
 		customMap.put("hasServiceName", hasServiceName);
-		Map<String, String> customFile = new HashMap<>(15);
+		Map<String, String> customFile = new HashMap<>(8);
 		customFile.put("menu.sql", "/templates/sql/menu.sql.vm");
-		customFile.put("entityVO.java", "/templates/entityVO.java.vm");
-		customFile.put("entityDTO.java", "/templates/entityDTO.java.vm");
+		customFile.put("entityVO.java", "/templates/api/entityVO.java.vm");
+		customFile.put("entityDTO.java", "/templates/api/entityDTO.java.vm");
 		if (hasWrapper) {
-			customFile.put("wrapper.java", "/templates/wrapper.java.vm");
+			customFile.put("wrapper.java", "/templates/api/wrapper.java.vm");
 		}
 		if (Func.isNotBlank(packageWebDir)) {
-			if (Func.equals(systemName, DevelopConstant.SWORD_NAME)) {
-				customFile.put("action.js", "/templates/sword/action.js.vm");
-				customFile.put("model.js", "/templates/sword/model.js.vm");
-				customFile.put("service.js", "/templates/sword/service.js.vm");
-				customFile.put("list.js", "/templates/sword/list.js.vm");
-				customFile.put("add.js", "/templates/sword/add.js.vm");
-				customFile.put("edit.js", "/templates/sword/edit.js.vm");
-				customFile.put("view.js", "/templates/sword/view.js.vm");
-			} else if (Func.equals(systemName, DevelopConstant.SABER_NAME)) {
-				customFile.put("api.js", "/templates/saber/api.js.vm");
-				customFile.put("crud.vue", "/templates/saber/crud.vue.vm");
-			} else if (Func.equals(systemName, DevelopConstant.SABER3_NAME)) {
-				customFile.put("api.js", "/templates/saber3/api.js.vm");
-				customFile.put("crud.vue", "/templates/saber3/crud.vue.vm");
-			}
+			customFile.put("api.js", "/templates/saber/api.js.vm");
+			customFile.put("crud.vue", "/templates/saber/crud.vue.vm");
 		}
 
 		FastAutoGenerator.create(url, username, password)
 			.globalConfig(builder -> builder.author(props.getProperty("author")).dateType(DateType.TIME_PACK).enableSwagger().outputDir(getOutputDir()).disableOpenDir())
-			.packageConfig(builder -> builder.parent(packageName).controller("controller").entity("entity").service("service").serviceImpl("service.impl").mapper("mapper").xml("mapper"))
+			.packageConfig(builder -> builder.parent(packageName).controller("controller").entity("pojo.entity").service("service").serviceImpl("service.impl").mapper("mapper").xml("mapper"))
 			.strategyConfig(builder -> builder.addTablePrefix(tablePrefix).addInclude(includeTables).addExclude(excludeTables)
 				.entityBuilder().naming(NamingStrategy.underline_to_camel).columnNaming(NamingStrategy.underline_to_camel).enableLombok().superClass("org.springblade.core.mp.base.BaseEntity").addSuperEntityColumns(superEntityColumns).enableFileOverride()
+				.javaTemplate("/templates/api/entity.java.vm")
 				.serviceBuilder().superServiceClass("org.springblade.core.mp.base.BaseService").superServiceImplClass("org.springblade.core.mp.base.BaseServiceImpl").formatServiceFileName("I%sService").formatServiceImplFileName("%sServiceImpl").enableFileOverride()
+				.serviceTemplate("/templates/api/service.java.vm")
+				.serviceImplTemplate("/templates/api/serviceImpl.java.vm")
 				.mapperBuilder().mapperAnnotation(Mapper.class).enableBaseResultMap().enableBaseColumnList().formatMapperFileName("%sMapper").formatXmlFileName("%sMapper").enableFileOverride()
+				.mapperTemplate("/templates/api/mapper.java.vm")
+				.mapperXmlTemplate("/templates/api/mapper.xml.vm")
 				.controllerBuilder().superClass("org.springblade.core.boot.ctrl.BladeController").formatFileName("%sController").enableRestStyle().enableHyphenStyle().enableFileOverride()
+				.template("/templates/api/controller.java.vm")
 			)
-			.templateConfig(builder -> builder.disable(TemplateType.ENTITY)
-				.entity("/templates/entity.java.vm")
-				.service("/templates/service.java.vm")
-				.serviceImpl("/templates/serviceImpl.java.vm")
-				.mapper("/templates/mapper.java.vm")
-				.xml("/templates/mapper.xml.vm")
-				.controller("/templates/controller.java.vm"))
 			.injectionConfig(builder -> builder.beforeOutputFile(
 					(tableInfo, objectMap) -> System.out.println("tableInfo: " + tableInfo.getEntityName() + " objectMap: " + objectMap.size())
 				).customMap(customMap).customFile(customFile)
 			)
 			.templateEngine(new VelocityTemplateEngine() {
 				@Override
-				protected void outputCustomFile(List<CustomFile> customFiles, TableInfo tableInfo, Map<String, Object> objectMap) {
+				protected void outputCustomFile(@NonNull List<CustomFile> customFiles, @NonNull TableInfo tableInfo, @NonNull Map<String, Object> objectMap) {
 					String entityName = tableInfo.getEntityName();
 					String entityNameLower = tableInfo.getEntityName().toLowerCase();
 
@@ -206,43 +191,15 @@ public class BladeCodeGenerator {
 							outputPath = getOutputDir() + StringPool.SLASH + "sql" + StringPool.SLASH + entityNameLower + ".menu.sql";
 						}
 						if (StringUtil.equals(key, "entityVO.java")) {
-							outputPath = getOutputDir() + StringPool.SLASH + packageName.replace(StringPool.DOT, StringPool.SLASH) + StringPool.SLASH + "vo" + StringPool.SLASH + entityName + "VO" + StringPool.DOT_JAVA;
+							outputPath = getOutputDir() + StringPool.SLASH + packageName.replace(StringPool.DOT, StringPool.SLASH) + StringPool.SLASH + "pojo" + StringPool.SLASH + "vo" + StringPool.SLASH + entityName + "VO" + StringPool.DOT_JAVA;
 						}
 
 						if (StringUtil.equals(key, "entityDTO.java")) {
-							outputPath = getOutputDir() + StringPool.SLASH + packageName.replace(StringPool.DOT, StringPool.SLASH) + StringPool.SLASH + "dto" + StringPool.SLASH + entityName + "DTO" + StringPool.DOT_JAVA;
+							outputPath = getOutputDir() + StringPool.SLASH + packageName.replace(StringPool.DOT, StringPool.SLASH) + StringPool.SLASH + "pojo" + StringPool.SLASH + "dto" + StringPool.SLASH + entityName + "DTO" + StringPool.DOT_JAVA;
 						}
 
 						if (StringUtil.equals(key, "wrapper.java")) {
 							outputPath = getOutputDir() + StringPool.SLASH + packageName.replace(StringPool.DOT, StringPool.SLASH) + StringPool.SLASH + "wrapper" + StringPool.SLASH + entityName + "Wrapper" + StringPool.DOT_JAVA;
-						}
-
-						if (StringUtil.equals(key, "action.js")) {
-							outputPath = getOutputWebDir() + StringPool.SLASH + "actions" + StringPool.SLASH + entityNameLower + ".js";
-						}
-
-						if (StringUtil.equals(key, "model.js")) {
-							outputPath = getOutputWebDir() + StringPool.SLASH + "models" + StringPool.SLASH + entityNameLower + ".js";
-						}
-
-						if (StringUtil.equals(key, "service.js")) {
-							outputPath = getOutputWebDir() + StringPool.SLASH + "services" + StringPool.SLASH + entityNameLower + ".js";
-						}
-
-						if (StringUtil.equals(key, "list.js")) {
-							outputPath = getOutputWebDir() + StringPool.SLASH + "pages" + StringPool.SLASH + StringUtil.upperFirst(servicePackage) + StringPool.SLASH + entityName + StringPool.SLASH + entityName + ".js";
-						}
-
-						if (StringUtil.equals(key, "add.js")) {
-							outputPath = getOutputWebDir() + StringPool.SLASH + "pages" + StringPool.SLASH + StringUtil.upperFirst(servicePackage) + StringPool.SLASH + entityName + StringPool.SLASH + entityName + "Add.js";
-						}
-
-						if (StringUtil.equals(key, "edit.js")) {
-							outputPath = getOutputWebDir() + StringPool.SLASH + "pages" + StringPool.SLASH + StringUtil.upperFirst(servicePackage) + StringPool.SLASH + entityName + StringPool.SLASH + entityName + "Edit.js";
-						}
-
-						if (StringUtil.equals(key, "view.js")) {
-							outputPath = getOutputWebDir() + StringPool.SLASH + "pages" + StringPool.SLASH + StringUtil.upperFirst(servicePackage) + StringPool.SLASH + entityName + StringPool.SLASH + entityName + "View.js";
 						}
 
 						if (StringUtil.equals(key, "api.js")) {
@@ -259,7 +216,6 @@ public class BladeCodeGenerator {
 			.execute();
 
 	}
-
 
 	/**
 	 * 获取配置文件

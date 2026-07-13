@@ -38,10 +38,6 @@ public class CodeGenerator {
 	 */
 	public static String PACKAGE_NAME = "org.springblade.test";
 	/**
-	 * 前端代码生成所属系统
-	 */
-	public static String SYSTEM_NAME = "saber";
-	/**
 	 * 前端代码生成地址
 	 */
 	public static String PACKAGE_WEB_DIR = "/Users/chill/Workspaces/test/Saber";
@@ -77,7 +73,6 @@ public class CodeGenerator {
 		BladeCodeGenerator generator = new BladeCodeGenerator();
 		generator.setCodeName(CODE_NAME);
 		generator.setServiceName(SERVICE_NAME);
-		generator.setSystemName(SYSTEM_NAME);
 		generator.setPackageName(PACKAGE_NAME);
 		generator.setPackageWebDir(PACKAGE_WEB_DIR);
 		generator.setTablePrefix(TABLE_PREFIX);

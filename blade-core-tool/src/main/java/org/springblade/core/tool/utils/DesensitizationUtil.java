@@ -17,7 +17,7 @@
 package org.springblade.core.tool.utils;
 
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;

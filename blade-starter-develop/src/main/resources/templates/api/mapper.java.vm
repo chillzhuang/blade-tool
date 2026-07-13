@@ -36,9 +36,9 @@ public interface $!{table.mapperName} extends $!{superMapperClass}<$!{entity}> {
 	/**
 	 * 自定义分页
 	 *
-	 * @param page
-	 * @param $!{table.entityPath}
-	 * @return
+	 * @param page 分页参数
+	 * @param $!{table.entityPath} $!{table.comment}查询条件
+	 * @return $!{table.comment}分页数据
 	 */
 	List<$!{entity}VO> select$!{entity}Page(IPage page, $!{entity}VO $!{table.entityPath});
 

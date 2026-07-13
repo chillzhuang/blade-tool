@@ -15,7 +15,7 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public class CollectionUtil extends org.springframework.util.CollectionUtils {
 	 * @param <T>     The generic tag
 	 * @return {@code true} if found, {@code false} else
 	 */
-	public static <T> boolean contains(@Nullable T[] array, final T element) {
+	public static <T> boolean contains(T @Nullable [] array, final T element) {
 		if (array == null) {
 			return false;
 		}

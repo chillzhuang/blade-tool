@@ -98,13 +98,14 @@ public class BladeApplication {
 		props.setProperty("blade.env", profile);
 		props.setProperty("blade.name", appName);
 		props.setProperty("blade.is-local", String.valueOf(isLocalDev()));
-		props.setProperty("blade.dev-mode", profile.equals(AppConstant.PROD_CODE) ? "false" : "true");
+		props.setProperty("blade.dev-mode", Boolean.toString(!profile.equals(AppConstant.PROD_CODE)));
 		props.setProperty("blade.service.version", AppConstant.APPLICATION_VERSION);
 		props.setProperty("spring.main.allow-bean-definition-overriding", "true");
 		props.setProperty("spring.cloud.sentinel.transport.dashboard", SentinelConstant.SENTINEL_ADDR);
 		props.setProperty("spring.cloud.alibaba.seata.tx-service-group", appName.concat(NacosConstant.NACOS_GROUP_SUFFIX));
 		props.setProperty("spring.config.import", String.join(",", NacosConstant.dataId(), NacosConstant.dataId(profile), NacosConstant.dataId(appName, profile)));
 		props.setProperty("nacos.logging.default.config.enabled", "false");
+		props.setProperty("management.info.process.enabled", "true");
 		// 加载自定义组件
 		List<LauncherService> launcherList = new ArrayList<>();
 		ServiceLoader.load(LauncherService.class).forEach(launcherList::add);

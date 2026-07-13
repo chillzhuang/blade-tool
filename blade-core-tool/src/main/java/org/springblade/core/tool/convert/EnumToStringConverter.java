@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.tool.utils.ConvertUtil;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.ConditionalGenericConverter;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;

@@ -23,8 +23,8 @@ import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.api.ResultCode;
 import org.springblade.core.tool.utils.BeanUtil;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
-import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
-import org.springframework.lang.Nullable;
+import org.springframework.boot.webmvc.error.DefaultErrorAttributes;
+import org.jspecify.annotations.Nullable;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 

@@ -33,14 +33,14 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.boot.restclient.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.web.client.RestTemplate;
 
 import javax.net.ssl.SSLContext;
@@ -154,8 +154,7 @@ public class RestTemplateConfiguration {
 		@Bean
 		@ConditionalOnMissingBean
 		public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder, OkHttpClient okHttpClient) {
-			restTemplateBuilder.requestFactory(() -> new OkHttp3ClientHttpRequestFactory(okHttpClient));
-			RestTemplate restTemplate = restTemplateBuilder.build();
+			RestTemplate restTemplate = restTemplateBuilder.requestFactory(() -> new OkHttp3ClientHttpRequestFactory(okHttpClient)).build();
 			configMessageConverters(context, restTemplate.getMessageConverters());
 			return restTemplate;
 		}
@@ -178,14 +177,14 @@ public class RestTemplateConfiguration {
 		@LoadBalanced
 		@ConditionalOnMissingBean
 		public LbRestTemplate lbRestTemplate(RestTemplateBuilder restTemplateBuilder, OkHttpClient okHttpClient) {
-			restTemplateBuilder.requestFactory(() -> new OkHttp3ClientHttpRequestFactory(okHttpClient));
-			LbRestTemplate restTemplate = restTemplateBuilder.build(LbRestTemplate.class);
+			LbRestTemplate restTemplate = restTemplateBuilder.requestFactory(() -> new OkHttp3ClientHttpRequestFactory(okHttpClient)).build(LbRestTemplate.class);
 			restTemplate.getInterceptors().add(context.getBean(RestTemplateHeaderInterceptor.class));
 			configMessageConverters(context, restTemplate.getMessageConverters());
 			return restTemplate;
 		}
 	}
 
+	@SuppressWarnings("removal")
 	private static void configMessageConverters(ApplicationContext context, List<HttpMessageConverter<?>> converters) {
 		converters.removeIf(x -> x instanceof StringHttpMessageConverter || x instanceof MappingJackson2HttpMessageConverter);
 		converters.add(new StringHttpMessageConverter(Charsets.UTF_8));

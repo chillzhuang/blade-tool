@@ -15,9 +15,9 @@
  */
 package org.springblade.core.i18n.config;
 
-import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springblade.core.i18n.interceptor.I18nInterceptor;
 import org.springblade.core.i18n.props.I18nProperties;
 import org.springblade.core.i18n.resolver.I18nLocaleResolver;
@@ -118,7 +118,7 @@ public class I18nAutoConfiguration {
 	public WebMvcConfigurer i18nWebMvcConfigurer(I18nInterceptor i18nInterceptor) {
 		return new WebMvcConfigurer() {
 			@Override
-			public void addInterceptors(@Nonnull InterceptorRegistry registry) {
+			public void addInterceptors(@NonNull InterceptorRegistry registry) {
 				registry.addInterceptor(i18nInterceptor)
 					.addPathPatterns("/**")
 					.order(0);

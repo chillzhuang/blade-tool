@@ -17,7 +17,7 @@
 package org.springblade.core.tool.utils;
 
 import lombok.experimental.UtilityClass;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.util.PatternMatchUtils;

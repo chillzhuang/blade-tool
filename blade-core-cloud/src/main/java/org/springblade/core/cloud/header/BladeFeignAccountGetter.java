@@ -16,7 +16,7 @@
 package org.springblade.core.cloud.header;
 
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import jakarta.servlet.http.HttpServletRequest;
 

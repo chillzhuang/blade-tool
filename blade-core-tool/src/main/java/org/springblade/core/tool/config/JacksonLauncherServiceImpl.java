@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springblade.core.swagger;
+package org.springblade.core.tool.config;
 
 import net.dreamlu.mica.auto.annotation.AutoService;
-import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.launch.service.LauncherService;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.core.Ordered;
@@ -24,28 +23,25 @@ import org.springframework.core.Ordered;
 import java.util.Properties;
 
 /**
- * 初始化Swagger配置
+ * Jackson 启动服务
  *
  * @author Chill
  */
 @AutoService(LauncherService.class)
-public class SwaggerLauncherServiceImpl implements LauncherService {
+public class JacksonLauncherServiceImpl implements LauncherService {
+
 	@Override
 	public void launcher(SpringApplicationBuilder builder, String appName, String profile) {
 		Properties props = System.getProperties();
-		if (profile.equals(AppConstant.PROD_CODE)) {
-			props.setProperty("swagger.enabled", "false");
-			props.setProperty("springdoc.api-docs.enabled", "false");
-			props.setProperty("springdoc.swagger-ui.enabled", "false");
-		} else {
-			props.setProperty("swagger.enabled", "true");
-			props.setProperty("springdoc.api-docs.enabled", "true");
-			props.setProperty("springdoc.swagger-ui.enabled", "true");
-		}
+		// Spring Boot 4 默认 JSON 底座为 Jackson 3，命令式 HTTP 消息转换器与反应式编解码器需分别指定首选实现，
+		// 两处同时锁回 Jackson 2，确保 @BladeView 视图过滤、大数转字符串等既有序列化约定在 servlet 与 webflux 两侧表现一致
+		props.setProperty("spring.http.converters.preferred-json-mapper", "jackson2");
+		props.setProperty("spring.http.codecs.preferred-json-mapper", "jackson2");
 	}
 
 	@Override
 	public int getOrder() {
-		return Ordered.LOWEST_PRECEDENCE;
+		return Ordered.HIGHEST_PRECEDENCE;
 	}
+
 }

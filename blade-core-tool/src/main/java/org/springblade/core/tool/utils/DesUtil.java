@@ -15,7 +15,7 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;

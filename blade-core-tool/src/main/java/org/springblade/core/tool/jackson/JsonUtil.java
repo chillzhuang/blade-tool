@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.type.CollectionLikeType;
 import com.fasterxml.jackson.databind.type.MapType;
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.tool.utils.*;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -280,7 +280,7 @@ public class JsonUtil {
 	 * @return Bean
 	 */
 	@Nullable
-	public static <T> T readValue(@Nullable byte[] content, Class<T> valueType) {
+	public static <T> T readValue(byte @Nullable [] content, Class<T> valueType) {
 		if (ObjectUtil.isEmpty(content)) {
 			return null;
 		}
@@ -340,7 +340,7 @@ public class JsonUtil {
 	 * @return Bean
 	 */
 	@Nullable
-	public static <T> T readValue(@Nullable byte[] content, TypeReference<T> typeReference) {
+	public static <T> T readValue(byte @Nullable [] content, TypeReference<T> typeReference) {
 		if (ObjectUtil.isEmpty(content)) {
 			return null;
 		}
@@ -414,7 +414,7 @@ public class JsonUtil {
 	 * @return Bean
 	 */
 	@Nullable
-	public static <T> T readValue(@Nullable byte[] content, JavaType javaType) {
+	public static <T> T readValue(byte @Nullable [] content, JavaType javaType) {
 		if (content == null || content.length == 0) {
 			return null;
 		}
@@ -565,7 +565,7 @@ public class JsonUtil {
 	 * @param <T>          泛型
 	 * @return 集合
 	 */
-	public static <T> List<T> readList(@Nullable byte[] content, Class<T> elementClass) {
+	public static <T> List<T> readList(byte @Nullable [] content, Class<T> elementClass) {
 		if (content == null || content.length == 0) {
 			return Collections.emptyList();
 		}
@@ -639,7 +639,7 @@ public class JsonUtil {
 	 * @param content bytes
 	 * @return 集合
 	 */
-	public static Map<String, Object> readMap(@Nullable byte[] content) {
+	public static Map<String, Object> readMap(byte @Nullable [] content) {
 		return readMap(content, Object.class);
 	}
 
@@ -681,7 +681,7 @@ public class JsonUtil {
 	 * @param <V>        泛型
 	 * @return 集合
 	 */
-	public static <V> Map<String, V> readMap(@Nullable byte[] content, Class<?> valueClass) {
+	public static <V> Map<String, V> readMap(byte @Nullable [] content, Class<?> valueClass) {
 		return readMap(content, String.class, valueClass);
 	}
 
@@ -731,7 +731,7 @@ public class JsonUtil {
 	 * @param <V>        泛型
 	 * @return 集合
 	 */
-	public static <K, V> Map<K, V> readMap(@Nullable byte[] content, Class<?> keyClass, Class<?> valueClass) {
+	public static <K, V> Map<K, V> readMap(byte @Nullable [] content, Class<?> keyClass, Class<?> valueClass) {
 		if (content == null || content.length == 0) {
 			return Collections.emptyMap();
 		}

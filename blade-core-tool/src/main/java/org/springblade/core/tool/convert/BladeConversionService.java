@@ -2,7 +2,7 @@ package org.springblade.core.tool.convert;
 
 import org.springframework.boot.convert.ApplicationConversionService;
 import org.springframework.core.convert.support.GenericConversionService;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.StringValueResolver;
 
 /**

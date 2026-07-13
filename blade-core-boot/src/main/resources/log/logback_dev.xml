@@ -57,8 +57,8 @@
     <logger name="org.apache.ibatis.io" level="INFO"/>
     <logger name="org.apache.velocity" level="INFO"/>
     <logger name="org.eclipse.jetty" level="INFO"/>
-    <logger name="io.undertow" level="INFO"/>
-    <logger name="org.xnio.nio" level="INFO"/>
+    <logger name="org.apache.catalina" level="INFO"/>
+    <logger name="org.apache.coyote" level="INFO"/>
     <logger name="org.thymeleaf" level="INFO"/>
     <logger name="springfox.documentation" level="INFO"/>
     <logger name="org.hibernate.validator" level="INFO"/>

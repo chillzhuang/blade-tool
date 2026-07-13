@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/Release-V4.10.1-blue.svg" alt="Downloads">
-  <img src="https://img.shields.io/badge/JDK-17+-green.svg" alt="Build Status">
+  <img src="https://img.shields.io/badge/Release-V5.0.0-blue.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/JDK-21+-green.svg" alt="Build Status">
   <img src="https://img.shields.io/badge/license-LGPL%20v3-blue.svg" alt="Build Status">
-  <img src="https://img.shields.io/badge/Spring%20Cloud-2025-blue.svg" alt="Coverage Status">
-  <img src="https://img.shields.io/badge/Spring%20Boot-3.5-blue.svg" alt="Downloads">
+  <img src="https://img.shields.io/badge/Spring%20Cloud-2025.1-blue.svg" alt="Coverage Status">
+  <img src="https://img.shields.io/badge/Spring%20Boot-4.1-blue.svg" alt="Downloads">
   <br/>
   <a target="_blank" href="https://bladex.cn">
     <img src="https://img.shields.io/badge/Author-Small%20Chill-ff69b4.svg" alt="Downloads">
@@ -22,7 +22,7 @@
 * 极简封装了多租户底层，用更少的代码换来拓展性更强的SaaS多租户系统。
 * 借鉴OAuth2，自研多终端认证系统，可控制子系统的token权限互相隔离。
 * 借鉴Security，自研Secure模块，采用JWT做Token认证，可拓展集成Redis等细颗粒度控制方案。
-* 稳定生产了六年，经历了从 Camden -> Hoxton -> 2025 的技术架构，也经历了从fat jar -> docker -> k8s + jenkins的部署架构。
+* 稳定生产了九年，经历了从 Camden -> Hoxton -> 2025 的技术架构，也经历了从fat jar -> docker -> k8s + jenkins的部署架构。
 * 项目分包明确，规范微服务的开发模式，使包与包之间的分工清晰。
 
 ## 架构图
@@ -32,14 +32,14 @@
 
 | 技术栈                  | 版本         |
 |----------------------|------------|
-| Java                 | 17+        |
+| Java                 | 21+        |
 | NodeJS               | 18+        |
-| Spring               | 6.2.17     |
-| Spring Boot          | 3.5.13     |
-| Spring Cloud         | 2025.0.2   |
-| Spring Cloud Alibaba | 2025.0.0.0 |
-| Nacos Alibaba        | 3.1.2      |
-| Mybatis Plus         | 3.5.14     |
+| Spring               | 7.0.8      |
+| Spring Boot          | 4.1.0      |
+| Spring Cloud         | 2025.1.2   |
+| Spring Cloud Alibaba | 2025.1.0.0 |
+| Nacos Alibaba        | 3.2.2      |
+| Mybatis Plus         | 3.5.17     |
 
 
 ## 工程结构
@@ -122,7 +122,6 @@ blade-tool
 |---------------------------|--------------------------------------------------------------------------------------------------------------------------|
 | SpringBlade开发手册一览         | [https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册](https://gitee.com/smallc/SpringBlade/wikis/SpringBlade开发手册) |
 | SpringBlade常见问题集锦         | [https://sns.bladex.cn/article-14966.html](https://sns.bladex.cn/article-14966.html)                                     |
-| SpringBlade基于Kuboard部署K8S | [https://kuboard.cn/learning/k8s-practice/spring-blade/](https://kuboard.cn/learning/k8s-practice/spring-blade/)         |
 | SpringBlade基于Rainbond部署   | [https://www.rainbond.com/docs/micro-service/example/blade](https://www.rainbond.com/docs/micro-service/example/blade)   |
 
 

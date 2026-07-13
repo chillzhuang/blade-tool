@@ -23,7 +23,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springblade.core.tool.constant.BladeConstant;
 import org.springblade.core.tool.utils.ObjectUtil;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.io.Serial;
 import java.io.Serializable;

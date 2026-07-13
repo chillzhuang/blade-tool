@@ -19,7 +19,7 @@ package org.springblade.core.redis.cache;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.time.Duration;
 

@@ -17,7 +17,7 @@ package org.springblade.core.cloud.header;
 
 import org.springblade.core.cloud.props.BladeFeignHeadersProperties;
 import org.springframework.http.HttpHeaders;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.concurrent.Callable;
 

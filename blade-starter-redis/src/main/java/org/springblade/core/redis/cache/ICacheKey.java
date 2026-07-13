@@ -20,7 +20,7 @@ package org.springblade.core.redis.cache;
 import org.springblade.core.tool.utils.ObjectUtil;
 import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.StringUtil;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.time.Duration;
 

@@ -15,7 +15,7 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.nio.charset.Charset;
 
@@ -107,8 +107,7 @@ public class HexUtil {
 	 * @param data Hex data
 	 * @return decode hex to bytes
 	 */
-	@Nullable
-	public static byte[] decode(@Nullable String data) {
+	public static byte @Nullable [] decode(@Nullable String data) {
 		if (StringUtil.isBlank(data)) {
 			return null;
 		}

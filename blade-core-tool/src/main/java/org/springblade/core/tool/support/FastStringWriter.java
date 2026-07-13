@@ -1,7 +1,7 @@
 package org.springblade.core.tool.support;
 
 import org.springblade.core.tool.utils.StringPool;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.io.Writer;
 

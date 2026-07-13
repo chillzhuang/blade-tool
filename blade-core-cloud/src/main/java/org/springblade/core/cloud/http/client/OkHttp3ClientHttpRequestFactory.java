@@ -18,7 +18,7 @@ package org.springblade.core.cloud.http.client;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpRequest;
@@ -133,7 +133,7 @@ public class OkHttp3ClientHttpRequestFactory implements ClientHttpRequestFactory
 	}
 
 
-	@NotNull
+	@NonNull
 	@Override
 	public ClientHttpRequest createRequest(URI uri, HttpMethod httpMethod) {
 		return new OkHttp3ClientHttpRequest(this.client, uri, httpMethod);

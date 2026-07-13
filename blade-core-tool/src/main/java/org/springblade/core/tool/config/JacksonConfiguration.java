@@ -15,37 +15,60 @@
  */
 package org.springblade.core.tool.config;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springblade.core.tool.jackson.BladeJacksonProperties;
-import org.springblade.core.tool.jackson.JsonUtil;
+import org.springblade.core.tool.jackson.BladeJavaTimeModule;
+import org.springblade.core.tool.jackson.BladeViewAnnotationIntrospector;
+import org.springblade.core.tool.utils.DateUtil;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.jackson2.autoconfigure.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
+
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Jackson配置类
  *
  * @author Chill
  */
-@AutoConfiguration(before = JacksonAutoConfiguration.class)
+@AutoConfiguration
 @ConditionalOnClass(ObjectMapper.class)
 @EnableConfigurationProperties(BladeJacksonProperties.class)
+@SuppressWarnings({"deprecation", "removal"})
 public class JacksonConfiguration {
 
 	@Bean
-	@ConditionalOnMissingBean
-	public ObjectMapper objectMapper() {
-		//创建默认的ObjectMapper
-		ObjectMapper objectMapper = JsonUtil.getInstance();
-		//允许空字符串序列化为null对象
-		objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
-		//自定义拓展配置
-		objectMapper.findAndRegisterModules();
-		return objectMapper;
+	public Jackson2ObjectMapperBuilderCustomizer bladeJacksonCustomizer() {
+		return builder -> {
+			// 默认视图包含 / 兼容宽松的读取特性 / 允许空字符串反序列化为 null 对象
+			builder.featuresToEnable(
+				MapperFeature.DEFAULT_VIEW_INCLUSION,
+				JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS,
+				JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER,
+				JsonParser.Feature.ALLOW_SINGLE_QUOTES,
+				DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
+			// 日期不序列化为时间戳 / 空对象不报错 / 未知属性不报错
+			builder.featuresToDisable(
+				SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,
+				SerializationFeature.FAIL_ON_EMPTY_BEANS,
+				DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+			builder.locale(Locale.CHINA);
+			builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
+			builder.dateFormat(new SimpleDateFormat(DateUtil.PATTERN_DATETIME, Locale.CHINA));
+			builder.modulesToInstall(new BladeJavaTimeModule());
+			builder.findModulesViaServiceLoader(true);
+			// 视图注解内省器，让 Jackson 识别 @BladeView
+			builder.annotationIntrospector(introspector -> new BladeViewAnnotationIntrospector());
+		};
 	}
 
 }

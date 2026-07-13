@@ -15,7 +15,7 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
@@ -145,8 +145,7 @@ public class AesUtil {
 	 * @param aesTextKey 文本密钥
 	 * @return byte[]
 	 */
-	@Nullable
-	public static byte[] decryptFormHex(@Nullable String content, String aesTextKey) {
+	public static byte @Nullable [] decryptFormHex(@Nullable String content, String aesTextKey) {
 		if (StringUtil.isBlank(content)) {
 			return null;
 		}
@@ -187,8 +186,7 @@ public class AesUtil {
 	 * @param aesTextKey 文本密钥
 	 * @return byte[]
 	 */
-	@Nullable
-	public static byte[] decryptFormBase64(@Nullable String content, String aesTextKey) {
+	public static byte @Nullable [] decryptFormBase64(@Nullable String content, String aesTextKey) {
 		if (StringUtil.isBlank(content)) {
 			return null;
 		}

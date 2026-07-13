@@ -15,11 +15,11 @@
  */
 package org.springblade.core.i18n.resolver;
 
-import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springblade.core.i18n.props.I18nProperties;
 import org.springblade.core.i18n.utils.LocaleParseUtil;
 import org.springframework.web.servlet.LocaleResolver;
@@ -49,9 +49,9 @@ public class I18nLocaleResolver implements LocaleResolver {
 			.collect(Collectors.toSet());
 	}
 
-	@Nonnull
+	@NonNull
 	@Override
-	public Locale resolveLocale(@Nonnull HttpServletRequest request) {
+	public Locale resolveLocale(@NonNull HttpServletRequest request) {
 		return LocaleParseUtil.resolveFromRequest(
 			request,
 			properties.getHeaderName(),
@@ -62,7 +62,7 @@ public class I18nLocaleResolver implements LocaleResolver {
 	}
 
 	@Override
-	public void setLocale(@Nonnull HttpServletRequest request, HttpServletResponse response, Locale locale) {
+	public void setLocale(@NonNull HttpServletRequest request, HttpServletResponse response, Locale locale) {
 		if (response != null && locale != null) {
 			// 检查是否支持该locale
 			boolean isSupported = supportedLocales.isEmpty() ||

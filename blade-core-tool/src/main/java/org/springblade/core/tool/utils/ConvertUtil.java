@@ -4,7 +4,7 @@ import lombok.experimental.UtilityClass;
 import org.springblade.core.tool.convert.BladeConversionService;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.support.GenericConversionService;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * 基于 spring ConversionService 类型转换

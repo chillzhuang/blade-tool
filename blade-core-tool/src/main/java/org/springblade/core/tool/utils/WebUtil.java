@@ -18,7 +18,7 @@ package org.springblade.core.tool.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.tool.jackson.JsonUtil;
 import org.springframework.http.MediaType;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestAttributes;

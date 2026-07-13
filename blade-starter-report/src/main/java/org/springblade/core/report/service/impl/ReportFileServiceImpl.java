@@ -15,7 +15,7 @@
  */
 package org.springblade.core.report.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springblade.core.report.entity.ReportFileEntity;
 import org.springblade.core.report.mapper.ReportFileMapper;
 import org.springblade.core.report.service.IReportFileService;

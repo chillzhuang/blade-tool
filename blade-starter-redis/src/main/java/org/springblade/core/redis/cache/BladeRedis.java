@@ -22,7 +22,7 @@ import org.springblade.core.tool.utils.NumberUtil;
 import org.springframework.data.redis.connection.RedisKeyCommands;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.Assert;
 
 import java.time.Duration;

@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springblade.core.i18n.props.I18nProperties;
 import org.springblade.core.i18n.utils.LocaleParseUtil;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Locale;

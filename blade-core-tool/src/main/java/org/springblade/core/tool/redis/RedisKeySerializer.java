@@ -19,7 +19,7 @@ import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -58,8 +58,7 @@ public class RedisKeySerializer implements RedisSerializer<Object> {
 	}
 
 	@Override
-	@Nullable
-	public byte[] serialize(Object object) {
+	public byte @Nullable [] serialize(Object object) {
 		Objects.requireNonNull(object, "redis key is null");
 		String key;
 		if (object instanceof SimpleKey) {

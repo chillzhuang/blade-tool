@@ -15,7 +15,7 @@
  */
 package org.springblade.core.tool.utils;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
@@ -421,7 +421,7 @@ public class DigestUtil extends org.springframework.util.DigestUtils {
 		return slowEquals(a.getBytes(Charsets.UTF_8), b.getBytes(Charsets.UTF_8));
 	}
 
-	public static boolean slowEquals(@Nullable byte[] a, @Nullable byte[] b) {
+	public static boolean slowEquals(byte @Nullable [] a, byte @Nullable [] b) {
 		if (a == null || b == null) {
 			return false;
 		}

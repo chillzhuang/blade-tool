@@ -16,7 +16,7 @@
 package org.springblade.core.tool.utils;
 
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * 数字类型工具类

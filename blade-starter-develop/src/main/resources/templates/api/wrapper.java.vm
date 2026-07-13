@@ -13,33 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package $!{package.Service};
+#set($wrapperPackage=$package.Entity.replace("pojo.entity","wrapper"))
+package $!{wrapperPackage};
 
+import lombok.AllArgsConstructor;
+import org.springblade.core.mp.support.BaseEntityWrapper;
+import org.springblade.core.tool.utils.BeanUtil;
 import $!{package.Entity}.$!{entity};
 #set($voPackage=$package.Entity.replace("entity","vo"))
 import $!{voPackage}.$!{entity}VO;
-import $!{superServiceClassPackage};
-import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
- * $!{table.comment} 服务类
+ * $!{table.comment}包装类,返回视图层所需的字段
  *
  * @author $!{author}
  * @since $!{date}
  */
-#if($!{kotlin})
-interface $!{table.serviceName} : $!{superServiceClass}<$!{entity}>
-#else
-public interface $!{table.serviceName} extends $!{superServiceClass}<$!{entity}> {
+public class $!{entity}Wrapper extends BaseEntityWrapper<$!{entity}, $!{entity}VO>  {
 
-	/**
-	 * 自定义分页
-	 *
-	 * @param page
-	 * @param $!{table.entityPath}
-	 * @return
-	 */
-	IPage<$!{entity}VO> select$!{entity}Page(IPage<$!{entity}VO> page, $!{entity}VO $!{table.entityPath});
+	public static $!{entity}Wrapper build() {
+        return new $!{entity}Wrapper();
+    }
+
+	@Override
+	public $!{entity}VO entityVO($!{entity} $!{table.entityPath}) {
+		$!{entity}VO $!{table.entityPath}VO = BeanUtil.copyProperties($!{table.entityPath}, $!{entity}VO.class);
+
+		return $!{table.entityPath}VO;
+	}
 
 }
-#end

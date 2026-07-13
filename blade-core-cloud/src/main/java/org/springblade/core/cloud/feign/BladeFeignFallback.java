@@ -25,7 +25,7 @@ import org.springblade.core.tool.jackson.JsonUtil;
 import org.springblade.core.tool.utils.ObjectUtil;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.lang.reflect.Method;
 import java.util.Objects;

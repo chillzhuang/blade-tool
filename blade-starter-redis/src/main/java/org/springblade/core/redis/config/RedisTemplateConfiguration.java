@@ -22,7 +22,7 @@ import org.springblade.core.redis.serializer.RedisKeySerializer;
 import org.springblade.core.tool.config.RedisConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.boot.data.redis.autoconfigure.DataRedisAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -37,7 +37,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
  * @author L.cm
  */
 @EnableCaching
-@AutoConfiguration(before = {RedisConfiguration.class, RedisAutoConfiguration.class})
+@AutoConfiguration(before = {RedisConfiguration.class, DataRedisAutoConfiguration.class})
 public class RedisTemplateConfiguration {
 
 	/**

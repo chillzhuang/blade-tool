@@ -13,7 +13,7 @@ import org.springblade.core.tool.utils.ClassUtil;
 import org.springblade.core.tool.utils.DesUtil;
 import org.springblade.core.tool.utils.StringUtil;
 import org.springframework.core.MethodParameter;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 /**
  * <p>辅助检测工具类</p>

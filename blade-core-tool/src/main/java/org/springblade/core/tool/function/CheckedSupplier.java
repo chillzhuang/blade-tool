@@ -16,7 +16,7 @@
 
 package org.springblade.core.tool.function;
 
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.io.Serializable;
 

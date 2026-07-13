@@ -22,7 +22,7 @@ import org.springblade.core.tool.jackson.JsonUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
 
@@ -268,7 +268,7 @@ public class Func {
 	 * @param array the array to check
 	 * @return 数组是否为空
 	 */
-	public static boolean isEmpty(@Nullable Object[] array) {
+	public static boolean isEmpty(Object @Nullable [] array) {
 		return ObjectUtil.isEmpty(array);
 	}
 
@@ -278,7 +278,7 @@ public class Func {
 	 * @param array 数组
 	 * @return 数组是否不为空
 	 */
-	public static boolean isNotEmpty(@Nullable Object[] array) {
+	public static boolean isNotEmpty(Object @Nullable [] array) {
 		return ObjectUtil.isNotEmpty(array);
 	}
 
@@ -348,7 +348,7 @@ public class Func {
 	 * @param <T>     The generic tag
 	 * @return {@code true} if found, {@code false} else
 	 */
-	public static <T> boolean contains(@Nullable T[] array, final T element) {
+	public static <T> boolean contains(T @Nullable [] array, final T element) {
 		return CollectionUtil.contains(array, element);
 	}
 

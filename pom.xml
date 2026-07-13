@@ -36,41 +36,37 @@
 
     <properties>
         <!-- Blade-Tool Version -->
-        <revision>4.10.1</revision>
+        <revision>5.0.0</revision>
         <module.name>org.springblade.blade.tool</module.name>
         <!-- jdk Version -->
-        <java.version>17</java.version>
-        <maven.plugin.version>3.14.1</maven.plugin.version>
-        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+        <java.version>21</java.version>
+        <maven.plugin.version>3.15.0</maven.plugin.version>
+        <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
         <maven.flatten.version>1.7.3</maven.flatten.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <commons-lang3.version>3.20.0</commons-lang3.version>
-
-        <knife4j.version>4.5.0</knife4j.version>
         <aliyun.sms.version>4.7.6</aliyun.sms.version>
         <tencent.sms.version>3.1.1357</tencent.sms.version>
 
         <mybatis.version>3.5.19</mybatis.version>
-        <mybatis.spring.version>3.0.5</mybatis.spring.version>
-        <mybatis.plus.version>3.5.14</mybatis.plus.version>
+        <mybatis.spring.version>4.0.0</mybatis.spring.version>
+        <mybatis.plus.version>3.5.17</mybatis.plus.version>
 
         <okhttp.version>4.12.0</okhttp.version>
         <protostuff.version>1.8.0</protostuff.version>
-        <disruptor.version>3.4.2</disruptor.version>
-        <guava.version>33.5.0-jre</guava.version>
-        <mica.auto.version>3.1.6</mica.auto.version>
-        <lombok.version>1.18.42</lombok.version>
+        <guava.version>33.6.0-jre</guava.version>
+        <mica.auto.version>4.0.1</mica.auto.version>
         <druid.version>1.2.28</druid.version>
+        <spring.retry.version>2.0.13</spring.retry.version>
+        <httpclient.version>4.5.14</httpclient.version>
 
-        <spring.version>6.2.17</spring.version>
-        <spring.boot.version>3.5.13</spring.boot.version>
-        <spring.boot.admin.version>3.5.8</spring.boot.admin.version>
-        <spring.cloud.version>2025.0.2</spring.cloud.version>
+        <spring.boot.version>4.1.0</spring.boot.version>
+        <spring.boot.admin.version>4.1.1</spring.boot.admin.version>
+        <spring.cloud.version>2025.1.2</spring.cloud.version>
 
-        <alibaba.cloud.version>2025.0.0.0</alibaba.cloud.version>
-        <alibaba.nacos.version>3.1.2</alibaba.nacos.version>
+        <alibaba.cloud.version>2025.1.0.0</alibaba.cloud.version>
+        <alibaba.nacos.version>3.2.2</alibaba.nacos.version>
         <fastexcel.version>1.3.0</fastexcel.version>
         <poi.version>5.4.1</poi.version>
         <poi.ooxl.version>1.4</poi.ooxl.version>
@@ -105,13 +101,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-framework-bom</artifactId>
-                <version>${spring.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.version}</version>
@@ -129,13 +118,6 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${alibaba.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-dependencies</artifactId>
-                <version>${knife4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -267,12 +249,6 @@
                 <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${spring.boot.admin.version}</version>
             </dependency>
-            <!-- common -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
-            </dependency>
             <!-- http -->
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
@@ -312,7 +288,7 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <artifactId>mybatis-plus-spring-boot4-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
             <dependency>
@@ -363,6 +339,12 @@
                 <artifactId>JustAuth</artifactId>
                 <version>1.16.7</version>
             </dependency>
+            <!-- httpclient -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
+            </dependency>
             <!-- Guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -375,12 +357,6 @@
                 <artifactId>ehcache</artifactId>
                 <version>2.10.9.2</version>
             </dependency>
-            <!-- validator -->
-            <dependency>
-                <artifactId>hibernate-validator</artifactId>
-                <groupId>org.hibernate.validator</groupId>
-                <version>9.0.1.Final</version>
-            </dependency>
             <!-- Druid -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -389,7 +365,7 @@
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-3-starter</artifactId>
+                <artifactId>druid-spring-boot-4-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
             <!-- MySQL -->
@@ -402,17 +378,17 @@
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
                 <artifactId>swagger-annotations-jakarta</artifactId>
-                <version>2.2.40</version>
+                <version>2.2.52</version>
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-                <version>2.8.13</version>
+                <version>3.0.3</version>
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>2.8.13</version>
+                <version>3.0.3</version>
             </dependency>
             <!-- protostuff -->
             <dependency>
@@ -437,27 +413,6 @@
                 <groupId>jakarta.servlet</groupId>
                 <artifactId>jakarta.servlet-api</artifactId>
                 <version>6.1.0</version>
-            </dependency>
-            <!-- javax -->
-            <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>2.3.1</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sun.xml.bind</groupId>
-                <artifactId>jaxb-core</artifactId>
-                <version>4.0.6</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sun.xml.bind</groupId>
-                <artifactId>jaxb-impl</artifactId>
-                <version>4.0.6</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.activation</groupId>
-                <artifactId>activation</artifactId>
-                <version>1.1.1</version>
             </dependency>
             <!-- captcha -->
             <dependency>
@@ -514,11 +469,11 @@
                 <artifactId>tencentcloud-sdk-java-sms</artifactId>
                 <version>${tencent.sms.version}</version>
             </dependency>
-            <!-- lombok -->
+            <!-- spring-retry -->
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
+                <groupId>org.springframework.retry</groupId>
+                <artifactId>spring-retry</artifactId>
+                <version>${spring.retry.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -526,7 +481,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <artifactId>spring-boot-starter-aspectj</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -724,6 +679,7 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>3.12.0</version>
                         <configuration>
+                            <legacyMode>true</legacyMode>
                             <doclint>none</doclint>
                             <failOnError>false</failOnError>
                             <failOnWarnings>false</failOnWarnings>

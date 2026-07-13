@@ -25,7 +25,7 @@ import org.springblade.core.launch.constant.SentinelConstant;
 import org.springblade.core.launch.service.LauncherService;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;

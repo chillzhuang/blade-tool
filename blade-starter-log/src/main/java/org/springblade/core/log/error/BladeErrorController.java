@@ -17,9 +17,9 @@ package org.springblade.core.log.error;
 
 import org.springblade.core.tool.jackson.JsonUtil;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
-import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
+import org.springframework.boot.webmvc.autoconfigure.error.BasicErrorController;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
-import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.boot.webmvc.error.ErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,6 +41,7 @@ public class BladeErrorController extends BasicErrorController {
 	}
 
 	@Override
+	@SuppressWarnings("removal")
 	public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
 		boolean includeStackTrace = isIncludeStackTrace(request, MediaType.ALL);
 		Map<String, Object> body = getErrorAttributes(request, (includeStackTrace) ? ErrorAttributeOptions.of(ErrorAttributeOptions.Include.STACK_TRACE) : ErrorAttributeOptions.defaults());

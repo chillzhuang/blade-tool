@@ -17,7 +17,7 @@ package org.springblade.core.mp.base;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;

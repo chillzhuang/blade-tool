@@ -15,7 +15,7 @@
  */
 package org.springblade.core.tenant;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tenant.exception.TenantException;
 import org.springblade.core.tool.utils.CollectionUtil;

@@ -23,8 +23,8 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -40,6 +40,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @AutoIgnore
 @ControllerAdvice
 @RequiredArgsConstructor
+@SuppressWarnings("removal")
 public class BladeViewResponseAdvice implements ResponseBodyAdvice<Object> {
 
 	private final BladeViewResolver viewResolver;
