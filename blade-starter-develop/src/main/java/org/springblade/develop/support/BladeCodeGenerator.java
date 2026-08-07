@@ -15,11 +15,13 @@
  */
 package org.springblade.develop.support;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
+import com.baomidou.mybatisplus.generator.config.builder.Entity;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -148,25 +150,33 @@ public class BladeCodeGenerator {
 			customFile.put("wrapper.java", "/templates/api/wrapper.java.vm");
 		}
 		if (Func.isNotBlank(packageWebDir)) {
-			customFile.put("api.js", "/templates/saber/api.js.vm");
+			customFile.put("api.ts", "/templates/saber/api.ts.vm");
 			customFile.put("crud.vue", "/templates/saber/crud.vue.vm");
 		}
+
+		// 无基础业务字段时实体不再继承 BaseEntity，服务层须同步降级为 MyBatis-Plus 原生接口（3.5.17 起位于 spring 包）
+		String superServiceClass = hasSuperEntity ? "org.springblade.core.mp.base.BaseService" : "com.baomidou.mybatisplus.spring.service.IService";
+		String superServiceImplClass = hasSuperEntity ? "org.springblade.core.mp.base.BaseServiceImpl" : "com.baomidou.mybatisplus.spring.service.impl.ServiceImpl";
 
 		FastAutoGenerator.create(url, username, password)
 			.globalConfig(builder -> builder.author(props.getProperty("author")).dateType(DateType.TIME_PACK).enableSwagger().outputDir(getOutputDir()).disableOpenDir())
 			.packageConfig(builder -> builder.parent(packageName).controller("controller").entity("pojo.entity").service("service").serviceImpl("service.impl").mapper("mapper").xml("mapper"))
-			.strategyConfig(builder -> builder.addTablePrefix(tablePrefix).addInclude(includeTables).addExclude(excludeTables)
-				.entityBuilder().naming(NamingStrategy.underline_to_camel).columnNaming(NamingStrategy.underline_to_camel).enableLombok().superClass("org.springblade.core.mp.base.BaseEntity").addSuperEntityColumns(superEntityColumns).enableFileOverride()
-				.javaTemplate("/templates/api/entity.java.vm")
-				.serviceBuilder().superServiceClass("org.springblade.core.mp.base.BaseService").superServiceImplClass("org.springblade.core.mp.base.BaseServiceImpl").formatServiceFileName("I%sService").formatServiceImplFileName("%sServiceImpl").enableFileOverride()
-				.serviceTemplate("/templates/api/service.java.vm")
-				.serviceImplTemplate("/templates/api/serviceImpl.java.vm")
-				.mapperBuilder().mapperAnnotation(Mapper.class).enableBaseResultMap().enableBaseColumnList().formatMapperFileName("%sMapper").formatXmlFileName("%sMapper").enableFileOverride()
-				.mapperTemplate("/templates/api/mapper.java.vm")
-				.mapperXmlTemplate("/templates/api/mapper.xml.vm")
-				.controllerBuilder().superClass("org.springblade.core.boot.ctrl.BladeController").formatFileName("%sController").enableRestStyle().enableHyphenStyle().enableFileOverride()
-				.template("/templates/api/controller.java.vm")
-			)
+			.strategyConfig(builder -> {
+				Entity.Builder entityBuilder = builder.addTablePrefix(tablePrefix).addInclude(includeTables).addExclude(excludeTables)
+					.entityBuilder().naming(NamingStrategy.underline_to_camel).columnNaming(NamingStrategy.underline_to_camel).enableLombok().idType(IdType.ASSIGN_ID).enableFileOverride()
+					.javaTemplate("/templates/api/entity.java.vm");
+				if (hasSuperEntity) {
+					entityBuilder.superClass("org.springblade.core.mp.base.BaseEntity").addSuperEntityColumns(superEntityColumns);
+				}
+				entityBuilder.serviceBuilder().superServiceClass(superServiceClass).superServiceImplClass(superServiceImplClass).formatServiceFileName("I%sService").formatServiceImplFileName("%sServiceImpl").enableFileOverride()
+					.serviceTemplate("/templates/api/service.java.vm")
+					.serviceImplTemplate("/templates/api/serviceImpl.java.vm")
+					.mapperBuilder().mapperAnnotation(Mapper.class).enableBaseResultMap().enableBaseColumnList().formatMapperFileName("%sMapper").formatXmlFileName("%sMapper").enableFileOverride()
+					.mapperTemplate("/templates/api/mapper.java.vm")
+					.mapperXmlTemplate("/templates/api/mapper.xml.vm")
+					.controllerBuilder().superClass("org.springblade.core.boot.ctrl.BladeController").formatFileName("%sController").enableRestStyle().enableHyphenStyle().enableFileOverride()
+					.template("/templates/api/controller.java.vm");
+			})
 			.injectionConfig(builder -> builder.beforeOutputFile(
 					(tableInfo, objectMap) -> System.out.println("tableInfo: " + tableInfo.getEntityName() + " objectMap: " + objectMap.size())
 				).customMap(customMap).customFile(customFile)
@@ -202,8 +212,8 @@ public class BladeCodeGenerator {
 							outputPath = getOutputDir() + StringPool.SLASH + packageName.replace(StringPool.DOT, StringPool.SLASH) + StringPool.SLASH + "wrapper" + StringPool.SLASH + entityName + "Wrapper" + StringPool.DOT_JAVA;
 						}
 
-						if (StringUtil.equals(key, "api.js")) {
-							outputPath = getOutputWebDir() + StringPool.SLASH + "api" + StringPool.SLASH + servicePackage.toLowerCase() + StringPool.SLASH + entityNameLower + ".js";
+						if (StringUtil.equals(key, "api.ts")) {
+							outputPath = getOutputWebDir() + StringPool.SLASH + "api" + StringPool.SLASH + servicePackage.toLowerCase() + StringPool.SLASH + entityNameLower + ".ts";
 						}
 
 						if (StringUtil.equals(key, "crud.vue")) {

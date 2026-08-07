@@ -652,7 +652,7 @@ import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 
 **⑥ 安全放行(springdoc 路径)**:springdoc UI 与规格端点需匿名可达。框架默认放行清单 `blade-core-secure` 的 `SecureRegistry.defaultExcludePatterns` 已含 `/v3/api-docs/**`、`/swagger-ui/**`、`/swagger-ui.html`(`/swagger-ui/**` 为 UI 静态资源,`/swagger-ui.html` 为跳转入口),下游 servlet 应用继承即可。若应用另有自建放行清单(Boot 单体的 `BladeConfiguration`、Cloud 网关的 `AuthProvider`),须同步补齐这三项,并去掉 `/doc.html`、`/swagger-resources/**` 等 knife4j / springfox 旧路径。
 
-**⑦ 代码生成器模板**:`blade-starter-develop/src/main/resources/templates/controller.java.vm` 里的 `@ApiOperationSupport` import 与注解一并删除——它是 `.vm` 资源,下游按 `*.java` 批量清理的脚本覆盖不到,须单独处理,否则该生成器产出的 Controller 引用已移除的 knife4j 包、编译不过(排序改用 §9⑧ 的 `@ApiOrder`)。删干净后**还须在模板 `@Tag` 上方补一行无参 `@ApiOrder` + 其 import**(`org.springblade.core.swagger.annotation.ApiOrder`),让生成的 Controller 与手写控制器一致带排序(见下「落地约定」);下游 Boot(`src/{main,test}/resources/templates/`)、Cloud(`blade-ops/blade-develop/src/{main,test}/resources/templates/`)的同名模板副本一并补。
+**⑦ 代码生成器模板**:`blade-starter-develop/src/main/resources/templates/controller.java.vm` 里的 `@ApiOperationSupport` import 与注解一并删除——它是 `.vm` 资源,下游按 `*.java` 批量清理的脚本覆盖不到,须单独处理,否则该生成器产出的 Controller 引用已移除的 knife4j 包、编译不过(排序改用 §9⑧ 的 `@ApiOrder`)。删干净后**还须在模板 `@Tag` 上方补一行无参 `@ApiOrder` + 其 import**(`org.springblade.core.swagger.annotation.ApiOrder`),让生成的 Controller 与手写控制器一致带排序(见下「落地约定」);下游 Boot(`src/main/resources/templates/`)、Cloud(`blade-ops/blade-develop/src/main/resources/templates/`)的同名模板副本一并补。`src/test/resources/templates/` 下的旧扁平路径 `.vm` 副本自模板重组为 `api/` 子目录后不再被加载,应直接删除,test 侧仅保留 `code.properties` 作为数据源配置覆盖点。
 
 **⑧ 接口排序:`@ApiOrder`(替代 knife4j 的 `@ApiOperationSupport(order = n)`)**
 
@@ -664,7 +664,7 @@ springdoc / OpenAPI 3 无接口排序原生注解,blade-starter-swagger 新增 `
 
 实现在 `SwaggerAutoConfiguration`:`GlobalOperationCustomizer` 读注解写入 `x-order` 扩展(类级用字节码行号取声明序,反射不保证方法顺序)并记录「tag → 类级序号」;`GlobalOpenApiCustomizer` 按 `x-order` 重排 `paths`、按类级序号重排顶层 `tags`。swagger-ui 仅在两个 sorter 未设时保留 spec 顺序(§9⑤),并须保持 `springdoc.writer-with-order-by-keys` 默认 `false`。
 
-**落地约定(本次统一)**:三工程**每个带 `@Tag` 的控制器**均在 `@Tag` 上方补一行**无参 `@ApiOrder`**(值取默认 `Integer.MAX_VALUE`),方法体只保留 `@Operation`——效果是分组内接口按**源码声明顺序**展示、各 `@Tag` 分组之间因类级序号相等而回落 tag 名字母序;仅当个别接口要打破源码顺序时,才在该方法上补 `@ApiOrder(n)` 精确覆盖。删 knife4j 排序注解(§3.1 / §4.2)后**只删不补**会让接口在 springdoc UI 下按字母序、丢失原有顺序,故「删旧 + 补 `@ApiOrder`」是同一件事的两半。代码生成器模板 `controller.java.vm`(blade-tool `blade-starter-develop` 源模板 + 下游 Boot/Cloud `blade-develop` 的 main/test 副本,共 5 份)同步在 `@Tag` 上方生成 `@ApiOrder`,新生成的 Controller 开箱即带排序。
+**落地约定(本次统一)**:三工程**每个带 `@Tag` 的控制器**均在 `@Tag` 上方补一行**无参 `@ApiOrder`**(值取默认 `Integer.MAX_VALUE`),方法体只保留 `@Operation`——效果是分组内接口按**源码声明顺序**展示、各 `@Tag` 分组之间因类级序号相等而回落 tag 名字母序;仅当个别接口要打破源码顺序时,才在该方法上补 `@ApiOrder(n)` 精确覆盖。删 knife4j 排序注解(§3.1 / §4.2)后**只删不补**会让接口在 springdoc UI 下按字母序、丢失原有顺序,故「删旧 + 补 `@ApiOrder`」是同一件事的两半。代码生成器模板 `controller.java.vm`(blade-tool `blade-starter-develop` 源模板 + 下游 Boot/Cloud `blade-develop` 的 main 副本,共 3 份)同步在 `@Tag` 上方生成 `@ApiOrder`,新生成的 Controller 开箱即带排序。
 
 > 提示:类级 `@ApiOrder(n)` 的 `value` 用作 `@Tag` 分组之间的排序序号(`SwaggerAutoConfiguration#recordTagOrder` 写入、`GlobalOpenApiCustomizer` 据此重排顶层 `tags`);分组内各接口不受此值影响,按源码声明顺序排列。本次全量采用**无参**形式,`value` 恒为默认值、各分组落 tag 名字母序;如需固定分组顺序,给对应控制器标 `@ApiOrder(n)` 即可。
 
