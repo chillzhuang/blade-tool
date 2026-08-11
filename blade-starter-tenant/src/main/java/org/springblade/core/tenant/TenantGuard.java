@@ -20,6 +20,7 @@ import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tenant.exception.TenantException;
 import org.springblade.core.tool.utils.CollectionUtil;
 import org.springblade.core.tool.utils.ReflectUtil;
+import org.springblade.core.tool.utils.StringUtil;
 
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -100,7 +101,8 @@ public class TenantGuard {
 	/**
 	 * 提交时（新增 / 修改）的租户绑定守卫
 	 * <p>
-	 * 新增（id 为空）：超管放行，非超管强制写入当前会话 tenantId，避免前端注入。<br/>
+	 * 新增（id 为空）：非超管强制写入当前会话 tenantId 避免前端注入；超管保留指定归属租户的能力，
+	 * 入参未指定时兜底为会话 tenantId。<br/>
 	 * 修改（id 不空）：调用 {@link #verify} 校验归属，并把已存在实体的 tenantId 回写到入参，防止 update 篡改。
 	 *
 	 * @param service    MyBatis-Plus IService 实例
@@ -112,18 +114,31 @@ public class TenantGuard {
 	public static <T> void bindTenant(IService<T> service, T entity, EntityType entityType) {
 		Long id = idOf(entity);
 		if (id == null) {
-			if (!SecureUtil.isAdministrator()) {
-				bindTenantId(entity, SecureUtil.getTenantId());
-			}
+			bindTenantOnCreate(entity);
 			return;
 		}
 		T existEntity = verify(service, id, entityType);
 		if (existEntity == null) {
+			// 超管提交了库中不存在的 id，saveOrUpdate 将退化为新增，按新增路径绑定归属
+			bindTenantOnCreate(entity);
 			return;
 		}
 		// 非超管路径下 verify 已确保 existEntity.tenantId 等于会话 tenantId，直接复用避免重复反射
 		String tenantId = SecureUtil.isAdministrator() ? tenantIdOf(existEntity) : SecureUtil.getTenantId();
 		bindTenantId(entity, tenantId);
+	}
+
+	/**
+	 * 新增路径的租户归属绑定
+	 * <p>
+	 * 非超管一律以会话 tenantId 覆盖入参，杜绝伪造归属；超管保留跨租户建数据的能力，仅在入参未携带
+	 * tenantId 时兜底为会话 tenantId —— 业务表单未必向超管暴露租户选择项，不兜底则记录会以空归属落库，
+	 * 脱离所有租户的数据范围且无法被租户条件检索。
+	 */
+	private static void bindTenantOnCreate(Object entity) {
+		if (!SecureUtil.isAdministrator() || StringUtil.isBlank(tenantIdOf(entity))) {
+			bindTenantId(entity, SecureUtil.getTenantId());
+		}
 	}
 
 	/**
@@ -143,12 +158,14 @@ public class TenantGuard {
 		if (CollectionUtil.isEmpty(ids)) {
 			return Collections.emptyList();
 		}
-		List<T> list = service.listByIds(ids);
+		// 去重入参主键，避免重复 id 导致查询行数不等于入参数量而误判为越权
+		List<Long> distinctIds = ids.stream().distinct().toList();
+		List<T> list = service.listByIds(distinctIds);
 		if (SecureUtil.isAdministrator()) {
 			return list;
 		}
 		String currentTenantId = SecureUtil.getTenantId();
-		if (list.size() != ids.size() || list.stream().anyMatch(entity -> !currentTenantId.equals(tenantIdOf(entity)))) {
+		if (list.size() != distinctIds.size() || list.stream().anyMatch(entity -> !currentTenantId.equals(tenantIdOf(entity)))) {
 			throw new TenantException("无权操作非本租户的" + entityType.label());
 		}
 		return list;
