@@ -41,6 +41,16 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
+        <!--
+            Jackson 3 库本体。Spring Cloud 与 Sentinel 的多个组件已按「Jackson 3 在场」编写条件装配，
+            缺席时的表现从静默不注册（Sentinel 规则数据源转换器）到容器启动失败（Feign 分页模型扩展、
+            Sentinel 熔断规则刷新监听器）不等，且都不属于本工程可修的范围。此处只引入库，
+            不引入 spring-boot-jackson 自动配置模块，序列化管线仍由 Jackson 2 承载，机制见父 POM 的门禁注释。
+        -->
+        <dependency>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
         <!-- Admin -->
         <dependency>
             <groupId>de.codecentric</groupId>

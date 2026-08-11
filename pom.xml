@@ -36,7 +36,7 @@
 
     <properties>
         <!-- Blade-Tool Version -->
-        <revision>5.0.0</revision>
+        <revision>5.0.1</revision>
         <module.name>org.springblade.blade.tool</module.name>
         <!-- jdk Version -->
         <java.version>21</java.version>
@@ -60,6 +60,7 @@
         <druid.version>1.2.28</druid.version>
         <spring.retry.version>2.0.13</spring.retry.version>
         <httpclient.version>4.5.14</httpclient.version>
+        <maven.enforcer.version>3.6.3</maven.enforcer.version>
 
         <spring.boot.version>4.1.0</spring.boot.version>
         <spring.boot.admin.version>4.1.1</spring.boot.admin.version>
@@ -126,6 +127,23 @@
                 <artifactId>mica-auto</artifactId>
                 <version>${mica.auto.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <!--
+                业务序列化由 Jackson 2 承载，中间件按各自条件使用 Jackson 3。
+                消息转换器改用哪一代，取决于容器中是否存在 JsonMapper Bean，该 Bean 只由
+                spring-boot-jackson 产出，故此处只剥离该模块，Jackson 3 的库照常引入。
+                webmvc、restclient 等多个 starter 均经 spring-boot-starter-jackson 传递，在此一并收口。
+            -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jackson</artifactId>
+                <version>${spring.boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-jackson</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- blade tool -->
             <dependency>
@@ -380,15 +398,28 @@
                 <artifactId>swagger-annotations-jakarta</artifactId>
                 <version>2.2.52</version>
             </dependency>
+            <!-- springdoc 直连 spring-boot-jackson，不受上方 starter 条目的排除约束，须单独剥离 -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
                 <version>3.0.3</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-jackson</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>3.0.3</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-jackson</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <!-- protostuff -->
             <dependency>
@@ -419,6 +450,12 @@
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>
                 <version>1.6.2</version>
+            </dependency>
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>2.0.64</version>
             </dependency>
             <!-- fastexcel -->
             <dependency>
@@ -532,6 +569,42 @@
             </resource>
         </resources>
         <plugins>
+            <!--
+                序列化管线门禁：把托管层排除的漏排转为构建期失败。
+                封禁对象仅为 Jackson 3 的自动配置模块，其库不在范围内；
+                spring-boot-jackson2 为精确坐标匹配，同样不受影响。
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.version}</version>
+                <executions>
+                    <execution>
+                        <id>ban-jackson3-autoconfigure</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <bannedDependencies>
+                                    <excludes>
+                                        <exclude>org.springframework.boot:spring-boot-jackson</exclude>
+                                        <exclude>org.springframework.boot:spring-boot-jackson-test</exclude>
+                                    </excludes>
+                                    <message>
+                                        检测到 spring-boot-jackson 进入依赖树。该模块会注册 JsonMapper Bean，
+                                        使 Boot 4 改用 Jackson 3 的消息转换器，
+                                        @BladeView 视图过滤、大数转字符串、日期格式等序列化约定将静默失效。
+                                        请执行 mvn dependency:tree -Dincludes='org.springframework.boot:spring-boot-jackson'
+                                        定位引入路径，并在父 POM dependencyManagement 对应条目补充排除。
+                                        注意：tools.jackson 系构件本身不在封禁范围，可以正常引入。
+                                    </message>
+                                </bannedDependencies>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
