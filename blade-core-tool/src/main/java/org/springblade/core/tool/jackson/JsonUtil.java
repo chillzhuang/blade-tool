@@ -979,12 +979,12 @@ public class JsonUtil {
 			super.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
 			//序列化时，日期的统一格式
 			super.setDateFormat(new SimpleDateFormat(DateUtil.PATTERN_DATETIME, Locale.CHINA));
-			//日期格式化
-			super.registerModule(new BladeJavaTimeModule());
 			//视图注解内省器，让 Jackson 识别 @BladeView
 			super.setAnnotationIntrospector(new BladeViewAnnotationIntrospector());
 			//注册模块
 			super.findAndRegisterModules();
+			//日期格式化，须后于官方模块注册以覆盖其格式
+			super.registerModule(new BladeJavaTimeModule());
 		}
 
 		@Override

@@ -16,6 +16,7 @@
 package org.springblade.core.tool.jackson;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.PackageVersion;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -32,12 +33,18 @@ import java.time.LocalTime;
 /**
  * java 8 时间默认序列化
  *
+ * <p>
+ * 仅覆盖 LocalDateTime、LocalDate、LocalTime 的格式，其余类型由官方 {@link JavaTimeModule} 处理。
+ * 模块名须显式声明：SimpleModule 以 Version 的 artifactId 为模块标识，沿用 jsr310 的 PackageVersion
+ * 会与官方模块同名，被去重逻辑判为重复注册而互相顶替。
+ * </p>
+ *
  * @author L.cm
  */
 public class BladeJavaTimeModule extends SimpleModule {
 
 	public BladeJavaTimeModule() {
-		super(PackageVersion.VERSION);
+		super("BladeJavaTimeModule", PackageVersion.VERSION);
 		this.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeUtil.DATETIME_FORMAT));
 		this.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeUtil.DATE_FORMAT));
 		this.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeUtil.TIME_FORMAT));
