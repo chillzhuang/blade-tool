@@ -17,15 +17,25 @@ package org.springblade.core.launch;
 
 import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.launch.constant.NacosConstant;
-import org.springblade.core.launch.constant.SentinelConstant;
 import org.springblade.core.launch.service.LauncherService;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.*;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.env.SimpleCommandLinePropertySource;
+import org.springframework.core.env.StandardEnvironment;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Properties;
+import java.util.ServiceLoader;
 import java.util.function.Function;
 
 /**
@@ -101,7 +111,6 @@ public class BladeApplication {
 		props.setProperty("blade.dev-mode", Boolean.toString(!profile.equals(AppConstant.PROD_CODE)));
 		props.setProperty("blade.service.version", AppConstant.APPLICATION_VERSION);
 		props.setProperty("spring.main.allow-bean-definition-overriding", "true");
-		props.setProperty("spring.cloud.sentinel.transport.dashboard", SentinelConstant.SENTINEL_ADDR);
 		props.setProperty("spring.cloud.alibaba.seata.tx-service-group", appName.concat(NacosConstant.NACOS_GROUP_SUFFIX));
 		props.setProperty("spring.config.import", String.join(",", NacosConstant.dataId(), NacosConstant.dataId(profile), NacosConstant.dataId(appName, profile)));
 		props.setProperty("nacos.logging.default.config.enabled", "false");
