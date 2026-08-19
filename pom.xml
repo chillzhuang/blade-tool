@@ -69,7 +69,7 @@
         <alibaba.cloud.version>2025.1.0.0</alibaba.cloud.version>
         <alibaba.nacos.version>3.2.2</alibaba.nacos.version>
         <fastexcel.version>1.3.0</fastexcel.version>
-        <poi.version>5.4.1</poi.version>
+        <poi.version>5.5.0</poi.version>
         <poi.ooxl.version>1.4</poi.ooxl.version>
     </properties>
 
