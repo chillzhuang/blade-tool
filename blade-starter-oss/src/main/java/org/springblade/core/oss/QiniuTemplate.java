@@ -15,8 +15,6 @@
  */
 package org.springblade.core.oss;
 
-import com.qiniu.common.Zone;
-import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.FileInfo;
@@ -44,6 +42,12 @@ import java.util.List;
  */
 @AllArgsConstructor
 public class QiniuTemplate implements OssTemplate {
+	/**
+	 * 建桶的区域编码，对应华东机房
+	 * 建桶时空间尚不存在，无从自动探测机房，区域须显式指定
+	 */
+	private static final String DEFAULT_REGION_ID = "z0";
+
 	/**
 	 * 七牛云认证对象
 	 */
@@ -73,7 +77,7 @@ public class QiniuTemplate implements OssTemplate {
 	@SneakyThrows
 	public void makeBucket(String bucketName) {
 		if (!CollectionUtil.contains(bucketManager.buckets(), getBucketName(bucketName))) {
-			bucketManager.createBucket(getBucketName(bucketName), Zone.autoZone().getRegion());
+			bucketManager.createBucket(getBucketName(bucketName), DEFAULT_REGION_ID);
 		}
 	}
 
@@ -189,18 +193,9 @@ public class QiniuTemplate implements OssTemplate {
 		makeBucket(bucketName);
 		String originalName = key;
 		key = getFileName(key);
-		// 覆盖上传
-		if (cover) {
-			uploadManager.put(stream, key, getUploadToken(bucketName, key), null, null);
-		} else {
-			Response response = uploadManager.put(stream, key, getUploadToken(bucketName), null, null);
-			int retry = 0;
-			int retryCount = 5;
-			while (response.needRetry() && retry < retryCount) {
-				response = uploadManager.put(stream, key, getUploadToken(bucketName), null, null);
-				retry++;
-			}
-		}
+		// 覆盖上传的凭证需绑定文件名
+		String uploadToken = cover ? getUploadToken(bucketName, key) : getUploadToken(bucketName);
+		uploadManager.put(stream, key, uploadToken, null, null);
 		BladeFile file = new BladeFile();
 		file.setOriginalName(originalName);
 		file.setName(key);
@@ -230,7 +225,7 @@ public class QiniuTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public void removeFiles(String bucketName, List<String> fileNames) {
-		fileNames.forEach(fileName -> removeFile(getBucketName(bucketName), fileName));
+		fileNames.forEach(fileName -> removeFile(bucketName, fileName));
 	}
 
 	/**

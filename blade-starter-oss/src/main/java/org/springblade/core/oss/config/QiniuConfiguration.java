@@ -47,14 +47,14 @@ public class QiniuConfiguration {
 	/**
 	 * 配置七牛云存储配置对象
 	 * 当容器中不存在 Configuration 类型的Bean时生效
-	 * 使用自动区域配置
+	 * 使用自动区域配置，按 AccessKey 与空间探测所在机房
 	 *
 	 * @return Configuration 七牛云存储配置对象
 	 */
 	@Bean
 	@ConditionalOnMissingBean(com.qiniu.storage.Configuration.class)
 	public com.qiniu.storage.Configuration qnConfiguration() {
-		return new com.qiniu.storage.Configuration(Region.autoRegion());
+		return com.qiniu.storage.Configuration.create(Region.autoRegion());
 	}
 
 	/**
