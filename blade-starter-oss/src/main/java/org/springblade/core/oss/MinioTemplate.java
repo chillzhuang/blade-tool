@@ -18,6 +18,7 @@ package org.springblade.core.oss;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
+import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -32,6 +33,7 @@ import org.springblade.core.tool.utils.StringPool;
 import org.springblade.core.tool.utils.StringUtil;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
@@ -59,6 +61,11 @@ public class MinioTemplate implements OssTemplate {
 	 * 配置类
 	 */
 	private final OssProperties ossProperties;
+
+	/**
+	 * 流长度未知时的分片大小：10MB
+	 */
+	private static final long DEFAULT_PART_SIZE = 10L * 1024 * 1024;
 
 
 	@Override
@@ -203,7 +210,7 @@ public class MinioTemplate implements OssTemplate {
 	@Override
 	@SneakyThrows
 	public BladeFile putFile(String bucketName, String fileName, MultipartFile file) {
-		return putFile(bucketName, file.getOriginalFilename(), file.getInputStream());
+		return putFile(bucketName, file.getOriginalFilename(), file.getInputStream(), file.getSize(), file.getContentType());
 	}
 
 	@Override
@@ -223,20 +230,38 @@ public class MinioTemplate implements OssTemplate {
 	 *
 	 * @param bucketName  存储桶名称
 	 * @param fileName    文件名
-	 * @param stream      输入流
+	 * @param stream      输入流，由调用方负责关闭
 	 * @param contentType 文件类型
 	 * @return BladeFile 上传文件信息
 	 */
 	@SneakyThrows
 	public BladeFile putFile(String bucketName, String fileName, InputStream stream, String contentType) {
+		return putFile(bucketName, fileName, stream, -1, contentType);
+	}
+
+	/**
+	 * 上传文件到MinIO
+	 *
+	 * @param bucketName  存储桶名称
+	 * @param fileName    文件名
+	 * @param stream      输入流，由调用方负责关闭
+	 * @param size        流长度，未知时传 -1
+	 * @param contentType 文件类型
+	 * @return BladeFile 上传文件信息
+	 */
+	@SneakyThrows
+	public BladeFile putFile(String bucketName, String fileName, InputStream stream, long size, String contentType) {
 		makeBucket(bucketName);
 		String originalName = fileName;
 		fileName = getFileName(fileName);
+		// 长度已知则交由SDK自行分片，未知则按固定分片读至流末尾：available()对网络流恒为0，不能用作对象长度
+		long objectSize = size >= 0 ? size : -1;
+		long partSize = size >= 0 ? -1 : DEFAULT_PART_SIZE;
 		client.putObject(
 			PutObjectArgs.builder()
 				.bucket(getBucketName(bucketName))
 				.object(fileName)
-				.stream(stream, stream.available(), -1)
+				.stream(stream, objectSize, partSize)
 				.contentType(contentType)
 				.build()
 		);
@@ -272,7 +297,14 @@ public class MinioTemplate implements OssTemplate {
 	@SneakyThrows
 	public void removeFiles(String bucketName, List<String> fileNames) {
 		Stream<DeleteObject> stream = fileNames.stream().map(DeleteObject::new);
-		client.removeObjects(RemoveObjectsArgs.builder().bucket(getBucketName(bucketName)).objects(stream::iterator).build());
+		Iterable<Result<DeleteError>> results = client.removeObjects(
+			RemoveObjectsArgs.builder().bucket(getBucketName(bucketName)).objects(stream::iterator).build()
+		);
+		// removeObjects返回惰性迭代器，不遍历则不会真正发起删除
+		for (Result<DeleteError> result : results) {
+			DeleteError error = result.get();
+			throw new IOException("删除文件失败：" + error.objectName() + "，" + error.message());
+		}
 	}
 
 	/**
@@ -446,10 +478,9 @@ public class MinioTemplate implements OssTemplate {
 	 * @return String MinIO Endpoint
 	 */
 	public String getEndpoint() {
-		if (StringUtil.isBlank(ossProperties.getTransformEndpoint())) {
-			return ossProperties.getEndpoint();
-		}
-		return ossProperties.getTransformEndpoint();
+		String endpoint = StringUtil.isBlank(ossProperties.getTransformEndpoint())
+			? ossProperties.getEndpoint() : ossProperties.getTransformEndpoint();
+		return StringUtil.removeSuffix(endpoint, StringPool.SLASH);
 	}
 
 
