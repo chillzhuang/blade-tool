@@ -36,7 +36,7 @@
 
     <properties>
         <!-- Blade-Tool Version -->
-        <revision>5.0.1</revision>
+        <revision>5.0.2</revision>
         <module.name>org.springblade.blade.tool</module.name>
         <!-- jdk Version -->
         <java.version>21</java.version>
